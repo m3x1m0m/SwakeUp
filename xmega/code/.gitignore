@@ -1,2 +1,4 @@
 *.cproj
 *.componentinfo.xml
+*.atsln
+/.vs/
