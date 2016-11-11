@@ -9,7 +9,7 @@
 #ifndef UART_H_
 #define UART_H_
 
-#include "../../event.h"
+#include "../../util/event.h"
 #define UART_MAX_DELIMITERS		3
 #define UART_MAX_IN_BUFFER		64
 #define UART_MAX_JOBS			4

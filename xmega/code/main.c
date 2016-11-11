@@ -10,7 +10,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-#include "event.h"
+#include "util/event.h"
 #include "drivers/uart/uart.h"
 #include "drivers/spi/spi.h"
 #include "drivers/spi/ssd1306.h"
