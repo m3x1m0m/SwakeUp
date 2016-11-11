@@ -46,7 +46,13 @@ static void _send(){
 }
 
 void uart_init(UART_BAUDRATE baudrate){
-
+	/*Set baud rate*/
+	UBRR0H |= (uint8_t)(MYUBRR>>8);
+	UBRR0L |= (uint8_t)(MYUBRR);
+	/*Enable receiver and transmitter*/
+	UCSR0B |= (1<<RXEN0) | (1<<TXEN0);
+	/*Frame format: 8 data bit, 1 stop bit*/
+	UCSR0C |= (1<<USBS0) | (1<<UCSZ00) | (1<<UCSZ01);
 }
 
 uint8_t uart_job(char * data, uint8_t len, void (* callback)(void)){
@@ -71,11 +77,25 @@ uint8_t uart_buffer_level(void){
 }
 
 void uart_write_blocked(char * data, uint8_t len){
-
+	uint8_t i = 0;
+	while(i<len){
+		/*Data buffer must be empty*/
+		while(!(UCSR0A & (1<<UDRE0)));
+		/*Write character by character*/
+		UDR0 = data[i];
+		i++;
+	}
 }
 
 uint8_t uart_read_blocked(char * data, uint8_t len){
-	uint8_t readLen = 0;
+	uint8_t next_char;
+	uint8_t readLen=0;
+	/*Clue character to character*/
+	while(readLen < len) {
+		while(!(UCSR0A & (1<<RXC0)));
+		data[readLen] = UDR0;
+		readLen++;
+	}
 	return readLen;
 }
 

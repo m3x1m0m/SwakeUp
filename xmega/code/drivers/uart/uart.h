@@ -10,9 +10,19 @@
 #define UART_H_
 
 #include "../../util/event.h"
+
+#ifndef FOSC
+#define FOSC 16000000UL
+#warning "Warning FOSC not defined for usart.h."
+#endif
+
 #define UART_MAX_DELIMITERS		3
 #define UART_MAX_IN_BUFFER		64
 #define UART_MAX_JOBS			4
+
+#define BAUD 9600
+#define MYUBRR (FOSC/16/BAUD-1)
+
 
 typedef enum{
 	B9600, B38400
