@@ -6,7 +6,9 @@
  */ 
 
  #include <avr/io.h>
+ #include "spi.h"
  // #include <avr/interrupt.h>
+ 
 
  #define SPI_SPCR_ENABLE (1<<SPE)
  #define SPI_SPCR_MASTER (1<<MSTR)
@@ -21,7 +23,7 @@
  //static volatile uint8_t transmitting = 0;
 
 
- void spi_init(void){
+ uint8_t spi_init(void){
 	/* Initialize the output buffer */
 	// circularBuffer_init(&outBuffer);
 
@@ -29,6 +31,11 @@
 	DDRB |= SPI_DDRB_MOSI|SPI_DDRB_SCK|SPI_DDRB_SS;        
 	/* Enable SPI, Master, set clock rate fck/16 */
 	SPCR = SPI_SPCR_ENABLE|SPI_SPCR_MASTER|SPI_SPCR_FCK_16;
+	return 1;
+ }
+
+ uint8_t spi_deinit(void){
+	return 1;
  }
  /*
  int8_t spi_write(uint8_t data){
@@ -57,3 +64,5 @@ ISR(SPI_STC_vect) {
 
 }
 */
+
+MODULE_DEFINE(SPI, "SPI", spi_init, spi_deinit);

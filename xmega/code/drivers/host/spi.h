@@ -10,11 +10,15 @@
 #define SPI_H_
 
 #include <stdint.h>
+
+#include "../../util/module.h"
+
 // #include "circularbuffer.h"
 
 // typedef void (*spi_read_cb)(CircularBuffer * outBuffer);
 
-void spi_init(void);
+uint8_t spi_init(void);
+uint8_t spi_deinit(void);
 
 // size_t spi_write(uint8_t data);
 void spi_write_blocking(uint8_t data);
@@ -29,5 +33,7 @@ CircularBuffer * getOutBuffer(void);
 CircularBuffer * getInBuffer(void);
 
 */
+
+MODULE_EXP(SPI);
 
 #endif /* SPI_H_ */
