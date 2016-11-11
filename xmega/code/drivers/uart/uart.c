@@ -6,7 +6,7 @@
  */ 
 
  #include "uart.h"
-
+ #include <avr/io.h>
 EVENT_REGISTER(EVENT_UART_JOB,		"Completed UART job");
 EVENT_REGISTER(EVENT_UART_DELIMITER,"Got UART delimiter");
 
@@ -88,7 +88,6 @@ void uart_write_blocked(char * data, uint8_t len){
 }
 
 uint8_t uart_read_blocked(char * data, uint8_t len){
-	uint8_t next_char;
 	uint8_t readLen=0;
 	/*Clue character to character*/
 	while(readLen < len) {
