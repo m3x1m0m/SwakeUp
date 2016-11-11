@@ -66,7 +66,7 @@ uint8_t uart_job(char * data, uint8_t len, void (* callback)(void)){
 
 uint8_t uart_buffer_level(void){
 	if(inBuffer_head<inBuffer_tail){
-		return UART_MAX_IN_BUFFER
+		return UART_MAX_IN_BUFFER;
 	}
 }
 
