@@ -2,3 +2,4 @@
 *.componentinfo.xml
 *.atsln
 /.vs/
+/Debug/
