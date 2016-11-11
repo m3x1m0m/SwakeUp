@@ -25,12 +25,12 @@ typedef struct _module{
 
 #ifndef __cplusplus
 
-#define MODULE_DEFINE(VAR, NAME, INIT, DEINIT, ...)     \
-    HIDef VAR = {                               \
+#define MODULE_DEFINE(VAR, DESC, INIT, DEINIT, ...)     \
+    Module VAR = {                               \
         .init = INIT,                           \
         .deinit = DEINIT,                       \
         .cnt = 0,                               \
-        .name = NAME,                           \
+        .name = DESC,                           \
         .deps = { __VA_ARGS__ }                 \
     }
 #else

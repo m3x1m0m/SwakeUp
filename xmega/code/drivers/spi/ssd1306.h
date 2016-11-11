@@ -10,9 +10,11 @@
 #define SSD1306_H_
 
 #include <stdint.h>
+#include "../../util/module.h"
 
 #define CS 1
 #define DC 0
+
 #define SSD1306_WIDTH 128
 #define SSD1306_HEIGHT 64
 #define SSD1306_BUFFERSIZE (SSD1306_WIDTH*SSD1306_HEIGHT)/8
@@ -70,7 +72,9 @@
 #define SSD1306_PAGE_ADDR		0x22
 #define SSD1306_COLUMN_ADDR		0x21
 
-void ssd1306_init(uint8_t * port, uint8_t cs, uint8_t dc);
+uint8_t ssd1306_init(void);
 void ssd1306_pixel(int16_t x, int16_t y, uint16_t color);
+
+MODULE_EXP(SSD1306);
 
 #endif /* SSD1306_H_ */

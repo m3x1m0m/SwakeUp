@@ -8,6 +8,8 @@
  #include "ssd1306.h"
 #include <avr/io.h>
 
+#include "../host/spi.h"
+
 uint8_t buffer[SSD1306_BUFFERSIZE] = {
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -108,8 +110,8 @@ uint8_t buffer[SSD1306_BUFFERSIZE] = {
  }
 
 
- void ssd1306_init(uint8_t * port, uint8_t cs, uint8_t dc){
-	PORTD |= (1<<cs) | (1<<dc);
+ uint8_t ssd1306_init(void){
+	PORTD |= (1<<CS) | (1<<DC);
 	 write_command(SSD1306_POWER_OFF);
  
 	 write_command(SSD1306_CLOCK_DIVIDE);
@@ -150,4 +152,8 @@ uint8_t buffer[SSD1306_BUFFERSIZE] = {
 
 
 	 //write_datas(&buffer,(uint16_t)SSD1306_BUFFERSIZE);
+
+	 return 1;
  }
+
+ MODULE_DEFINE(SSD1306,"SSD1306",ssd1306_init,0, &SPI);

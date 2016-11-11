@@ -11,18 +11,16 @@
 #include <util/delay.h>
 
 #include "util/event.h"
-#include "drivers/uart/uart.h"
-#include "drivers/spi/spi.h"
+#include "drivers/host/uart.h"
+#include "drivers/host/spi.h"
 #include "drivers/spi/ssd1306.h"
+#include "util/module.h"
 
 EVENT_REGISTER(EVENT_COUNT,"counter event");
 
 int main(void) {
 	DDRD |= (1<<CS) | (1<<DC) | (1<<2);
-	spi_init();
-	 ssd1306_init(DDRD,CS,DC);
-	
-	
+	module_init(&SSD1306);	
 // 	write_command(SSD1306_COLUMN_ADDR);
 // 	write_command(0x00);
 // 	write_command(0x7F);
