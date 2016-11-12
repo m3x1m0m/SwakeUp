@@ -14,14 +14,12 @@
 #include "util/event.h"
 #include "drivers/host/uart.h"	//Breach of layering 
 #include "modules/screen.h"
-
+#include "pin_definitions.h"
 
 EVENT_REGISTER(EVENT_COUNT,"counter event");
 
 int main(void) {
-	DDRD |= (1<<CS) | (1<<DC) | (1<<2);
-   //UBRR0H = (MYUBRR >> 8);
-
+	DDRD |=  SSD1306_CS  | SSD1306_DC | (1<<2);
 	uart_init(B9600);
 	module_init(&Screen);
 		

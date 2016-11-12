@@ -7,6 +7,8 @@
 
  #include <avr/io.h>
  #include "spi.h"
+ #include "../../pin_definitions.h"
+
  // #include <avr/interrupt.h>
  
 
@@ -14,9 +16,7 @@
  #define SPI_SPCR_MASTER (1<<MSTR)
  #define SPI_SPCR_FCK_16 (1<<SPR0)
 
- #define SPI_DDRB_MOSI	(1<<5)
- #define SPI_DDRB_SCK	(1<<3)
- #define SPI_DDRB_SS	(1<<2)
+
 
  //static CircularBuffer outBuffer;
  //static CircularBuffer inBuffer;
