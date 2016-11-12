@@ -44,8 +44,8 @@ typedef void (*EventCallback) (Event *);
 #ifdef EVENT_SUPPORTS_SLEEP
 void event_init(void (*enableSleep)(void), void (*disableSleep)(void));
 #endif
-void event_fire(Event event, uint8_t * data);
-void event_addListener(uint8_t eventId, EventCallback callback);
+uint8_t event_fire(Event event, uint8_t * data);
+uint8_t event_addListener(uint8_t eventId, EventCallback callback);
 void event_removeListener(uint8_t eventId, EventCallback callback);
 void event_process(void);
 

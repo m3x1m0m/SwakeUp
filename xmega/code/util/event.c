@@ -14,6 +14,7 @@ typedef struct {
 EventListener listeners[EVENT_MAX_LISTENERS];
 Event eventBuffer[EVENT_MAX_BUFFER];
 
+static uint8_t eventBufferSize = 0;
 static uint8_t eventBufferHead = 0;
 static uint8_t eventBufferTail = 0;
 static uint8_t listenerIndex = 0;
@@ -28,11 +29,15 @@ void event_init(void (*enableSleep)(void), void (*disableSleep)(void)) {
 }
 #endif
 
-void event_fire(Event event, uint8_t * data) {
+uint8_t event_fire(Event event, uint8_t * data) {
+	if (eventBufferSize == EVENT_MAX_BUFFER){
+		//Can't fire the event, log error? TODO
+		return 0;
+	}
 	event.data = data;
-	eventBuffer[eventBufferHead] = event;
-	eventBufferHead++;
-	if (eventBufferHead > EVENT_MAX_BUFFER - 1) {
+	eventBuffer[eventBufferHead] = event; 
+	eventBufferSize++;
+	if (eventBufferHead++ > EVENT_MAX_BUFFER - 1) {
 		eventBufferHead = 0;
 	}
 #ifdef EVENT_SUPPORTS_SLEEP
@@ -42,27 +47,35 @@ void event_fire(Event event, uint8_t * data) {
 		//TODO throw warning
 	}
 #endif
+	return 1;
 }
 
 static Event getNext(void) {
+	if (eventBufferSize == 0){
+		//Trying to read from an empty buffer, log error? TODO!
+	}
+	eventBufferSize--;
 	Event returnal = eventBuffer[eventBufferTail];
-	eventBufferTail++;
-	if (eventBufferTail > EVENT_MAX_BUFFER - 1) {
+	if (eventBufferTail++ > EVENT_MAX_BUFFER - 1) {
 		eventBufferTail = 0;
 	}
 	return returnal;
 }
 
-void event_addListener(uint8_t eventId, EventCallback callback) {
+uint8_t event_addListener(uint8_t eventId, EventCallback callback) {
+	if(listenerIndex == EVENT_MAX_LISTENERS){
+		//TODO log: no more listener slots available :( 
+		return 0;
+	}
 	listeners[listenerIndex].eventId = eventId; // = {.eventId = eventId, .callback = callback};
 	listeners[listenerIndex].callback = callback;
 	listenerIndex++;
+	return 1;
 }
 
 void event_removeListener(uint8_t eventId, EventCallback callback) {
 	for (uint8_t i = 0; i < listenerIndex; i++) {
-		if (listeners[i].eventId == eventId
-				&& listeners[i].callback == callback) {
+		if (listeners[i].eventId == eventId	&& listeners[i].callback == callback) {
 			for (uint8_t b = i; b < listenerIndex - 1; b++) {
 				listeners[b] = listeners[b + 1];
 			}
