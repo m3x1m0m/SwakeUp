@@ -73,6 +73,10 @@
 #define SSD1306_COLUMN_ADDR		0x21
 
 uint8_t ssd1306_init(void);
+void ssd1306_setRegion(uint8_t x1, uint8_t y1, uint8_t * buf, uint16_t len);
+void ssd1306_turnOn(void);
+void ssd1306_turnOff(void);
+void ssd1306_contrast(uint8_t contrast);
 void ssd1306_pixel(int16_t x, int16_t y, uint16_t color);
 
 MODULE_EXP(SSD1306);
