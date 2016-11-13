@@ -9,36 +9,37 @@
 #include <avr/io.h>
 
 #include "../host/spi.h"
+#include "../../pin_definitions.h"
 
  static void write_data(uint8_t data){
-	 PORTD &= ~(1<<CS);
-	 PORTD |= (1<<DC);
+	 SSD1306_PORT &= ~SSD1306_CS;
+	 SSD1306_PORT |= SSD1306_DC;
 	 spi_write_blocking(data);
-	 PORTD |= (1<<CS);
+	 SSD1306_PORT |= SSD1306_CS;
  }
  static void ssd1306_command(uint8_t config){
-	 PORTD |= (1<<CS);
-	 PORTD &= ~(1<<CS) & ~(1<<DC);
+	 SSD1306_PORT |= SSD1306_CS;
+	 SSD1306_PORT &= ~SSD1306_CS & ~SSD1306_DC;
 	 spi_write_blocking(config);
-	 PORTD |= (1<<CS) | (1<<DC);
+	 SSD1306_PORT |= SSD1306_CS | SSD1306_DC;
  }
 
  static void write_command(uint8_t config){
-	 PORTD |= (1<<CS);
-	 PORTD &= ~(1<<CS) & ~(1<<DC);
+	 SSD1306_PORT |= SSD1306_CS;
+	 SSD1306_PORT &= ~SSD1306_CS & ~SSD1306_DC;
 	 spi_write_blocking(config);
-	 PORTD |= (1<<CS) | (1<<DC);
+	 SSD1306_PORT |= SSD1306_CS | SSD1306_DC;
 
  }
  
  static void write_datas(uint8_t * datas, uint16_t len){
-	 PORTD |= (1<<CS);
-	 PORTD |= (1<<DC);
-	 PORTD &= ~(1<<CS);
+	 SSD1306_PORT |= SSD1306_CS;
+	 SSD1306_PORT |= SSD1306_DC;
+	 SSD1306_PORT &= ~SSD1306_CS;
 	 for (uint16_t i=0; i<len; i++) {
 		 spi_write_blocking(datas[i]);
 	 }
-	 PORTD |= (1<<CS);
+	 SSD1306_PORT |= SSD1306_CS;
  }
 
  void ssd1306_setRegion(uint8_t x1, uint8_t y1, uint8_t * buf, uint16_t len){
@@ -48,18 +49,18 @@
  // 	write_command(SSD1306_PAGE_ADDR);
  // 	write_command(0x00);
  // 	write_command(0x07);
-	 PORTD |= (1<<CS);
-	 PORTD |= (1<<DC);
-	 PORTD &= ~(1<<CS);
+	 SSD1306_PORT |= SSD1306_CS;
+	 SSD1306_PORT |= SSD1306_DC;
+	 SSD1306_PORT &= ~SSD1306_CS;
 	 for (uint16_t i=0; i<len; i++) {
 		 spi_write_blocking(buf[i]);
 	 }
-	 PORTD |= (1<<CS);
+	 SSD1306_PORT |= SSD1306_CS;
  }
 
 
  uint8_t ssd1306_init(void){
-	PORTD |= (1<<CS) | (1<<DC);
+	SSD1306_PORT |= SSD1306_CS | SSD1306_DC;
 	 ssd1306_turnOff();
  
 	 write_command(SSD1306_CLOCK_DIVIDE);

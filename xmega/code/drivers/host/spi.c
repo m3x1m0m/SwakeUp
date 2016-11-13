@@ -28,7 +28,7 @@
 	// circularBuffer_init(&outBuffer);
 
 	/* Set MOSI, SCK as Output */
-	DDRB |= SPI_DDRB_MOSI|SPI_DDRB_SCK|SPI_DDRB_SS;        
+	SPI_PORT |= SPI_DDRB_MOSI|SPI_DDRB_SCK|SPI_DDRB_SS;        
 	/* Enable SPI, Master, set clock rate fck/16 */
 	SPCR = SPI_SPCR_ENABLE|SPI_SPCR_MASTER|SPI_SPCR_FCK_16;
 	return 1;

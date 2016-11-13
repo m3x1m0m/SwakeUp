@@ -19,7 +19,7 @@
 EVENT_REGISTER(EVENT_COUNT,"counter event");
 
 int main(void) {
-	DDRD |=  SSD1306_CS  | SSD1306_DC | (1<<2);
+	SSD1306_PORT |=  SSD1306_CS  | SSD1306_DC | (1<<2);
 	uart_init(B9600);
 	module_init(&Screen);
 		
