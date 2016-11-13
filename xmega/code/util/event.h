@@ -19,6 +19,8 @@ extern "C" {
 
 #define EVENT_MAX_LISTENERS 12
 #define EVENT_MAX_BUFFER	16
+#define SYSTEM_ADDRESS		uint8_t * //(void*) ?
+#define SYSTEM_ADDRESS_CAST (SYSTEM_ADDRESS)
 
 static const uint8_t eventIndex = 0;
 
@@ -27,7 +29,7 @@ typedef struct Event Event;
 #endif
 struct Event{
 	uint8_t eventId;
-	uint8_t * data;
+	SYSTEM_ADDRESS data;
 	const char * description;
 };
 
@@ -44,7 +46,7 @@ typedef void (*EventCallback) (Event *);
 #ifdef EVENT_SUPPORTS_SLEEP
 void event_init(void (*enableSleep)(void), void (*disableSleep)(void));
 #endif
-uint8_t event_fire(Event event, uint8_t * data);
+uint8_t event_fire(Event event, SYSTEM_ADDRESS data);
 uint8_t event_addListener(uint8_t eventId, EventCallback callback);
 void event_removeListener(uint8_t eventId, EventCallback callback);
 void event_process(void);

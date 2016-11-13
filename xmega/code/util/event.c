@@ -6,6 +6,7 @@
  */
 #include "event.h"
 
+
 typedef struct {
 	uint8_t eventId;
 	EventCallback callback;
@@ -29,7 +30,7 @@ void event_init(void (*enableSleep)(void), void (*disableSleep)(void)) {
 }
 #endif
 
-uint8_t event_fire(Event event, uint8_t * data) {
+uint8_t event_fire(Event event, SYSTEM_ADDRESS data) {
 	if (eventBufferSize == EVENT_MAX_BUFFER){
 		//Can't fire the event, log error? TODO
 		return 0;

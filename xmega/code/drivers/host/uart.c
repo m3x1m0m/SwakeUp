@@ -6,33 +6,25 @@
  */ 
 
  #include "uart.h"
+ #include "../../util/job.h"
  #include <avr/io.h>
  #include <avr/interrupt.h>
 
 EVENT_REGISTER(EVENT_UART_JOB,		"Completed UART job");
 EVENT_REGISTER(EVENT_UART_DELIMITER,"Got UART delimiter");
 
+
+
+JOB_BUFFER_INIT(UartJobs, UART_MAX_JOBS);
+
 #define UART_MAX_DELIMITERS		3
 #define UART_MAX_IN_BUFFER		64
-#define UART_MAX_JOBS			4
-
-struct UartJob{
-	char * data;
-	uint8_t len;
-	uint8_t i;
-	void (* callback)(void);
-};
 
 struct UartDelimiter{
 	char delimiter;
 	uint8_t readDelimiter;
 	uint8_t tempReadDelimiter;
 };
-
-struct UartJob jobs				[UART_MAX_JOBS];
-uint8_t jobs_head				= 0;
-uint8_t jobs_tail				= 0;
-uint8_t jobs_size				= 0;
 
 struct UartDelimiter delimiters [UART_MAX_DELIMITERS];
 uint8_t delimiters_head			= 0;
@@ -71,16 +63,10 @@ void uart_init(UART_BAUDRATE baudrate){
  
 
 uint8_t uart_job(char * data, uint8_t len, void (* callback)(void)){
-	if(jobs_size == UART_MAX_JOBS){
+	if(job_add(&UartJobs,data,len,callback) == 0){
 		//we are full boi
 		return 0;
 	}
-	struct UartJob * curJob = &jobs[jobs_head];
-	curJob->callback = callback;
-	curJob->data = data;
-	curJob->len = len;
-	jobs_size++;
-	if(jobs_head++ == UART_MAX_JOBS) jobs_head = 0;
 	if(!sending) _send();
 	return 1;
 }
@@ -147,13 +133,13 @@ ISR(USART_RX_vect)
 			if(delimitChar == 0){
 				if(delimiters[i].readDelimiter>0){
 					if(delimiters[i].tempReadDelimiter == 0){
-						event_fire(EVENT_UART_DELIMITER,&delimiters[i]);
+						event_fire(EVENT_UART_DELIMITER,SYSTEM_ADDRESS_CAST&delimiters[i]);
 					}else{
 						delimiters[i].tempReadDelimiter--;
 					}
 				}
 			}else if(delimitChar == read){
-				event_fire(EVENT_UART_DELIMITER,&delimiters[i]);
+				event_fire(EVENT_UART_DELIMITER,SYSTEM_ADDRESS_CAST&delimiters[i]);
 			}
 		}
 	}else{
@@ -162,15 +148,15 @@ ISR(USART_RX_vect)
 	}
 }
 
-static struct UartJob * curJob = 0;
+static struct Job * curJob = 0;
 
 static void _send(){
 	sending = 1;
-	UCSR0B |= (1<<TXEN0)|(1<<UDRIE0);	//enable the interrupts!
-	curJob = &jobs[jobs_tail];
-	if (jobs_tail++ == UART_MAX_JOBS - 1) {
-		jobs_tail = 0;
+	if(!job_get(&UartJobs, &curJob)){
+		//Error, we are trying to send but we are empty
+		return;
 	}
+	UCSR0B |= (1<<TXEN0)|(1<<UDRIE0);	//enable the interrupts!
 }
 
 //UDR0 Empty interrupt service routine
@@ -181,17 +167,11 @@ ISR(USART_UDRE_vect) {
 	}
 	UDR0 = curJob->data[curJob->i];
 	if(curJob->i++ == curJob->len){
-		event_fire(EVENT_UART_JOB,curJob);
-		if(jobs_size-- == 0){
+		event_fire(EVENT_UART_JOB,SYSTEM_ADDRESS_CAST curJob);
+		if(!job_get(&UartJobs, curJob)){
 			curJob = 0;
 			//disable transmission and UDR0 empty interrupt
 			UCSR0B &= ~((1<<TXEN0)|(1<<UDRIE0));
-		}else{
-			curJob = &jobs[jobs_tail];
-			if (jobs_tail++ == UART_MAX_JOBS - 1) {
-				jobs_tail = 0;
-			}
 		}
-	}
- 
+	} 
 }
