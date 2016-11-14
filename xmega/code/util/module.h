@@ -39,7 +39,6 @@ typedef struct _module {
 
 #define MODULE_EXP(MODULE)     extern Module MODULE;
 
-/**
 uint8_t module_deinit(Module * module);
 uint8_t module_init(Module * module);
 

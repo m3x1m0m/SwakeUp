@@ -23,6 +23,7 @@
 static void callback(Event * event, uint8_t * data);
 
 const static char strin[6] = "Hallo\n";
+const static char stri[6] = "Beppy\n";
 
 int main(void) {
     SSD1306_PORT |=  SSD1306_CS  | SSD1306_DC | (1 << 2);
@@ -30,10 +31,11 @@ int main(void) {
     module_init(&TIMER);
     //module_init(&Screen);
     sei();
-    uart_job(strin, sizeof(strin), 0);
-    event_addListener(&EVENT_UART_JOB, callback);
+    //uart_job(strin, sizeof(strin), 0);
+    //event_addListener(&EVENT_UART_JOB, callback);
     event_addListener(&EVENT_TIMER_1_HZ, callback);
     while (1) {
+        //uart_write_blocked(strin, sizeof(strin));
         event_process();
     }
 }
@@ -43,6 +45,7 @@ static void callback(Event * event, uint8_t * data) {
     if (event == &EVENT_UART_JOB) {
         //toggle led
     } else if (event == &EVENT_TIMER_1_HZ) {
-        uart_job(strin, sizeof(strin), 0);
+        uart_write_blocked(stri, sizeof(stri));
+        //uart_job(strin, sizeof(strin), 0);
     }
 }

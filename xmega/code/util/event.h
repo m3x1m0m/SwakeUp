@@ -30,6 +30,7 @@ struct Event {
     uint8_t eventId;
     uint8_t * data;
     const char * description;
+    uint8_t descLen;
 };
 
 typedef void (*EventCallback) (Event *, uint8_t *);
@@ -38,7 +39,7 @@ typedef void (*EventCallback) (Event *, uint8_t *);
 
 #ifndef __cplusplus
 #define EVENT_REGISTER(eventName, desc)\
-Event eventName = {.eventId = __COUNTER__, .data = 0, .description = desc }
+Event eventName = {.eventId = __COUNTER__, .data = 0, .description = desc, .descLen = sizeof(desc) }
 #else
 #define EVENT_REGISTER(eventName, desc)\
 static Event eventName = {__COUNTER__, 0, desc }
