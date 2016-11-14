@@ -30,7 +30,8 @@ typedef enum {
 void uart_speed(UART_BAUDRATE baudrate);
 uint8_t uart_job(char * data, uint8_t len, void (* callback)(void));
 uint8_t uart_buffer_level(void);
-void uart_write_blocked(char * data, uint8_t len);
+void uart_write_blocked(char data);
+void uart_writes_blocked(char * data, uint8_t len);
 uint8_t uart_read_blocked(char * data, uint8_t len);
 uint8_t uart_add_delimiter(char delimiter, void(*callback)(char *, uint8_t));
 
