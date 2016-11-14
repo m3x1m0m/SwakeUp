@@ -102,8 +102,8 @@ dkms.conf
 
 # Eclipse #
 #####################
-xmega/code/SwakeUp/*
-xmega/code/.metadata
+MyStuff/*
+.metadata
 
 # LaTeX #
 #####################
