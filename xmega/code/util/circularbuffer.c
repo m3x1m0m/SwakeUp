@@ -4,7 +4,7 @@
  * Created: 9/6/2013 1:11:19 AM
  *  Author: Elmar
  */
-#include "CircularBuffer.h"
+#include "circularbuffer.h"
 
 uint8_t circularBuffer_dataLeft(CircularBuffer * buffer) {
     return (buffer->head - buffer->tail) - 1;
