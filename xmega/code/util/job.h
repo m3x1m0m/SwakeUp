@@ -16,7 +16,7 @@ extern "C" {
 #include <stdint.h>
 
 struct Job{
-	char * data;
+	uint8_t * data;
 	uint8_t len;
 	uint8_t i;
 	void (* callback)(struct Job *);
@@ -38,7 +38,7 @@ struct JobBuffer{
 #define JOB_BUFFER_INIT(NAME, SIZE)	struct Job _##NAME[SIZE]; struct JobBuffer NAME = {.jobs = _##NAME, .capacity = SIZE, .head = 0, .tail = 0, .size = 0}
 #endif
 
-uint8_t job_add(struct JobBuffer * buffer, char * job, uint8_t len, void (* callback)(struct Job *));
+uint8_t job_add(struct JobBuffer * buffer, uint8_t * job, uint8_t len, void (* callback)(struct Job *));
 uint8_t job_get(struct JobBuffer * buffer, struct Job ** job);
 
 #ifdef __cplusplus

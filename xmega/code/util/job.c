@@ -7,7 +7,7 @@
 
  #include "job.h"
 
-uint8_t job_add(struct JobBuffer * buffer, char * job, uint8_t len, void (* callback)(struct Job *)){
+uint8_t job_add(struct JobBuffer * buffer, uint8_t * job, uint8_t len, void (* callback)(struct Job *)){
 	if(buffer->size == buffer->capacity){
 		return 0;
 	}
