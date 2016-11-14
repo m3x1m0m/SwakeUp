@@ -5,7 +5,7 @@
  * Author : elmar
  */
 
-#define F_CPU 1000000UL
+#define F_CPU 16000000UL
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
@@ -20,6 +20,8 @@
 #include "modules/screen.h"
 #include "pin_definitions.h"
 
+#include "drivers/host/pwm.h"
+
 static void callback(Event * event, uint8_t * data);
 
 const static char strin[6] = "Hallo\n";
@@ -28,7 +30,8 @@ const static char stri[6] = "Beppy\n";
 int main(void) {
     SSD1306_PORT |=  SSD1306_CS  | SSD1306_DC | (1 << 2);
     module_init(&UART);
-    module_init(&TIMER);
+    //module_init(&TIMER);
+    module_init(&PWM);
     //module_init(&Screen);
     sei();
     //uart_job(strin, sizeof(strin), 0);
