@@ -7,15 +7,18 @@
 
  #include <avr/io.h>
  #include "spi.h"
+ #include "../../util/job.h"
  #include "../../pin_definitions.h"
 
  // #include <avr/interrupt.h>
  
+ JOB_BUFFER_INIT(SpiBuffer, SPI_MAX_JOBS);
 
  #define SPI_SPCR_ENABLE (1<<SPE)
  #define SPI_SPCR_MASTER (1<<MSTR)
  #define SPI_SPCR_FCK_16 (1<<SPR0)
 
+ EVENT_REGISTER(SPI_JOB_FINISHED,"Reading or writing");
 
 
  //static CircularBuffer outBuffer;
@@ -51,6 +54,14 @@
  uint8_t spi_writes(uint8_t * datas, uint8_t len){
 	return circularBuffer_write(&outBuffer,datas,len);
  }*/
+ uint8_t spi_writes(uint8_t * datas, uint8_t len){
+	if(job_add(&SpiBuffer,datas,len,0) == 0){
+		//we are full
+		return 0;
+	}
+	//Todo enable interrupts
+	return 1;
+ }
 
  void spi_write_blocking(uint8_t data) {
 	SPDR = data;

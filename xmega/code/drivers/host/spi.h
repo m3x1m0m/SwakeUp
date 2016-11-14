@@ -12,6 +12,9 @@
 #include <stdint.h>
 
 #include "../../util/module.h"
+#include "../../util/event.h"
+
+#define SPI_MAX_JOBS	4
 
 // #include "circularbuffer.h"
 
@@ -22,7 +25,7 @@ uint8_t spi_deinit(void);
 
 // size_t spi_write(uint8_t data);
 void spi_write_blocking(uint8_t data);
-// size_t spi_writes(uint8_t * datas, size_t len);
+uint8_t spi_writes(uint8_t * datas, uint8_t len);
 /*
 void spi_read(uint8_t amount);
 void spi_read_blocking(uint8_t * buf, uint8_t len);
@@ -35,5 +38,6 @@ CircularBuffer * getInBuffer(void);
 */
 
 MODULE_EXP(SPI);
+EVENT_EXP(SPI_JOB_FINISHED);
 
 #endif /* SPI_H_ */
