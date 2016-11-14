@@ -14,22 +14,22 @@ extern "C" {
 #endif
 
 #include <stdint.h>
-#define SYSTEM_ADDRESS		uint8_t *
+#define SYSTEM_ADDRESS      uint8_t *
 #define SYSTEM_ADDRESS_CAST (SYSTEM_ADDRESS)
 #define EVENT_SUPPORTS_SLEEP
 
 #define EVENT_MAX_LISTENERS 12
-#define EVENT_MAX_BUFFER	16
+#define EVENT_MAX_BUFFER    16
 
 static const uint8_t eventIndex = 0;
 
 #ifndef __cplusplus
 typedef struct Event Event;
 #endif
-struct Event{
-	uint8_t eventId;
-	uint8_t * data;
-	const char * description;
+struct Event {
+    uint8_t eventId;
+    uint8_t * data;
+    const char * description;
 };
 
 typedef void (*EventCallback) (Event *, uint8_t *);

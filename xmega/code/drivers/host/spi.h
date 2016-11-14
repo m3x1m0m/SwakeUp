@@ -3,7 +3,7 @@
  *
  * Created: 11/7/2016 10:59:37 AM
  *  Author: elmar
- */ 
+ */
 
 
 #ifndef SPI_H_
@@ -14,7 +14,7 @@
 #include "../../util/module.h"
 #include "../../util/event.h"
 
-#define SPI_MAX_JOBS	4
+#define SPI_MAX_JOBS    4
 
 // #include "circularbuffer.h"
 

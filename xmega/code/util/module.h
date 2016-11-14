@@ -15,12 +15,12 @@ extern "C" {
 #include <stdint.h>
 #define MOUDLE_MAX_DEPENDENCIES         5
 
-typedef struct _module{
-	uint8_t (*init)();
-	uint8_t (*deinit)();
-	uint8_t cnt;
-	const char * name;
-	struct _module * deps[MOUDLE_MAX_DEPENDENCIES];
+typedef struct _module {
+    uint8_t (*init)();
+    uint8_t (*deinit)();
+    uint8_t cnt;
+    const char * name;
+    struct _module * deps[MOUDLE_MAX_DEPENDENCIES];
 } Module;
 
 #ifndef __cplusplus
@@ -39,6 +39,7 @@ typedef struct _module{
 
 #define MODULE_EXP(MODULE)     extern Module MODULE;
 
+/**
 uint8_t module_deinit(Module * module);
 uint8_t module_init(Module * module);
 

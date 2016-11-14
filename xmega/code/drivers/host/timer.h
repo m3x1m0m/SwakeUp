@@ -3,7 +3,7 @@
  *
  * Created: 11/14/2016 1:11:16 AM
  *  Author: elmar
- */ 
+ */
 
 
 #ifndef TIMER_H_

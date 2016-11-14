@@ -3,7 +3,7 @@
  *
  * Created: 9/6/2013 1:11:27 AM
  *  Author: Elmar
- */ 
+ */
 
 
 #ifndef CIRCULARBUFFER_H_
@@ -14,10 +14,10 @@
 #define BUF_SIZE 32
 
 typedef struct {
-	uint8_t	size;
-	uint8_t	head;
-	uint8_t tail;
-	char data[BUF_SIZE];
+    uint8_t size;
+    uint8_t head;
+    uint8_t tail;
+    char data[BUF_SIZE];
 } CircularBuffer;
 
 void circularBuffer_init(CircularBuffer * buffer);

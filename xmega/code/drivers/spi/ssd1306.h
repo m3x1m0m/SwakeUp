@@ -3,7 +3,7 @@
  *
  * Created: 11/8/2016 1:54:59 AM
  *  Author: elmar
- */ 
+ */
 
 
 #ifndef SSD1306_H_
@@ -60,17 +60,17 @@
 #define SSD1306_SWITCHCAPVCC 0x2
 
 
-#define SSD1306_POWER_ON		0xAF
-#define SSD1306_CONTRAST		0x81
-#define SSD1306_CLOCK_DIVIDE	0xD5
-#define SSD1306_MULTIPLEX		0xA8
-#define SSD1306_POWER_OFF		0xAF
-#define SSD1306_ENTIRE_ON		0xA4
-#define SSD1306_NORMAL			0xA6
-#define SSD1306_PRECHARGE		0xD9
+#define SSD1306_POWER_ON        0xAF
+#define SSD1306_CONTRAST        0x81
+#define SSD1306_CLOCK_DIVIDE    0xD5
+#define SSD1306_MULTIPLEX       0xA8
+#define SSD1306_POWER_OFF       0xAF
+#define SSD1306_ENTIRE_ON       0xA4
+#define SSD1306_NORMAL          0xA6
+#define SSD1306_PRECHARGE       0xD9
 
-#define SSD1306_PAGE_ADDR		0x22
-#define SSD1306_COLUMN_ADDR		0x21
+#define SSD1306_PAGE_ADDR       0x22
+#define SSD1306_COLUMN_ADDR     0x21
 
 uint8_t ssd1306_init(void);
 void ssd1306_setRegion(uint8_t x1, uint8_t y1, uint8_t * buf, uint16_t len);

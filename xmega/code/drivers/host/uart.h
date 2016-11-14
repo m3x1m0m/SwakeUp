@@ -3,7 +3,7 @@
  *
  * Created: 11/9/2016 12:37:33 AM
  *  Author: elmar
- */ 
+ */
 
 
 #ifndef UART_H_
@@ -15,16 +15,16 @@
 EVENT_EXP(EVENT_UART_JOB);
 EVENT_EXP(EVENT_UART_DELIMITER);
 
-#define UART_MAX_DELIMITERS		3
-#define UART_MAX_IN_BUFFER		64
-#define UART_MAX_JOBS			4
+#define UART_MAX_DELIMITERS     3
+#define UART_MAX_IN_BUFFER      64
+#define UART_MAX_JOBS           4
 
 #define BAUD 9600
 //#define MYUBRR (FOSC/16/BAUD-1)
 
 
-typedef enum{
-	B9600, B4800, B2400
+typedef enum {
+    B9600, B4800, B2400
 } UART_BAUDRATE;
 
 void uart_speed(UART_BAUDRATE baudrate);
