@@ -13,7 +13,8 @@ uint8_t job_add(struct JobBuffer * buffer, uint8_t * job, uint8_t len, void (* c
     }
     buffer->size++;
     buffer->jobs[buffer->head].data = job;
-    buffer->jobs[buffer->head].len = len;
+    buffer->jobs[buffer->head].len  = len;
+    buffer->jobs[buffer->head].i    = 0;
     buffer->jobs[buffer->head].callback = callback;
     if (++buffer->head ==  buffer->capacity) {
         buffer->head = 0;

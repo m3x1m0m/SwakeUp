@@ -7,6 +7,7 @@
 
 #include "uart.h"
 #include "../../util/job.h"
+#include "../../util/log.h"
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
@@ -37,7 +38,6 @@ static uint8_t sending          = 0;
 
 static void _send();
 
-#define F_CPU 1000000
 #define USART_BAUDRATE 9600
 #define BAUD_PRESCALE (((F_CPU/(USART_BAUDRATE*16UL)))-1)
 
@@ -58,6 +58,7 @@ void uart_speed(UART_BAUDRATE baudrate) {
 
 uint8_t uart_job(char * data, uint8_t len, void (* callback)(void)) {
     if (job_add(&UartJobs, data, len, callback) == 0) {
+        LOG_ERROR("No free jobs");
         //we are full boi
         return 0;
     }
@@ -97,6 +98,7 @@ uint8_t uart_read_blocked(char * data, uint8_t len) {
 uint8_t uart_add_delimiter(char delimiter, void(*callback)(char *, uint8_t)) {
     if (delimiters_size == UART_MAX_DELIMITERS) {
         //we are full boi
+        LOG_ERROR("No free delimiters");
         return 0;
     }
     struct UartDelimiter * curDelimiter = &delimiters[delimiters_head];
@@ -108,7 +110,7 @@ uint8_t uart_add_delimiter(char delimiter, void(*callback)(char *, uint8_t)) {
 }
 static inline uint8_t writeInBuf(uint8_t data) {
     if (inBuffer_size == UART_MAX_IN_BUFFER) {
-        //we are full boi
+        LOG_ERROR("Uart buffer overrun");
         return 0;
     }
     inBuffer[inBuffer_head] = data;
@@ -146,6 +148,7 @@ static struct Job * curJob = 0;
 static void _send() {
     sending = 1;
     if (!job_get(&UartJobs, &curJob)) {
+        LOG_ERROR("Jobs is empty");
         //Error, we are trying to send but we are empty
         return;
     }
@@ -155,16 +158,19 @@ static void _send() {
 //UDR0 Empty interrupt service routine
 ISR(USART_UDRE_vect) {
     if (curJob == 0) {
+        LOG_ERROR("curJob == 0");
         //Error!
         return;
     }
     UDR0 = curJob->data[curJob->i];
-    if (curJob->i++ == curJob->len) {
+    if (++curJob->i == curJob->len) {
         event_fire(&EVENT_UART_JOB, SYSTEM_ADDRESS_CAST curJob);
-        if (!job_get(&UartJobs, curJob)) {
+        curJob->i = 0;
+        if (!job_get(&UartJobs, &curJob)) {
             curJob = 0;
-            //disable transmission and UDR0 empty interrupt
-            UCSR0B &= ~((1 << TXEN0) | (1 << UDRIE0));
+            //disable UDR0 empty interrupt
+            UCSR0B &= ~(1 << UDRIE0);
+            sending = 0;
         }
     }
 }
