@@ -24,7 +24,6 @@ typedef struct _module{
 } Module;
 
 #ifndef __cplusplus
-
 #define MODULE_DEFINE(VAR, DESC, INIT, DEINIT, ...)     \
     Module VAR = {                               \
         .init = INIT,                           \
@@ -34,11 +33,10 @@ typedef struct _module{
         .deps = { __VA_ARGS__ }                 \
     }
 #else
-
 #define MODULE_DEFINE(VAR, NAME, INIT, DEINIT, ...)\
     Module VAR = {INIT, DEINIT, 0, NAME,{ __VA_ARGS__ }}
-
 #endif
+
 #define MODULE_EXP(MODULE)     extern Module MODULE;
 
 uint8_t module_deinit(Module * module);

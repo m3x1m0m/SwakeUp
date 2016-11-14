@@ -10,12 +10,9 @@
  #include <avr/io.h>
  #include <avr/interrupt.h>
 
+JOB_BUFFER_INIT(UartJobs, UART_MAX_JOBS);
 EVENT_REGISTER(EVENT_UART_JOB,		"Completed UART job");
 EVENT_REGISTER(EVENT_UART_DELIMITER,"Got UART delimiter");
-
-
-
-JOB_BUFFER_INIT(UartJobs, UART_MAX_JOBS);
 
 #define UART_MAX_DELIMITERS		3
 #define UART_MAX_IN_BUFFER		64
@@ -44,7 +41,7 @@ static void _send();
 #define USART_BAUDRATE 9600
 #define BAUD_PRESCALE (((F_CPU/(USART_BAUDRATE*16UL)))-1)
 
-void uart_init(UART_BAUDRATE baudrate){
+void uart_speed(UART_BAUDRATE baudrate){
 	switch(baudrate){
 		case B2400:
 		UBRR0L	= 51;
@@ -56,9 +53,6 @@ void uart_init(UART_BAUDRATE baudrate){
 		UBRR0L	= 12;
 		break;
 	}	
-	UCSR0A |= 1 << U2X0;
-	UCSR0B |= (1 << RXEN0)	| (1 << TXEN0) |(1<<RXEN0)|(1<<RXCIE0);			// Enable receiver and transmitter, also interrupts	
-	UCSR0C |= (1 << UCSZ01) | (1 << UCSZ00);								// Set frame: 8data, 1 stp 
 }
  
 
@@ -133,13 +127,13 @@ ISR(USART_RX_vect)
 			if(delimitChar == 0){
 				if(delimiters[i].readDelimiter>0){
 					if(delimiters[i].tempReadDelimiter == 0){
-						event_fire(EVENT_UART_DELIMITER,SYSTEM_ADDRESS_CAST&delimiters[i]);
+						event_fire(&EVENT_UART_DELIMITER, SYSTEM_ADDRESS_CAST &delimiters[i]);
 					}else{
 						delimiters[i].tempReadDelimiter--;
 					}
 				}
 			}else if(delimitChar == read){
-				event_fire(EVENT_UART_DELIMITER,SYSTEM_ADDRESS_CAST&delimiters[i]);
+				event_fire(&EVENT_UART_DELIMITER, SYSTEM_ADDRESS_CAST &delimiters[i]);
 			}
 		}
 	}else{
@@ -167,7 +161,7 @@ ISR(USART_UDRE_vect) {
 	}
 	UDR0 = curJob->data[curJob->i];
 	if(curJob->i++ == curJob->len){
-		event_fire(EVENT_UART_JOB,SYSTEM_ADDRESS_CAST curJob);
+		event_fire(&EVENT_UART_JOB,SYSTEM_ADDRESS_CAST curJob);
 		if(!job_get(&UartJobs, curJob)){
 			curJob = 0;
 			//disable transmission and UDR0 empty interrupt
@@ -175,3 +169,13 @@ ISR(USART_UDRE_vect) {
 		}
 	} 
 }
+
+static uint8_t init(void){
+	uart_speed(B9600);
+	UCSR0A |= 1 << U2X0;
+	UCSR0B |= (1 << RXEN0)	| (1 << TXEN0) |(1<<RXEN0)|(1<<RXCIE0);			// Enable receiver and transmitter, also interrupts
+	UCSR0C |= (1 << UCSZ01) | (1 << UCSZ00);								// Set frame: 8data, 1 stp
+	return 1;
+}
+
+MODULE_DEFINE(UART,"Uart",init,0);
