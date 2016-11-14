@@ -4,10 +4,9 @@
  * Created: 10/31/2016 3:44:36 PM
  * Author : elmar
  */
-
-#define F_CPU 1000000UL
-
 #include <avr/io.h>
+#include "pin_definitions.h"
+
 #include <avr/interrupt.h>
 #include <util/delay.h>
 
@@ -18,15 +17,18 @@
 #include "drivers/host/timer.h" //Breach of layering 
 
 #include "modules/screen.h"
-#include "pin_definitions.h"
+
 
 static void callback(Event * event, uint8_t * data);
 
-const static char strin[6] = "Hallo\n";
-const static char stri[6] = "Beppy\n";
+const static char hallo[] = "Hallo\n\r";
+const static char elmar[] = "Elmar\n\r";
+const static char ramle[] = "ramlE\n\r";
 
 int main(void) {
-    SSD1306_PORT |=  SSD1306_CS  | SSD1306_DC | (1 << 2);
+    LED_PORT        = 0xFF;
+    SSD1306_PORT    |=  SSD1306_CS  | SSD1306_DC | (1 << 2);
+    LED_DDRD        |= LED_ERROR | LED_SOL;
     module_init(&UART);
     module_init(&TIMER);
     //module_init(&Screen);
@@ -40,12 +42,19 @@ int main(void) {
     }
 }
 
+uint8_t el = 0;
 
 static void callback(Event * event, uint8_t * data) {
     if (event == &EVENT_UART_JOB) {
+        if (el) {
+            //  uart_job(hallo, sizeof(hallo), 0);
+            el = 0;
+        }
         //toggle led
     } else if (event == &EVENT_TIMER_1_HZ) {
-        uart_write_blocked(stri, sizeof(stri));
-        //uart_job(strin, sizeof(strin), 0);
+        LED_PORT = LED_PORT ^ LED_SOL;
+        uart_job(elmar, sizeof(elmar), 0);
+        uart_job(ramle, sizeof(ramle), 0);
+        uart_job(hallo, sizeof(hallo), 0);
     }
 }
