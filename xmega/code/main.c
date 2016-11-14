@@ -4,7 +4,11 @@
  * Created: 10/31/2016 3:44:36 PM
  * Author : elmar
  */
+
+#define EVENT_SUPPORTS_SLEEP
+
 #include <avr/io.h>
+#include <avr/sleep.h>
 #include "pin_definitions.h"
 
 #include <avr/interrupt.h>
@@ -26,10 +30,24 @@ static void callback(Event * event, uint8_t * data);
 
 LOG_INIT("Main");
 
+static void sleep(void) {
+    sleep_cpu();
+}
+
+static void wakeUp(void) {
+    sleep_disable();
+    //ADCSRA = adcsra;
+}
+
 int main(void) {
+#ifdef EVENT_SUPPORTS_SLEEP
+    event_init(sleep, wakeUp);
+    sleep_enable();
+    set_sleep_mode(SLEEP_MODE_IDLE);
+#endif
     LED_PORT        = 0xFF;
     SSD1306_PORT    |=  SSD1306_CS  | SSD1306_DC | (1 << 2);
-    LED_DDRD        |= LED_ERROR | LED_SOL;
+    LED_DDRD        |=  LED_ERROR   | LED_SOL;
     module_init(&LOGGER);
     module_init(&TIMER);
     event_addListener(&EVENT_TIMER_1_HZ, callback);
