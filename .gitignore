@@ -100,6 +100,11 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
+# Eclipse #
+#####################
+xmega/code/SwakeUp/*
+xmega/code/.metadata
+
 # LaTeX #
 #####################
 *.aux
