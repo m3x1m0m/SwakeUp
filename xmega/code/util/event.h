@@ -49,7 +49,7 @@ static Event eventName = {__COUNTER__, 0, desc }
 void event_init(void (*enableSleep)(void), void (*disableSleep)(void));
 #endif
 void event_fire(Event * event, uint8_t * data);
-void event_addListener(Event * event, EventCallback callback);
+uint8_t event_addListener(Event * event, EventCallback callback);
 void event_removeListener(Event * event, EventCallback callback);
 void event_process(void);
 

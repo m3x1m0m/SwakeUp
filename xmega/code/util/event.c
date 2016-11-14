@@ -58,10 +58,12 @@ static InternalEvent * getNext(void) {
     return returnal;
 }
 
-void event_addListener(Event * event, EventCallback callback) {
-    listeners[listenerIndex].event = event; // = {.eventId = eventId, .callback = callback};
+uint8_t event_addListener(Event * event, EventCallback callback) {
+    if (listenerIndex >= EVENT_MAX_LISTENERS) return 0;
+    listeners[listenerIndex].event = event;
     listeners[listenerIndex].callback = callback;
     listenerIndex++;
+    return 1;
 }
 
 void event_removeListener(Event * event, EventCallback callback) {
