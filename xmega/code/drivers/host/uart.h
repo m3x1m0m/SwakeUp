@@ -24,7 +24,7 @@ EVENT_EXP(EVENT_UART_DELIMITER);
 
 
 typedef enum {
-    B9600, B4800, B2400
+    B38400, B9600, B4800, B2400
 } UART_BAUDRATE;
 
 void uart_speed(UART_BAUDRATE baudrate);

@@ -9,7 +9,7 @@
 #ifndef PIN_DEFINITIONS_H_
 #define PIN_DEFINITIONS_H_
 
-#define F_CPU           1000000UL
+#define F_CPU           8000000UL
 #include <avr/io.h>
 
 #define LED_DDRD        DDRD

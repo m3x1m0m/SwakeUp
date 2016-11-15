@@ -5,6 +5,7 @@
  *  Author: elmar
  */
 
+#include "../../pin_definitions.h"
 #include "uart.h"
 #include "../../util/job.h"
 
@@ -50,7 +51,20 @@ void uart_speed(UART_BAUDRATE baudrate) {
         UBRR0L  = 25;
         break;
     case B9600:
+#if F_CPU == 1000000UL
         UBRR0L  = 12;
+#elif F_CPU == 8000000UL
+        UBRR0L = 103;
+#elif F_CPU == 16000000UL
+        UBRR0L = 207;
+#endif
+        break;
+    case B38400:
+#if F_CPU == 8000000UL
+        UBRR0L = 25;
+#elif F_CPU == 16000000UL
+        UBRR0L = 51;
+#endif
         break;
     }
 }
@@ -181,7 +195,11 @@ ISR(USART_UDRE_vect) {
 }
 
 static uint8_t init(void) {
+#if F_CPU == 8000000UL ||  F_CPU == 8000000UL
+    uart_speed(B38400);
+#else
     uart_speed(B9600);
+#endif
     UCSR0A |= 1 << U2X0;
     UCSR0B |= (1 << RXEN0)  | (1 << TXEN0) | (1 << RXEN0) | (1 << RXCIE0);  // Enable receiver and transmitter, also interrupts
     UCSR0C |= (1 << UCSZ01) | (1 << UCSZ00);                                // Set frame: 8data, 1 stp
