@@ -42,10 +42,12 @@ static void callback(Event * event, uint8_t * data);
 LOG_INIT("Main");
 
 static void sleep(void) {
+    LED_PORT = LED_PORT & ~LED_ERROR;
     sleep_cpu();
 }
 
 static void wakeUp(void) {
+    LED_PORT = LED_PORT | LED_ERROR;
     sleep_disable();
     //ADCSRA = adcsra;
 }
@@ -76,15 +78,11 @@ int main(void) {
     }
 }
 
-uint8_t el = 0;
-
 static void callback(Event * event, uint8_t * data) {
+    static uint8_t i = 0;
     if (event == &EVENT_TIMER_1_HZ) {
-        LOG_DEBUG("Timer event %d", el++);
+        LOG_DEBUG("Timer event %d", i++);
         LED_PORT = LED_PORT ^ LED_SOL;
-//         if (el == 5) {
-//             LOG_ERROR("0x%x == %d", &el, 5);
-//         }
     }
 }
 <<<<<<< HEAD
