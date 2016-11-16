@@ -5,9 +5,10 @@
  *  Author: elmar
  */
 
+#include "../../pin_definitions.h"
 #include "uart.h"
 #include "../../util/job.h"
-#include "../../util/log.h"
+
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
@@ -50,7 +51,20 @@ void uart_speed(UART_BAUDRATE baudrate) {
         UBRR0L  = 25;
         break;
     case B9600:
+#if F_CPU == 1000000UL
         UBRR0L  = 12;
+#elif F_CPU == 8000000UL
+        UBRR0L = 103;
+#elif F_CPU == 16000000UL
+        UBRR0L = 207;
+#endif
+        break;
+    case B38400:
+#if F_CPU == 8000000UL
+        UBRR0L = 25;
+#elif F_CPU == 16000000UL
+        UBRR0L = 51;
+#endif
         break;
     }
 }
@@ -58,7 +72,7 @@ void uart_speed(UART_BAUDRATE baudrate) {
 
 uint8_t uart_job(char * data, uint8_t len, void (* callback)(void)) {
     if (job_add(&UartJobs, data, len, callback) == 0) {
-        LOG_ERROR("No free jobs");
+        //LOG_ERROR("No free jobs");
         //we are full boi
         return 0;
     }
@@ -73,7 +87,12 @@ uint8_t uart_buffer_level(void) {
     return 0;
 }
 
-void uart_write_blocked(char * data, uint8_t len) {
+void uart_write_blocked(char data) {
+    while (!(UCSR0A & (1 << UDRE0)));
+    UDR0 = data;
+}
+
+void uart_writes_blocked(char * data, uint8_t len) {
     uint8_t i = 0;
     while (i < len) {
         /*Data buffer must be empty*/
@@ -98,7 +117,7 @@ uint8_t uart_read_blocked(char * data, uint8_t len) {
 uint8_t uart_add_delimiter(char delimiter, void(*callback)(char *, uint8_t)) {
     if (delimiters_size == UART_MAX_DELIMITERS) {
         //we are full boi
-        LOG_ERROR("No free delimiters");
+        //  LOG_ERROR("No free delimiters");
         return 0;
     }
     struct UartDelimiter * curDelimiter = &delimiters[delimiters_head];
@@ -110,7 +129,7 @@ uint8_t uart_add_delimiter(char delimiter, void(*callback)(char *, uint8_t)) {
 }
 static inline uint8_t writeInBuf(uint8_t data) {
     if (inBuffer_size == UART_MAX_IN_BUFFER) {
-        LOG_ERROR("Uart buffer overrun");
+        // LOG_ERROR("Uart buffer overrun");
         return 0;
     }
     inBuffer[inBuffer_head] = data;
@@ -148,7 +167,7 @@ static struct Job * curJob = 0;
 static void _send() {
     sending = 1;
     if (!job_get(&UartJobs, &curJob)) {
-        LOG_ERROR("Jobs is empty");
+        // LOG_ERROR("Jobs is empty");
         //Error, we are trying to send but we are empty
         return;
     }
@@ -158,7 +177,7 @@ static void _send() {
 //UDR0 Empty interrupt service routine
 ISR(USART_UDRE_vect) {
     if (curJob == 0) {
-        LOG_ERROR("curJob == 0");
+        //LOG_ERROR("curJob == 0");
         //Error!
         return;
     }
@@ -176,7 +195,11 @@ ISR(USART_UDRE_vect) {
 }
 
 static uint8_t init(void) {
+#if F_CPU == 8000000UL ||  F_CPU == 8000000UL
+    uart_speed(B38400);
+#else
     uart_speed(B9600);
+#endif
     UCSR0A |= 1 << U2X0;
     UCSR0B |= (1 << RXEN0)  | (1 << TXEN0) | (1 << RXEN0) | (1 << RXCIE0);  // Enable receiver and transmitter, also interrupts
     UCSR0C |= (1 << UCSZ01) | (1 << UCSZ00);                                // Set frame: 8data, 1 stp

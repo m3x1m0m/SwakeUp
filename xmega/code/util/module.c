@@ -37,9 +37,11 @@ uint8_t module_init(Module * module) {
     if (module->cnt == 0) {
         if (!_moduleInitDeps(module))
             return 0;
-        if (!module->init()) {
-            _moduleDeInitDeps(module);
-            return 0;
+        if (module->init != 0) {
+            if (!module->init()) {
+                _moduleDeInitDeps(module);
+                return 0;
+            }
         }
     }
     module->cnt++;
@@ -50,8 +52,10 @@ uint8_t module_deinit(Module * module) {
     module->cnt--;
     if (module->cnt > 0)
         return 1;
-    if (module->deinit != 0 && !module->deinit()) {
-        return 0;
+    if (module->deinit != 0) {
+        if (!module->deinit()) {
+            return 0;
+        }
     }
     return _moduleDeInitDeps(module);
 }

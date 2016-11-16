@@ -5,6 +5,7 @@
  *  Author: elmar
  */
 #include "event.h"
+#include "../modules/log.h"
 
 typedef struct {
     Event * event;
@@ -33,18 +34,27 @@ void event_init(void (*enableSleep)(void), void (*disableSleep)(void)) {
 }
 #endif
 
+uint8_t warning = 0;
+
+LOG_INIT("Event");
+
 void event_fire(Event * event, uint8_t * data) {
+    uint8_t tempHead = (eventBufferHead + 1 > EVENT_MAX_BUFFER - 1) ? 0 : eventBufferHead + 1;
+    if (tempHead == eventBufferTail) {
+        //Our buffer is full! For now we will fire an error, could maybe process all the events?
+        LOG_DEBUG("Event capacity(%d) reached!", EVENT_MAX_BUFFER);
+    }
     eventBuffer[eventBufferHead].data = data;
     eventBuffer[eventBufferHead].event = event;
-    eventBufferHead++;
-    if (eventBufferHead > EVENT_MAX_BUFFER - 1) {
-        eventBufferHead = 0;
-    }
+    eventBufferHead = tempHead;
 #ifdef EVENT_SUPPORTS_SLEEP
-    if (_disableSleep != 0) {
-        _disableSleep();
-    } else {
-        //TODO throw warning
+    if (!warning) {
+        if (_enableSleep != 0 && _disableSleep != 0) {
+            _disableSleep();
+        } else {
+            LOG_WARNING("_enableSleep == %d _disableSleep == %d", _enableSleep, _disableSleep);
+            warning = 1;
+        }
     }
 #endif
 }
@@ -58,10 +68,15 @@ static InternalEvent * getNext(void) {
     return returnal;
 }
 
-void event_addListener(Event * event, EventCallback callback) {
-    listeners[listenerIndex].event = event; // = {.eventId = eventId, .callback = callback};
+uint8_t event_addListener(Event * event, EventCallback callback) {
+    if (listenerIndex >= EVENT_MAX_LISTENERS) {
+        LOG_WARNING("Cant register listener for: %s", event->description);
+        return 0;
+    }
+    listeners[listenerIndex].event = event;
     listeners[listenerIndex].callback = callback;
     listenerIndex++;
+    return 1;
 }
 
 void event_removeListener(Event * event, EventCallback callback) {
@@ -75,7 +90,10 @@ void event_removeListener(Event * event, EventCallback callback) {
             return;
         }
     }
+    LOG_WARNING("Can't find listener for: %s", event->description);
 }
+
+
 
 void event_process(void) {
     while (eventBufferHead != eventBufferTail) {
@@ -87,10 +105,13 @@ void event_process(void) {
         }
     }
 #ifdef EVENT_SUPPORTS_SLEEP
-    if (_enableSleep != 0) {
-        _enableSleep();
-    } else {
-        //TODO throw warning
+    if (!warning) {
+        if (_enableSleep != 0 && _disableSleep != 0) {
+            if (eventBufferHead == eventBufferTail) _enableSleep(); //One more check if everything is really processed
+        } else {
+            LOG_WARNING("_enableSleep == %d _disableSleep == %d", _enableSleep, _disableSleep);
+            warning = 1;
+        }
     }
 #endif
 }

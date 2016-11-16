@@ -8,8 +8,10 @@
 
 #include <avr/interrupt.h>
 #include "timer.h"
+#include "../../modules/log.h"
 
 EVENT_REGISTER(EVENT_TIMER_1_HZ, "1 second pulse");
+LOG_INIT("Timer");
 
 ISR(TIMER1_COMPA_vect) {
     event_fire(&EVENT_TIMER_1_HZ, 0);
@@ -25,6 +27,7 @@ static uint8_t init(void) {
     TCCR1B |= (1 << CS12);
     // enable timer compare interrupt:
     TIMSK1 |= (1 << OCIE1A);
+    LOG_SYSTEM("Timer initialized with OCR1A(%d)", OCR1A);
 }
 
 static uint8_t deinit(void) {
