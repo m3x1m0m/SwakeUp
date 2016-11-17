@@ -103,6 +103,8 @@ dkms.conf
 # Simulation #
 #####################
 *.raw
+*.fft
+*.plt
 
 # Eclipse #
 #####################
