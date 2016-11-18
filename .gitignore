@@ -105,6 +105,13 @@ dkms.conf
 *.raw
 *.fft
 *.plt
+*.txt
+*.net
+
+#LibreOffice#
+#####################
+.~*
+
 
 # Eclipse #
 #####################
