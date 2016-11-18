@@ -72,6 +72,10 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=AIPOPTVY
 
+[GeneratedDocument1]
+DocumentPath=Project Outputs for SwakeUpp\Design Rule Check - atxmega.html
+DItemRevisionGUID=
+
 [Configuration1]
 Name=Default Configuration
 ParameterCount=0
