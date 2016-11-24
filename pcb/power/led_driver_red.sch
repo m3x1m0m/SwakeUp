@@ -1,0 +1,270 @@
+EESchema Schematic File Version 2
+LIBS:power
+LIBS:device
+LIBS:transistors
+LIBS:conn
+LIBS:linear
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:special
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:valves
+LIBS:led_driver-cache
+EELAYER 27 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title "Power Board for SwakeUp"
+Date "23 nov 2016"
+Rev "0.1"
+Comp ""
+Comment1 "Maximilian Stiefel"
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L DIODE D1
+U 1 1 5832CE98
+P 6250 2800
+F 0 "D1" H 6250 2900 40  0000 C CNN
+F 1 "DIODE" H 6250 2700 40  0000 C CNN
+F 2 "~" H 6250 2800 60  0000 C CNN
+F 3 "~" H 6250 2800 60  0000 C CNN
+	1    6250 2800
+	0    1    1    0   
+$EndComp
+$Comp
+L INDUCTOR L1
+U 1 1 5832D264
+P 6800 2750
+F 0 "L1" V 6950 2750 40  0000 C CNN
+F 1 "33u" V 6900 2750 40  0000 C CNN
+F 2 "~" H 6800 2750 60  0000 C CNN
+F 3 "~" H 6800 2750 60  0000 C CNN
+	1    6800 2750
+	0    -1   -1   0   
+$EndComp
+$Comp
+L DIODESCH D2
+U 1 1 5832D2CC
+P 6500 3350
+F 0 "D2" V 6500 3450 40  0000 C CNN
+F 1 "DIODESCH" H 6500 3250 40  0000 C CNN
+F 2 "~" H 6500 3350 60  0000 C CNN
+F 3 "~" H 6500 3350 60  0000 C CNN
+	1    6500 3350
+	0    -1   -1   0   
+$EndComp
+$Comp
+L C C2
+U 1 1 5832D36C
+P 7100 3350
+F 0 "C2" H 6900 3350 40  0000 L CNN
+F 1 "10u" H 6900 3300 40  0000 L CNN
+F 2 "~" H 7138 3200 30  0000 C CNN
+F 3 "~" H 7100 3350 60  0000 C CNN
+	1    7100 3350
+	1    0    0    -1  
+$EndComp
+$Comp
+L LED D3
+U 1 1 5832D3AC
+P 7350 2950
+F 0 "D3" H 7350 3050 50  0000 C CNN
+F 1 "LED" H 7350 2850 50  0000 C CNN
+F 2 "~" H 7350 2950 60  0000 C CNN
+F 3 "~" H 7350 2950 60  0000 C CNN
+	1    7350 2950
+	0    1    1    0   
+$EndComp
+$Comp
+L R R3
+U 1 1 5832D3C3
+P 7350 3500
+F 0 "R3" H 7500 3550 40  0000 C CNN
+F 1 "0.1R" H 7500 3500 40  0000 C CNN
+F 2 "~" V 7280 3500 30  0000 C CNN
+F 3 "~" H 7350 3500 30  0000 C CNN
+	1    7350 3500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5700 2250 5700 3150
+Wire Wire Line
+	7350 3800 7350 3750
+Wire Wire Line
+	7350 3250 7350 3150
+Connection ~ 7100 3800
+Connection ~ 6500 3800
+$Comp
+L R R2
+U 1 1 5832DD85
+P 5700 2000
+F 0 "R2" H 5600 2050 40  0000 C CNN
+F 1 "10k" H 5600 2000 40  0000 C CNN
+F 2 "~" V 5630 2000 30  0000 C CNN
+F 3 "~" H 5700 2000 30  0000 C CNN
+	1    5700 2000
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R1
+U 1 1 5832DD8B
+P 5050 3350
+F 0 "R1" V 5200 3350 40  0000 C CNN
+F 1 "470R" V 5150 3350 40  0000 C CNN
+F 2 "~" V 4980 3350 30  0000 C CNN
+F 3 "~" H 5050 3350 30  0000 C CNN
+	1    5050 3350
+	0    -1   -1   0   
+$EndComp
+$Comp
+L C C1
+U 1 1 5832DD91
+P 5050 3050
+F 0 "C1" V 5150 2900 40  0000 L CNN
+F 1 "150p" V 5100 2850 40  0000 L CNN
+F 2 "~" H 5088 2900 30  0000 C CNN
+F 3 "~" H 5050 3050 60  0000 C CNN
+	1    5050 3050
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	5250 3050 5300 3050
+Wire Wire Line
+	5300 3050 5300 3350
+Wire Wire Line
+	4850 3050 4800 3050
+Wire Wire Line
+	4800 3050 4800 3350
+Connection ~ 6500 2750
+Wire Wire Line
+	6500 3550 6500 3800
+Wire Wire Line
+	7100 3800 7100 3550
+Wire Wire Line
+	4600 1750 6000 1750
+Wire Wire Line
+	6000 2550 6000 2600
+Wire Wire Line
+	6000 2600 6250 2600
+Wire Wire Line
+	6000 1750 6000 2150
+Wire Wire Line
+	6500 1750 6500 3150
+Wire Wire Line
+	5300 3350 5400 3350
+Connection ~ 5700 2350
+Wire Wire Line
+	5700 3550 5700 3800
+Wire Wire Line
+	5700 3150 6250 3150
+Wire Wire Line
+	7100 2750 7350 2750
+Wire Wire Line
+	7100 2750 7100 3150
+Wire Wire Line
+	5700 3800 7950 3800
+Wire Wire Line
+	6400 1750 6500 1750
+Connection ~ 5700 1750
+Wire Wire Line
+	4800 3350 4650 3350
+Text GLabel 4600 1750 0    60   Input ~ 0
+20V
+Text HLabel 4650 3350 0    60   Input ~ 0
+PWM_R
+Text HLabel 8100 3200 2    60   Output ~ 0
+opAmp_R
+$Comp
+L R R4
+U 1 1 5832E4EA
+P 7700 3200
+F 0 "R4" V 7850 3200 40  0000 C CNN
+F 1 "4.7k" V 7800 3200 40  0000 C CNN
+F 2 "~" V 7630 3200 30  0000 C CNN
+F 3 "~" H 7700 3200 30  0000 C CNN
+	1    7700 3200
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	7450 3200 7350 3200
+Connection ~ 7350 3200
+Wire Wire Line
+	7950 3200 8100 3200
+$Comp
+L C C3
+U 1 1 5832E560
+P 7950 3500
+F 0 "C3" H 8100 3550 40  0000 L CNN
+F 1 "22n" H 8100 3500 40  0000 L CNN
+F 2 "~" H 7988 3350 30  0000 C CNN
+F 3 "~" H 7950 3500 60  0000 C CNN
+	1    7950 3500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7950 3200 7950 3300
+Wire Wire Line
+	7950 3800 7950 3700
+Connection ~ 7350 3800
+$Comp
+L DMG2305UX-13 Q3
+U 1 1 5832E5D3
+P 6200 1850
+F 0 "Q3" V 6100 1700 40  0000 R CNN
+F 1 "DMG2305UX-13" V 6450 2050 40  0000 R CNN
+F 2 "SOT-23" V 6400 1950 29  0000 C CNN
+F 3 "~" H 6200 1850 60  0000 C CNN
+	1    6200 1850
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	6250 3150 6250 3000
+$Comp
+L MMBT3904-TP Q2
+U 1 1 5832E632
+P 5900 2350
+F 0 "Q2" H 5900 2202 40  0000 R CNN
+F 1 "MMBT3904-TP" H 5600 2350 40  0000 R CNN
+F 2 "SOT-23" H 5250 2300 29  0000 C CNN
+F 3 "~" H 5900 2350 60  0000 C CNN
+	1    5900 2350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6250 2600 6250 2050
+$Comp
+L MMBT3904-TP Q1
+U 1 1 5832E691
+P 5600 3350
+F 0 "Q1" H 5600 3202 40  0000 R CNN
+F 1 "MMBT3904-TP" H 5650 3100 40  0000 R CNN
+F 2 "SOT-23" H 5300 3050 29  0000 C CNN
+F 3 "~" H 5600 3350 60  0000 C CNN
+	1    5600 3350
+	1    0    0    -1  
+$EndComp
+$EndSCHEMATC
