@@ -29,13 +29,14 @@ LIBS:atmel
 LIBS:contrib
 LIBS:valves
 LIBS:coolLib
+LIBS:power-cache
 EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 2 2
+Sheet 2 3
 Title "RGB LED Driver"
-Date "2016-11-24"
+Date "2016-11-27"
 Rev "1.0"
 Comp ""
 Comment1 ""
@@ -44,35 +45,11 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L Q_NPN_BCE Q2
-U 1 1 58375354
-P 2850 5900
-F 0 "Q2" H 3150 5900 50  0000 R CNN
-F 1 "Q_NPN_BCE" H 3450 5850 50  0001 R CNN
-F 2 "" H 3050 6000 50  0000 C CNN
-F 3 "http://www.mccsemi.com/up_pdf/MMBT3904(SOT-23).pdf" H 2850 5900 50  0001 C CNN
-F 4 "MMBT3904TPMSCT-ND" H 3550 5850 60  0001 C CNN "Digikey"
-	1    2850 5900
-	1    0    0    -1  
-$EndComp
-$Comp
-L Q_PMOS_DGS Q3
-U 1 1 583753F3
-P 3400 5450
-F 0 "Q3" V 3650 5450 50  0000 R CNN
-F 1 "Q_PMOS_DGS" H 4050 5400 50  0001 R CNN
-F 2 "" H 3600 5550 50  0000 C CNN
-F 3 "http://www.diodes.com/_files/datasheets/DMG2305UX.pdf" H 3400 5450 50  0001 C CNN
-F 4 "DMG2305UX-13DICT-ND" H 3400 5450 60  0001 C CNN "Digikey"
-	1    3400 5450
-	0    -1   -1   0   
-$EndComp
-$Comp
 L D D1
 U 1 1 5837550B
 P 3400 6300
-F 0 "D1" V 3400 6150 50  0000 C CNN
-F 1 "D" H 3400 6200 50  0001 C CNN
+F 0 "D1" V 3450 6150 50  0000 C CNN
+F 1 "1N4148WFL-G" V 3350 5950 50  0000 C CNN
 F 2 "" H 3400 6300 50  0000 C CNN
 F 3 "http://media.digikey.com/pdf/Data%20Sheets/Vishay%20Semiconductors/1N4148WFL-G.pdf" H 3400 6300 50  0001 C CNN
 F 4 "1N4148WFL-G3-08GITR-ND" V 3350 5550 60  0001 C CNN "Digikey"
@@ -115,7 +92,7 @@ F 4 "490-3174-1-ND" H 2000 6450 60  0001 C CNN "Digikey"
 	1    2000 6450
 	0    1    1    0   
 $EndComp
-Text HLabel 1650 6750 0    60   Input ~ 0
+Text HLabel 950  6750 0    60   Input ~ 0
 PWM_G
 $Comp
 L INDUCTOR L1
@@ -128,18 +105,6 @@ F 3 "http://www.bourns.com/docs/Product-Datasheets/SRN3015.pdf" H 4150 6200 50  
 F 4 "SRN3015-330MCT-ND" V 4300 5650 60  0001 C CNN "Digikey"
 	1    4150 6200
 	0    -1   -1   0   
-$EndComp
-$Comp
-L D_Schottky D2
-U 1 1 58375DFD
-P 3750 6600
-F 0 "D2" V 3750 6750 50  0000 C CNN
-F 1 "D_Schottky" H 3750 6500 50  0001 C CNN
-F 2 "" H 3750 6600 50  0000 C CNN
-F 3 "http://www.vishay.com/docs/88869/packaging.pdf" H 3750 6600 50  0001 C CNN
-F 4 "10MQ060NPBFCT-ND" V 3800 7200 60  0001 C CNN "Digikey"
-	1    3750 6600
-	0    1    1    0   
 $EndComp
 $Comp
 L C C2
@@ -213,7 +178,7 @@ Connection ~ 3400 6100
 Wire Wire Line
 	3400 6500 3400 6450
 Wire Wire Line
-	1650 6750 1850 6750
+	950  6750 1850 6750
 Wire Wire Line
 	2150 6750 2300 6750
 Wire Wire Line
@@ -272,54 +237,6 @@ Text HLabel 5800 6650 2    60   Output ~ 0
 OPAMP_G
 Connection ~ 5600 6650
 $Comp
-L Q_NPN_BCE Q1
-U 1 1 583781C6
-P 2500 6750
-F 0 "Q1" H 2800 6750 50  0000 R CNN
-F 1 "Q_NPN_BCE" H 3100 6700 50  0001 R CNN
-F 2 "" H 2700 6850 50  0000 C CNN
-F 3 "http://www.mccsemi.com/up_pdf/MMBT3904(SOT-23).pdf" H 2500 6750 50  0001 C CNN
-F 4 "MMBT3904TPMSCT-ND" H 3200 6700 60  0001 C CNN "Digikey"
-	1    2500 6750
-	1    0    0    -1  
-$EndComp
-$Comp
-L Q_NPN_BCE Q7
-U 1 1 5837BEE8
-P 2850 3700
-F 0 "Q7" H 3150 3700 50  0000 R CNN
-F 1 "Q_NPN_BCE" H 3450 3650 50  0001 R CNN
-F 2 "" H 3050 3800 50  0000 C CNN
-F 3 "http://www.mccsemi.com/up_pdf/MMBT3904(SOT-23).pdf" H 2850 3700 50  0001 C CNN
-F 4 "MMBT3904TPMSCT-ND" H 3550 3650 60  0001 C CNN "Digikey"
-	1    2850 3700
-	1    0    0    -1  
-$EndComp
-$Comp
-L Q_PMOS_DGS Q9
-U 1 1 5837BEEF
-P 3400 3250
-F 0 "Q9" V 3650 3250 50  0000 R CNN
-F 1 "Q_PMOS_DGS" H 4050 3200 50  0001 R CNN
-F 2 "" H 3600 3350 50  0000 C CNN
-F 3 "http://www.diodes.com/_files/datasheets/DMG2305UX.pdf" H 3400 3250 50  0001 C CNN
-F 4 "DMG2305UX-13DICT-ND" H 3400 3250 60  0001 C CNN "Digikey"
-	1    3400 3250
-	0    -1   -1   0   
-$EndComp
-$Comp
-L D D4
-U 1 1 5837BEF6
-P 3400 4100
-F 0 "D4" V 3400 3950 50  0000 C CNN
-F 1 "D" H 3400 4000 50  0001 C CNN
-F 2 "" H 3400 4100 50  0000 C CNN
-F 3 "http://media.digikey.com/pdf/Data%20Sheets/Vishay%20Semiconductors/1N4148WFL-G.pdf" H 3400 4100 50  0001 C CNN
-F 4 "1N4148WFL-G3-08GITR-ND" V 3350 3350 60  0001 C CNN "Digikey"
-	1    3400 4100
-	0    -1   -1   0   
-$EndComp
-$Comp
 L R R14
 U 1 1 5837BEFE
 P 2600 3400
@@ -355,7 +272,7 @@ F 4 "490-3174-1-ND" H 2000 4250 60  0001 C CNN "Digikey"
 	1    2000 4250
 	0    1    1    0   
 $EndComp
-Text HLabel 1650 4550 0    60   Input ~ 0
+Text HLabel 950  4550 0    60   Input ~ 0
 PWM_B
 $Comp
 L INDUCTOR L3
@@ -368,18 +285,6 @@ F 3 "http://www.bourns.com/docs/Product-Datasheets/SRN3015.pdf" H 4150 4000 50  
 F 4 "SRN3015-330MCT-ND" V 4300 3450 60  0001 C CNN "Digikey"
 	1    4150 4000
 	0    -1   -1   0   
-$EndComp
-$Comp
-L D_Schottky D6
-U 1 1 5837BF1B
-P 3750 4400
-F 0 "D6" V 3750 4550 50  0000 C CNN
-F 1 "D_Schottky" H 3750 4300 50  0001 C CNN
-F 2 "" H 3750 4400 50  0000 C CNN
-F 3 "http://www.vishay.com/docs/88869/packaging.pdf" H 3750 4400 50  0001 C CNN
-F 4 "10MQ060NPBFCT-ND" V 3800 5000 60  0001 C CNN "Digikey"
-	1    3750 4400
-	0    1    1    0   
 $EndComp
 $Comp
 L C C7
@@ -453,7 +358,7 @@ Connection ~ 3400 3900
 Wire Wire Line
 	3400 4300 3400 4250
 Wire Wire Line
-	1650 4550 1850 4550
+	950  4550 1850 4550
 Wire Wire Line
 	2150 4550 2300 4550
 Wire Wire Line
@@ -512,23 +417,11 @@ Text HLabel 5800 4450 2    60   Output ~ 0
 OPAMP_B
 Connection ~ 5600 4450
 $Comp
-L Q_NPN_BCE Q5
-U 1 1 5837BF6E
-P 2500 4550
-F 0 "Q5" H 2800 4550 50  0000 R CNN
-F 1 "Q_NPN_BCE" H 3100 4500 50  0001 R CNN
-F 2 "" H 2700 4650 50  0000 C CNN
-F 3 "http://www.mccsemi.com/up_pdf/MMBT3904(SOT-23).pdf" H 2500 4550 50  0001 C CNN
-F 4 "MMBT3904TPMSCT-ND" H 3200 4500 60  0001 C CNN "Digikey"
-	1    2500 4550
-	1    0    0    -1  
-$EndComp
-$Comp
 L Q_NPN_BCE Q6
 U 1 1 5837C3ED
 P 2850 1650
-F 0 "Q6" H 3150 1650 50  0000 R CNN
-F 1 "Q_NPN_BCE" H 3450 1600 50  0001 R CNN
+F 0 "Q6" H 3100 1750 50  0000 R CNN
+F 1 "MMBT3904" H 3400 1550 50  0000 R CNN
 F 2 "" H 3050 1750 50  0000 C CNN
 F 3 "http://www.mccsemi.com/up_pdf/MMBT3904(SOT-23).pdf" H 2850 1650 50  0001 C CNN
 F 4 "MMBT3904TPMSCT-ND" H 3550 1600 60  0001 C CNN "Digikey"
@@ -539,28 +432,14 @@ $Comp
 L Q_PMOS_DGS Q8
 U 1 1 5837C3F4
 P 3400 1200
-F 0 "Q8" V 3650 1200 50  0000 R CNN
-F 1 "Q_PMOS_DGS" H 4050 1150 50  0001 R CNN
+F 0 "Q8" V 3600 1100 50  0000 R CNN
+F 1 "DMG2305UX" V 3350 1100 50  0000 R CNN
 F 2 "" H 3600 1300 50  0000 C CNN
 F 3 "http://www.diodes.com/_files/datasheets/DMG2305UX.pdf" H 3400 1200 50  0001 C CNN
 F 4 "DMG2305UX-13DICT-ND" H 3400 1200 60  0001 C CNN "Digikey"
 	1    3400 1200
 	0    -1   -1   0   
 $EndComp
-$Comp
-L D D3
-U 1 1 5837C3FB
-P 3400 2050
-F 0 "D3" V 3400 1900 50  0000 C CNN
-F 1 "D" H 3400 1950 50  0001 C CNN
-F 2 "" H 3400 2050 50  0000 C CNN
-F 3 "http://media.digikey.com/pdf/Data%20Sheets/Vishay%20Semiconductors/1N4148WFL-G.pdf" H 3400 2050 50  0001 C CNN
-F 4 "1N4148WFL-G3-08GITR-ND" V 3350 1300 60  0001 C CNN "Digikey"
-	1    3400 2050
-	0    -1   -1   0   
-$EndComp
-Text GLabel 950  1100 0    60   Input ~ 0
-V20
 $Comp
 L R R13
 U 1 1 5837C403
@@ -597,13 +476,13 @@ F 4 "490-3174-1-ND" H 2000 2200 60  0001 C CNN "Digikey"
 	1    2000 2200
 	0    1    1    0   
 $EndComp
-Text HLabel 1650 2500 0    60   Input ~ 0
+Text HLabel 950  2500 0    60   Input ~ 0
 PWM_R
 $Comp
 L INDUCTOR L2
 U 1 1 5837C419
 P 4150 1950
-F 0 "L2" V 4350 1950 50  0000 C CNN
+F 0 "L2" V 4100 1950 50  0000 C CNN
 F 1 "33u" V 4250 1950 50  0000 C CNN
 F 2 "" H 4150 1950 50  0000 C CNN
 F 3 "http://www.bourns.com/docs/Product-Datasheets/SRN3015.pdf" H 4150 1950 50  0001 C CNN
@@ -615,8 +494,8 @@ $Comp
 L D_Schottky D5
 U 1 1 5837C420
 P 3750 2350
-F 0 "D5" V 3750 2500 50  0000 C CNN
-F 1 "D_Schottky" H 3750 2250 50  0001 C CNN
+F 0 "D5" V 3700 2500 50  0000 C CNN
+F 1 "VS-10MQ060NPbF" V 3800 2800 50  0000 C CNN
 F 2 "" H 3750 2350 50  0000 C CNN
 F 3 "http://www.vishay.com/docs/88869/packaging.pdf" H 3750 2350 50  0001 C CNN
 F 4 "10MQ060NPBFCT-ND" V 3800 2950 60  0001 C CNN "Digikey"
@@ -695,7 +574,7 @@ Connection ~ 3400 1850
 Wire Wire Line
 	3400 2250 3400 2200
 Wire Wire Line
-	1650 2500 1850 2500
+	950  2500 1850 2500
 Wire Wire Line
 	2150 2500 2300 2500
 Wire Wire Line
@@ -753,23 +632,145 @@ Wire Wire Line
 Text HLabel 5800 2400 2    60   Output ~ 0
 OPAMP_R
 Connection ~ 5600 2400
+Connection ~ 1050 1100
+NoConn ~ 7900 3350
+Text HLabel 950  1100 0    60   Input ~ 0
+V20
 $Comp
-L Q_NPN_BCE Q4
-U 1 1 5837C473
+L Q_NPN_BCE Q1
+U 1 1 583C6C6A
 P 2500 2500
-F 0 "Q4" H 2800 2500 50  0000 R CNN
-F 1 "Q_NPN_BCE" H 3100 2450 50  0001 R CNN
+F 0 "Q1" H 2750 2600 50  0000 R CNN
+F 1 "MMBT3904" H 3050 2400 50  0000 R CNN
 F 2 "" H 2700 2600 50  0000 C CNN
 F 3 "http://www.mccsemi.com/up_pdf/MMBT3904(SOT-23).pdf" H 2500 2500 50  0001 C CNN
 F 4 "MMBT3904TPMSCT-ND" H 3200 2450 60  0001 C CNN "Digikey"
 	1    2500 2500
 	1    0    0    -1  
 $EndComp
+$Comp
+L Q_PMOS_DGS Q7
+U 1 1 583C6F4A
+P 3400 3250
+F 0 "Q7" V 3600 3150 50  0000 R CNN
+F 1 "DMG2305UX" V 3350 3150 50  0000 R CNN
+F 2 "" H 3600 3350 50  0000 C CNN
+F 3 "http://www.diodes.com/_files/datasheets/DMG2305UX.pdf" H 3400 3250 50  0001 C CNN
+F 4 "DMG2305UX-13DICT-ND" H 3400 3250 60  0001 C CNN "Digikey"
+	1    3400 3250
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Q_NPN_BCE Q4
+U 1 1 583C7003
+P 2850 3700
+F 0 "Q4" H 3100 3800 50  0000 R CNN
+F 1 "MMBT3904" H 3400 3600 50  0000 R CNN
+F 2 "" H 3050 3800 50  0000 C CNN
+F 3 "http://www.mccsemi.com/up_pdf/MMBT3904(SOT-23).pdf" H 2850 3700 50  0001 C CNN
+F 4 "MMBT3904TPMSCT-ND" H 3550 3650 60  0001 C CNN "Digikey"
+	1    2850 3700
+	1    0    0    -1  
+$EndComp
+$Comp
+L Q_NPN_BCE Q2
+U 1 1 583C70B5
+P 2500 4550
+F 0 "Q2" H 2750 4650 50  0000 R CNN
+F 1 "MMBT3904" H 3050 4450 50  0000 R CNN
+F 2 "" H 2700 4650 50  0000 C CNN
+F 3 "http://www.mccsemi.com/up_pdf/MMBT3904(SOT-23).pdf" H 2500 4550 50  0001 C CNN
+F 4 "MMBT3904TPMSCT-ND" H 3200 4500 60  0001 C CNN "Digikey"
+	1    2500 4550
+	1    0    0    -1  
+$EndComp
+$Comp
+L Q_NPN_BCE Q3
+U 1 1 583C7452
+P 2500 6750
+F 0 "Q3" H 2750 6850 50  0000 R CNN
+F 1 "MMBT3904" H 3050 6650 50  0000 R CNN
+F 2 "" H 2700 6850 50  0000 C CNN
+F 3 "http://www.mccsemi.com/up_pdf/MMBT3904(SOT-23).pdf" H 2500 6750 50  0001 C CNN
+F 4 "MMBT3904TPMSCT-ND" H 3200 6700 60  0001 C CNN "Digikey"
+	1    2500 6750
+	1    0    0    -1  
+$EndComp
+$Comp
+L Q_NPN_BCE Q5
+U 1 1 583C75B3
+P 2850 5900
+F 0 "Q5" H 3100 6000 50  0000 R CNN
+F 1 "MMBT3904" H 3400 5800 50  0000 R CNN
+F 2 "" H 3050 6000 50  0000 C CNN
+F 3 "http://www.mccsemi.com/up_pdf/MMBT3904(SOT-23).pdf" H 2850 5900 50  0001 C CNN
+F 4 "MMBT3904TPMSCT-ND" H 3550 5850 60  0001 C CNN "Digikey"
+	1    2850 5900
+	1    0    0    -1  
+$EndComp
+$Comp
+L Q_PMOS_DGS Q9
+U 1 1 583C788D
+P 3400 5450
+F 0 "Q9" V 3600 5350 50  0000 R CNN
+F 1 "DMG2305UX" V 3350 5350 50  0000 R CNN
+F 2 "" H 3600 5550 50  0000 C CNN
+F 3 "http://www.diodes.com/_files/datasheets/DMG2305UX.pdf" H 3400 5450 50  0001 C CNN
+F 4 "DMG2305UX-13DICT-ND" H 3400 5450 60  0001 C CNN "Digikey"
+	1    3400 5450
+	0    -1   -1   0   
+$EndComp
+Connection ~ 1050 3150
 Wire Wire Line
-	1050 3150 1050 5350
-Wire Wire Line
-	1050 3200 1050 1100
-Connection ~ 1050 1100
-Connection ~ 1050 3200
-NoConn ~ 7900 3350
+	1050 1100 1050 5350
+Text Notes 5150 2300 0    60   ~ 0
+fcutt,off=1.539 kHz
+$Comp
+L D D4
+U 1 1 583CC236
+P 3400 4100
+F 0 "D4" V 3450 3950 50  0000 C CNN
+F 1 "1N4148WFL-G" V 3350 3750 50  0000 C CNN
+F 2 "" H 3400 4100 50  0000 C CNN
+F 3 "http://media.digikey.com/pdf/Data%20Sheets/Vishay%20Semiconductors/1N4148WFL-G.pdf" H 3400 4100 50  0001 C CNN
+F 4 "1N4148WFL-G3-08GITR-ND" V 3350 3350 60  0001 C CNN "Digikey"
+	1    3400 4100
+	0    -1   -1   0   
+$EndComp
+$Comp
+L D D3
+U 1 1 583CC52C
+P 3400 2050
+F 0 "D3" V 3450 1900 50  0000 C CNN
+F 1 "1N4148WFL-G" V 3350 1700 50  0000 C CNN
+F 2 "" H 3400 2050 50  0000 C CNN
+F 3 "http://media.digikey.com/pdf/Data%20Sheets/Vishay%20Semiconductors/1N4148WFL-G.pdf" H 3400 2050 50  0001 C CNN
+F 4 "1N4148WFL-G3-08GITR-ND" V 3350 1300 60  0001 C CNN "Digikey"
+	1    3400 2050
+	0    -1   -1   0   
+$EndComp
+$Comp
+L D_Schottky D2
+U 1 1 583CD480
+P 3750 4400
+F 0 "D2" V 3700 4550 50  0000 C CNN
+F 1 "VS-10MQ060NPbF" V 3800 4850 50  0000 C CNN
+F 2 "" H 3750 4400 50  0000 C CNN
+F 3 "http://www.vishay.com/docs/88869/packaging.pdf" H 3750 4400 50  0001 C CNN
+F 4 "10MQ060NPBFCT-ND" V 3800 5000 60  0001 C CNN "Digikey"
+	1    3750 4400
+	0    1    1    0   
+$EndComp
+$Comp
+L D_Schottky D6
+U 1 1 583CD596
+P 3750 6600
+F 0 "D6" V 3700 6750 50  0000 C CNN
+F 1 "VS-10MQ060NPbF" V 3800 7050 50  0000 C CNN
+F 2 "" H 3750 6600 50  0000 C CNN
+F 3 "http://www.vishay.com/docs/88869/packaging.pdf" H 3750 6600 50  0001 C CNN
+F 4 "10MQ060NPBFCT-ND" V 3800 7200 60  0001 C CNN "Digikey"
+	1    3750 6600
+	0    1    1    0   
+$EndComp
 $EndSCHEMATC
