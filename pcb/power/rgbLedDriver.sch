@@ -28,7 +28,7 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
-LIBS:power-cache
+LIBS:coolLib
 EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
@@ -284,10 +284,10 @@ F 4 "MMBT3904TPMSCT-ND" H 3200 6700 60  0001 C CNN "Digikey"
 	1    0    0    -1  
 $EndComp
 $Comp
-L Q_NPN_BCE Q?
+L Q_NPN_BCE Q7
 U 1 1 5837BEE8
 P 2850 3700
-F 0 "Q?" H 3150 3700 50  0000 R CNN
+F 0 "Q7" H 3150 3700 50  0000 R CNN
 F 1 "Q_NPN_BCE" H 3450 3650 50  0001 R CNN
 F 2 "" H 3050 3800 50  0000 C CNN
 F 3 "http://www.mccsemi.com/up_pdf/MMBT3904(SOT-23).pdf" H 2850 3700 50  0001 C CNN
@@ -296,10 +296,10 @@ F 4 "MMBT3904TPMSCT-ND" H 3550 3650 60  0001 C CNN "Digikey"
 	1    0    0    -1  
 $EndComp
 $Comp
-L Q_PMOS_DGS Q?
+L Q_PMOS_DGS Q9
 U 1 1 5837BEEF
 P 3400 3250
-F 0 "Q?" V 3650 3250 50  0000 R CNN
+F 0 "Q9" V 3650 3250 50  0000 R CNN
 F 1 "Q_PMOS_DGS" H 4050 3200 50  0001 R CNN
 F 2 "" H 3600 3350 50  0000 C CNN
 F 3 "http://www.diodes.com/_files/datasheets/DMG2305UX.pdf" H 3400 3250 50  0001 C CNN
@@ -308,10 +308,10 @@ F 4 "DMG2305UX-13DICT-ND" H 3400 3250 60  0001 C CNN "Digikey"
 	0    -1   -1   0   
 $EndComp
 $Comp
-L D D?
+L D D4
 U 1 1 5837BEF6
 P 3400 4100
-F 0 "D?" V 3400 3950 50  0000 C CNN
+F 0 "D4" V 3400 3950 50  0000 C CNN
 F 1 "D" H 3400 4000 50  0001 C CNN
 F 2 "" H 3400 4100 50  0000 C CNN
 F 3 "http://media.digikey.com/pdf/Data%20Sheets/Vishay%20Semiconductors/1N4148WFL-G.pdf" H 3400 4100 50  0001 C CNN
@@ -320,10 +320,10 @@ F 4 "1N4148WFL-G3-08GITR-ND" V 3350 3350 60  0001 C CNN "Digikey"
 	0    -1   -1   0   
 $EndComp
 $Comp
-L R R?
+L R R14
 U 1 1 5837BEFE
 P 2600 3400
-F 0 "R?" V 2680 3400 50  0000 C CNN
+F 0 "R14" V 2680 3400 50  0000 C CNN
 F 1 "10k" V 2600 3400 50  0000 C CNN
 F 2 "" V 2530 3400 50  0000 C CNN
 F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 2600 3400 50  0001 C CNN
@@ -332,10 +332,10 @@ F 4 "311-10KGRCT-ND" V 2600 3400 60  0001 C CNN "Digikey"
 	-1   0    0    1   
 $EndComp
 $Comp
-L R R?
+L R R12
 U 1 1 5837BF05
 P 2000 4550
-F 0 "R?" V 2080 4550 50  0000 C CNN
+F 0 "R12" V 2080 4550 50  0000 C CNN
 F 1 "470R" V 2000 4550 50  0000 C CNN
 F 2 "" V 1930 4550 50  0000 C CNN
 F 3 "https://industrial.panasonic.com/cdbs/www-data/pdf/RDA0000/AOA0000COL70.pdf" H 2000 4550 50  0001 C CNN
@@ -344,10 +344,10 @@ F 4 "P20245CT-ND" V 2000 4550 60  0001 C CNN "Digikey"
 	0    1    1    0   
 $EndComp
 $Comp
-L C C?
+L C C5
 U 1 1 5837BF0C
 P 2000 4250
-F 0 "C?" H 2025 4350 50  0000 L CNN
+F 0 "C5" H 2025 4350 50  0000 L CNN
 F 1 "150p" H 2025 4150 50  0000 L CNN
 F 2 "" H 2038 4100 50  0000 C CNN
 F 3 "http://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM033R71E151KA01-01.pdf" H 2000 4250 50  0001 C CNN
@@ -358,10 +358,10 @@ $EndComp
 Text HLabel 1650 4550 0    60   Input ~ 0
 PWM_B
 $Comp
-L INDUCTOR L?
+L INDUCTOR L3
 U 1 1 5837BF14
 P 4150 4000
-F 0 "L?" V 4350 4000 50  0000 C CNN
+F 0 "L3" V 4350 4000 50  0000 C CNN
 F 1 "33u" V 4250 4000 50  0000 C CNN
 F 2 "" H 4150 4000 50  0000 C CNN
 F 3 "http://www.bourns.com/docs/Product-Datasheets/SRN3015.pdf" H 4150 4000 50  0001 C CNN
@@ -370,10 +370,10 @@ F 4 "SRN3015-330MCT-ND" V 4300 3450 60  0001 C CNN "Digikey"
 	0    -1   -1   0   
 $EndComp
 $Comp
-L D_Schottky D?
+L D_Schottky D6
 U 1 1 5837BF1B
 P 3750 4400
-F 0 "D?" V 3750 4550 50  0000 C CNN
+F 0 "D6" V 3750 4550 50  0000 C CNN
 F 1 "D_Schottky" H 3750 4300 50  0001 C CNN
 F 2 "" H 3750 4400 50  0000 C CNN
 F 3 "http://www.vishay.com/docs/88869/packaging.pdf" H 3750 4400 50  0001 C CNN
@@ -382,10 +382,10 @@ F 4 "10MQ060NPBFCT-ND" V 3800 5000 60  0001 C CNN "Digikey"
 	0    1    1    0   
 $EndComp
 $Comp
-L C C?
+L C C7
 U 1 1 5837BF22
 P 4550 4400
-F 0 "C?" H 4575 4500 50  0000 L CNN
+F 0 "C7" H 4575 4500 50  0000 L CNN
 F 1 "10u" H 4575 4300 50  0000 L CNN
 F 2 "" H 4588 4250 50  0000 C CNN
 F 3 "http://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRT188R61E106ME13-01.pdf" H 4550 4400 50  0001 C CNN
@@ -398,10 +398,10 @@ LED_B_P
 Text HLabel 5800 4150 2    60   Output ~ 0
 LED_B_N
 $Comp
-L R R?
+L R R16
 U 1 1 5837BF2B
 P 4850 4650
-F 0 "R?" V 4930 4650 50  0000 C CNN
+F 0 "R16" V 4930 4650 50  0000 C CNN
 F 1 "0.1R" V 4850 4650 50  0000 C CNN
 F 2 "" V 4780 4650 50  0000 C CNN
 F 3 "http://media.digikey.com/pdf/Data%20Sheets/Samsung%20PDFs/RU_Series_ds.pdf" H 4850 4650 50  0001 C CNN
@@ -410,10 +410,10 @@ F 4 "1276-6155-1-ND" V 4850 4650 60  0001 C CNN "Digikey"
 	1    0    0    -1  
 $EndComp
 $Comp
-L C C?
+L C C9
 U 1 1 5837BF32
 P 5600 4650
-F 0 "C?" H 5625 4750 50  0000 L CNN
+F 0 "C9" H 5625 4750 50  0000 L CNN
 F 1 "22n" H 5625 4550 50  0000 L CNN
 F 2 "" H 5638 4500 50  0000 C CNN
 F 3 "https://product.tdk.com/info/en/catalog/datasheets/mlcc_highreliability_general_en.pdf" H 5600 4650 50  0001 C CNN
@@ -422,10 +422,10 @@ F 4 "445-8118-1-ND" H 5600 4650 60  0001 C CNN "Digikey"
 	-1   0    0    1   
 $EndComp
 $Comp
-L R R?
+L R R18
 U 1 1 5837BF39
 P 5250 4450
-F 0 "R?" V 5330 4450 50  0000 C CNN
+F 0 "R18" V 5330 4450 50  0000 C CNN
 F 1 "4.7k" V 5250 4450 50  0000 C CNN
 F 2 "" V 5180 4450 50  0000 C CNN
 F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 5250 4450 50  0001 C CNN
@@ -512,10 +512,10 @@ Text HLabel 5800 4450 2    60   Output ~ 0
 OPAMP_B
 Connection ~ 5600 4450
 $Comp
-L Q_NPN_BCE Q?
+L Q_NPN_BCE Q5
 U 1 1 5837BF6E
 P 2500 4550
-F 0 "Q?" H 2800 4550 50  0000 R CNN
+F 0 "Q5" H 2800 4550 50  0000 R CNN
 F 1 "Q_NPN_BCE" H 3100 4500 50  0001 R CNN
 F 2 "" H 2700 4650 50  0000 C CNN
 F 3 "http://www.mccsemi.com/up_pdf/MMBT3904(SOT-23).pdf" H 2500 4550 50  0001 C CNN
@@ -524,10 +524,10 @@ F 4 "MMBT3904TPMSCT-ND" H 3200 4500 60  0001 C CNN "Digikey"
 	1    0    0    -1  
 $EndComp
 $Comp
-L Q_NPN_BCE Q?
+L Q_NPN_BCE Q6
 U 1 1 5837C3ED
 P 2850 1650
-F 0 "Q?" H 3150 1650 50  0000 R CNN
+F 0 "Q6" H 3150 1650 50  0000 R CNN
 F 1 "Q_NPN_BCE" H 3450 1600 50  0001 R CNN
 F 2 "" H 3050 1750 50  0000 C CNN
 F 3 "http://www.mccsemi.com/up_pdf/MMBT3904(SOT-23).pdf" H 2850 1650 50  0001 C CNN
@@ -536,10 +536,10 @@ F 4 "MMBT3904TPMSCT-ND" H 3550 1600 60  0001 C CNN "Digikey"
 	1    0    0    -1  
 $EndComp
 $Comp
-L Q_PMOS_DGS Q?
+L Q_PMOS_DGS Q8
 U 1 1 5837C3F4
 P 3400 1200
-F 0 "Q?" V 3650 1200 50  0000 R CNN
+F 0 "Q8" V 3650 1200 50  0000 R CNN
 F 1 "Q_PMOS_DGS" H 4050 1150 50  0001 R CNN
 F 2 "" H 3600 1300 50  0000 C CNN
 F 3 "http://www.diodes.com/_files/datasheets/DMG2305UX.pdf" H 3400 1200 50  0001 C CNN
@@ -548,10 +548,10 @@ F 4 "DMG2305UX-13DICT-ND" H 3400 1200 60  0001 C CNN "Digikey"
 	0    -1   -1   0   
 $EndComp
 $Comp
-L D D?
+L D D3
 U 1 1 5837C3FB
 P 3400 2050
-F 0 "D?" V 3400 1900 50  0000 C CNN
+F 0 "D3" V 3400 1900 50  0000 C CNN
 F 1 "D" H 3400 1950 50  0001 C CNN
 F 2 "" H 3400 2050 50  0000 C CNN
 F 3 "http://media.digikey.com/pdf/Data%20Sheets/Vishay%20Semiconductors/1N4148WFL-G.pdf" H 3400 2050 50  0001 C CNN
@@ -562,10 +562,10 @@ $EndComp
 Text GLabel 950  1100 0    60   Input ~ 0
 V20
 $Comp
-L R R?
+L R R13
 U 1 1 5837C403
 P 2600 1350
-F 0 "R?" V 2680 1350 50  0000 C CNN
+F 0 "R13" V 2680 1350 50  0000 C CNN
 F 1 "10k" V 2600 1350 50  0000 C CNN
 F 2 "" V 2530 1350 50  0000 C CNN
 F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 2600 1350 50  0001 C CNN
@@ -574,10 +574,10 @@ F 4 "311-10KGRCT-ND" V 2600 1350 60  0001 C CNN "Digikey"
 	-1   0    0    1   
 $EndComp
 $Comp
-L R R?
+L R R11
 U 1 1 5837C40A
 P 2000 2500
-F 0 "R?" V 2080 2500 50  0000 C CNN
+F 0 "R11" V 2080 2500 50  0000 C CNN
 F 1 "470R" V 2000 2500 50  0000 C CNN
 F 2 "" V 1930 2500 50  0000 C CNN
 F 3 "https://industrial.panasonic.com/cdbs/www-data/pdf/RDA0000/AOA0000COL70.pdf" H 2000 2500 50  0001 C CNN
@@ -586,10 +586,10 @@ F 4 "P20245CT-ND" V 2000 2500 60  0001 C CNN "Digikey"
 	0    1    1    0   
 $EndComp
 $Comp
-L C C?
+L C C4
 U 1 1 5837C411
 P 2000 2200
-F 0 "C?" H 2025 2300 50  0000 L CNN
+F 0 "C4" H 2025 2300 50  0000 L CNN
 F 1 "150p" H 2025 2100 50  0000 L CNN
 F 2 "" H 2038 2050 50  0000 C CNN
 F 3 "http://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM033R71E151KA01-01.pdf" H 2000 2200 50  0001 C CNN
@@ -600,10 +600,10 @@ $EndComp
 Text HLabel 1650 2500 0    60   Input ~ 0
 PWM_R
 $Comp
-L INDUCTOR L?
+L INDUCTOR L2
 U 1 1 5837C419
 P 4150 1950
-F 0 "L?" V 4350 1950 50  0000 C CNN
+F 0 "L2" V 4350 1950 50  0000 C CNN
 F 1 "33u" V 4250 1950 50  0000 C CNN
 F 2 "" H 4150 1950 50  0000 C CNN
 F 3 "http://www.bourns.com/docs/Product-Datasheets/SRN3015.pdf" H 4150 1950 50  0001 C CNN
@@ -612,10 +612,10 @@ F 4 "SRN3015-330MCT-ND" V 4300 1400 60  0001 C CNN "Digikey"
 	0    -1   -1   0   
 $EndComp
 $Comp
-L D_Schottky D?
+L D_Schottky D5
 U 1 1 5837C420
 P 3750 2350
-F 0 "D?" V 3750 2500 50  0000 C CNN
+F 0 "D5" V 3750 2500 50  0000 C CNN
 F 1 "D_Schottky" H 3750 2250 50  0001 C CNN
 F 2 "" H 3750 2350 50  0000 C CNN
 F 3 "http://www.vishay.com/docs/88869/packaging.pdf" H 3750 2350 50  0001 C CNN
@@ -624,10 +624,10 @@ F 4 "10MQ060NPBFCT-ND" V 3800 2950 60  0001 C CNN "Digikey"
 	0    1    1    0   
 $EndComp
 $Comp
-L C C?
+L C C6
 U 1 1 5837C427
 P 4550 2350
-F 0 "C?" H 4575 2450 50  0000 L CNN
+F 0 "C6" H 4575 2450 50  0000 L CNN
 F 1 "10u" H 4575 2250 50  0000 L CNN
 F 2 "" H 4588 2200 50  0000 C CNN
 F 3 "http://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRT188R61E106ME13-01.pdf" H 4550 2350 50  0001 C CNN
@@ -640,10 +640,10 @@ LED_R_P
 Text HLabel 5800 2100 2    60   Output ~ 0
 LED_R_N
 $Comp
-L R R?
+L R R15
 U 1 1 5837C430
 P 4850 2600
-F 0 "R?" V 4930 2600 50  0000 C CNN
+F 0 "R15" V 4930 2600 50  0000 C CNN
 F 1 "0.1R" V 4850 2600 50  0000 C CNN
 F 2 "" V 4780 2600 50  0000 C CNN
 F 3 "http://media.digikey.com/pdf/Data%20Sheets/Samsung%20PDFs/RU_Series_ds.pdf" H 4850 2600 50  0001 C CNN
@@ -652,10 +652,10 @@ F 4 "1276-6155-1-ND" V 4850 2600 60  0001 C CNN "Digikey"
 	1    0    0    -1  
 $EndComp
 $Comp
-L C C?
+L C C8
 U 1 1 5837C437
 P 5600 2600
-F 0 "C?" H 5625 2700 50  0000 L CNN
+F 0 "C8" H 5625 2700 50  0000 L CNN
 F 1 "22n" H 5625 2500 50  0000 L CNN
 F 2 "" H 5638 2450 50  0000 C CNN
 F 3 "https://product.tdk.com/info/en/catalog/datasheets/mlcc_highreliability_general_en.pdf" H 5600 2600 50  0001 C CNN
@@ -664,10 +664,10 @@ F 4 "445-8118-1-ND" H 5600 2600 60  0001 C CNN "Digikey"
 	-1   0    0    1   
 $EndComp
 $Comp
-L R R?
+L R R17
 U 1 1 5837C43E
 P 5250 2400
-F 0 "R?" V 5330 2400 50  0000 C CNN
+F 0 "R17" V 5330 2400 50  0000 C CNN
 F 1 "4.7k" V 5250 2400 50  0000 C CNN
 F 2 "" V 5180 2400 50  0000 C CNN
 F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 5250 2400 50  0001 C CNN
@@ -754,10 +754,10 @@ Text HLabel 5800 2400 2    60   Output ~ 0
 OPAMP_R
 Connection ~ 5600 2400
 $Comp
-L Q_NPN_BCE Q?
+L Q_NPN_BCE Q4
 U 1 1 5837C473
 P 2500 2500
-F 0 "Q?" H 2800 2500 50  0000 R CNN
+F 0 "Q4" H 2800 2500 50  0000 R CNN
 F 1 "Q_NPN_BCE" H 3100 2450 50  0001 R CNN
 F 2 "" H 2700 2600 50  0000 C CNN
 F 3 "http://www.mccsemi.com/up_pdf/MMBT3904(SOT-23).pdf" H 2500 2500 50  0001 C CNN
