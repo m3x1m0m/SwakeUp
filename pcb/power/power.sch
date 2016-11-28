@@ -34,7 +34,7 @@ EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 1 4
+Sheet 1 2
 Title "Power Board For SwakeUp"
 Date "2016-11-26"
 Rev "1.0"
@@ -45,458 +45,1055 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Sheet
-S 3006 2394 1044 1306
+S 2306 3844 1044 1256
 U 58375294
 F0 "RGB LED Driver " 60
 F1 "rgbLedDriver.sch" 60
-F2 "PWM_G" I L 3006 2650 60 
-F3 "LED_G_P" O R 4050 3400 60 
-F4 "LED_G_N" O R 4050 3500 60 
-F5 "OPAMP_G" O R 4050 3600 60 
-F6 "PWM_B" I L 3006 3050 60 
-F7 "LED_B_P" O R 4050 3050 60 
-F8 "LED_B_N" O R 4050 3150 60 
-F9 "OPAMP_B" O R 4050 3250 60 
-F10 "PWM_R" I L 3006 3400 60 
-F11 "LED_R_P" O R 4050 2650 60 
-F12 "LED_R_N" O R 4050 2750 60 
-F13 "OPAMP_R" O R 4050 2850 60 
-F14 "V20" I L 3006 2500 60 
+F2 "LED_G_P" O R 3350 4850 60 
+F3 "LED_G_N" O R 3350 4950 60 
+F4 "OPAMP_G" O R 3350 5050 60 
+F5 "PWM_B" I L 2306 4500 60 
+F6 "LED_B_P" O R 3350 4500 60 
+F7 "LED_B_N" O R 3350 4600 60 
+F8 "OPAMP_B" O R 3350 4700 60 
+F9 "PWM_R" I L 2306 4100 60 
+F10 "LED_R_P" O R 3350 4100 60 
+F11 "LED_R_N" O R 3350 4200 60 
+F12 "OPAMP_R" O R 3350 4300 60 
+F13 "V20" I L 2306 3950 60 
+F14 "PWM_G" I L 2306 4850 60 
 $EndSheet
 $Comp
-L LM324QT U1
+L LM324QT U2
 U 1 1 5838BEE1
-P 6250 3050
-F 0 "U1" H 6700 2300 60  0000 C CNN
-F 1 "LM324QT" H 5950 2300 60  0000 C CNN
-F 2 "" H 6250 3050 60  0000 C CNN
-F 3 "http://www.st.com/content/ccc/resource/technical/document/datasheet/58/13/52/7e/39/8c/4c/ba/CD00000457.pdf/files/CD00000457.pdf/jcr:content/translations/en.CD00000457.pdf" H 6250 3050 60  0001 C CNN
-F 4 "497-12005-1-ND" H 6250 3050 60  0001 C CNN "Digikey"
-	1    6250 3050
+P 5750 4500
+F 0 "U2" H 6200 3750 60  0000 C CNN
+F 1 "LM324QT" H 5450 3750 60  0000 C CNN
+F 2 "" H 5750 4500 60  0000 C CNN
+F 3 "http://www.st.com/content/ccc/resource/technical/document/datasheet/58/13/52/7e/39/8c/4c/ba/CD00000457.pdf/files/CD00000457.pdf/jcr:content/translations/en.CD00000457.pdf" H 5750 4500 60  0001 C CNN
+F 4 "497-12005-1-ND" H 5750 4500 60  0001 C CNN "Digikey"
+	1    5750 4500
 	1    0    0    -1  
-$EndComp
-$Comp
-L GND #PWR1
-U 1 1 5838E9B2
-P 4750 2550
-F 0 "#PWR1" H 4750 2300 50  0001 C CNN
-F 1 "GND" H 4750 2400 50  0000 C CNN
-F 2 "" H 4750 2550 50  0000 C CNN
-F 3 "" H 4750 2550 50  0000 C CNN
-	1    4750 2550
-	1    0    0    -1  
-$EndComp
-$Comp
-L R R8
-U 1 1 5838F1C9
-P 5300 3450
-F 0 "R8" V 5380 3450 50  0000 C CNN
-F 1 "120k" V 5300 3450 50  0000 C CNN
-F 2 "" V 5230 3450 50  0000 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 5300 3450 50  0001 C CNN
-F 4 "311-120KHRCT-ND" V 5300 3450 60  0001 C CNN "Digikey"
-	1    5300 3450
-	0    1    1    0   
-$EndComp
-$Comp
-L GND #PWR2
-U 1 1 5838F3B3
-P 4750 3550
-F 0 "#PWR2" H 4750 3300 50  0001 C CNN
-F 1 "GND" H 4750 3400 50  0000 C CNN
-F 2 "" H 4750 3550 50  0000 C CNN
-F 3 "" H 4750 3550 50  0000 C CNN
-	1    4750 3550
-	1    0    0    -1  
-$EndComp
-$Comp
-L GND #PWR6
-U 1 1 58391691
-P 7750 3550
-F 0 "#PWR6" H 7750 3300 50  0001 C CNN
-F 1 "GND" H 7750 3400 50  0000 C CNN
-F 2 "" H 7750 3550 50  0000 C CNN
-F 3 "" H 7750 3550 50  0000 C CNN
-	1    7750 3550
-	1    0    0    -1  
-$EndComp
-$Comp
-L CONN_01X04 P1
-U 1 1 58392B4F
-P 4350 1850
-F 0 "P1" H 4350 2100 50  0000 C CNN
-F 1 "CONN_01X04" V 4450 1850 50  0000 C CNN
-F 2 "" H 4350 1850 50  0000 C CNN
-F 3 "http://www.on-shore.com/wp-content/uploads/2015/09/osttcxx2162.pdf" H 4350 1850 50  0001 C CNN
-F 4 "ED2611-ND" H 4350 1850 60  0001 C CNN "Digikey"
-	1    4350 1850
-	0    -1   -1   0   
-$EndComp
-$Comp
-L R R9
-U 1 1 58394867
-P 7200 2650
-F 0 "R9" V 7280 2650 50  0000 C CNN
-F 1 "240k" V 7200 2650 50  0000 C CNN
-F 2 "" V 7130 2650 50  0000 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 7200 2650 50  0001 C CNN
-F 4 "311-240KHRCT-ND" V 7200 2650 60  0001 C CNN "Digikey"
-	1    7200 2650
-	0    1    1    0   
-$EndComp
-$Comp
-L R R19
-U 1 1 58394912
-P 7600 2650
-F 0 "R19" V 7680 2650 50  0000 C CNN
-F 1 "39k" V 7600 2650 50  0000 C CNN
-F 2 "" V 7530 2650 50  0000 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 7600 2650 50  0001 C CNN
-F 4 "311-39.0KHRCT-ND" V 7600 2650 60  0001 C CNN "Digikey"
-	1    7600 2650
-	0    1    1    0   
 $EndComp
 $Comp
 L GND #PWR5
-U 1 1 58394C0A
-P 7750 2750
-F 0 "#PWR5" H 7750 2500 50  0001 C CNN
-F 1 "GND" H 7750 2600 50  0000 C CNN
-F 2 "" H 7750 2750 50  0000 C CNN
-F 3 "" H 7750 2750 50  0000 C CNN
-	1    7750 2750
+U 1 1 5838E9B2
+P 4250 4000
+F 0 "#PWR5" H 4250 3750 50  0001 C CNN
+F 1 "GND" H 4250 3850 50  0000 C CNN
+F 2 "" H 4250 4000 50  0000 C CNN
+F 3 "" H 4250 4000 50  0000 C CNN
+	1    4250 4000
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R21
-U 1 1 58394FC2
-P 8100 2950
-F 0 "R21" V 8180 2950 50  0000 C CNN
-F 1 "47k" V 8100 2950 50  0000 C CNN
-F 2 "" V 8030 2950 50  0000 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 8100 2950 50  0001 C CNN
-F 4 "311-47.0KHRCT-ND" V 8100 2950 60  0001 C CNN "Digikey"
-	1    8100 2950
+L R R3
+U 1 1 5838F1C9
+P 4700 5100
+F 0 "R3" V 4780 5100 50  0000 C CNN
+F 1 "120k" V 4700 5100 50  0000 C CNN
+F 2 "" V 4630 5100 50  0000 C CNN
+F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 4700 5100 50  0001 C CNN
+F 4 "311-120KHRCT-ND" V 4700 5100 60  0001 C CNN "Digikey"
+	1    4700 5100
 	0    1    1    0   
 $EndComp
 $Comp
-L C C10
+L GND #PWR4
+U 1 1 5838F3B3
+P 4100 5200
+F 0 "#PWR4" H 4100 4950 50  0001 C CNN
+F 1 "GND" H 4100 5050 50  0000 C CNN
+F 2 "" H 4100 5200 50  0000 C CNN
+F 3 "" H 4100 5200 50  0000 C CNN
+	1    4100 5200
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR10
+U 1 1 58391691
+P 7350 5150
+F 0 "#PWR10" H 7350 4900 50  0001 C CNN
+F 1 "GND" H 7350 5000 50  0000 C CNN
+F 2 "" H 7350 5150 50  0000 C CNN
+F 3 "" H 7350 5150 50  0000 C CNN
+	1    7350 5150
+	1    0    0    -1  
+$EndComp
+$Comp
+L CONN_01X04 P3
+U 1 1 58392B4F
+P 3650 3300
+F 0 "P3" H 3650 3550 50  0000 C CNN
+F 1 "CONN_01X04" V 3750 3300 50  0000 C CNN
+F 2 "" H 3650 3300 50  0000 C CNN
+F 3 "http://www.on-shore.com/wp-content/uploads/2015/09/osttcxx2162.pdf" H 3650 3300 50  0001 C CNN
+F 4 "ED2611-ND" H 3650 3300 60  0001 C CNN "Digikey"
+	1    3650 3300
+	0    -1   -1   0   
+$EndComp
+$Comp
+L R R6
+U 1 1 58394867
+P 6750 3900
+F 0 "R6" V 6830 3900 50  0000 C CNN
+F 1 "240k" V 6750 3900 50  0000 C CNN
+F 2 "" V 6680 3900 50  0000 C CNN
+F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 6750 3900 50  0001 C CNN
+F 4 "311-240KHRCT-ND" V 6750 3900 60  0001 C CNN "Digikey"
+	1    6750 3900
+	0    1    1    0   
+$EndComp
+$Comp
+L R R13
+U 1 1 58394912
+P 7250 3900
+F 0 "R13" V 7330 3900 50  0000 C CNN
+F 1 "39k" V 7250 3900 50  0000 C CNN
+F 2 "" V 7180 3900 50  0000 C CNN
+F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 7250 3900 50  0001 C CNN
+F 4 "311-39.0KHRCT-ND" V 7250 3900 60  0001 C CNN "Digikey"
+	1    7250 3900
+	0    1    1    0   
+$EndComp
+$Comp
+L GND #PWR11
+U 1 1 58394C0A
+P 7400 4200
+F 0 "#PWR11" H 7400 3950 50  0001 C CNN
+F 1 "GND" H 7400 4050 50  0000 C CNN
+F 2 "" H 7400 4200 50  0000 C CNN
+F 3 "" H 7400 4200 50  0000 C CNN
+	1    7400 4200
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R15
+U 1 1 58394FC2
+P 7750 4450
+F 0 "R15" V 7830 4450 50  0000 C CNN
+F 1 "47k" V 7750 4450 50  0000 C CNN
+F 2 "" V 7680 4450 50  0000 C CNN
+F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 7750 4450 50  0001 C CNN
+F 4 "311-47.0KHRCT-ND" V 7750 4450 60  0001 C CNN "Digikey"
+	1    7750 4450
+	0    1    1    0   
+$EndComp
+$Comp
+L C C6
 U 1 1 583951CE
-P 8300 3200
-F 0 "C10" H 8325 3300 50  0000 L CNN
-F 1 "10n" H 8325 3100 50  0000 L CNN
-F 2 "" H 8338 3050 50  0000 C CNN
-F 3 "http://www.yageo.com/documents/recent/UPY-GPHC_X7R_6.3V-to-50V_15.pdf" H 8300 3200 50  0001 C CNN
-F 4 "311-1085-1-ND" H 8300 3200 60  0001 C CNN "Digikey"
-	1    8300 3200
+P 7950 4700
+F 0 "C6" H 7975 4800 50  0000 L CNN
+F 1 "10n" H 7975 4600 50  0000 L CNN
+F 2 "" H 7988 4550 50  0000 C CNN
+F 3 "http://www.yageo.com/documents/recent/UPY-GPHC_X7R_6.3V-to-50V_15.pdf" H 7950 4700 50  0001 C CNN
+F 4 "311-1085-1-ND" H 7950 4700 60  0001 C CNN "Digikey"
+	1    7950 4700
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR7
+L GND #PWR14
 U 1 1 58395B51
-P 9100 3450
-F 0 "#PWR7" H 9100 3200 50  0001 C CNN
-F 1 "GND" H 9100 3300 50  0000 C CNN
-F 2 "" H 9100 3450 50  0000 C CNN
-F 3 "" H 9100 3450 50  0000 C CNN
-	1    9100 3450
+P 8750 4950
+F 0 "#PWR14" H 8750 4700 50  0001 C CNN
+F 1 "GND" H 8750 4800 50  0000 C CNN
+F 2 "" H 8750 4950 50  0000 C CNN
+F 3 "" H 8750 4950 50  0000 C CNN
+	1    8750 4950
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R5
+L R R2
 U 1 1 583964BE
-P 4900 2450
-F 0 "R5" V 4980 2450 50  0000 C CNN
-F 1 "3.9k" V 4900 2450 50  0000 C CNN
-F 2 "" V 4830 2450 50  0000 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 4900 2450 50  0001 C CNN
-F 4 "311-3.90KHRCT-ND" V 4900 2450 60  0001 C CNN "Digikey"
-	1    4900 2450
+P 4400 3900
+F 0 "R2" V 4480 3900 50  0000 C CNN
+F 1 "3.9k" V 4400 3900 50  0000 C CNN
+F 2 "" V 4330 3900 50  0000 C CNN
+F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 4400 3900 50  0001 C CNN
+F 4 "311-3.90KHRCT-ND" V 4400 3900 60  0001 C CNN "Digikey"
+	1    4400 3900
+	0    1    1    0   
+$EndComp
+$Comp
+L R R4
+U 1 1 583968F2
+P 4800 3900
+F 0 "R4" V 4880 3900 50  0000 C CNN
+F 1 "120k" V 4800 3900 50  0000 C CNN
+F 2 "" V 4730 3900 50  0000 C CNN
+F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 4800 3900 50  0001 C CNN
+F 4 "311-120KHRCT-ND" V 4800 3900 60  0001 C CNN "Digikey"
+	1    4800 3900
 	0    1    1    0   
 $EndComp
 $Comp
 L R R7
-U 1 1 583968F2
-P 5300 2450
-F 0 "R7" V 5380 2450 50  0000 C CNN
-F 1 "120k" V 5300 2450 50  0000 C CNN
-F 2 "" V 5230 2450 50  0000 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 5300 2450 50  0001 C CNN
-F 4 "311-120KHRCT-ND" V 5300 2450 60  0001 C CNN "Digikey"
-	1    5300 2450
+U 1 1 583969A3
+P 6750 5100
+F 0 "R7" V 6830 5100 50  0000 C CNN
+F 1 "120k" V 6750 5100 50  0000 C CNN
+F 2 "" V 6680 5100 50  0000 C CNN
+F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 6750 5100 50  0001 C CNN
+F 4 "311-120KHRCT-ND" V 6750 5100 60  0001 C CNN "Digikey"
+	1    6750 5100
 	0    1    1    0   
+$EndComp
+$Comp
+L R R1
+U 1 1 58396C86
+P 4250 5100
+F 0 "R1" V 4330 5100 50  0000 C CNN
+F 1 "3.9k" V 4250 5100 50  0000 C CNN
+F 2 "" V 4180 5100 50  0000 C CNN
+F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 4250 5100 50  0001 C CNN
+F 4 "311-3.90KHRCT-ND" V 4250 5100 60  0001 C CNN "Digikey"
+	1    4250 5100
+	0    1    1    0   
+$EndComp
+$Comp
+L R R11
+U 1 1 58396D3B
+P 7200 5100
+F 0 "R11" V 7280 5100 50  0000 C CNN
+F 1 "3.9k" V 7200 5100 50  0000 C CNN
+F 2 "" V 7130 5100 50  0000 C CNN
+F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 7200 5100 50  0001 C CNN
+F 4 "311-3.90KHRCT-ND" V 7200 5100 60  0001 C CNN "Digikey"
+	1    7200 5100
+	0    1    1    0   
+$EndComp
+$Comp
+L R R16
+U 1 1 58398205
+P 8150 4450
+F 0 "R16" V 8230 4450 50  0000 C CNN
+F 1 "47k" V 8150 4450 50  0000 C CNN
+F 2 "" V 8080 4450 50  0000 C CNN
+F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 8150 4450 50  0001 C CNN
+F 4 "311-47.0KHRCT-ND" V 8150 4450 60  0001 C CNN "Digikey"
+	1    8150 4450
+	0    1    1    0   
+$EndComp
+$Comp
+L R R17
+U 1 1 5839829C
+P 8550 4450
+F 0 "R17" V 8630 4450 50  0000 C CNN
+F 1 "47k" V 8550 4450 50  0000 C CNN
+F 2 "" V 8480 4450 50  0000 C CNN
+F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 8550 4450 50  0001 C CNN
+F 4 "311-47.0KHRCT-ND" V 8550 4450 60  0001 C CNN "Digikey"
+	1    8550 4450
+	0    1    1    0   
+$EndComp
+$Comp
+L C C8
+U 1 1 583984D9
+P 8350 4700
+F 0 "C8" H 8375 4800 50  0000 L CNN
+F 1 "10n" H 8375 4600 50  0000 L CNN
+F 2 "" H 8388 4550 50  0000 C CNN
+F 3 "http://www.yageo.com/documents/recent/UPY-GPHC_X7R_6.3V-to-50V_15.pdf" H 8350 4700 50  0001 C CNN
+F 4 "311-1085-1-ND" H 8350 4700 60  0001 C CNN "Digikey"
+	1    8350 4700
+	1    0    0    -1  
+$EndComp
+Text GLabel 8900 4450 2    60   Input ~ 0
+PWM_OLED
+$Comp
+L C C9
+U 1 1 58399326
+P 8750 4700
+F 0 "C9" H 8775 4800 50  0000 L CNN
+F 1 "10n" H 8775 4600 50  0000 L CNN
+F 2 "" H 8788 4550 50  0000 C CNN
+F 3 "http://www.yageo.com/documents/recent/UPY-GPHC_X7R_6.3V-to-50V_15.pdf" H 8750 4700 50  0001 C CNN
+F 4 "311-1085-1-ND" H 8750 4700 60  0001 C CNN "Digikey"
+	1    8750 4700
+	1    0    0    -1  
+$EndComp
+$Comp
+L USB_B P4
+U 1 1 58399DD1
+P 6500 6800
+F 0 "P4" H 6700 6600 50  0000 C CNN
+F 1 "USB_B" H 6450 7000 50  0000 C CNN
+F 2 "" V 6450 6700 50  0000 C CNN
+F 3 "http://katalog.we-online.de/em/datasheet/632121300001.pdf" V 6450 6700 50  0001 C CNN
+F 4 "732-9615-ND" H 6500 6800 60  0001 C CNN "Digikey"
+	1    6500 6800
+	0    1    1    0   
+$EndComp
+Text GLabel 4900 4500 0    60   Input ~ 0
+V20
+$Comp
+L GND #PWR8
+U 1 1 5839C2CB
+P 6650 4500
+F 0 "#PWR8" H 6650 4250 50  0001 C CNN
+F 1 "GND" H 6650 4350 50  0000 C CNN
+F 2 "" H 6650 4500 50  0000 C CNN
+F 3 "" H 6650 4500 50  0000 C CNN
+	1    6650 4500
+	1    0    0    -1  
+$EndComp
+Text Notes 7900 4150 0    60   ~ 0
+A=(R1+R2)/R1 =7.154\nVin,max=2.8 V\nVout,max=20.031V
+Text Notes 4000 5800 0    60   ~ 0
+A=(R1+R2)/R1 =31.769\nVin,max=30 mV\nVout,max=953.077 mV\nVref = 1.0 V
+NoConn ~ 6200 6700
+NoConn ~ 6200 6800
+$Comp
+L CONN_01X04 P2
+U 1 1 583C3625
+P 1100 1050
+F 0 "P2" H 1100 1300 50  0000 C CNN
+F 1 "CONN_01X04" V 1200 1050 50  0000 C CNN
+F 2 "" H 1100 1050 50  0000 C CNN
+F 3 "" H 1100 1050 50  0000 C CNN
+	1    1100 1050
+	0    -1   -1   0   
+$EndComp
+$Comp
+L CONN_01X04 P1
+U 1 1 583C37A6
+P 1050 5750
+F 0 "P1" H 1050 6000 50  0000 C CNN
+F 1 "CONN_01X04" V 1150 5750 50  0000 C CNN
+F 2 "" H 1050 5750 50  0000 C CNN
+F 3 "" H 1050 5750 50  0000 C CNN
+	1    1050 5750
+	0    1    1    0   
+$EndComp
+$Comp
+L CONN_01X02 P5
+U 1 1 583C3890
+P 10450 1200
+F 0 "P5" H 10450 1350 50  0000 C CNN
+F 1 "CONN_01X02" V 10550 1200 50  0000 C CNN
+F 2 "" H 10450 1200 50  0000 C CNN
+F 3 "" H 10450 1200 50  0000 C CNN
+	1    10450 1200
+	0    -1   -1   0   
+$EndComp
+$Comp
+L CONN_01X02 P6
+U 1 1 583C39A1
+P 10600 5600
+F 0 "P6" H 10600 5750 50  0000 C CNN
+F 1 "CONN_01X02" V 10700 5600 50  0000 C CNN
+F 2 "" H 10600 5600 50  0000 C CNN
+F 3 "" H 10600 5600 50  0000 C CNN
+	1    10600 5600
+	0    1    1    0   
+$EndComp
+$Comp
+L BARREL_JACK CON1
+U 1 1 583C4079
+P 4050 1250
+F 0 "CON1" H 4050 1500 50  0000 C CNN
+F 1 "BARREL_JACK" H 4050 1050 50  0000 C CNN
+F 2 "" H 4050 1250 50  0000 C CNN
+F 3 "http://www.cui.com/product/resource/digikeypdf/pj-047bh.pdf" H 4050 1250 50  0001 C CNN
+F 4 "CP-047BH-ND" H 4050 1250 60  0001 C CNN "Digikey"
+	1    4050 1250
+	1    0    0    -1  
+$EndComp
+Text Notes 900  850  0    60   ~ 0
+ADC
+Text Notes 800  6000 0    60   ~ 0
+PWM
+Text Notes 10350 5850 0    60   ~ 0
+SCREEN
+Text Notes 10200 1000 0    60   ~ 0
+Power for µC\n
+$Comp
+L GND #PWR6
+U 1 1 583C8E04
+P 4450 1350
+F 0 "#PWR6" H 4450 1100 50  0001 C CNN
+F 1 "GND" H 4450 1200 50  0000 C CNN
+F 2 "" H 4450 1350 50  0000 C CNN
+F 3 "" H 4450 1350 50  0000 C CNN
+	1    4450 1350
+	1    0    0    -1  
+$EndComp
+Text GLabel 4450 1150 2    60   Output ~ 0
+V20
+$Comp
+L R R5
+U 1 1 583CB81C
+P 6750 3550
+F 0 "R5" V 6830 3550 50  0000 C CNN
+F 1 "120k" V 6750 3550 50  0000 C CNN
+F 2 "" V 6680 3550 50  0000 C CNN
+F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 6750 3550 50  0001 C CNN
+F 4 "311-120KHRCT-ND" V 6750 3550 60  0001 C CNN "Digikey"
+	1    6750 3550
+	0    1    1    0   
+$EndComp
+$Comp
+L R R12
+U 1 1 583CC0A2
+P 7250 3550
+F 0 "R12" V 7330 3550 50  0000 C CNN
+F 1 "2.7k" V 7250 3550 50  0000 C CNN
+F 2 "" V 7180 3550 50  0000 C CNN
+F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 7250 3550 50  0001 C CNN
+F 4 "311-2.70KHRCT-ND" V 7250 3550 60  0001 C CNN "Digikey"
+	1    7250 3550
+	0    1    1    0   
+$EndComp
+$Comp
+L R R14
+U 1 1 583CC264
+P 7600 3550
+F 0 "R14" V 7680 3550 50  0000 C CNN
+F 1 "3.3k" V 7600 3550 50  0000 C CNN
+F 2 "" V 7530 3550 50  0000 C CNN
+F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 7600 3550 50  0001 C CNN
+F 4 "311-3.30KHRCT-ND" V 7600 3550 60  0001 C CNN "Digikey"
+	1    7600 3550
+	0    1    1    0   
+$EndComp
+$Comp
+L GND #PWR12
+U 1 1 583CC537
+P 7750 3600
+F 0 "#PWR12" H 7750 3350 50  0001 C CNN
+F 1 "GND" H 7750 3450 50  0000 C CNN
+F 2 "" H 7750 3600 50  0000 C CNN
+F 3 "" H 7750 3600 50  0000 C CNN
+	1    7750 3600
+	1    0    0    -1  
+$EndComp
+Text GLabel 1200 5450 1    60   Output ~ 0
+PWM_OLED
+Text GLabel 1100 5450 1    60   Output ~ 0
+PWM_G
+Text GLabel 1000 5450 1    60   Output ~ 0
+PWM_B
+Text GLabel 900  5450 1    60   Output ~ 0
+PWM_R
+Text GLabel 2150 4100 0    60   Input ~ 0
+PWM_R
+Text GLabel 2150 4500 0    60   Input ~ 0
+PWM_R
+Text GLabel 2150 4850 0    60   Input ~ 0
+PWM_R
+Text GLabel 2000 3950 0    60   Input ~ 0
+V20
+Text GLabel 7100 3400 2    60   Output ~ 0
+ADC_OLED
+Text GLabel 6700 5300 2    60   Output ~ 0
+ADC_G
+Text GLabel 4750 5300 0    60   Output ~ 0
+ADC_B
+Text GLabel 4800 3500 0    60   Output ~ 0
+ADC_R
+Wire Wire Line
+	4250 3900 4250 4000
+Wire Wire Line
+	4100 5100 4100 5200
+Wire Wire Line
+	7350 5100 7350 5150
+Wire Wire Line
+	3500 3500 3500 4100
+Wire Wire Line
+	3500 4100 3350 4100
+Wire Wire Line
+	3350 4500 3600 4500
+Wire Wire Line
+	3600 4500 3600 3500
+Wire Wire Line
+	3350 4850 3700 4850
+Wire Wire Line
+	3700 4850 3700 3500
+Wire Wire Line
+	3800 4950 3350 4950
+Wire Wire Line
+	3800 4600 3350 4600
+Connection ~ 3800 4600
+Wire Wire Line
+	3950 3700 3950 5050
+Wire Wire Line
+	7500 3700 7500 4700
+Wire Wire Line
+	7400 3900 7400 4200
+Wire Wire Line
+	7900 4450 8000 4450
+Wire Wire Line
+	8300 4450 8400 4450
+Wire Wire Line
+	7950 4900 8750 4900
+Wire Wire Line
+	7950 4900 7950 4850
+Connection ~ 8750 4900
+Wire Wire Line
+	8350 4850 8350 4900
+Connection ~ 8350 4900
+Wire Wire Line
+	7950 4550 7950 4450
+Connection ~ 7950 4450
+Wire Wire Line
+	8350 4550 8350 4450
+Connection ~ 8350 4450
+Wire Wire Line
+	6900 4450 7600 4450
+Wire Wire Line
+	8750 4850 8750 4950
+Wire Wire Line
+	8750 4550 8750 4450
+Wire Wire Line
+	8700 4450 8900 4450
+Connection ~ 8750 4450
+Wire Wire Line
+	3350 4200 3800 4200
+Connection ~ 3800 4200
+Wire Wire Line
+	3800 3500 3800 4950
+Wire Wire Line
+	4900 4500 5050 4500
+Wire Wire Line
+	7500 4700 6450 4700
+Wire Wire Line
+	6450 4500 6650 4500
+Wire Wire Line
+	6900 4300 6450 4300
+Wire Wire Line
+	6450 4100 7000 4100
+Wire Wire Line
+	5000 6600 6200 6600
+Wire Wire Line
+	4450 1350 4350 1350
+Wire Wire Line
+	4350 1350 4350 1250
+Wire Wire Line
+	4350 1150 4450 1150
+Wire Wire Line
+	6900 3550 7100 3550
+Wire Wire Line
+	7400 3550 7450 3550
+Wire Wire Line
+	7750 3600 7750 3550
+Wire Wire Line
+	1200 5450 1200 5550
+Wire Wire Line
+	1100 5450 1100 5550
+Wire Wire Line
+	1000 5450 1000 5550
+Wire Wire Line
+	900  5450 900  5550
+Wire Wire Line
+	2306 4100 2150 4100
+Wire Wire Line
+	2306 4500 2150 4500
+Wire Wire Line
+	2150 4850 2306 4850
+Wire Wire Line
+	2306 3950 2000 3950
+Wire Wire Line
+	6900 3900 7100 3900
+Wire Wire Line
+	7000 4100 7000 3900
+Connection ~ 7000 3900
+Wire Wire Line
+	6450 3900 6600 3900
+Wire Wire Line
+	6600 3550 6550 3550
+Wire Wire Line
+	6550 3200 6550 3900
+Connection ~ 6550 3900
+Wire Wire Line
+	7100 3400 7000 3400
+Wire Wire Line
+	7000 3400 7000 3550
+Connection ~ 7000 3550
+Wire Wire Line
+	6900 4300 6900 4450
+Wire Wire Line
+	6450 5100 6600 5100
+Wire Wire Line
+	6700 5300 6500 5300
+Wire Wire Line
+	6500 5300 6500 5100
+Connection ~ 6500 5100
+Wire Wire Line
+	4850 5100 5050 5100
+Wire Wire Line
+	6900 5100 7050 5100
+Wire Wire Line
+	6450 4900 7000 4900
+Wire Wire Line
+	7000 4900 7000 5100
+Connection ~ 7000 5100
+Wire Wire Line
+	4450 5100 4450 4900
+Wire Wire Line
+	4450 4900 5050 4900
+Connection ~ 4450 5100
+Wire Wire Line
+	4400 5100 4550 5100
+Wire Wire Line
+	4750 5300 4950 5300
+Wire Wire Line
+	4950 5300 4950 5100
+Connection ~ 4950 5100
+Wire Wire Line
+	3950 3700 7500 3700
+Wire Wire Line
+	4600 4100 5050 4100
+Wire Wire Line
+	4950 3900 5050 3900
+Wire Wire Line
+	4550 3900 4650 3900
+Wire Wire Line
+	4600 3900 4600 4100
+Connection ~ 4600 3900
+Wire Wire Line
+	5000 3900 5000 3500
+Connection ~ 5000 3900
+Wire Wire Line
+	5000 3500 4800 3500
+Connection ~ 6550 3550
+Wire Wire Line
+	10550 5300 10550 5400
+$Comp
+L GND #PWR16
+U 1 1 583EB242
+P 10900 5400
+F 0 "#PWR16" H 10900 5150 50  0001 C CNN
+F 1 "GND" H 10900 5250 50  0000 C CNN
+F 2 "" H 10900 5400 50  0000 C CNN
+F 3 "" H 10900 5400 50  0000 C CNN
+	1    10900 5400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	10650 5400 10900 5400
+$Comp
+L GND #PWR15
+U 1 1 583EC5FB
+P 10500 1500
+F 0 "#PWR15" H 10500 1250 50  0001 C CNN
+F 1 "GND" H 10500 1350 50  0000 C CNN
+F 2 "" H 10500 1500 50  0000 C CNN
+F 3 "" H 10500 1500 50  0000 C CNN
+	1    10500 1500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	10500 1500 10500 1400
+Text GLabel 7100 3200 2    60   Output ~ 0
+VPWM
+Wire Wire Line
+	7100 3200 6550 3200
+Text GLabel 1150 1300 3    60   Input ~ 0
+ADC_G
+Wire Wire Line
+	1150 1250 1150 1300
+Text GLabel 1050 1300 3    60   Input ~ 0
+ADC_B
+Wire Wire Line
+	1050 1250 1050 1300
+Text GLabel 950  1300 3    60   Input ~ 0
+ADC_R
+Wire Wire Line
+	950  1250 950  1300
+Text GLabel 1250 1300 3    60   Input ~ 0
+ADC_OLED
+Wire Wire Line
+	1250 1300 1250 1250
+Wire Wire Line
+	3350 4700 5050 4700
+Wire Wire Line
+	3350 4300 5050 4300
+Wire Wire Line
+	3950 5050 3350 5050
+Text GLabel 10550 5300 1    60   Input ~ 0
+VPWM
+$Comp
+L TS30013 U1
+U 1 1 5840430A
+P 2500 6700
+F 0 "U1" H 3150 6250 60  0000 C CNN
+F 1 "TS30013" H 2100 6250 60  0000 C CNN
+F 2 "" H 2600 6700 60  0000 C CNN
+F 3 "http://www.semtech.com/images/datasheet/ts30011_12_13.pdf" H 2600 6700 60  0001 C CNN
+F 4 "TS30013-M050QFNRCT-ND" H 2500 6700 60  0001 C CNN "Digikey"
+	1    2500 6700
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR3
+U 1 1 58404311
+P 3550 6400
+F 0 "#PWR3" H 3550 6150 50  0001 C CNN
+F 1 "GND" H 3550 6250 50  0000 C CNN
+F 2 "" H 3550 6400 50  0000 C CNN
+F 3 "" H 3550 6400 50  0000 C CNN
+	1    3550 6400
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR1
+U 1 1 58404317
+P 1250 6850
+F 0 "#PWR1" H 1250 6600 50  0001 C CNN
+F 1 "GND" H 1250 6700 50  0000 C CNN
+F 2 "" H 1250 6850 50  0000 C CNN
+F 3 "" H 1250 6850 50  0000 C CNN
+	1    1250 6850
+	1    0    0    -1  
+$EndComp
+$Comp
+L C C3
+U 1 1 5840431E
+P 5200 6850
+F 0 "C3" H 5225 6950 50  0000 L CNN
+F 1 "22u" H 5225 6750 50  0000 L CNN
+F 2 "" H 5238 6700 50  0000 C CNN
+F 3 "http://www.samsungsem.com/kr/support/product-search/mlcc/__icsFiles/afieldfile/2016/08/18/S_CL10A226MQ8NRNC.pdf" H 5200 6850 50  0001 C CNN
+F 4 "1276-1193-1-ND" H 5200 6850 60  0001 C CNN "Digikey"
+	1    5200 6850
+	1    0    0    -1  
+$EndComp
+$Comp
+L INDUCTOR L1
+U 1 1 58404326
+P 4700 6600
+F 0 "L1" V 4650 6600 50  0000 C CNN
+F 1 "4.7u" V 4800 6600 50  0000 C CNN
+F 2 "" H 4700 6600 50  0000 C CNN
+F 3 "http://www.yuden.co.jp/productdata/catalog/en/wound04_e.pdf" H 4700 6600 50  0001 C CNN
+F 4 "587-2969-1-ND " V 4700 6600 60  0001 C CNN "Digikey"
+	1    4700 6600
+	0    -1   -1   0   
+$EndComp
+$Comp
+L GND #PWR2
+U 1 1 5840432D
+P 2550 7300
+F 0 "#PWR2" H 2550 7050 50  0001 C CNN
+F 1 "GND" H 2550 7150 50  0000 C CNN
+F 2 "" H 2550 7300 50  0000 C CNN
+F 3 "" H 2550 7300 50  0000 C CNN
+	1    2550 7300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1250 6450 1250 6400
+Connection ~ 1250 6400
+Wire Wire Line
+	1250 6750 1250 6850
+Connection ~ 1250 6800
+Wire Wire Line
+	3350 6600 4400 6600
+Connection ~ 5200 6600
+Wire Wire Line
+	4300 6700 4300 6600
+Connection ~ 4300 6600
+Wire Wire Line
+	5200 6600 5200 6700
+Wire Wire Line
+	5600 6600 5600 6700
+Wire Wire Line
+	4300 7000 4300 7100
+Wire Wire Line
+	4300 7100 5600 7100
+Wire Wire Line
+	5600 7100 5600 7000
+Wire Wire Line
+	5200 7000 5200 7100
+Connection ~ 5200 7100
+Wire Wire Line
+	1100 6400 1750 6400
+Wire Wire Line
+	1750 6600 1450 6600
+Wire Wire Line
+	1450 6600 1450 6800
+Wire Wire Line
+	1450 6800 1250 6800
+Wire Wire Line
+	2550 7250 2550 7300
+Wire Wire Line
+	3350 6400 3550 6400
+Wire Wire Line
+	3350 6800 3550 6800
+Connection ~ 4000 6600
+Wire Wire Line
+	1750 6800 1600 6800
+Wire Wire Line
+	1600 6800 1600 7500
+Wire Wire Line
+	1600 7500 4150 7500
+Wire Wire Line
+	4150 7500 4150 6600
+Connection ~ 4150 6600
+Wire Wire Line
+	4000 6800 4000 6600
+Connection ~ 5600 6600
+Text HLabel 3550 7000 2    60   Input ~ 0
+5V_EN
+Wire Wire Line
+	3550 7000 3350 7000
+$Comp
+L C C1
+U 1 1 58404357
+P 1250 6600
+F 0 "C1" H 1275 6700 50  0000 L CNN
+F 1 "10u" H 1275 6500 50  0000 L CNN
+F 2 "" H 1288 6450 50  0000 C CNN
+F 3 "http://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRT188R61E106ME13-01.pdf" H 1250 6600 50  0001 C CNN
+F 4 "490-12323-1-ND" H 1250 6600 60  0001 C CNN "Digikey"
+	1    1250 6600
+	1    0    0    -1  
+$EndComp
+$Comp
+L C C2
+U 1 1 5840435F
+P 3700 6800
+F 0 "C2" H 3725 6900 50  0000 L CNN
+F 1 "22n" H 3725 6700 50  0000 L CNN
+F 2 "" H 3738 6650 50  0000 C CNN
+F 3 "https://product.tdk.com/info/en/catalog/datasheets/mlcc_highreliability_general_en.pdf" H 3700 6800 50  0001 C CNN
+F 4 "445-8118-1-ND" H 3700 6800 60  0001 C CNN "Digikey"
+	1    3700 6800
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	3850 6800 4000 6800
+$Comp
+L C C4
+U 1 1 58404368
+P 5600 6850
+F 0 "C4" H 5625 6950 50  0000 L CNN
+F 1 "22u" H 5625 6750 50  0000 L CNN
+F 2 "" H 5638 6700 50  0000 C CNN
+F 3 "http://www.samsungsem.com/kr/support/product-search/mlcc/__icsFiles/afieldfile/2016/08/18/S_CL10A226MQ8NRNC.pdf" H 5600 6850 50  0001 C CNN
+F 4 "1276-1193-1-ND" H 5600 6850 60  0001 C CNN "Digikey"
+	1    5600 6850
+	1    0    0    -1  
+$EndComp
+$Comp
+L D_Schottky D1
+U 1 1 58404370
+P 4300 6850
+F 0 "D1" V 4250 7000 50  0000 C CNN
+F 1 "VS-10MQ060NPbF" V 4350 7300 50  0000 C CNN
+F 2 "" H 4300 6850 50  0000 C CNN
+F 3 "http://www.vishay.com/docs/88869/packaging.pdf" H 4300 6850 50  0001 C CNN
+F 4 "10MQ060NPBFCT-ND" V 4350 7450 60  0001 C CNN "Digikey"
+	1    4300 6850
+	0    1    1    0   
+$EndComp
+Text GLabel 1100 6400 0    60   Input ~ 0
+V20
+$Comp
+L LM2840 U3
+U 1 1 584064D4
+P 7650 1550
+F 0 "U3" H 7950 1300 60  0000 C CNN
+F 1 "LM2840" H 7450 1300 60  0000 C CNN
+F 2 "" H 7650 1550 60  0000 C CNN
+F 3 "http://www.ti.com/lit/ds/symlink/lm2841.pdf" H 7650 1550 60  0001 C CNN
+F 4 "LM2840XMK-ADJL/NOPBTR-ND" H 7650 1550 60  0001 C CNN "Digikey"
+	1    7650 1550
+	1    0    0    -1  
+$EndComp
+$Comp
+L D_Schottky D2
+U 1 1 584064DC
+P 9000 1650
+F 0 "D2" H 9000 1750 50  0000 C CNN
+F 1 "VS-10MQ060NPbF" H 9000 1550 50  0000 C CNN
+F 2 "" H 9000 1650 50  0000 C CNN
+F 3 "http://www.vishay.com/docs/94118/vs-10mq060npbf.pdf" H 9000 1650 50  0001 C CNN
+F 4 "10MQ060NPBFCT-ND" H 9000 1650 60  0001 C CNN "Digikey"
+	1    9000 1650
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	8150 1400 9050 1400
+$Comp
+L C C5
+U 1 1 584064E5
+P 7650 1100
+F 0 "C5" H 7675 1200 50  0000 L CNN
+F 1 "0.1u" H 7675 1000 50  0000 L CNN
+F 2 "" H 7688 950 50  0000 C CNN
+F 3 "http://www.yageo.com/documents/recent/UPY-GPHC_X7R_6.3V-to-50V_15.pdf" H 7650 1100 50  0001 C CNN
+F 4 "311-1088-1-ND" H 7650 1100 60  0001 C CNN "Digikey"
+	1    7650 1100
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	7150 1400 7150 1100
+Wire Wire Line
+	7150 1100 7500 1100
+Wire Wire Line
+	7800 1100 8200 1100
+Wire Wire Line
+	8200 1100 8200 1400
+Connection ~ 8200 1400
+Wire Wire Line
+	9000 950  9000 1500
+Connection ~ 9000 1400
+Wire Wire Line
+	9650 1400 10400 1400
+Wire Wire Line
+	9700 1400 9700 1500
+Wire Wire Line
+	9700 1850 9000 1850
+Wire Wire Line
+	9000 1850 9000 1800
+Connection ~ 9700 1400
+$Comp
+L GND #PWR9
+U 1 1 584064F9
+P 7050 1550
+F 0 "#PWR9" H 7050 1300 50  0001 C CNN
+F 1 "GND" H 7050 1400 50  0000 C CNN
+F 2 "" H 7050 1550 50  0000 C CNN
+F 3 "" H 7050 1550 50  0000 C CNN
+	1    7050 1550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7050 1550 7150 1550
+Wire Wire Line
+	8150 1700 8250 1700
+Wire Wire Line
+	8250 1700 8250 1550
+Connection ~ 8250 1550
+$Comp
+L C C7
+U 1 1 58406504
+P 8350 1850
+F 0 "C7" H 8375 1950 50  0000 L CNN
+F 1 "2.2u" H 8375 1750 50  0000 L CNN
+F 2 "" H 8388 1700 50  0000 C CNN
+F 3 "http://search.murata.co.jp/Ceramy/image/img/A01X/partnumbering_e_01.pdf" H 8350 1850 50  0001 C CNN
+F 4 "490-7204-1-ND" H 8350 1850 60  0001 C CNN "Digikey"
+	1    8350 1850
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR13
+U 1 1 5840650B
+P 8350 2600
+F 0 "#PWR13" H 8350 2350 50  0001 C CNN
+F 1 "GND" H 8350 2450 50  0000 C CNN
+F 2 "" H 8350 2600 50  0000 C CNN
+F 3 "" H 8350 2600 50  0000 C CNN
+	1    8350 2600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8350 2000 8350 2600
+Wire Wire Line
+	8350 1700 8350 1550
+$Comp
+L R R8
+U 1 1 58406515
+P 6800 1750
+F 0 "R8" V 6880 1750 50  0000 C CNN
+F 1 "27k" V 6800 1750 50  0000 C CNN
+F 2 "" V 6730 1750 50  0000 C CNN
+F 3 "http://industrial.panasonic.com/www-cgi/jvcr13pz.cgi?E+PZ+3+AOA0002+ERJ3EKF2702V+7+WW" H 6800 1750 50  0001 C CNN
+F 4 "P27.0KHCT-ND" V 6800 1750 60  0001 C CNN "Digikey"
+	1    6800 1750
+	0    1    1    0   
+$EndComp
+$Comp
+L R R9
+U 1 1 5840651D
+P 7150 1950
+F 0 "R9" V 7230 1950 50  0000 C CNN
+F 1 "10k" V 7150 1950 50  0000 C CNN
+F 2 "" V 7080 1950 50  0000 C CNN
+F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 7150 1950 50  0001 C CNN
+F 4 " 311-10.0KHRCT-ND" V 7150 1950 60  0001 C CNN "Digikey"
+	1    7150 1950
+	1    0    0    -1  
 $EndComp
 $Comp
 L R R10
-U 1 1 583969A3
-P 7200 3450
-F 0 "R10" V 7280 3450 50  0000 C CNN
-F 1 "120k" V 7200 3450 50  0000 C CNN
-F 2 "" V 7130 3450 50  0000 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 7200 3450 50  0001 C CNN
-F 4 "311-120KHRCT-ND" V 7200 3450 60  0001 C CNN "Digikey"
-	1    7200 3450
-	0    1    1    0   
-$EndComp
-$Comp
-L R R6
-U 1 1 58396C86
-P 4900 3450
-F 0 "R6" V 4980 3450 50  0000 C CNN
-F 1 "3.9k" V 4900 3450 50  0000 C CNN
-F 2 "" V 4830 3450 50  0000 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 4900 3450 50  0001 C CNN
-F 4 "311-3.90KHRCT-ND" V 4900 3450 60  0001 C CNN "Digikey"
-	1    4900 3450
-	0    1    1    0   
-$EndComp
-$Comp
-L R R20
-U 1 1 58396D3B
-P 7600 3450
-F 0 "R20" V 7680 3450 50  0000 C CNN
-F 1 "3.9k" V 7600 3450 50  0000 C CNN
-F 2 "" V 7530 3450 50  0000 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 7600 3450 50  0001 C CNN
-F 4 "311-3.90KHRCT-ND" V 7600 3450 60  0001 C CNN "Digikey"
-	1    7600 3450
-	0    1    1    0   
-$EndComp
-$Comp
-L R R22
-U 1 1 58398205
-P 8500 2950
-F 0 "R22" V 8580 2950 50  0000 C CNN
-F 1 "47k" V 8500 2950 50  0000 C CNN
-F 2 "" V 8430 2950 50  0000 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 8500 2950 50  0001 C CNN
-F 4 "311-47.0KHRCT-ND" V 8500 2950 60  0001 C CNN "Digikey"
-	1    8500 2950
-	0    1    1    0   
-$EndComp
-$Comp
-L R R23
-U 1 1 5839829C
-P 8900 2950
-F 0 "R23" V 8980 2950 50  0000 C CNN
-F 1 "47k" V 8900 2950 50  0000 C CNN
-F 2 "" V 8830 2950 50  0000 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 8900 2950 50  0001 C CNN
-F 4 "311-47.0KHRCT-ND" V 8900 2950 60  0001 C CNN "Digikey"
-	1    8900 2950
-	0    1    1    0   
-$EndComp
-$Comp
-L C C11
-U 1 1 583984D9
-P 8700 3200
-F 0 "C11" H 8725 3300 50  0000 L CNN
-F 1 "10n" H 8725 3100 50  0000 L CNN
-F 2 "" H 8738 3050 50  0000 C CNN
-F 3 "http://www.yageo.com/documents/recent/UPY-GPHC_X7R_6.3V-to-50V_15.pdf" H 8700 3200 50  0001 C CNN
-F 4 "311-1085-1-ND" H 8700 3200 60  0001 C CNN "Digikey"
-	1    8700 3200
-	1    0    0    -1  
-$EndComp
-Text GLabel 9350 2950 2    60   Input ~ 0
-PWM_OLED
-$Comp
-L C C12
-U 1 1 58399326
-P 9100 3200
-F 0 "C12" H 9125 3300 50  0000 L CNN
-F 1 "10n" H 9125 3100 50  0000 L CNN
-F 2 "" H 9138 3050 50  0000 C CNN
-F 3 "http://www.yageo.com/documents/recent/UPY-GPHC_X7R_6.3V-to-50V_15.pdf" H 9100 3200 50  0001 C CNN
-F 4 "311-1085-1-ND" H 9100 3200 60  0001 C CNN "Digikey"
-	1    9100 3200
-	1    0    0    -1  
-$EndComp
-$Comp
-L USB_B P2
-U 1 1 58399DD1
-P 5650 5150
-F 0 "P2" H 5850 4950 50  0000 C CNN
-F 1 "USB_B" H 5600 5350 50  0000 C CNN
-F 2 "" V 5600 5050 50  0000 C CNN
-F 3 "http://katalog.we-online.de/em/datasheet/632121300001.pdf" V 5600 5050 50  0001 C CNN
-F 4 "732-9615-ND" H 5650 5150 60  0001 C CNN "Digikey"
-	1    5650 5150
-	0    1    1    0   
-$EndComp
-Text GLabel 5400 3050 0    60   Input ~ 0
-V20
-$Comp
-L GND #PWR4
-U 1 1 5839C2CB
-P 7150 3050
-F 0 "#PWR4" H 7150 2800 50  0001 C CNN
-F 1 "GND" H 7150 2900 50  0000 C CNN
-F 2 "" H 7150 3050 50  0000 C CNN
-F 3 "" H 7150 3050 50  0000 C CNN
-	1    7150 3050
-	1    0    0    -1  
-$EndComp
-$Sheet
-S 3000 4300 2000 200 
-U 583BCCA6
-F0 "Bucket Converter for 2.8 V, 100 mA" 60
-F1 "V28.sch" 60
-F2 "V28" O R 5000 4400 60 
-F3 "V20" I L 3000 4400 60 
-$EndSheet
-Text Notes 7150 2150 0    60   ~ 0
-A=(R1+R2)/R1 =7.154\nVin,max=2.8 V\nVout,max=20.031 V
-Text Notes 7050 4050 0    60   ~ 0
-A=(R1+R2)/R1 =31.769\nVin,max=30 mV\nVout,max=953.077 mV
-Wire Wire Line
-	5450 2450 5550 2450
-Wire Wire Line
-	5050 2450 5150 2450
-Wire Wire Line
-	5100 2450 5100 2650
-Wire Wire Line
-	5100 2650 5550 2650
-Connection ~ 5100 2450
-Wire Wire Line
-	4750 2450 4750 2550
-Wire Wire Line
-	4750 3450 4750 3550
-Wire Wire Line
-	5050 3450 5150 3450
-Wire Wire Line
-	5450 3450 5550 3450
-Wire Wire Line
-	5100 3450 5100 3650
-Wire Wire Line
-	5100 3650 5550 3650
-Connection ~ 5100 3450
-Wire Wire Line
-	4050 3250 5550 3250
-Wire Wire Line
-	5550 2850 4050 2850
-Wire Wire Line
-	7350 3450 7450 3450
-Wire Wire Line
-	7400 3650 7400 3450
-Connection ~ 7400 3450
-Wire Wire Line
-	7750 3450 7750 3550
-Wire Wire Line
-	4050 3600 4600 3600
-Wire Wire Line
-	4200 2050 4200 2650
-Wire Wire Line
-	4200 2650 4050 2650
-Wire Wire Line
-	4050 3050 4300 3050
-Wire Wire Line
-	4300 3050 4300 2050
-Wire Wire Line
-	4050 3400 4400 3400
-Wire Wire Line
-	4400 3400 4400 2050
-Wire Wire Line
-	4500 3500 4050 3500
-Wire Wire Line
-	4500 3150 4050 3150
-Connection ~ 4500 3150
-Wire Wire Line
-	4600 3600 4600 2250
-Wire Wire Line
-	4600 2250 7850 2250
-Wire Wire Line
-	7850 2250 7850 3250
-Wire Wire Line
-	7350 2650 7450 2650
-Wire Wire Line
-	7750 2650 7750 2750
-Wire Wire Line
-	7400 2950 7400 2850
-Wire Wire Line
-	8250 2950 8350 2950
-Wire Wire Line
-	8650 2950 8750 2950
-Wire Wire Line
-	7400 2450 7400 2650
-Connection ~ 7400 2650
-Wire Wire Line
-	8300 3400 9100 3400
-Wire Wire Line
-	8300 3400 8300 3350
-Connection ~ 9100 3400
-Wire Wire Line
-	8700 3350 8700 3400
-Connection ~ 8700 3400
-Wire Wire Line
-	8300 3050 8300 2950
-Connection ~ 8300 2950
-Wire Wire Line
-	8700 3050 8700 2950
-Connection ~ 8700 2950
-Wire Wire Line
-	7400 2950 7950 2950
-Wire Wire Line
-	9100 3350 9100 3450
-Wire Wire Line
-	9100 3050 9100 2950
-Wire Wire Line
-	9050 2950 9350 2950
-Connection ~ 9100 2950
-Wire Wire Line
-	4050 2750 4500 2750
-Connection ~ 4500 2750
-Wire Wire Line
-	4500 2050 4500 3500
-Wire Wire Line
-	5400 3050 5550 3050
-Wire Wire Line
-	6950 3650 7400 3650
-Wire Wire Line
-	6950 3450 7050 3450
-Wire Wire Line
-	7850 3250 6950 3250
-Wire Wire Line
-	6950 3050 7150 3050
-Wire Wire Line
-	7400 2850 6950 2850
-Wire Wire Line
-	6950 2650 7050 2650
-Wire Wire Line
-	6950 2450 7400 2450
-$Sheet
-S 3000 4850 2000 300 
-U 583B3084
-F0 "Bucket Converter for 5 V,  3 A" 60
-F1 "V53A.sch" 60
-F2 "V20" I L 3000 4950 60 
-F3 "V5" O R 5000 4950 60 
-F4 "5V_EN" I L 3000 5050 60 
-$EndSheet
-Text GLabel 2700 4400 0    60   Input ~ 0
-V20
-Wire Wire Line
-	2700 4400 3000 4400
-Wire Wire Line
-	2850 4400 2850 4950
-Wire Wire Line
-	2850 4950 3000 4950
-Connection ~ 2850 4400
-Wire Wire Line
-	5000 4950 5350 4950
-$Comp
-L GND #PWR3
-U 1 1 583B960B
-P 5200 5250
-F 0 "#PWR3" H 5200 5000 50  0001 C CNN
-F 1 "GND" H 5200 5100 50  0000 C CNN
-F 2 "" H 5200 5250 50  0000 C CNN
-F 3 "" H 5200 5250 50  0000 C CNN
-	1    5200 5250
+U 1 1 58406525
+P 7150 2300
+F 0 "R10" V 7230 2300 50  0000 C CNN
+F 1 "150" V 7150 2300 50  0000 C CNN
+F 2 "" V 7080 2300 50  0000 C CNN
+F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 7150 2300 50  0001 C CNN
+F 4 "311-150HRCT-ND" V 7150 2300 60  0001 C CNN "Digikey"
+	1    7150 2300
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	5200 5250 5350 5250
-NoConn ~ 5350 5050
-NoConn ~ 5350 5150
+	7150 2150 7150 2100
+Wire Wire Line
+	7150 1700 7150 1800
+Wire Wire Line
+	7150 1750 6950 1750
+Connection ~ 7150 1750
+Wire Wire Line
+	6550 1750 6550 950 
+Wire Wire Line
+	6550 950  9000 950 
+Wire Wire Line
+	6550 1750 6650 1750
+Wire Wire Line
+	9700 2550 7150 2550
+Connection ~ 8350 2550
+Connection ~ 9700 1850
+Wire Wire Line
+	7150 2550 7150 2450
+Text Notes 9150 900  0    60   ~ 0
+Vout=0.765 V (1 + (R1 / R2))=2.8V\nR1/R2= .66
+$Comp
+L INDUCTOR L2
+U 1 1 5840653B
+P 9350 1400
+F 0 "L2" V 9300 1400 50  0000 C CNN
+F 1 "33u" V 9450 1400 50  0000 C CNN
+F 2 "" H 9350 1400 50  0000 C CNN
+F 3 "http://www.bourns.com/docs/Product-Datasheets/SRN3015.pdf" H 9350 1400 50  0001 C CNN
+F 4 "SRN3015-330MCT-ND" V 9500 850 60  0001 C CNN "Digikey"
+	1    9350 1400
+	0    -1   -1   0   
+$EndComp
+$Comp
+L C C10
+U 1 1 58406543
+P 9700 1650
+F 0 "C10" H 9725 1750 50  0000 L CNN
+F 1 "10u" H 9725 1550 50  0000 L CNN
+F 2 "" H 9738 1500 50  0000 C CNN
+F 3 "http://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRT188R61E106ME13-01.pdf" H 9700 1650 50  0001 C CNN
+F 4 "490-12323-1-ND" H 9700 1650 60  0001 C CNN "Digikey"
+	1    9700 1650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9700 1800 9700 2550
+Wire Wire Line
+	6050 6900 6200 6900
+Wire Wire Line
+	6050 7100 6600 7100
+$Comp
+L GND #PWR7
+U 1 1 58413E62
+P 6050 7150
+F 0 "#PWR7" H 6050 6900 50  0001 C CNN
+F 1 "GND" H 6050 7000 50  0000 C CNN
+F 2 "" H 6050 7150 50  0000 C CNN
+F 3 "" H 6050 7150 50  0000 C CNN
+	1    6050 7150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6050 6900 6050 7150
+Connection ~ 6050 7100
+Wire Wire Line
+	8350 1550 8150 1550
 $EndSCHEMATC

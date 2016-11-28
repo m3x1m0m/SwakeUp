@@ -38,7 +38,7 @@ Sheet 3 4
 Title "Bucket Converter for 2.8 V "
 Date "2016-11-26"
 Rev "v1.0"
-Comp "-"
+Comp "Uppsala University"
 Comment1 "Drain up to 100 mA."
 Comment2 ""
 Comment3 ""
@@ -106,10 +106,10 @@ Connection ~ 7100 3300
 Wire Wire Line
 	5550 3450 5900 3450
 $Comp
-L GND #PWR8
+L GND #PWR10
 U 1 1 583BD949
 P 4450 3450
-F 0 "#PWR8" H 4450 3200 50  0001 C CNN
+F 0 "#PWR10" H 4450 3200 50  0001 C CNN
 F 1 "GND" H 4450 3300 50  0000 C CNN
 F 2 "" H 4450 3450 50  0000 C CNN
 F 3 "" H 4450 3450 50  0000 C CNN
@@ -136,10 +136,10 @@ F 4 "490-7204-1-ND" H 5750 3750 60  0001 C CNN "Digikey"
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR9
+L GND #PWR11
 U 1 1 583BD95B
 P 5750 4500
-F 0 "#PWR9" H 5750 4250 50  0001 C CNN
+F 0 "#PWR11" H 5750 4250 50  0001 C CNN
 F 1 "GND" H 5750 4350 50  0000 C CNN
 F 2 "" H 5750 4500 50  0000 C CNN
 F 3 "" H 5750 4500 50  0000 C CNN
