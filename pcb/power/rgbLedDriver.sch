@@ -103,7 +103,7 @@ Wire Wire Line
 Connection ~ 3750 7050
 Connection ~ 4550 7050
 Wire Wire Line
-	4850 7050 4850 7000
+	4850 7000 4850 7100
 Wire Wire Line
 	4450 6200 5800 6200
 Wire Wire Line
@@ -187,7 +187,7 @@ Wire Wire Line
 Connection ~ 3750 4850
 Connection ~ 4550 4850
 Wire Wire Line
-	4850 4850 4850 4800
+	4850 4800 4850 4900
 Wire Wire Line
 	4450 4000 5800 4000
 Wire Wire Line
@@ -332,7 +332,7 @@ U 1 1 5837C43E
 P 5250 2400
 F 0 "R30" V 5330 2400 50  0000 C CNN
 F 1 "4.7k" V 5250 2400 50  0000 C CNN
-F 2 "" V 5180 2400 50  0000 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 5180 2400 50  0001 C CNN
 F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 5250 2400 50  0001 C CNN
 F 4 "311-4.7KGRCT-ND" V 5250 2400 60  0001 C CNN "Digikey"
 	1    5250 2400
@@ -391,7 +391,7 @@ Wire Wire Line
 Connection ~ 3750 2800
 Connection ~ 4550 2800
 Wire Wire Line
-	4850 2800 4850 2750
+	4850 2750 4850 2850
 Wire Wire Line
 	4450 1950 5800 1950
 Wire Wire Line
@@ -423,7 +423,7 @@ Connection ~ 1050 3150
 Wire Wire Line
 	1050 1100 1050 5350
 Text Notes 5850 2800 0    60   ~ 0
-Low-Pass Filter\n-----------------------\nfcutt,off=1.539 kHz
+Low-Pass Filter\n-----------------------\nfcutt,off=1.539 kHz\nfsample=4 kHz
 $Comp
 L D D6
 U 1 1 583CC52C
@@ -730,7 +730,7 @@ U 1 1 58426A19
 P 5250 6650
 F 0 "R32" V 5330 6650 50  0000 C CNN
 F 1 "4.7k" V 5250 6650 50  0000 C CNN
-F 2 "" V 5180 6650 50  0000 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 5180 6650 50  0001 C CNN
 F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 5250 6650 50  0001 C CNN
 F 4 "311-4.7KGRCT-ND" V 5250 6650 60  0001 C CNN "Digikey"
 	1    5250 6650
@@ -742,7 +742,7 @@ U 1 1 58426AE7
 P 5250 4450
 F 0 "R31" V 5330 4450 50  0000 C CNN
 F 1 "4.7k" V 5250 4450 50  0000 C CNN
-F 2 "" V 5180 4450 50  0000 C CNN
+F 2 "Resistors_SMD:R_0603_HandSoldering" V 5180 4450 50  0001 C CNN
 F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 5250 4450 50  0001 C CNN
 F 4 "311-4.7KGRCT-ND" V 5250 4450 60  0001 C CNN "Digikey"
 	1    5250 4450
@@ -771,5 +771,38 @@ F 3 "https://product.tdk.com/info/en/catalog/datasheets/mlcc_highreliability_gen
 F 4 "445-8118-1-ND" H 5600 6850 60  0001 C CNN "Digikey"
 	1    5600 6850
 	-1   0    0    1   
+$EndComp
+$Comp
+L GND #PWR020
+U 1 1 584185EC
+P 4850 2850
+F 0 "#PWR020" H 4850 2600 50  0001 C CNN
+F 1 "GND" H 4850 2700 50  0000 C CNN
+F 2 "" H 4850 2850 50  0000 C CNN
+F 3 "" H 4850 2850 50  0000 C CNN
+	1    4850 2850
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR021
+U 1 1 584188BC
+P 4850 7100
+F 0 "#PWR021" H 4850 6850 50  0001 C CNN
+F 1 "GND" H 4850 6950 50  0000 C CNN
+F 2 "" H 4850 7100 50  0000 C CNN
+F 3 "" H 4850 7100 50  0000 C CNN
+	1    4850 7100
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR022
+U 1 1 58418AC2
+P 4850 4900
+F 0 "#PWR022" H 4850 4650 50  0001 C CNN
+F 1 "GND" H 4850 4750 50  0000 C CNN
+F 2 "" H 4850 4900 50  0000 C CNN
+F 3 "" H 4850 4900 50  0000 C CNN
+	1    4850 4900
+	1    0    0    -1  
 $EndComp
 $EndSCHEMATC
