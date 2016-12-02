@@ -121,18 +121,6 @@ F 3 "" H 7700 4350 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L CONN_01X04 P6
-U 1 1 58430FB4
-P 4000 2500
-F 0 "P6" H 4000 2750 50  0000 C CNN
-F 1 "CONN_01X04" V 4100 2500 50  0000 C CNN
-F 2 "Connect:PINHEAD1-3" H 4000 2500 50  0001 C CNN
-F 3 "http://www.on-shore.com/wp-content/uploads/2015/09/ostvnxxa150.pdf" H 4000 2500 50  0001 C CNN
-F 4 "ED10563-ND" H 4000 2500 60  0001 C CNN "Digikey"
-	1    4000 2500
-	0    -1   -1   0   
-$EndComp
-$Comp
 L R R12
 U 1 1 58430FBC
 P 7100 3100
@@ -573,4 +561,12 @@ Text HLabel 7450 2350 2    60   Output ~ 0
 ADC_OLED
 Text HLabel 7450 2150 2    60   Output ~ 0
 VOLED
+Text HLabel 3850 2700 1    60   Output ~ 0
+LED_R
+Text HLabel 3950 2700 1    60   Output ~ 0
+LED_B
+Text HLabel 4050 2700 1    60   Output ~ 0
+LED_G
+Text HLabel 4150 2700 1    60   Output ~ 0
+LED_GND
 $EndSCHEMATC

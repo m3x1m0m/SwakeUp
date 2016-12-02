@@ -45,16 +45,16 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L CONN_01X04 P1
+L CONN_01X04 P2
 U 1 1 583C3625
-P 1250 1350
-F 0 "P1" H 1250 1600 50  0000 C CNN
-F 1 "CONN_01X04" V 1350 1350 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x04" H 1250 1350 50  0001 C CNN
-F 3 "http://www.sullinscorp.com/drawings/78_P(N)PxCxxxLFBN-RC,_10492-H.pdf" H 1250 1350 50  0001 C CNN
-F 4 "S7002-ND " H 1250 1350 60  0001 C CNN "Digikey"
-	1    1250 1350
-	0    -1   -1   0   
+P 1250 5550
+F 0 "P2" H 1250 5800 50  0000 C CNN
+F 1 "CONN_01X04" V 1350 5550 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x04" H 1250 5550 50  0001 C CNN
+F 3 "http://www.sullinscorp.com/drawings/78_P(N)PxCxxxLFBN-RC,_10492-H.pdf" H 1250 5550 50  0001 C CNN
+F 4 "S7002-ND " H 1250 5550 60  0001 C CNN "Digikey"
+	1    1250 5550
+	0    1    1    0   
 $EndComp
 $Comp
 L BARREL_JACK CON1
@@ -68,40 +68,40 @@ F 4 "CP-047BH-ND" H 1350 3550 60  0001 C CNN "Digikey"
 	1    1350 3550
 	1    0    0    -1  
 $EndComp
-Text Notes 1050 1150 0    60   ~ 0
+Text Notes 1200 5800 2    60   ~ 0
 ADC
-Text Notes 1150 6000 0    60   ~ 0
+Text Notes 1500 1200 2    60   ~ 0
 PWM
-Text Notes 10150 5900 2    60   ~ 0
+Text Notes 10150 1160 0    60   ~ 0
 SCREEN
-Text GLabel 5400 3600 0    60   Input ~ 0
-PWM_OLED
 Text GLabel 5400 3450 0    60   Input ~ 0
+PWM_OLED
+Text GLabel 5400 3300 0    60   Input ~ 0
 PWM_G
-Text GLabel 5400 3350 0    60   Input ~ 0
+Text GLabel 5400 3200 0    60   Input ~ 0
 PWM_B
-Text GLabel 5400 3250 0    60   Input ~ 0
+Text GLabel 5400 3100 0    60   Input ~ 0
 PWM_R
 $Comp
 L GND #PWR01
 U 1 1 583EB242
-P 10400 5450
-F 0 "#PWR01" H 10400 5200 50  0001 C CNN
-F 1 "GND" H 10400 5300 50  0000 C CNN
-F 2 "" H 10400 5450 50  0000 C CNN
-F 3 "" H 10400 5450 50  0000 C CNN
-	1    10400 5450
-	-1   0    0    -1  
+P 9900 1550
+F 0 "#PWR01" H 9900 1300 50  0001 C CNN
+F 1 "GND" H 9900 1400 50  0000 C CNN
+F 2 "" H 9900 1550 50  0000 C CNN
+F 3 "" H 9900 1550 50  0000 C CNN
+	1    9900 1550
+	1    0    0    1   
 $EndComp
-Text GLabel 1300 1550 3    60   Input ~ 0
+Text GLabel 1200 5350 1    60   Input ~ 0
 ADC_G
-Text GLabel 1200 1550 3    60   Input ~ 0
+Text GLabel 1300 5350 1    60   Input ~ 0
 ADC_B
-Text GLabel 1100 1550 3    60   Input ~ 0
+Text GLabel 1400 5350 1    60   Input ~ 0
 ADC_R
-Text GLabel 1400 1550 3    60   Input ~ 0
+Text GLabel 1100 5350 1    60   Input ~ 0
 ADC_OLED
-Text GLabel 9950 5450 1    60   Input ~ 0
+Text GLabel 10350 1550 3    60   Input ~ 0
 VOLED
 $Comp
 L LED D1
@@ -118,16 +118,16 @@ $EndComp
 Text Notes 2700 3850 0    60   ~ 0
 Debugging Diode\n-----------------------\nDiode: 1.7 V, 2 mA\nP=33.489 mW\nCan be left out in a later version!
 $Comp
-L CONN_01X03 P5
+L CONN_01X03 P6
 U 1 1 583EC068
-P 10050 5650
-F 0 "P5" H 10050 5850 50  0000 C CNN
-F 1 "CONN_01X03" V 10150 5650 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x03" H 10050 5650 50  0001 C CNN
-F 3 "http://www.sullinscorp.com/drawings/78_P(N)PxCxxxLFBN-RC,_10492-H.pdf" H 10050 5650 50  0001 C CNN
-F 4 "S7036-ND " H 10050 5650 60  0001 C CNN "Digikey"
-	1    10050 5650
-	0    -1   1    0   
+P 10250 1350
+F 0 "P6" H 10250 1550 50  0000 C CNN
+F 1 "CONN_01X03" V 10350 1350 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x03" H 10250 1350 50  0001 C CNN
+F 3 "http://www.sullinscorp.com/drawings/78_P(N)PxCxxxLFBN-RC,_10492-H.pdf" H 10250 1350 50  0001 C CNN
+F 4 "S7036-ND " H 10250 1350 60  0001 C CNN "Digikey"
+	1    10250 1350
+	0    1    -1   0   
 $EndComp
 Wire Wire Line
 	1650 3550 1650 4350
@@ -145,25 +145,25 @@ Wire Wire Line
 	1650 4300 2300 4300
 Connection ~ 1650 4300
 Wire Wire Line
-	10400 5400 10400 5450
+	9900 1600 9900 1550
 Wire Wire Line
-	10050 5400 10400 5400
+	10250 1600 9900 1600
 Wire Wire Line
-	10050 5400 10050 5450
+	10250 1600 10250 1550
 Wire Wire Line
-	10150 5450 10150 5400
-Connection ~ 10150 5400
+	10150 1550 10150 1600
+Connection ~ 10150 1600
 $Comp
-L CONN_01X04 P2
+L CONN_01X04 P1
 U 1 1 5841F1E1
-P 1400 5750
-F 0 "P2" H 1400 6000 50  0000 C CNN
-F 1 "CONN_01X04" V 1500 5750 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x04" H 1400 5750 50  0001 C CNN
-F 3 "http://www.sullinscorp.com/drawings/78_P(N)PxCxxxLFBN-RC,_10492-H.pdf" H 1400 5750 50  0001 C CNN
-F 4 "S7002-ND " H 1400 5750 60  0001 C CNN "Digikey"
-	1    1400 5750
-	0    1    1    0   
+P 1250 1400
+F 0 "P1" H 1250 1650 50  0000 C CNN
+F 1 "CONN_01X04" V 1350 1400 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x04" H 1250 1400 50  0001 C CNN
+F 3 "http://www.sullinscorp.com/drawings/78_P(N)PxCxxxLFBN-RC,_10492-H.pdf" H 1250 1400 50  0001 C CNN
+F 4 "S7002-ND " H 1250 1400 60  0001 C CNN "Digikey"
+	1    1250 1400
+	0    -1   -1   0   
 $EndComp
 $Comp
 L GND #PWR02
@@ -242,28 +242,32 @@ F8 "PWM_B" I L 5550 5400 60
 F9 "PWM_G" I L 5550 5500 60 
 $EndSheet
 $Sheet
-S 5550 2900 1750 1050
+S 5550 2750 1750 1350
 U 584304A2
 F0 "LEDs" 60
 F1 "leds.sch" 60
-F2 "V20" I L 5550 3050 60 
-F3 "PWM_R" I L 5550 3250 60 
-F4 "PWM_B" I L 5550 3350 60 
-F5 "PWM_G" I L 5550 3450 60 
-F6 "ADC_R" O R 7300 3250 60 
-F7 "ADC_B" O R 7300 3350 60 
-F8 "ADC_G" O R 7300 3450 60 
-F9 "PWM_OLED" I L 5550 3600 60 
-F10 "ADC_OLED" O R 7300 3600 60 
-F11 "VOLED" O R 7300 3700 60 
+F2 "V20" I L 5550 2900 60 
+F3 "PWM_R" I L 5550 3100 60 
+F4 "PWM_B" I L 5550 3200 60 
+F5 "PWM_G" I L 5550 3300 60 
+F6 "ADC_R" O R 7300 3100 60 
+F7 "ADC_B" O R 7300 3200 60 
+F8 "ADC_G" O R 7300 3300 60 
+F9 "PWM_OLED" I L 5550 3450 60 
+F10 "ADC_OLED" O R 7300 3450 60 
+F11 "VOLED" O R 7300 3550 60 
+F12 "LED_R" O R 7300 3700 60 
+F13 "LED_B" O R 7300 3800 60 
+F14 "LED_G" O R 7300 3900 60 
+F15 "LED_GND" O R 7300 4000 60 
 $EndSheet
 NoConn ~ 9750 3350
 NoConn ~ 9750 3450
 $Comp
-L USB_A P4
+L USB_A P5
 U 1 1 584373B8
 P 10050 3450
-F 0 "P4" H 10250 3250 50  0000 C CNN
+F 0 "P5" H 10250 3250 50  0000 C CNN
 F 1 "USB_A" H 10000 3650 50  0000 C CNN
 F 2 "Connect:USB_A" V 10000 3350 50  0001 C CNN
 F 3 "http://portal.fciconnect.com/Comergent//fci/drawing/87520.pdf" V 10000 3350 50  0001 C CNN
@@ -271,21 +275,21 @@ F 4 "609-1045-ND" H 10050 3450 60  0001 C CNN "Digikey"
 	1    10050 3450
 	0    1    1    0   
 $EndComp
-Text Notes 9550 1150 0    60   ~ 0
+Text Notes 10450 5710 2    60   ~ 0
 Power for µC\n
 $Comp
-L CONN_01X03 P3
+L CONN_01X03 P4
 U 1 1 584384F7
-P 9850 1350
-F 0 "P3" H 9850 1550 50  0000 C CNN
-F 1 "CONN_01X03" V 9950 1350 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x03" H 9850 1350 50  0001 C CNN
-F 3 "http://www.sullinscorp.com/drawings/78_P(N)PxCxxxLFBN-RC,_10492-H.pdf" H 9850 1350 50  0001 C CNN
-F 4 "S7036-ND " H 9850 1350 60  0001 C CNN "Digikey"
-	1    9850 1350
-	0    1    -1   0   
+P 10150 5450
+F 0 "P4" H 10150 5650 50  0000 C CNN
+F 1 "CONN_01X03" V 10250 5450 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x03" H 10150 5450 50  0001 C CNN
+F 3 "http://www.sullinscorp.com/drawings/78_P(N)PxCxxxLFBN-RC,_10492-H.pdf" H 10150 5450 50  0001 C CNN
+F 4 "S7036-ND " H 10150 5450 60  0001 C CNN "Digikey"
+	1    10150 5450
+	0    -1   1    0   
 $EndComp
-Text GLabel 9850 1550 3    60   Output ~ 0
+Text GLabel 10150 5250 1    60   Output ~ 0
 5V_EN
 Text GLabel 5350 1350 0    60   Input ~ 0
 V20
@@ -295,25 +299,25 @@ Text GLabel 5400 1550 0    60   Input ~ 0
 5V_EN
 Wire Wire Line
 	5400 1550 5550 1550
-Text GLabel 5400 3050 0    60   Input ~ 0
+Text GLabel 5400 2900 0    60   Input ~ 0
 V20
 Wire Wire Line
-	5400 3050 5550 3050
+	5400 2900 5550 2900
 Wire Wire Line
-	5400 3250 5550 3250
+	5400 3100 5550 3100
 Wire Wire Line
-	5400 3350 5550 3350
+	5400 3200 5550 3200
+Wire Wire Line
+	5400 3300 5550 3300
 Wire Wire Line
 	5400 3450 5550 3450
-Wire Wire Line
-	5400 3600 5550 3600
-Text GLabel 1250 5550 1    60   Output ~ 0
+Text GLabel 1400 1600 3    60   Output ~ 0
 PWM_OLED
-Text GLabel 1350 5550 1    60   Output ~ 0
+Text GLabel 1300 1600 3    60   Output ~ 0
 PWM_G
-Text GLabel 1450 5550 1    60   Output ~ 0
+Text GLabel 1200 1600 3    60   Output ~ 0
 PWM_B
-Text GLabel 1550 5550 1    60   Output ~ 0
+Text GLabel 1100 1600 3    60   Output ~ 0
 PWM_R
 Text GLabel 5400 5100 0    60   Input ~ 0
 ADC_G
@@ -350,17 +354,17 @@ Wire Wire Line
 $Comp
 L GND #PWR05
 U 1 1 58444C94
-P 10200 1550
-F 0 "#PWR05" H 10200 1300 50  0001 C CNN
-F 1 "GND" H 10200 1400 50  0000 C CNN
-F 2 "" H 10200 1550 50  0000 C CNN
-F 3 "" H 10200 1550 50  0000 C CNN
-	1    10200 1550
-	-1   0    0    -1  
+P 9800 5250
+F 0 "#PWR05" H 9800 5000 50  0001 C CNN
+F 1 "GND" H 9800 5100 50  0000 C CNN
+F 2 "" H 9800 5250 50  0000 C CNN
+F 3 "" H 9800 5250 50  0000 C CNN
+	1    9800 5250
+	1    0    0    1   
 $EndComp
 Wire Wire Line
-	9950 1550 10200 1550
-Text GLabel 9750 1550 3    60   Input ~ 0
+	10050 5250 9800 5250
+Text GLabel 10250 5250 1    60   Input ~ 0
 V28
 Text GLabel 7500 1650 2    60   Output ~ 0
 V28
@@ -388,24 +392,62 @@ Wire Wire Line
 Wire Wire Line
 	9750 3750 10150 3750
 Connection ~ 9750 3750
-Text GLabel 7500 3250 2    60   Output ~ 0
+Text GLabel 7500 3100 2    60   Output ~ 0
 ADC_R
-Text GLabel 7500 3350 2    60   Output ~ 0
+Text GLabel 7500 3200 2    60   Output ~ 0
 ADC_B
-Text GLabel 7500 3450 2    60   Output ~ 0
+Text GLabel 7500 3300 2    60   Output ~ 0
 ADC_G
-Text GLabel 7500 3600 2    60   Output ~ 0
+Text GLabel 7500 3450 2    60   Output ~ 0
 ADC_OLED
-Text GLabel 7500 3700 2    60   Output ~ 0
+Text GLabel 7500 3550 2    60   Output ~ 0
 VOLED
+Wire Wire Line
+	7300 3550 7500 3550
+Wire Wire Line
+	7500 3450 7300 3450
+Wire Wire Line
+	7300 3300 7500 3300
+Wire Wire Line
+	7500 3200 7300 3200
+Wire Wire Line
+	7300 3100 7500 3100
+Text Notes 3100 1200 0    60   ~ 0
+LED
+Text GLabel 7500 3700 2    60   Output ~ 0
+LED_R
+Text GLabel 7500 3800 2    60   Output ~ 0
+LED_B
+Text GLabel 7500 3900 2    60   Output ~ 0
+LED_G
 Wire Wire Line
 	7300 3700 7500 3700
 Wire Wire Line
-	7500 3600 7300 3600
+	7300 3800 7500 3800
 Wire Wire Line
-	7300 3450 7500 3450
+	7300 3900 7500 3900
+Text GLabel 7500 4000 2    60   Output ~ 0
+LED_GND
 Wire Wire Line
-	7500 3350 7300 3350
-Wire Wire Line
-	7300 3250 7500 3250
+	7500 4000 7300 4000
+Text GLabel 3450 1600 3    60   Input ~ 0
+LED_R
+Text GLabel 3350 1600 3    60   Input ~ 0
+LED_B
+Text GLabel 3250 1600 3    60   Input ~ 0
+LED_G
+Text GLabel 3150 1600 3    60   Input ~ 0
+LED_GND
+$Comp
+L CONN_01X04 P3
+U 1 1 58452B47
+P 3300 1400
+F 0 "P3" H 3300 1650 50  0000 C CNN
+F 1 "CONN_01X04" V 3400 1400 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x04" H 3300 1400 50  0001 C CNN
+F 3 "http://www.sullinscorp.com/drawings/78_P(N)PxCxxxLFBN-RC,_10492-H.pdf" H 3300 1400 50  0001 C CNN
+F 4 "S7002-ND " H 3300 1400 60  0001 C CNN "Digikey"
+	1    3300 1400
+	0    -1   -1   0   
+$EndComp
 $EndSCHEMATC
