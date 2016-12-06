@@ -264,10 +264,10 @@ $EndSheet
 NoConn ~ 9750 3350
 NoConn ~ 9750 3450
 $Comp
-L USB_A P5
+L USB_A P4
 U 1 1 584373B8
 P 10050 3450
-F 0 "P5" H 10250 3250 50  0000 C CNN
+F 0 "P4" H 10250 3250 50  0000 C CNN
 F 1 "USB_A" H 10000 3650 50  0000 C CNN
 F 2 "Connect:USB_A" V 10000 3350 50  0001 C CNN
 F 3 "http://portal.fciconnect.com/Comergent//fci/drawing/87520.pdf" V 10000 3350 50  0001 C CNN
@@ -278,10 +278,10 @@ $EndComp
 Text Notes 10450 5710 2    60   ~ 0
 Power for µC\n
 $Comp
-L CONN_01X03 P4
+L CONN_01X03 P5
 U 1 1 584384F7
 P 10150 5450
-F 0 "P4" H 10150 5650 50  0000 C CNN
+F 0 "P5" H 10150 5650 50  0000 C CNN
 F 1 "CONN_01X03" V 10250 5450 50  0000 C CNN
 F 2 "Pin_Headers:Pin_Header_Straight_1x03" H 10150 5450 50  0001 C CNN
 F 3 "http://www.sullinscorp.com/drawings/78_P(N)PxCxxxLFBN-RC,_10492-H.pdf" H 10150 5450 50  0001 C CNN
@@ -444,7 +444,7 @@ U 1 1 58452B47
 P 3300 1400
 F 0 "P3" H 3300 1650 50  0000 C CNN
 F 1 "CONN_01X04" V 3400 1400 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x04" H 3300 1400 50  0001 C CNN
+F 2 "Additional:LED_CONN_1.25_PITCH" H 3300 1400 50  0001 C CNN
 F 3 "http://www.sullinscorp.com/drawings/78_P(N)PxCxxxLFBN-RC,_10492-H.pdf" H 3300 1400 50  0001 C CNN
 F 4 "S7002-ND " H 3300 1400 60  0001 C CNN "Digikey"
 	1    3300 1400
