@@ -311,7 +311,7 @@ F 4 "TS30012-M050QFNRCT-ND " H 3050 5500 60  0001 C CNN "Digikey"
 	1    3050 5500
 	1    0    0    -1  
 $EndComp
-Text Notes 1400 4900 0    60   ~ 0
+Text Notes 1400 5000 0    60   ~ 0
 5V for Mobile Phone\n-----------------------\nVout,max=5 V\nAout,max = 2A
 $Comp
 L GND #PWR010
@@ -480,7 +480,7 @@ Wire Wire Line
 Wire Wire Line
 	6600 5400 6600 5450
 Wire Wire Line
-	6600 6300 6600 6250
+	6600 6250 6600 6350
 Connection ~ 6200 6300
 Wire Wire Line
 	3900 5200 4100 5200
@@ -498,4 +498,16 @@ Wire Wire Line
 	4300 2400 5150 2400
 Connection ~ 6600 5400
 Connection ~ 4800 2400
+$Comp
+L GND #PWR?
+U 1 1 584C8E69
+P 6600 6350
+F 0 "#PWR?" H 6600 6100 50  0001 C CNN
+F 1 "GND" H 6600 6200 50  0000 C CNN
+F 2 "" H 6600 6350 50  0000 C CNN
+F 3 "" H 6600 6350 50  0000 C CNN
+	1    6600 6350
+	1    0    0    -1  
+$EndComp
+Connection ~ 6600 6300
 $EndSCHEMATC
