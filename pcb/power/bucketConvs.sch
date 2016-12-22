@@ -108,7 +108,7 @@ U 1 1 5842EC5F
 P 1450 2750
 F 0 "R2" V 1530 2750 50  0000 C CNN
 F 1 "27k" V 1450 2750 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 1380 2750 50  0001 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 1380 2750 50  0001 C CNN
 F 3 "http://industrial.panasonic.com/www-cgi/jvcr13pz.cgi?E+PZ+3+AOA0002+ERJ3EKF2702V+7+WW" H 1450 2750 50  0001 C CNN
 F 4 "P27.0KHCT-ND" V 1450 2750 60  0001 C CNN "Digikey"
 	1    1450 2750
@@ -120,7 +120,7 @@ U 1 1 5842EC67
 P 1800 2950
 F 0 "R3" V 1880 2950 50  0000 C CNN
 F 1 "10k" V 1800 2950 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 1730 2950 50  0001 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 1730 2950 50  0001 C CNN
 F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 1800 2950 50  0001 C CNN
 F 4 " 311-10.0KHRCT-ND" V 1800 2950 60  0001 C CNN "Digikey"
 	1    1800 2950
@@ -132,7 +132,7 @@ U 1 1 5842EC6F
 P 1800 3300
 F 0 "R4" V 1880 3300 50  0000 C CNN
 F 1 "150" V 1800 3300 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 1730 3300 50  0001 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 1730 3300 50  0001 C CNN
 F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 1800 3300 50  0001 C CNN
 F 4 "311-150HRCT-ND" V 1800 3300 60  0001 C CNN "Digikey"
 	1    1800 3300
@@ -182,7 +182,7 @@ U 1 1 5842EC90
 P 4800 3050
 F 0 "R5" V 4880 3050 50  0000 C CNN
 F 1 "560R" V 4800 3050 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 4730 3050 50  0001 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 4730 3050 50  0001 C CNN
 F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 4800 3050 50  0001 C CNN
 F 4 "311-560GRCT-ND" V 4800 3050 60  0001 C CNN "Digikey"
 	1    4800 3050
@@ -291,7 +291,7 @@ U 1 1 5842F8EB
 P 6600 6100
 F 0 "R6" V 6680 6100 50  0000 C CNN
 F 1 "1.5k" V 6600 6100 50  0000 C CNN
-F 2 "Capacitors_SMD:C_0603_HandSoldering" V 6530 6100 50  0001 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 6530 6100 50  0001 C CNN
 F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 6600 6100 50  0001 C CNN
 F 4 "311-1.5KGRCT-ND " V 6600 6100 60  0001 C CNN "Digikey"
 	1    6600 6100
@@ -499,10 +499,10 @@ Wire Wire Line
 Connection ~ 6600 5400
 Connection ~ 4800 2400
 $Comp
-L GND #PWR?
+L GND #PWR013
 U 1 1 584C8E69
 P 6600 6350
-F 0 "#PWR?" H 6600 6100 50  0001 C CNN
+F 0 "#PWR013" H 6600 6100 50  0001 C CNN
 F 1 "GND" H 6600 6200 50  0000 C CNN
 F 2 "" H 6600 6350 50  0000 C CNN
 F 3 "" H 6600 6350 50  0000 C CNN

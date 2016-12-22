@@ -230,7 +230,7 @@ U 1 1 5837C403
 P 2600 1350
 F 0 "R24" V 2680 1350 50  0000 C CNN
 F 1 "10k" V 2600 1350 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 2530 1350 50  0001 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 2530 1350 50  0001 C CNN
 F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 2600 1350 50  0001 C CNN
 F 4 "311-10KGRCT-ND" V 2600 1350 60  0001 C CNN "Digikey"
 	1    2600 1350
@@ -242,7 +242,7 @@ U 1 1 5837C40A
 P 2000 2500
 F 0 "R21" V 2080 2500 50  0000 C CNN
 F 1 "470R" V 2000 2500 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 1930 2500 50  0001 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 1930 2500 50  0001 C CNN
 F 3 "https://industrial.panasonic.com/cdbs/www-data/pdf/RDA0000/AOA0000COL70.pdf" H 2000 2500 50  0001 C CNN
 F 4 "P20245CT-ND" V 2000 2500 60  0001 C CNN "Digikey"
 	1    2000 2500
@@ -308,7 +308,7 @@ U 1 1 5837C430
 P 4850 2600
 F 0 "R27" V 4930 2600 50  0000 C CNN
 F 1 "0.1R" V 4850 2600 50  0000 C CNN
-F 2 "Capacitors_SMD:C_0603_HandSoldering" V 4780 2600 50  0001 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 4780 2600 50  0001 C CNN
 F 3 "http://media.digikey.com/pdf/Data%20Sheets/Samsung%20PDFs/RU_Series_ds.pdf" H 4850 2600 50  0001 C CNN
 F 4 "1276-6155-1-ND" V 4850 2600 60  0001 C CNN "Digikey"
 	1    4850 2600
@@ -332,7 +332,7 @@ U 1 1 5837C43E
 P 5250 2400
 F 0 "R30" V 5330 2400 50  0000 C CNN
 F 1 "4.7k" V 5250 2400 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 5180 2400 50  0001 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 5180 2400 50  0001 C CNN
 F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 5250 2400 50  0001 C CNN
 F 4 "311-4.7KGRCT-ND" V 5250 2400 60  0001 C CNN "Digikey"
 	1    5250 2400
@@ -466,7 +466,7 @@ U 1 1 58417A6F
 P 2000 4550
 F 0 "R22" V 2080 4550 50  0000 C CNN
 F 1 "470R" V 2000 4550 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 1930 4550 50  0001 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 1930 4550 50  0001 C CNN
 F 3 "https://industrial.panasonic.com/cdbs/www-data/pdf/RDA0000/AOA0000COL70.pdf" H 2000 4550 50  0001 C CNN
 F 4 "P20245CT-ND" V 2000 4550 60  0001 C CNN "Digikey"
 	1    2000 4550
@@ -478,7 +478,7 @@ U 1 1 58417E43
 P 2000 6750
 F 0 "R23" V 2080 6750 50  0000 C CNN
 F 1 "470R" V 2000 6750 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 1930 6750 50  0001 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 1930 6750 50  0001 C CNN
 F 3 "https://industrial.panasonic.com/cdbs/www-data/pdf/RDA0000/AOA0000COL70.pdf" H 2000 6750 50  0001 C CNN
 F 4 "P20245CT-ND" V 2000 6750 60  0001 C CNN "Digikey"
 	1    2000 6750
@@ -490,7 +490,7 @@ U 1 1 58418FF7
 P 2600 5600
 F 0 "R26" V 2680 5600 50  0000 C CNN
 F 1 "10k" V 2600 5600 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 2530 5600 50  0001 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 2530 5600 50  0001 C CNN
 F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 2600 5600 50  0001 C CNN
 F 4 "311-10KGRCT-ND" V 2600 5600 60  0001 C CNN "Digikey"
 	1    2600 5600
@@ -502,7 +502,7 @@ U 1 1 584192F9
 P 2600 3400
 F 0 "R25" V 2680 3400 50  0000 C CNN
 F 1 "10k" V 2600 3400 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 2530 3400 50  0001 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 2530 3400 50  0001 C CNN
 F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 2600 3400 50  0001 C CNN
 F 4 "311-10KGRCT-ND" V 2600 3400 60  0001 C CNN "Digikey"
 	1    2600 3400
@@ -706,7 +706,7 @@ U 1 1 58425BE1
 P 4850 4650
 F 0 "R28" V 4930 4650 50  0000 C CNN
 F 1 "0.1R" V 4850 4650 50  0000 C CNN
-F 2 "Capacitors_SMD:C_0603_HandSoldering" V 4780 4650 50  0001 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 4780 4650 50  0001 C CNN
 F 3 "http://media.digikey.com/pdf/Data%20Sheets/Samsung%20PDFs/RU_Series_ds.pdf" H 4850 4650 50  0001 C CNN
 F 4 "1276-6155-1-ND" V 4850 4650 60  0001 C CNN "Digikey"
 	1    4850 4650
@@ -718,7 +718,7 @@ U 1 1 58425F29
 P 4850 6850
 F 0 "R29" V 4930 6850 50  0000 C CNN
 F 1 "0.1R" V 4850 6850 50  0000 C CNN
-F 2 "Capacitors_SMD:C_0603_HandSoldering" V 4780 6850 50  0001 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 4780 6850 50  0001 C CNN
 F 3 "http://media.digikey.com/pdf/Data%20Sheets/Samsung%20PDFs/RU_Series_ds.pdf" H 4850 6850 50  0001 C CNN
 F 4 "1276-6155-1-ND" V 4850 6850 60  0001 C CNN "Digikey"
 	1    4850 6850
@@ -730,7 +730,7 @@ U 1 1 58426A19
 P 5250 6650
 F 0 "R32" V 5330 6650 50  0000 C CNN
 F 1 "4.7k" V 5250 6650 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 5180 6650 50  0001 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 5180 6650 50  0001 C CNN
 F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 5250 6650 50  0001 C CNN
 F 4 "311-4.7KGRCT-ND" V 5250 6650 60  0001 C CNN "Digikey"
 	1    5250 6650
@@ -742,7 +742,7 @@ U 1 1 58426AE7
 P 5250 4450
 F 0 "R31" V 5330 4450 50  0000 C CNN
 F 1 "4.7k" V 5250 4450 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 5180 4450 50  0001 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 5180 4450 50  0001 C CNN
 F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 5250 4450 50  0001 C CNN
 F 4 "311-4.7KGRCT-ND" V 5250 4450 60  0001 C CNN "Digikey"
 	1    5250 4450
@@ -773,10 +773,10 @@ F 4 "445-8118-1-ND" H 5600 6850 60  0001 C CNN "Digikey"
 	-1   0    0    1   
 $EndComp
 $Comp
-L GND #PWR022
+L GND #PWR024
 U 1 1 584185EC
 P 4850 2850
-F 0 "#PWR022" H 4850 2600 50  0001 C CNN
+F 0 "#PWR024" H 4850 2600 50  0001 C CNN
 F 1 "GND" H 4850 2700 50  0000 C CNN
 F 2 "" H 4850 2850 50  0000 C CNN
 F 3 "" H 4850 2850 50  0000 C CNN
@@ -784,10 +784,10 @@ F 3 "" H 4850 2850 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR023
+L GND #PWR025
 U 1 1 584188BC
 P 4850 7100
-F 0 "#PWR023" H 4850 6850 50  0001 C CNN
+F 0 "#PWR025" H 4850 6850 50  0001 C CNN
 F 1 "GND" H 4850 6950 50  0000 C CNN
 F 2 "" H 4850 7100 50  0000 C CNN
 F 3 "" H 4850 7100 50  0000 C CNN
@@ -795,10 +795,10 @@ F 3 "" H 4850 7100 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR024
+L GND #PWR026
 U 1 1 58418AC2
 P 4850 4900
-F 0 "#PWR024" H 4850 4650 50  0001 C CNN
+F 0 "#PWR026" H 4850 4650 50  0001 C CNN
 F 1 "GND" H 4850 4750 50  0000 C CNN
 F 2 "" H 4850 4900 50  0000 C CNN
 F 3 "" H 4850 4900 50  0000 C CNN

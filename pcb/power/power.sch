@@ -159,9 +159,9 @@ U 1 1 5841F1E1
 P 1250 1400
 F 0 "P1" H 1250 1650 50  0000 C CNN
 F 1 "CONN_01X04" V 1350 1400 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x04" H 1250 1400 50  0001 C CNN
-F 3 "http://www.sullinscorp.com/drawings/78_P(N)PxCxxxLFBN-RC,_10492-H.pdf" H 1250 1400 50  0001 C CNN
-F 4 "S7002-ND " H 1250 1400 60  0001 C CNN "Digikey"
+F 2 "Additional:ESQ-104-12-G-S-LL" H 1250 1400 50  0001 C CNN
+F 3 "https://www.samtec.com/products/esq" H 1250 1400 50  0001 C CNN
+F 4 "ESQ-104-12-G-S-LL" H 1250 1400 60  0001 C CNN "Samtec"
 	1    1250 1400
 	0    -1   -1   0   
 $EndComp
@@ -182,7 +182,7 @@ U 1 1 58429064
 P 2300 4100
 F 0 "R1" V 2380 4100 50  0000 C CNN
 F 1 "10k" V 2300 4100 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 2230 4100 50  0001 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 2230 4100 50  0001 C CNN
 F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 2300 4100 50  0001 C CNN
 F 4 " 311-10.0KHRCT-ND" V 2300 4100 60  0001 C CNN "Digikey"
 	1    2300 4100
@@ -444,9 +444,9 @@ U 1 1 58452B47
 P 3300 1400
 F 0 "P3" H 3300 1650 50  0000 C CNN
 F 1 "CONN_01X04" V 3400 1400 50  0000 C CNN
-F 2 "Additional:LED_CONN_1.25_PITCH" H 3300 1400 50  0001 C CNN
-F 3 "http://www.sullinscorp.com/drawings/78_P(N)PxCxxxLFBN-RC,_10492-H.pdf" H 3300 1400 50  0001 C CNN
-F 4 "S7002-ND " H 3300 1400 60  0001 C CNN "Digikey"
+F 2 "Additional:ESQ-104-12-G-S-LL" H 3300 1400 50  0001 C CNN
+F 3 "https://www.samtec.com/products/esq" H 3300 1400 50  0001 C CNN
+F 4 "ESQ-104-12-G-S-LL" H 3300 1400 60  0001 C CNN "Samtec"
 	1    3300 1400
 	0    -1   -1   0   
 $EndComp

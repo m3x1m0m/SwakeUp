@@ -76,10 +76,10 @@ F 4 "497-12005-1-ND" H 6100 3700 60  0001 C CNN "Digikey"
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR015
+L GND #PWR016
 U 1 1 58430F99
 P 4600 3200
-F 0 "#PWR015" H 4600 2950 50  0001 C CNN
+F 0 "#PWR016" H 4600 2950 50  0001 C CNN
 F 1 "GND" H 4600 3050 50  0000 C CNN
 F 2 "" H 4600 3200 50  0000 C CNN
 F 3 "" H 4600 3200 50  0000 C CNN
@@ -92,17 +92,17 @@ U 1 1 58430FA0
 P 5050 4300
 F 0 "R9" V 5130 4300 50  0000 C CNN
 F 1 "120k" V 5050 4300 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 4980 4300 50  0001 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 4980 4300 50  0001 C CNN
 F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 5050 4300 50  0001 C CNN
 F 4 "311-120KHRCT-ND" V 5050 4300 60  0001 C CNN "Digikey"
 	1    5050 4300
 	0    1    1    0   
 $EndComp
 $Comp
-L GND #PWR016
+L GND #PWR017
 U 1 1 58430FA7
 P 4450 4400
-F 0 "#PWR016" H 4450 4150 50  0001 C CNN
+F 0 "#PWR017" H 4450 4150 50  0001 C CNN
 F 1 "GND" H 4450 4250 50  0000 C CNN
 F 2 "" H 4450 4400 50  0000 C CNN
 F 3 "" H 4450 4400 50  0000 C CNN
@@ -110,10 +110,10 @@ F 3 "" H 4450 4400 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR017
+L GND #PWR018
 U 1 1 58430FAD
 P 7700 4350
-F 0 "#PWR017" H 7700 4100 50  0001 C CNN
+F 0 "#PWR018" H 7700 4100 50  0001 C CNN
 F 1 "GND" H 7700 4200 50  0000 C CNN
 F 2 "" H 7700 4350 50  0000 C CNN
 F 3 "" H 7700 4350 50  0000 C CNN
@@ -126,7 +126,7 @@ U 1 1 58430FBC
 P 7100 3100
 F 0 "R12" V 7180 3100 50  0000 C CNN
 F 1 "240k" V 7100 3100 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 7030 3100 50  0001 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 7030 3100 50  0001 C CNN
 F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 7100 3100 50  0001 C CNN
 F 4 "311-240KHRCT-ND" V 7100 3100 60  0001 C CNN "Digikey"
 	1    7100 3100
@@ -138,17 +138,17 @@ U 1 1 58430FC4
 P 7600 3100
 F 0 "R16" V 7680 3100 50  0000 C CNN
 F 1 "39k" V 7600 3100 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 7530 3100 50  0001 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 7530 3100 50  0001 C CNN
 F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 7600 3100 50  0001 C CNN
 F 4 "311-39.0KHRCT-ND" V 7600 3100 60  0001 C CNN "Digikey"
 	1    7600 3100
 	0    1    1    0   
 $EndComp
 $Comp
-L GND #PWR018
+L GND #PWR019
 U 1 1 58430FCB
 P 7750 3400
-F 0 "#PWR018" H 7750 3150 50  0001 C CNN
+F 0 "#PWR019" H 7750 3150 50  0001 C CNN
 F 1 "GND" H 7750 3250 50  0000 C CNN
 F 2 "" H 7750 3400 50  0000 C CNN
 F 3 "" H 7750 3400 50  0000 C CNN
@@ -161,7 +161,7 @@ U 1 1 58430FD2
 P 8100 3650
 F 0 "R18" V 8180 3650 50  0000 C CNN
 F 1 "47k" V 8100 3650 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 8030 3650 50  0001 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 8030 3650 50  0001 C CNN
 F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 8100 3650 50  0001 C CNN
 F 4 "311-47.0KHRCT-ND" V 8100 3650 60  0001 C CNN "Digikey"
 	1    8100 3650
@@ -180,10 +180,10 @@ F 4 "311-1085-1-ND" H 8300 3900 60  0001 C CNN "Digikey"
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR019
+L GND #PWR020
 U 1 1 58430FE1
 P 9100 4150
-F 0 "#PWR019" H 9100 3900 50  0001 C CNN
+F 0 "#PWR020" H 9100 3900 50  0001 C CNN
 F 1 "GND" H 9100 4000 50  0000 C CNN
 F 2 "" H 9100 4150 50  0000 C CNN
 F 3 "" H 9100 4150 50  0000 C CNN
@@ -196,7 +196,7 @@ U 1 1 58430FE8
 P 4750 3100
 F 0 "R8" V 4830 3100 50  0000 C CNN
 F 1 "3.9k" V 4750 3100 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 4680 3100 50  0001 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 4680 3100 50  0001 C CNN
 F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 4750 3100 50  0001 C CNN
 F 4 "311-3.90KHRCT-ND" V 4750 3100 60  0001 C CNN "Digikey"
 	1    4750 3100
@@ -208,7 +208,7 @@ U 1 1 58430FF0
 P 5150 3100
 F 0 "R10" V 5230 3100 50  0000 C CNN
 F 1 "120k" V 5150 3100 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 5080 3100 50  0001 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 5080 3100 50  0001 C CNN
 F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 5150 3100 50  0001 C CNN
 F 4 "311-120KHRCT-ND" V 5150 3100 60  0001 C CNN "Digikey"
 	1    5150 3100
@@ -220,7 +220,7 @@ U 1 1 58430FF8
 P 7100 4300
 F 0 "R13" V 7180 4300 50  0000 C CNN
 F 1 "120k" V 7100 4300 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 7030 4300 50  0001 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 7030 4300 50  0001 C CNN
 F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 7100 4300 50  0001 C CNN
 F 4 "311-120KHRCT-ND" V 7100 4300 60  0001 C CNN "Digikey"
 	1    7100 4300
@@ -232,7 +232,7 @@ U 1 1 58431000
 P 4600 4300
 F 0 "R7" V 4680 4300 50  0000 C CNN
 F 1 "3.9k" V 4600 4300 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 4530 4300 50  0001 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 4530 4300 50  0001 C CNN
 F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 4600 4300 50  0001 C CNN
 F 4 "311-3.90KHRCT-ND" V 4600 4300 60  0001 C CNN "Digikey"
 	1    4600 4300
@@ -244,7 +244,7 @@ U 1 1 58431008
 P 7550 4300
 F 0 "R14" V 7630 4300 50  0000 C CNN
 F 1 "3.9k" V 7550 4300 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 7480 4300 50  0001 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 7480 4300 50  0001 C CNN
 F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 7550 4300 50  0001 C CNN
 F 4 "311-3.90KHRCT-ND" V 7550 4300 60  0001 C CNN "Digikey"
 	1    7550 4300
@@ -256,7 +256,7 @@ U 1 1 58431010
 P 8500 3650
 F 0 "R19" V 8580 3650 50  0000 C CNN
 F 1 "47k" V 8500 3650 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 8430 3650 50  0001 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 8430 3650 50  0001 C CNN
 F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 8500 3650 50  0001 C CNN
 F 4 "311-47.0KHRCT-ND" V 8500 3650 60  0001 C CNN "Digikey"
 	1    8500 3650
@@ -268,7 +268,7 @@ U 1 1 58431018
 P 8900 3650
 F 0 "R20" V 8980 3650 50  0000 C CNN
 F 1 "47k" V 8900 3650 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 8830 3650 50  0001 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 8830 3650 50  0001 C CNN
 F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 8900 3650 50  0001 C CNN
 F 4 "311-47.0KHRCT-ND" V 8900 3650 60  0001 C CNN "Digikey"
 	1    8900 3650
@@ -299,10 +299,10 @@ F 4 "311-1085-1-ND" H 9100 3900 60  0001 C CNN "Digikey"
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR020
+L GND #PWR021
 U 1 1 58431031
 P 7000 3700
-F 0 "#PWR020" H 7000 3450 50  0001 C CNN
+F 0 "#PWR021" H 7000 3450 50  0001 C CNN
 F 1 "GND" H 7000 3550 50  0000 C CNN
 F 2 "" H 7000 3700 50  0000 C CNN
 F 3 "" H 7000 3700 50  0000 C CNN
@@ -319,7 +319,7 @@ U 1 1 5843103A
 P 7100 2500
 F 0 "R11" V 7180 2500 50  0000 C CNN
 F 1 "120k" V 7100 2500 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 7030 2500 50  0001 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 7030 2500 50  0001 C CNN
 F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 7100 2500 50  0001 C CNN
 F 4 "311-120KHRCT-ND" V 7100 2500 60  0001 C CNN "Digikey"
 	1    7100 2500
@@ -331,7 +331,7 @@ U 1 1 58431042
 P 7600 2500
 F 0 "R15" V 7680 2500 50  0000 C CNN
 F 1 "2.7k" V 7600 2500 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 7530 2500 50  0001 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 7530 2500 50  0001 C CNN
 F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 7600 2500 50  0001 C CNN
 F 4 "311-2.70KHRCT-ND" V 7600 2500 60  0001 C CNN "Digikey"
 	1    7600 2500
@@ -343,17 +343,17 @@ U 1 1 5843104A
 P 7950 2500
 F 0 "R17" V 8030 2500 50  0000 C CNN
 F 1 "3.3k" V 7950 2500 50  0000 C CNN
-F 2 "Resistors_SMD:R_0603_HandSoldering" V 7880 2500 50  0001 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 7880 2500 50  0001 C CNN
 F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 7950 2500 50  0001 C CNN
 F 4 "311-3.30KHRCT-ND" V 7950 2500 60  0001 C CNN "Digikey"
 	1    7950 2500
 	0    1    1    0   
 $EndComp
 $Comp
-L GND #PWR021
+L GND #PWR022
 U 1 1 58431051
 P 8100 2900
-F 0 "#PWR021" H 8100 2650 50  0001 C CNN
+F 0 "#PWR022" H 8100 2650 50  0001 C CNN
 F 1 "GND" H 8100 2750 50  0000 C CNN
 F 2 "" H 8100 2900 50  0000 C CNN
 F 3 "" H 8100 2900 50  0000 C CNN
@@ -433,8 +433,6 @@ Wire Wire Line
 Connection ~ 4150 3400
 Wire Wire Line
 	4150 2700 4150 4150
-Wire Wire Line
-	5250 3700 5400 3700
 Wire Wire Line
 	7850 3900 6800 3900
 Wire Wire Line
@@ -549,7 +547,7 @@ Text HLabel 2500 4050 0    60   Input ~ 0
 PWM_G
 Text HLabel 5150 2700 0    60   Output ~ 0
 ADC_R
-Text HLabel 5250 3700 0    60   Input ~ 0
+Text HLabel 5150 3800 0    60   Input ~ 0
 V20
 Text HLabel 5100 4500 0    60   Output ~ 0
 ADC_B
@@ -569,4 +567,40 @@ Text HLabel 4050 2700 1    60   Output ~ 0
 LED_G
 Text HLabel 4150 2700 1    60   Output ~ 0
 LED_GND
+$Comp
+L C C21
+U 1 1 584CBAE2
+P 5100 3600
+F 0 "C21" V 5150 3650 50  0000 L CNN
+F 1 "2.2u" V 5150 3350 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603_HandSoldering" H 5138 3450 50  0001 C CNN
+F 3 "http://search.murata.co.jp/Ceramy/image/img/A01X/partnumbering_e_01.pdf" H 5100 3600 50  0001 C CNN
+F 4 "490-7204-1-ND" H 5100 3600 60  0001 C CNN "Digikey"
+	1    5100 3600
+	0    -1   -1   0   
+$EndComp
+$Comp
+L GND #PWR023
+U 1 1 584CCA77
+P 4700 3650
+F 0 "#PWR023" H 4700 3400 50  0001 C CNN
+F 1 "GND" H 4700 3500 50  0000 C CNN
+F 2 "" H 4700 3650 50  0000 C CNN
+F 3 "" H 4700 3650 50  0000 C CNN
+	1    4700 3650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5400 3700 5300 3700
+Wire Wire Line
+	5300 3600 5300 3800
+Wire Wire Line
+	5300 3600 5250 3600
+Connection ~ 5300 3700
+Wire Wire Line
+	4700 3650 4700 3600
+Wire Wire Line
+	4700 3600 4950 3600
+Wire Wire Line
+	5300 3800 5150 3800
 $EndSCHEMATC
