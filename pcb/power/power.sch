@@ -50,9 +50,9 @@ U 1 1 583C3625
 P 1250 5550
 F 0 "P2" H 1250 5800 50  0000 C CNN
 F 1 "CONN_01X04" V 1350 5550 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x04" H 1250 5550 50  0001 C CNN
-F 3 "http://www.sullinscorp.com/drawings/78_P(N)PxCxxxLFBN-RC,_10492-H.pdf" H 1250 5550 50  0001 C CNN
-F 4 "S7002-ND " H 1250 5550 60  0001 C CNN "Digikey"
+F 2 "Additional:ESQ-104-12-G-S-LL" H 1250 5550 50  0001 C CNN
+F 3 "https://www.samtec.com/products/esq" H 1250 5550 50  0001 C CNN
+F 4 "ESQ-104-12-G-S-LL" H 1250 5550 60  0001 C CNN "Samtec"
 	1    1250 5550
 	0    1    1    0   
 $EndComp
@@ -123,9 +123,9 @@ U 1 1 583EC068
 P 10250 1350
 F 0 "P6" H 10250 1550 50  0000 C CNN
 F 1 "CONN_01X03" V 10350 1350 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x03" H 10250 1350 50  0001 C CNN
-F 3 "http://www.sullinscorp.com/drawings/78_P(N)PxCxxxLFBN-RC,_10492-H.pdf" H 10250 1350 50  0001 C CNN
-F 4 "S7036-ND " H 10250 1350 60  0001 C CNN "Digikey"
+F 2 "Additional:ESQ-103-12-G-S-LL" H 10250 1350 50  0001 C CNN
+F 3 "https://www.samtec.com/products/esq" H 10250 1350 50  0001 C CNN
+F 4 "ESQ-103-12-G-S-LL" H 10250 1350 60  0001 C CNN "Samtec"
 	1    10250 1350
 	0    1    -1   0   
 $EndComp
@@ -283,9 +283,9 @@ U 1 1 584384F7
 P 10150 5450
 F 0 "P5" H 10150 5650 50  0000 C CNN
 F 1 "CONN_01X03" V 10250 5450 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x03" H 10150 5450 50  0001 C CNN
-F 3 "http://www.sullinscorp.com/drawings/78_P(N)PxCxxxLFBN-RC,_10492-H.pdf" H 10150 5450 50  0001 C CNN
-F 4 "S7036-ND " H 10150 5450 60  0001 C CNN "Digikey"
+F 2 "Additional:ESQ-103-12-G-S-LL" H 10150 5450 50  0001 C CNN
+F 3 "https://www.samtec.com/products/esq" H 10150 5450 50  0001 C CNN
+F 4 "ESQ-103-12-G-S-LL" H 10150 5450 60  0001 C CNN "Samtec"
 	1    10150 5450
 	0    -1   1    0   
 $EndComp
@@ -444,9 +444,8 @@ U 1 1 58452B47
 P 3300 1400
 F 0 "P3" H 3300 1650 50  0000 C CNN
 F 1 "CONN_01X04" V 3400 1400 50  0000 C CNN
-F 2 "Additional:ESQ-104-12-G-S-LL" H 3300 1400 50  0001 C CNN
-F 3 "https://www.samtec.com/products/esq" H 3300 1400 50  0001 C CNN
-F 4 "ESQ-104-12-G-S-LL" H 3300 1400 60  0001 C CNN "Samtec"
+F 2 "Additional:LED_CONN_1.25_PITCH" H 3300 1400 50  0001 C CNN
+F 3 "" H 3300 1400 50  0001 C CNN
 	1    3300 1400
 	0    -1   -1   0   
 $EndComp
