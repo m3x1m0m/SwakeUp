@@ -1,4 +1,4 @@
-(module Bourns_SRN3015 (layer F.Cu) (tedit 58616B44)
+(module Bourns_SRN3015_3D (layer F.Cu) (tedit 58616B44)
   (fp_text reference REF** (at 0 3) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.15)))
   )
