@@ -36,7 +36,7 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 2 5
 Title "Bucket Converters for 5 V and 2.8 V"
-Date "2016-12-02"
+Date "2016-12-29"
 Rev "1.0"
 Comp "Uppsala University"
 Comment1 ""
@@ -69,10 +69,10 @@ F 4 "311-1088-1-ND" H 2300 2100 60  0001 C CNN "Digikey"
 	0    1    1    0   
 $EndComp
 $Comp
-L GND #PWR07
+L GND #PWR5
 U 1 1 5842EC4A
 P 1700 2550
-F 0 "#PWR07" H 1700 2300 50  0001 C CNN
+F 0 "#PWR5" H 1700 2300 50  0001 C CNN
 F 1 "GND" H 1700 2400 50  0000 C CNN
 F 2 "" H 1700 2550 50  0000 C CNN
 F 3 "" H 1700 2550 50  0000 C CNN
@@ -92,10 +92,10 @@ F 4 "490-7204-1-ND" H 3000 2850 60  0001 C CNN "Digikey"
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR08
+L GND #PWR7
 U 1 1 5842EC58
 P 3000 3600
-F 0 "#PWR08" H 3000 3350 50  0001 C CNN
+F 0 "#PWR7" H 3000 3350 50  0001 C CNN
 F 1 "GND" H 3000 3450 50  0000 C CNN
 F 2 "" H 3000 3600 50  0000 C CNN
 F 3 "" H 3000 3600 50  0000 C CNN
@@ -203,10 +203,10 @@ F 4 "10MQ060NPBFCT-ND" V 3700 3250 60  0001 C CNN "Digikey"
 	0    1    1    0   
 $EndComp
 $Comp
-L GND #PWR09
+L GND #PWR6
 U 1 1 5842F8AB
 P 1800 5650
-F 0 "#PWR09" H 1800 5400 50  0001 C CNN
+F 0 "#PWR6" H 1800 5400 50  0001 C CNN
 F 1 "GND" H 1800 5500 50  0000 C CNN
 F 2 "" H 1800 5650 50  0000 C CNN
 F 3 "" H 1800 5650 50  0000 C CNN
@@ -314,10 +314,10 @@ $EndComp
 Text Notes 1400 5000 0    60   ~ 0
 5V for Mobile Phone\n-----------------------\nVout,max=5 V\nAout,max = 2A
 $Comp
-L GND #PWR010
+L GND #PWR8
 U 1 1 5842F92D
 P 3100 6050
-F 0 "#PWR010" H 3100 5800 50  0001 C CNN
+F 0 "#PWR8" H 3100 5800 50  0001 C CNN
 F 1 "GND" H 3100 5900 50  0000 C CNN
 F 2 "" H 3100 6050 50  0000 C CNN
 F 3 "" H 3100 6050 50  0000 C CNN
@@ -325,10 +325,10 @@ F 3 "" H 3100 6050 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR011
+L GND #PWR9
 U 1 1 5842F939
 P 4100 5200
-F 0 "#PWR011" H 4100 4950 50  0001 C CNN
+F 0 "#PWR9" H 4100 4950 50  0001 C CNN
 F 1 "GND" H 4100 5050 50  0000 C CNN
 F 2 "" H 4100 5200 50  0000 C CNN
 F 3 "" H 4100 5200 50  0000 C CNN
@@ -336,10 +336,10 @@ F 3 "" H 4100 5200 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L PWR_FLAG #FLG012
+L PWR_FLAG #FLG3
 U 1 1 5842F941
 P 5750 5250
-F 0 "#FLG012" H 5750 5345 50  0001 C CNN
+F 0 "#FLG3" H 5750 5345 50  0001 C CNN
 F 1 "PWR_FLAG" H 5750 5430 50  0000 C CNN
 F 2 "" H 5750 5250 50  0000 C CNN
 F 3 "" H 5750 5250 50  0000 C CNN
@@ -499,10 +499,10 @@ Wire Wire Line
 Connection ~ 6600 5400
 Connection ~ 4800 2400
 $Comp
-L GND #PWR013
+L GND #PWR10
 U 1 1 584C8E69
 P 6600 6350
-F 0 "#PWR013" H 6600 6100 50  0001 C CNN
+F 0 "#PWR10" H 6600 6100 50  0001 C CNN
 F 1 "GND" H 6600 6200 50  0000 C CNN
 F 2 "" H 6600 6350 50  0000 C CNN
 F 3 "" H 6600 6350 50  0000 C CNN
@@ -510,4 +510,67 @@ F 3 "" H 6600 6350 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 Connection ~ 6600 6300
+$Comp
+L TPS2514ADBV U3
+U 1 1 5865A2F4
+P 7900 3500
+F 0 "U3" H 8350 3150 60  0000 C CNN
+F 1 "TPS2514ADBV" H 7700 3150 60  0000 C CNN
+F 2 "TO_SOT_Packages_SMD:SOT-23-6" H 7900 3500 60  0001 C CNN
+F 3 "http://www.ti.com/lit/ds/symlink/tps2514a.pdf" H 7900 3500 60  0001 C CNN
+F 4 "296-40725-1-ND" H 7900 3500 60  0001 C CNN "Digikey"
+	1    7900 3500
+	1    0    0    -1  
+$EndComp
+Text HLabel 8850 3500 2    60   Input ~ 0
+V5
+$Comp
+L GND #PWR11
+U 1 1 5865A9E7
+P 7350 3500
+F 0 "#PWR11" H 7350 3250 50  0001 C CNN
+F 1 "GND" H 7350 3350 50  0000 C CNN
+F 2 "" H 7350 3500 50  0000 C CNN
+F 3 "" H 7350 3500 50  0000 C CNN
+	1    7350 3500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7350 3500 7400 3500
+Text Notes 7000 4550 0    60   ~ 0
+USB Dedicated Charging Port Control.\n-----------------------\nSimple SOT-23-6 IC for detecting propriatary and open standards used by a\ndevice and providing the corresponding electrical signature at the data lines\n(voltage or impedance).
+Text HLabel 8450 3300 2    60   Output ~ 0
+DM1
+Wire Wire Line
+	8400 3300 8450 3300
+Text HLabel 7350 3300 0    60   Output ~ 0
+DP1
+Wire Wire Line
+	7400 3300 7350 3300
+$Comp
+L C C22
+U 1 1 586629FF
+P 8650 3650
+F 0 "C22" H 8675 3750 50  0000 L CNN
+F 1 "C" H 8675 3550 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603_HandSoldering" H 8688 3500 50  0001 C CNN
+F 3 "http://www.yageo.com/documents/recent/UPY-GPHC_Y5V_6.3V-to-50V_6.pdf" H 8650 3650 50  0001 C CNN
+F 4 "311-1343-1-ND" H 8650 3650 60  0001 C CNN "Digikey"
+	1    8650 3650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8400 3500 8850 3500
+Connection ~ 8650 3500
+$Comp
+L GND #PWR12
+U 1 1 58662C1C
+P 8650 3800
+F 0 "#PWR12" H 8650 3550 50  0001 C CNN
+F 1 "GND" H 8650 3650 50  0000 C CNN
+F 2 "" H 8650 3800 50  0000 C CNN
+F 3 "" H 8650 3800 50  0000 C CNN
+	1    8650 3800
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
