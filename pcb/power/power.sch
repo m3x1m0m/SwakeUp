@@ -36,7 +36,7 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 5
 Title "Power Board "
-Date "2016-12-02"
+Date "2016-12-30"
 Rev "1.0"
 Comp "Uppsala University"
 Comment1 "Project: Swakeup"
@@ -449,16 +449,16 @@ Wire Wire Line
 	7500 1350 7300 1350
 Wire Wire Line
 	7300 1550 7500 1550
+Text GLabel 7500 1750 2    60   Output ~ 0
+D-
+Text GLabel 7500 1900 2    60   Output ~ 0
+D+
 Wire Wire Line
-	7300 1750 9300 1750
+	7300 1900 7500 1900
 Wire Wire Line
-	9300 1750 9300 3350
-Wire Wire Line
-	9300 3350 9750 3350
-Wire Wire Line
-	9750 3450 9150 3450
-Wire Wire Line
-	9150 3450 9150 1900
-Wire Wire Line
-	9150 1900 7300 1900
+	7300 1750 7500 1750
+Text GLabel 9750 3350 0    60   Input ~ 0
+D-
+Text GLabel 9750 3450 0    60   Input ~ 0
+D+
 $EndSCHEMATC

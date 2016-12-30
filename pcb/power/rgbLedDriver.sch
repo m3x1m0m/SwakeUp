@@ -36,7 +36,7 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 5 5
 Title "RGB LED Driver "
-Date "2016-12-02"
+Date "2016-12-30"
 Rev "1.0"
 Comp "Uppsala University"
 Comment1 "Project: Swakeup"
@@ -48,18 +48,18 @@ Text HLabel 950  6750 0    60   Input ~ 0
 PWM_G
 Text HLabel 5800 6200 2    60   Output ~ 0
 LED_G_P
-Text HLabel 5800 6350 2    60   Output ~ 0
+Text HLabel 5800 7050 2    60   Output ~ 0
 LED_G_N
-Text HLabel 5800 6650 2    60   Output ~ 0
-OPAMP_G
+Text HLabel 5800 5500 2    60   Output ~ 0
+OPAMP_G_P
 Text HLabel 950  4550 0    60   Input ~ 0
 PWM_B
 Text HLabel 5800 4000 2    60   Output ~ 0
 LED_B_P
-Text HLabel 5800 4150 2    60   Output ~ 0
+Text HLabel 5800 4850 2    60   Output ~ 0
 LED_B_N
-Text HLabel 5800 4450 2    60   Output ~ 0
-OPAMP_B
+Text HLabel 5800 3300 2    60   Output ~ 0
+OPAMP_B_P
 $Comp
 L Q_PMOS_DGS Q7
 U 1 1 5837C3F4
@@ -148,49 +148,49 @@ F 4 "490-12323-1-ND" H 4550 2350 60  0001 C CNN "Digikey"
 $EndComp
 Text HLabel 5800 1950 2    60   Output ~ 0
 LED_R_P
-Text HLabel 5800 2100 2    60   Output ~ 0
+Text HLabel 5800 2800 2    60   Output ~ 0
 LED_R_N
 $Comp
 L R R27
 U 1 1 5837C430
-P 4850 2600
-F 0 "R27" V 4930 2600 50  0000 C CNN
-F 1 "0.1R" V 4850 2600 50  0000 C CNN
-F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 4780 2600 50  0001 C CNN
-F 3 "http://media.digikey.com/pdf/Data%20Sheets/Samsung%20PDFs/RU_Series_ds.pdf" H 4850 2600 50  0001 C CNN
-F 4 "1276-6155-1-ND" V 4850 2600 60  0001 C CNN "Digikey"
-	1    4850 2600
-	1    0    0    -1  
+P 5200 1950
+F 0 "R27" V 5280 1950 50  0000 C CNN
+F 1 "0.1R" V 5200 1950 50  0000 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 5130 1950 50  0001 C CNN
+F 3 "http://media.digikey.com/pdf/Data%20Sheets/Samsung%20PDFs/RU_Series_ds.pdf" H 5200 1950 50  0001 C CNN
+F 4 "1276-6155-1-ND" V 5200 1950 60  0001 C CNN "Digikey"
+	1    5200 1950
+	0    1    1    0   
 $EndComp
 $Comp
 L C C18
 U 1 1 5837C437
-P 5600 2600
-F 0 "C18" H 5625 2700 50  0000 L CNN
-F 1 "22n" H 5625 2500 50  0000 L CNN
-F 2 "Capacitors_SMD:C_0603_HandSoldering" H 5638 2450 50  0001 C CNN
-F 3 "https://product.tdk.com/info/en/catalog/datasheets/mlcc_highreliability_general_en.pdf" H 5600 2600 50  0001 C CNN
-F 4 "445-8118-1-ND" H 5600 2600 60  0001 C CNN "Digikey"
-	1    5600 2600
-	-1   0    0    1   
+P 5200 1450
+F 0 "C18" H 5225 1550 50  0000 L CNN
+F 1 "22n" H 5225 1350 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603_HandSoldering" H 5238 1300 50  0001 C CNN
+F 3 "https://product.tdk.com/info/en/catalog/datasheets/mlcc_highreliability_general_en.pdf" H 5200 1450 50  0001 C CNN
+F 4 "445-8118-1-ND" H 5200 1450 60  0001 C CNN "Digikey"
+	1    5200 1450
+	0    -1   -1   0   
 $EndComp
 $Comp
 L R R30
 U 1 1 5837C43E
-P 5250 2400
-F 0 "R30" V 5330 2400 50  0000 C CNN
-F 1 "4.7k" V 5250 2400 50  0000 C CNN
-F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 5180 2400 50  0001 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 5250 2400 50  0001 C CNN
-F 4 "311-4.7KGRCT-ND" V 5250 2400 60  0001 C CNN "Digikey"
-	1    5250 2400
-	0    1    1    0   
+P 4950 1700
+F 0 "R30" V 5030 1700 50  0000 C CNN
+F 1 "4.7k" V 4950 1700 50  0000 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 4880 1700 50  0001 C CNN
+F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 4950 1700 50  0001 C CNN
+F 4 "311-4.7KGRCT-ND" V 4950 1700 60  0001 C CNN "Digikey"
+	1    4950 1700
+	-1   0    0    1   
 $EndComp
-Text HLabel 5800 2400 2    60   Output ~ 0
-OPAMP_R
+Text HLabel 5800 1250 2    60   Output ~ 0
+OPAMP_R_P
 Text HLabel 950  1100 0    60   Input ~ 0
 V20
-Text Notes 5850 2800 0    60   ~ 0
+Text Notes 4950 1100 0    60   ~ 0
 Low-Pass Filter\n-----------------------\nfcutt,off=1.539 kHz\nfsample=4 kHz
 $Comp
 L D D6
@@ -471,106 +471,106 @@ $EndComp
 $Comp
 L R R28
 U 1 1 58425BE1
-P 4850 4650
-F 0 "R28" V 4930 4650 50  0000 C CNN
-F 1 "0.1R" V 4850 4650 50  0000 C CNN
-F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 4780 4650 50  0001 C CNN
-F 3 "http://media.digikey.com/pdf/Data%20Sheets/Samsung%20PDFs/RU_Series_ds.pdf" H 4850 4650 50  0001 C CNN
-F 4 "1276-6155-1-ND" V 4850 4650 60  0001 C CNN "Digikey"
-	1    4850 4650
-	1    0    0    -1  
+P 5200 4000
+F 0 "R28" V 5280 4000 50  0000 C CNN
+F 1 "0.1R" V 5200 4000 50  0000 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 5130 4000 50  0001 C CNN
+F 3 "http://media.digikey.com/pdf/Data%20Sheets/Samsung%20PDFs/RU_Series_ds.pdf" H 5200 4000 50  0001 C CNN
+F 4 "1276-6155-1-ND" V 5200 4000 60  0001 C CNN "Digikey"
+	1    5200 4000
+	0    1    1    0   
 $EndComp
 $Comp
 L R R29
 U 1 1 58425F29
-P 4850 6850
-F 0 "R29" V 4930 6850 50  0000 C CNN
-F 1 "0.1R" V 4850 6850 50  0000 C CNN
-F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 4780 6850 50  0001 C CNN
-F 3 "http://media.digikey.com/pdf/Data%20Sheets/Samsung%20PDFs/RU_Series_ds.pdf" H 4850 6850 50  0001 C CNN
-F 4 "1276-6155-1-ND" V 4850 6850 60  0001 C CNN "Digikey"
-	1    4850 6850
-	1    0    0    -1  
+P 5200 6200
+F 0 "R29" V 5280 6200 50  0000 C CNN
+F 1 "0.1R" V 5200 6200 50  0000 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 5130 6200 50  0001 C CNN
+F 3 "http://media.digikey.com/pdf/Data%20Sheets/Samsung%20PDFs/RU_Series_ds.pdf" H 5200 6200 50  0001 C CNN
+F 4 "1276-6155-1-ND" V 5200 6200 60  0001 C CNN "Digikey"
+	1    5200 6200
+	0    1    1    0   
 $EndComp
 $Comp
 L R R32
 U 1 1 58426A19
-P 5250 6650
-F 0 "R32" V 5330 6650 50  0000 C CNN
-F 1 "4.7k" V 5250 6650 50  0000 C CNN
-F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 5180 6650 50  0001 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 5250 6650 50  0001 C CNN
-F 4 "311-4.7KGRCT-ND" V 5250 6650 60  0001 C CNN "Digikey"
-	1    5250 6650
-	0    1    1    0   
+P 4950 5950
+F 0 "R32" V 5030 5950 50  0000 C CNN
+F 1 "4.7k" V 4950 5950 50  0000 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 4880 5950 50  0001 C CNN
+F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 4950 5950 50  0001 C CNN
+F 4 "311-4.7KGRCT-ND" V 4950 5950 60  0001 C CNN "Digikey"
+	1    4950 5950
+	-1   0    0    1   
 $EndComp
 $Comp
 L R R31
 U 1 1 58426AE7
-P 5250 4450
-F 0 "R31" V 5330 4450 50  0000 C CNN
-F 1 "4.7k" V 5250 4450 50  0000 C CNN
-F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 5180 4450 50  0001 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 5250 4450 50  0001 C CNN
-F 4 "311-4.7KGRCT-ND" V 5250 4450 60  0001 C CNN "Digikey"
-	1    5250 4450
-	0    1    1    0   
+P 4900 3750
+F 0 "R31" V 4980 3750 50  0000 C CNN
+F 1 "4.7k" V 4900 3750 50  0000 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 4830 3750 50  0001 C CNN
+F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 4900 3750 50  0001 C CNN
+F 4 "311-4.7KGRCT-ND" V 4900 3750 60  0001 C CNN "Digikey"
+	1    4900 3750
+	-1   0    0    1   
 $EndComp
 $Comp
 L C C19
 U 1 1 584270BF
-P 5600 4650
-F 0 "C19" H 5625 4750 50  0000 L CNN
-F 1 "22n" H 5625 4550 50  0000 L CNN
-F 2 "Capacitors_SMD:C_0603_HandSoldering" H 5638 4500 50  0001 C CNN
-F 3 "https://product.tdk.com/info/en/catalog/datasheets/mlcc_highreliability_general_en.pdf" H 5600 4650 50  0001 C CNN
-F 4 "445-8118-1-ND" H 5600 4650 60  0001 C CNN "Digikey"
-	1    5600 4650
-	-1   0    0    1   
+P 5150 3500
+F 0 "C19" H 5175 3600 50  0000 L CNN
+F 1 "22n" H 5175 3400 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603_HandSoldering" H 5188 3350 50  0001 C CNN
+F 3 "https://product.tdk.com/info/en/catalog/datasheets/mlcc_highreliability_general_en.pdf" H 5150 3500 50  0001 C CNN
+F 4 "445-8118-1-ND" H 5150 3500 60  0001 C CNN "Digikey"
+	1    5150 3500
+	0    -1   -1   0   
 $EndComp
 $Comp
 L C C20
 U 1 1 58427309
-P 5600 6850
-F 0 "C20" H 5625 6950 50  0000 L CNN
-F 1 "22n" H 5625 6750 50  0000 L CNN
-F 2 "Capacitors_SMD:C_0603_HandSoldering" H 5638 6700 50  0001 C CNN
-F 3 "https://product.tdk.com/info/en/catalog/datasheets/mlcc_highreliability_general_en.pdf" H 5600 6850 50  0001 C CNN
-F 4 "445-8118-1-ND" H 5600 6850 60  0001 C CNN "Digikey"
-	1    5600 6850
-	-1   0    0    1   
-$EndComp
-$Comp
-L GND #PWR25
-U 1 1 584188BC
-P 4850 7100
-F 0 "#PWR25" H 4850 6850 50  0001 C CNN
-F 1 "GND" H 4850 6950 50  0000 C CNN
-F 2 "" H 4850 7100 50  0000 C CNN
-F 3 "" H 4850 7100 50  0000 C CNN
-	1    4850 7100
-	1    0    0    -1  
+P 5200 5700
+F 0 "C20" H 5225 5800 50  0000 L CNN
+F 1 "22n" H 5225 5600 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603_HandSoldering" H 5238 5550 50  0001 C CNN
+F 3 "https://product.tdk.com/info/en/catalog/datasheets/mlcc_highreliability_general_en.pdf" H 5200 5700 50  0001 C CNN
+F 4 "445-8118-1-ND" H 5200 5700 60  0001 C CNN "Digikey"
+	1    5200 5700
+	0    -1   -1   0   
 $EndComp
 $Comp
 L GND #PWR24
-U 1 1 58418AC2
-P 4850 4900
-F 0 "#PWR24" H 4850 4650 50  0001 C CNN
-F 1 "GND" H 4850 4750 50  0000 C CNN
-F 2 "" H 4850 4900 50  0000 C CNN
-F 3 "" H 4850 4900 50  0000 C CNN
-	1    4850 4900
+U 1 1 584188BC
+P 4550 7100
+F 0 "#PWR24" H 4550 6850 50  0001 C CNN
+F 1 "GND" H 4550 6950 50  0000 C CNN
+F 2 "" H 4550 7100 50  0000 C CNN
+F 3 "" H 4550 7100 50  0000 C CNN
+	1    4550 7100
 	1    0    0    -1  
 $EndComp
 $Comp
 L GND #PWR23
+U 1 1 58418AC2
+P 4550 4900
+F 0 "#PWR23" H 4550 4650 50  0001 C CNN
+F 1 "GND" H 4550 4750 50  0000 C CNN
+F 2 "" H 4550 4900 50  0000 C CNN
+F 3 "" H 4550 4900 50  0000 C CNN
+	1    4550 4900
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR22
 U 1 1 584185EC
-P 4850 2850
-F 0 "#PWR23" H 4850 2600 50  0001 C CNN
-F 1 "GND" H 4850 2700 50  0000 C CNN
-F 2 "" H 4850 2850 50  0000 C CNN
-F 3 "" H 4850 2850 50  0000 C CNN
-	1    4850 2850
+P 4550 2850
+F 0 "#PWR22" H 4550 2600 50  0001 C CNN
+F 1 "GND" H 4550 2700 50  0000 C CNN
+F 2 "" H 4550 2850 50  0000 C CNN
+F 3 "" H 4550 2850 50  0000 C CNN
+	1    4550 2850
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
@@ -618,37 +618,18 @@ Connection ~ 4550 6200
 Wire Wire Line
 	3750 6750 3750 7050
 Wire Wire Line
-	2600 7050 5600 7050
-Wire Wire Line
 	2600 7050 2600 6950
 Wire Wire Line
-	4550 7050 4550 6750
+	4550 6750 4550 7100
 Connection ~ 3750 7050
 Connection ~ 4550 7050
 Wire Wire Line
-	4850 7000 4850 7100
-Wire Wire Line
-	4450 6200 5800 6200
+	4450 6200 5050 6200
 Wire Wire Line
 	3750 5350 3750 6450
 Connection ~ 3750 6200
 Wire Wire Line
 	3600 5350 3750 5350
-Wire Wire Line
-	5800 6350 4850 6350
-Wire Wire Line
-	4850 6350 4850 6700
-Wire Wire Line
-	5100 6650 4850 6650
-Connection ~ 4850 6650
-Wire Wire Line
-	5400 6650 5800 6650
-Wire Wire Line
-	5600 6650 5600 6700
-Connection ~ 4850 7050
-Wire Wire Line
-	5600 7050 5600 7000
-Connection ~ 5600 6650
 Wire Wire Line
 	1050 3150 3200 3150
 Wire Wire Line
@@ -694,37 +675,20 @@ Connection ~ 4550 4000
 Wire Wire Line
 	3750 4550 3750 4850
 Wire Wire Line
-	2600 4850 5600 4850
+	2600 4850 5800 4850
 Wire Wire Line
 	2600 4850 2600 4750
 Wire Wire Line
-	4550 4850 4550 4550
+	4550 4550 4550 4900
 Connection ~ 3750 4850
 Connection ~ 4550 4850
 Wire Wire Line
-	4850 4800 4850 4900
-Wire Wire Line
-	4450 4000 5800 4000
+	4450 4000 5050 4000
 Wire Wire Line
 	3750 3150 3750 4250
 Connection ~ 3750 4000
 Wire Wire Line
 	3600 3150 3750 3150
-Wire Wire Line
-	5800 4150 4850 4150
-Wire Wire Line
-	4850 4150 4850 4500
-Wire Wire Line
-	5100 4450 4850 4450
-Connection ~ 4850 4450
-Wire Wire Line
-	5400 4450 5800 4450
-Wire Wire Line
-	5600 4450 5600 4500
-Connection ~ 4850 4850
-Wire Wire Line
-	5600 4850 5600 4800
-Connection ~ 5600 4450
 Wire Wire Line
 	950  1100 3200 1100
 Wire Wire Line
@@ -772,7 +736,7 @@ Wire Wire Line
 Wire Wire Line
 	2600 2800 2600 2700
 Wire Wire Line
-	4550 2800 4550 2500
+	4550 2500 4550 2850
 Connection ~ 3750 2800
 Connection ~ 4550 2800
 Wire Wire Line
@@ -785,24 +749,69 @@ Connection ~ 1050 3150
 Wire Wire Line
 	1050 1100 1050 5350
 Wire Wire Line
-	5600 2800 5600 2750
-Connection ~ 4850 2800
+	2600 2800 5800 2800
 Wire Wire Line
-	2600 2800 5600 2800
+	4450 1950 5050 1950
+Connection ~ 4950 1950
 Wire Wire Line
-	5800 2100 4850 2100
-Connection ~ 4850 2400
+	4950 1250 4950 1550
 Wire Wire Line
-	5600 2400 5600 2450
-Connection ~ 5600 2400
+	4950 1450 5050 1450
 Wire Wire Line
-	5400 2400 5800 2400
+	5350 1950 5800 1950
 Wire Wire Line
-	5100 2400 4850 2400
+	5350 1450 5800 1450
+Connection ~ 5450 1950
 Wire Wire Line
-	4450 1950 5800 1950
+	4950 1250 5800 1250
+Connection ~ 4950 1450
+Text HLabel 5800 1450 2    60   Output ~ 0
+OPAMP_R_N
+Connection ~ 5450 1450
 Wire Wire Line
-	4850 2750 4850 2850
+	5350 4000 5800 4000
 Wire Wire Line
-	4850 2100 4850 2450
+	5000 3500 4900 3500
+Wire Wire Line
+	4900 3300 4900 3600
+Wire Wire Line
+	5300 3500 5800 3500
+Connection ~ 5450 4000
+Wire Wire Line
+	5450 3500 5450 4000
+Wire Wire Line
+	4900 3900 4900 4000
+Connection ~ 4900 4000
+Wire Wire Line
+	4950 1850 4950 1950
+Wire Wire Line
+	5450 1450 5450 1950
+Wire Wire Line
+	4900 3300 5800 3300
+Connection ~ 4900 3500
+Text HLabel 5800 3500 2    60   Output ~ 0
+OPAMP_B_N
+Connection ~ 5450 3500
+Wire Wire Line
+	5350 6200 5800 6200
+Wire Wire Line
+	5050 5700 4950 5700
+Wire Wire Line
+	4950 5500 4950 5800
+Wire Wire Line
+	4950 6100 4950 6200
+Connection ~ 4950 6200
+Wire Wire Line
+	5350 5700 5800 5700
+Wire Wire Line
+	5450 5700 5450 6200
+Connection ~ 5450 6200
+Wire Wire Line
+	2600 7050 5800 7050
+Text HLabel 5800 5700 2    60   Output ~ 0
+OPAMP_G_N
+Connection ~ 5450 5700
+Wire Wire Line
+	5800 5500 4950 5500
+Connection ~ 4950 5700
 $EndSCHEMATC

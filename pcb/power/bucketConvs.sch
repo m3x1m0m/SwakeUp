@@ -36,7 +36,7 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 2 5
 Title "Bucket Converters for 5 V and 2.8 V"
-Date "2016-12-29"
+Date "2016-12-30"
 Rev "1.0"
 Comp "Uppsala University"
 Comment1 ""
@@ -155,13 +155,13 @@ $EndComp
 $Comp
 L C C5
 U 1 1 5842EC80
-P 4350 2650
-F 0 "C5" H 4375 2750 50  0000 L CNN
-F 1 "10u" H 4375 2550 50  0000 L CNN
-F 2 "Capacitors_SMD:C_0603_HandSoldering" H 4388 2500 50  0001 C CNN
-F 3 "http://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRT188R61E106ME13-01.pdf" H 4350 2650 50  0001 C CNN
-F 4 "490-12323-1-ND" H 4350 2650 60  0001 C CNN "Digikey"
-	1    4350 2650
+P 4350 2900
+F 0 "C5" H 4375 3000 50  0000 L CNN
+F 1 "10u" H 4375 2800 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603_HandSoldering" H 4388 2750 50  0001 C CNN
+F 3 "http://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRT188R61E106ME13-01.pdf" H 4350 2900 50  0001 C CNN
+F 4 "490-12323-1-ND" H 4350 2900 60  0001 C CNN "Digikey"
+	1    4350 2900
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -193,13 +193,13 @@ Debugging Diode\n-----------------------\nDiode: 1.7 V, 2 mA\nP=2.161 mW\nCan be
 $Comp
 L D_Schottky D2
 U 1 1 5842ECC9
-P 3650 2650
-F 0 "D2" H 4100 2400 50  0000 C CNN
-F 1 "VS-10MQ060NPbF" H 3800 2500 50  0000 C CNN
-F 2 "Diodes_SMD:SMA_Handsoldering" H 3650 2650 50  0001 C CNN
-F 3 "http://www.vishay.com/docs/88869/packaging.pdf" H 3650 2650 50  0001 C CNN
-F 4 "10MQ060NPBFCT-ND" V 3700 3250 60  0001 C CNN "Digikey"
-	1    3650 2650
+P 3650 2925
+F 0 "D2" H 4100 2675 50  0000 C CNN
+F 1 "VS-10MQ060NPbF" H 3800 2775 50  0000 C CNN
+F 2 "Diodes_SMD:SMA_Handsoldering" H 3650 2925 50  0001 C CNN
+F 3 "http://www.vishay.com/docs/88869/packaging.pdf" H 3650 2925 50  0001 C CNN
+F 4 "10MQ060NPBFCT-ND" V 3700 3525 60  0001 C CNN "Digikey"
+	1    3650 2925
 	0    1    1    0   
 $EndComp
 $Comp
@@ -315,20 +315,9 @@ Text Notes 1400 5000 0    60   ~ 0
 5V for Mobile Phone\n-----------------------\nVout,max=5 V\nAout,max = 2A
 $Comp
 L GND #PWR8
-U 1 1 5842F92D
-P 3100 6050
-F 0 "#PWR8" H 3100 5800 50  0001 C CNN
-F 1 "GND" H 3100 5900 50  0000 C CNN
-F 2 "" H 3100 6050 50  0000 C CNN
-F 3 "" H 3100 6050 50  0000 C CNN
-	1    3100 6050
-	1    0    0    -1  
-$EndComp
-$Comp
-L GND #PWR9
 U 1 1 5842F939
 P 4100 5200
-F 0 "#PWR9" H 4100 4950 50  0001 C CNN
+F 0 "#PWR8" H 4100 4950 50  0001 C CNN
 F 1 "GND" H 4100 5050 50  0000 C CNN
 F 2 "" H 4100 5200 50  0000 C CNN
 F 3 "" H 4100 5200 50  0000 C CNN
@@ -380,14 +369,12 @@ Wire Wire Line
 	2850 2100 2850 2400
 Connection ~ 2850 2400
 Wire Wire Line
-	3650 1950 3650 2500
+	3650 1950 3650 2775
 Connection ~ 3650 2400
 Wire Wire Line
-	4350 2400 4350 2500
+	4350 2400 4350 2750
 Wire Wire Line
-	4350 2850 3650 2850
-Wire Wire Line
-	3650 2850 3650 2800
+	3650 3550 3650 3075
 Connection ~ 4350 2400
 Wire Wire Line
 	1700 2550 1800 2550
@@ -414,11 +401,8 @@ Wire Wire Line
 Wire Wire Line
 	1200 2750 1300 2750
 Connection ~ 3000 3550
-Connection ~ 4350 2850
 Wire Wire Line
 	1800 3550 1800 3450
-Wire Wire Line
-	4350 3550 4350 2800
 Wire Wire Line
 	2800 2550 3150 2550
 Wire Wire Line
@@ -499,10 +483,10 @@ Wire Wire Line
 Connection ~ 6600 5400
 Connection ~ 4800 2400
 $Comp
-L GND #PWR10
+L GND #PWR9
 U 1 1 584C8E69
 P 6600 6350
-F 0 "#PWR10" H 6600 6100 50  0001 C CNN
+F 0 "#PWR9" H 6600 6100 50  0001 C CNN
 F 1 "GND" H 6600 6200 50  0000 C CNN
 F 2 "" H 6600 6350 50  0000 C CNN
 F 3 "" H 6600 6350 50  0000 C CNN
@@ -525,10 +509,10 @@ $EndComp
 Text HLabel 8850 3500 2    60   Input ~ 0
 V5
 $Comp
-L GND #PWR11
+L GND #PWR10
 U 1 1 5865A9E7
 P 7350 3500
-F 0 "#PWR11" H 7350 3250 50  0001 C CNN
+F 0 "#PWR10" H 7350 3250 50  0001 C CNN
 F 1 "GND" H 7350 3350 50  0000 C CNN
 F 2 "" H 7350 3500 50  0000 C CNN
 F 3 "" H 7350 3500 50  0000 C CNN
@@ -552,7 +536,7 @@ L C C22
 U 1 1 586629FF
 P 8650 3650
 F 0 "C22" H 8675 3750 50  0000 L CNN
-F 1 "C" H 8675 3550 50  0000 L CNN
+F 1 "0.1u" H 8675 3550 50  0000 L CNN
 F 2 "Capacitors_SMD:C_0603_HandSoldering" H 8688 3500 50  0001 C CNN
 F 3 "http://www.yageo.com/documents/recent/UPY-GPHC_Y5V_6.3V-to-50V_6.pdf" H 8650 3650 50  0001 C CNN
 F 4 "311-1343-1-ND" H 8650 3650 60  0001 C CNN "Digikey"
@@ -563,14 +547,18 @@ Wire Wire Line
 	8400 3500 8850 3500
 Connection ~ 8650 3500
 $Comp
-L GND #PWR12
+L GND #PWR11
 U 1 1 58662C1C
 P 8650 3800
-F 0 "#PWR12" H 8650 3550 50  0001 C CNN
+F 0 "#PWR11" H 8650 3550 50  0001 C CNN
 F 1 "GND" H 8650 3650 50  0000 C CNN
 F 2 "" H 8650 3800 50  0000 C CNN
 F 3 "" H 8650 3800 50  0000 C CNN
 	1    8650 3800
 	1    0    0    -1  
 $EndComp
+NoConn ~ 3100 6050
+Wire Wire Line
+	4350 3550 4350 3050
+Connection ~ 3650 3550
 $EndSCHEMATC
