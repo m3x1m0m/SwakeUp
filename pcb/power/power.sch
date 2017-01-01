@@ -225,9 +225,9 @@ F1 "bucketConvs.sch" 60
 F2 "V20" I L 5550 1350 60 
 F3 "5V_EN" I L 5550 1550 60 
 F4 "V5" O R 7300 1350 60 
-F5 "V28" O R 7300 1550 60 
-F6 "DM1" O R 7300 1750 60 
-F7 "DP1" O R 7300 1900 60 
+F5 "V28" O R 7300 1450 60 
+F6 "DM1" O R 7300 1550 60 
+F7 "DP1" O R 7300 1650 60 
 $EndSheet
 $Sheet
 S 5550 4650 1750 1050
@@ -366,7 +366,7 @@ Wire Wire Line
 	10050 5250 9800 5250
 Text GLabel 10250 5250 1    60   Input ~ 0
 V28
-Text GLabel 7500 1550 2    60   Output ~ 0
+Text GLabel 7500 1450 2    60   Output ~ 0
 V28
 Text GLabel 7500 1350 2    60   Output ~ 0
 V5
@@ -445,20 +445,20 @@ F 3 "" H 3300 1400 50  0001 C CNN
 	1    3300 1400
 	0    -1   -1   0   
 $EndComp
-Wire Wire Line
-	7500 1350 7300 1350
-Wire Wire Line
-	7300 1550 7500 1550
-Text GLabel 7500 1750 2    60   Output ~ 0
+Text GLabel 7500 1550 2    60   Output ~ 0
 D-
-Text GLabel 7500 1900 2    60   Output ~ 0
+Text GLabel 7500 1650 2    60   Output ~ 0
 D+
-Wire Wire Line
-	7300 1900 7500 1900
-Wire Wire Line
-	7300 1750 7500 1750
 Text GLabel 9750 3350 0    60   Input ~ 0
 D-
 Text GLabel 9750 3450 0    60   Input ~ 0
 D+
+Wire Wire Line
+	7300 1650 7500 1650
+Wire Wire Line
+	7500 1550 7300 1550
+Wire Wire Line
+	7300 1450 7500 1450
+Wire Wire Line
+	7500 1350 7300 1350
 $EndSCHEMATC
