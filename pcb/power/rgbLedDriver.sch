@@ -92,7 +92,7 @@ F 0 "R21" V 2080 2500 50  0000 C CNN
 F 1 "470R" V 2000 2500 50  0000 C CNN
 F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 1930 2500 50  0001 C CNN
 F 3 "https://industrial.panasonic.com/cdbs/www-data/pdf/RDA0000/AOA0000COL70.pdf" H 2000 2500 50  0001 C CNN
-F 4 "P20245CT-ND" V 2000 2500 60  0001 C CNN "Digikey"
+F 4 "311-470HRCT-ND " V 2000 2500 60  0001 C CNN "Digikey"
 	1    2000 2500
 	0    1    1    0   
 $EndComp
@@ -170,7 +170,7 @@ F 0 "C18" H 5225 1550 50  0000 L CNN
 F 1 "22n" H 5225 1350 50  0000 L CNN
 F 2 "Capacitors_SMD:C_0603_HandSoldering" H 5238 1300 50  0001 C CNN
 F 3 "https://product.tdk.com/info/en/catalog/datasheets/mlcc_highreliability_general_en.pdf" H 5200 1450 50  0001 C CNN
-F 4 "445-8118-1-ND" H 5200 1450 60  0001 C CNN "Digikey"
+F 4 "1276-1104-1-ND" H 5200 1450 60  0001 C CNN "Digikey"
 	1    5200 1450
 	0    -1   -1   0   
 $EndComp
@@ -200,7 +200,7 @@ F 0 "D6" V 3450 1900 50  0000 C CNN
 F 1 "1N4148WFL-G" V 3350 1700 50  0000 C CNN
 F 2 "Additional:SOD-123F" H 3400 2050 50  0001 C CNN
 F 3 "http://media.digikey.com/pdf/Data%20Sheets/Vishay%20Semiconductors/1N4148WFL-G.pdf" H 3400 2050 50  0001 C CNN
-F 4 "1N4148WFL-G3-08GITR-ND" V 3350 1300 60  0001 C CNN "Digikey"
+F 4 "1621821" V 3350 1300 60  0001 C CNN "Farnell"
 	1    3400 2050
 	0    -1   -1   0   
 $EndComp
@@ -236,7 +236,7 @@ F 0 "R22" V 2080 4550 50  0000 C CNN
 F 1 "470R" V 2000 4550 50  0000 C CNN
 F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 1930 4550 50  0001 C CNN
 F 3 "https://industrial.panasonic.com/cdbs/www-data/pdf/RDA0000/AOA0000COL70.pdf" H 2000 4550 50  0001 C CNN
-F 4 "P20245CT-ND" V 2000 4550 60  0001 C CNN "Digikey"
+F 4 "311-470HRCT-ND " V 2000 4550 60  0001 C CNN "Digikey"
 	1    2000 4550
 	0    1    1    0   
 $EndComp
@@ -248,7 +248,7 @@ F 0 "R23" V 2080 6750 50  0000 C CNN
 F 1 "470R" V 2000 6750 50  0000 C CNN
 F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 1930 6750 50  0001 C CNN
 F 3 "https://industrial.panasonic.com/cdbs/www-data/pdf/RDA0000/AOA0000COL70.pdf" H 2000 6750 50  0001 C CNN
-F 4 "P20245CT-ND" V 2000 6750 60  0001 C CNN "Digikey"
+F 4 "311-470HRCT-ND " V 2000 6750 60  0001 C CNN "Digikey"
 	1    2000 6750
 	0    1    1    0   
 $EndComp
@@ -380,7 +380,7 @@ F 0 "D7" V 3450 3950 50  0000 C CNN
 F 1 "1N4148WFL-G" V 3350 3750 50  0000 C CNN
 F 2 "Additional:SOD-123F" H 3400 4100 50  0001 C CNN
 F 3 "http://media.digikey.com/pdf/Data%20Sheets/Vishay%20Semiconductors/1N4148WFL-G.pdf" H 3400 4100 50  0001 C CNN
-F 4 "1N4148WFL-G3-08GITR-ND" V 3350 3350 60  0001 C CNN "Digikey"
+F 4 "1621821" V 3350 3350 60  0001 C CNN "Farnell"
 	1    3400 4100
 	0    -1   -1   0   
 $EndComp
@@ -392,7 +392,7 @@ F 0 "D8" V 3450 6150 50  0000 C CNN
 F 1 "1N4148WFL-G" V 3350 5950 50  0000 C CNN
 F 2 "Additional:SOD-123F" H 3400 6300 50  0001 C CNN
 F 3 "http://media.digikey.com/pdf/Data%20Sheets/Vishay%20Semiconductors/1N4148WFL-G.pdf" H 3400 6300 50  0001 C CNN
-F 4 "1N4148WFL-G3-08GITR-ND" V 3350 5550 60  0001 C CNN "Digikey"
+F 4 "1621821" V 3350 5550 60  0001 C CNN "Farnell"
 	1    3400 6300
 	0    -1   -1   0   
 $EndComp
@@ -524,7 +524,7 @@ F 0 "C19" H 5175 3600 50  0000 L CNN
 F 1 "22n" H 5175 3400 50  0000 L CNN
 F 2 "Capacitors_SMD:C_0603_HandSoldering" H 5188 3350 50  0001 C CNN
 F 3 "https://product.tdk.com/info/en/catalog/datasheets/mlcc_highreliability_general_en.pdf" H 5150 3500 50  0001 C CNN
-F 4 "445-8118-1-ND" H 5150 3500 60  0001 C CNN "Digikey"
+F 4 "1276-1104-1-ND " H 5150 3500 60  0001 C CNN "Digikey"
 	1    5150 3500
 	0    -1   -1   0   
 $EndComp
@@ -536,15 +536,15 @@ F 0 "C20" H 5225 5800 50  0000 L CNN
 F 1 "22n" H 5225 5600 50  0000 L CNN
 F 2 "Capacitors_SMD:C_0603_HandSoldering" H 5238 5550 50  0001 C CNN
 F 3 "https://product.tdk.com/info/en/catalog/datasheets/mlcc_highreliability_general_en.pdf" H 5200 5700 50  0001 C CNN
-F 4 "445-8118-1-ND" H 5200 5700 60  0001 C CNN "Digikey"
+F 4 "1276-1104-1-ND " H 5200 5700 60  0001 C CNN "Digikey"
 	1    5200 5700
 	0    -1   -1   0   
 $EndComp
 $Comp
-L GND #PWR24
+L GND #PWR025
 U 1 1 584188BC
 P 4550 7100
-F 0 "#PWR24" H 4550 6850 50  0001 C CNN
+F 0 "#PWR025" H 4550 6850 50  0001 C CNN
 F 1 "GND" H 4550 6950 50  0000 C CNN
 F 2 "" H 4550 7100 50  0000 C CNN
 F 3 "" H 4550 7100 50  0000 C CNN
@@ -552,10 +552,10 @@ F 3 "" H 4550 7100 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR23
+L GND #PWR026
 U 1 1 58418AC2
 P 4550 4900
-F 0 "#PWR23" H 4550 4650 50  0001 C CNN
+F 0 "#PWR026" H 4550 4650 50  0001 C CNN
 F 1 "GND" H 4550 4750 50  0000 C CNN
 F 2 "" H 4550 4900 50  0000 C CNN
 F 3 "" H 4550 4900 50  0000 C CNN
@@ -563,10 +563,10 @@ F 3 "" H 4550 4900 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR22
+L GND #PWR027
 U 1 1 584185EC
 P 4550 2850
-F 0 "#PWR22" H 4550 2600 50  0001 C CNN
+F 0 "#PWR027" H 4550 2600 50  0001 C CNN
 F 1 "GND" H 4550 2700 50  0000 C CNN
 F 2 "" H 4550 2850 50  0000 C CNN
 F 3 "" H 4550 2850 50  0000 C CNN

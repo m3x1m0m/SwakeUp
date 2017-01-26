@@ -1,4 +1,4 @@
-update=mån  2 jan 2017 11:15:39
+update=ons 25 jan 2017 22:57:24
 version=1
 last_client=kicad
 [pcbnew]
@@ -57,6 +57,8 @@ LibName27=atmel
 LibName28=contrib
 LibName29=valves
 LibName30=myLib/coolLib
+[general]
+version=1
 [schematic_editor]
 version=1
 PageLayoutDescrFile=
@@ -67,5 +69,3 @@ NetFmtName=
 SpiceForceRefPrefix=0
 SpiceUseNetNumbers=0
 LabSize=60
-[general]
-version=1
