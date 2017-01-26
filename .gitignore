@@ -67,7 +67,7 @@ Thumbs.db
 *.pch
 
 # Libraries
-*.lib
+#*.lib
 *.a
 *.la
 *.lo
@@ -99,6 +99,42 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# Simulation #
+#####################
+*.raw
+*.fft
+*.plt
+*.txt
+*.net
+
+# LibreOffice #
+#####################
+.~*
+
+# KiCAD #
+#####################
+# For PCBs designed using KiCad: http://www.kicad-pcb.org/
+
+# Temporary files
+*.000
+*.bak
+*.bck
+*.kicad_pcb-bak
+*~
+_autosave-*
+*.tmp
+
+# Netlist files (exported from Eeschema)
+*.net
+
+# Autorouter files (exported from Pcbnew)
+.dsn
+
+# Exported BOM files
+*.xml
+*.csv
+
 
 # Eclipse #
 #####################
