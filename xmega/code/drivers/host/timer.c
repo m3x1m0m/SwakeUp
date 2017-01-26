@@ -10,6 +10,8 @@
 #include "timer.h"
 #include "../../modules/log.h"
 
+#define PERIOD_TO_OCR1A(PERIOD) (PERIOD/1/F_CPU/1024)
+
 EVENT_REGISTER(EVENT_TIMER_1_HZ, "1 second pulse");
 LOG_INIT("Timer");
 
