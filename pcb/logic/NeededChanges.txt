@@ -1,0 +1,7 @@
+USART
+Both usart connections are currently on one channel, both on channel D. This should be fixed.
+USART
+RX and TX are switched around on USARTD0
+Crystal
+Holes for the pinout are too small, should be enlargened.
+
