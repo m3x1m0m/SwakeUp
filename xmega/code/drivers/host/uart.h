@@ -8,9 +8,10 @@
 
 #ifndef UART_H_
 #define UART_H_
-
+#include <avr/io.h>
 #include "../../util/event.h"
 #include "../../util/module.h"
+#include "../../util/job.h"
 
 EVENT_EXP(EVENT_UART_JOB);
 EVENT_EXP(EVENT_UART_DELIMITER);
@@ -19,21 +20,19 @@ EVENT_EXP(EVENT_UART_DELIMITER);
 #define UART_MAX_IN_BUFFER      64
 #define UART_MAX_JOBS           4
 
-#define BAUD 9600
-//#define MYUBRR (FOSC/16/BAUD-1)
-
-
 typedef enum {
     B38400, B9600, B4800, B2400
 } UART_BAUDRATE;
 
-void uart_speed(UART_BAUDRATE baudrate);
-uint8_t uart_job(char * data, uint8_t len, void (* callback)(void));
-uint8_t uart_buffer_level(void);
-void uart_write_blocked(char data);
-void uart_writes_blocked(char * data, uint8_t len);
-uint8_t uart_read_blocked(char * data, uint8_t len);
-uint8_t uart_add_delimiter(char delimiter, void(*callback)(char *, uint8_t));
+
+
+void uart_speed(UART_BAUDRATE baudrate, USART_t * port);
+uint8_t uart_job(char * data, uint8_t len, void (* callback)(struct Job *), USART_t * port);
+uint8_t uart_buffer_level(USART_t * port);
+void uart_write_blocked(char data, USART_t * port);
+void uart_writes_blocked(char * data, uint8_t len, USART_t * port);
+uint8_t uart_read_blocked(char * data, uint8_t len, USART_t * port);
+uint8_t uart_add_delimiter(char delimiter, void(*callback)(char *, uint8_t), USART_t * port);
 
 MODULE_EXP(UART);
 

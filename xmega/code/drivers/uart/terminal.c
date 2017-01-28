@@ -10,7 +10,7 @@
 #include "../../util/job.h"
 #include "../../modules/log.h"
 #include "../../tinyprint/printf.h"
-
+#include "../../pin_definitions.h"
 #include <stdarg.h>
 
 LOG_INIT("Terminal");
@@ -22,7 +22,7 @@ static uint8_t currentLine = 0;
 
 
 static void write_block(void * p, char c) {
-    uart_write_blocked(c);
+    uart_write_blocked(c, &CP_PORT);
 }
 static void write(void * p, char c) {
     terminal_putc(c);
@@ -102,7 +102,7 @@ void terminal_putc(char c) {
 void terminal_flush(void) {
     if (sendStatus[currentLine] == 1) return; //we are already sending what we can
     sendStatus[currentLine] = 1;
-    uart_job(buffer[currentLine], characterIndex[currentLine], 0);
+    uart_job(buffer[currentLine], characterIndex[currentLine], 0, &CP_PORT);
     if (++currentLine == TERMINAL_LINES) {
         currentLine = 0;
     }
