@@ -18,11 +18,8 @@
 #include "util/event.h"
 #include "drivers/host/uart.h"
 #include "modules/log.h"
-<<<<<<< HEAD
 
 #include "drivers/host/pwm.h"
-=======
->>>>>>> logic_board
 
 static void callback(Event * event, uint8_t * data);
 
@@ -61,12 +58,6 @@ int main(void) {
     //sleep_enable();
     //set_sleep_mode(SLEEP_MODE_IDLE);
 #endif
-<<<<<<< HEAD
-=======
-    //module_init(&LOGGER);
-    //module_init(&TIMER);
-    //event_addListener(&EVENT_TIMER_1_HZ, callback);
->>>>>>> logic_board
     //module_init(&Screen);
     PMIC.CTRL = PMIC_LOLVLEN_bm | PMIC_MEDLVLEN_bm | PMIC_HILVLEN_bm; //peripheral enable - interrupt levels (ALL)
     sei();
@@ -83,9 +74,4 @@ static void callback(Event * event, uint8_t * data) {
 //         LOG_DEBUG("Timer event %d", i++);
 //         LED_PORT = LED_PORT ^ LED_SOL;
 //     }
-<<<<<<< HEAD
 }
-=======
-}
-
->>>>>>> logic_board
