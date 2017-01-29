@@ -16,7 +16,7 @@ LOG_INIT("Logger")
 
 void log_error() {
     while (1) {
-        LED_PORT = LED_PORT ^ LED_ERROR;
+        LED_PORT.OUTTGL = LED_PIN;
         _delay_ms(500);
     }
 }
