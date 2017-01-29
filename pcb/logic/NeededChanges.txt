@@ -4,4 +4,5 @@ USART
 RX and TX are switched around on USARTD0
 Crystal
 Holes for the pinout are too small, should be enlargened.
-
+CP2102
+Remove the 10k Resistor on the suspend
