@@ -82,7 +82,7 @@ uint8_t uart_job(char * data, uint8_t len, void (* callback)(struct Job *), USAR
     if (job_add(uartBuffers[id], data, len, callback) == 0) {
         //LOG_ERROR("No free jobs");
         //we are full boi
-        LED_PORT.OUTCLR = LED_PIN;
+        //LED_PORT.OUTCLR = LED_PIN;
         return 0;
     }
     if (!sending[id]) _send(port, uartBuffers[id]);
@@ -199,7 +199,7 @@ static void _send(USART_t * port, struct JobBuffer * uartJob) {
 
 //UDR0 Empty interrupt service routine
 ISR(USARTE0_TXC_vect) {
-    LED_PORT.OUTCLR = LED_PIN;
+    //LED_PORT.OUTCLR = LED_PIN;
     uint8_t id = getId(&CP_PORT);
     struct Job * currentJob = curJob[id];
     if (currentJob == 0) {
@@ -207,7 +207,7 @@ ISR(USARTE0_TXC_vect) {
         LED_PORT.OUTCLR = LED_PIN;
         return;
     }
-    LED_PORT.OUTCLR = LED_PIN;
+    //LED_PORT.OUTCLR = LED_PIN;
     CP_PORT.DATA = currentJob->data[currentJob->i];
     if (++currentJob->i == currentJob->len) {
         event_fire(&EVENT_UART_JOB, SYSTEM_ADDRESS_CAST currentJob);
