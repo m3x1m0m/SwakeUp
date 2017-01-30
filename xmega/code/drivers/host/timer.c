@@ -9,30 +9,49 @@
 #include <avr/interrupt.h>
 #include "timer.h"
 #include "../../modules/log.h"
-
-#define PERIOD_TO_OCR1A(PERIOD) (PERIOD/1/F_CPU/1024)
-
+#include "../../pin_definitions.h"
+#include "uart.h"
 EVENT_REGISTER(EVENT_TIMER_1_HZ, "1 second pulse");
 LOG_INIT("Timer");
 
-ISR(TIMER1_COMPA_vect) {
-    event_fire(&EVENT_TIMER_1_HZ, 0);
-}
+
+
+
+// ISR(RTC_OVF_vect) {
+//     while (!((CP_PORT).STATUS & USART_DREIF_bm));
+//     (CP_PORT).DATA = 'o';
+//     //uart_write_blocked('O', CP_PORT);
+//     //LED_PORT.OUTTGL = LED_PIN;
+// }
+//
+// ISR(RTC_COMP_vect) {
+//     while (!((CP_PORT).STATUS & USART_DREIF_bm));
+//     (CP_PORT).DATA = 'c';
+//     //uart_write_blocked('C', CP_PORT);
+//     //LED_PORT.OUTTGL = LED_PIN;
+// }
 
 static uint8_t init(void) {
-    // set compare match register to desired timer count:
-    OCR1A = 976;   //  1s / 1 / 1000000hZ / 1024prescaler
-    // turn on CTC mode:
-    TCCR1B |= (1 << WGM12);
-    // Set CS10 and CS12 bits for 1024 prescaler:
-    TCCR1B |= (1 << CS10);
-    TCCR1B |= (1 << CS12);
-    // enable timer compare interrupt:
-    TIMSK1 |= (1 << OCIE1A);
-    LOG_SYSTEM("Timer initialized with OCR1A(%d)", OCR1A);
+    OSC.CTRL |= OSC_RC32KEN_bm;
+    while ( ( OSC.STATUS & OSC_RC32KRDY_bm ) == 0);
+    CLK.RTCCTRL = CLK_RTCSRC_RCOSC_gc | CLK_RTCEN_bm;
+    while ( RTC.STATUS & RTC_SYNCBUSY_bm  );
+    RTC.PER = 1023;
+    RTC.CNT = 0;
+    RTC.COMP = 0;
+    RTC.CTRL = ( RTC.CTRL & ~RTC_PRESCALER_gm ) | RTC_PRESCALER_DIV1_gc;
+    RTC.INTCTRL = ( RTC.INTCTRL & ~( RTC_COMPINTLVL_gm | RTC_OVFINTLVL_gm ) ) | RTC_OVFINTLVL_LO_gc | RTC_COMPINTLVL_OFF_gc;
+    return 1;
 }
 
 static uint8_t deinit(void) {
+    return 1;
+}
+
+ISR(RTC_OVF_vect) {
+    // LED_PORT.OUTTGL = LED_PIN;
+    //uart_write_blocked('O', CP_PORT);
+    event_fire(&EVENT_TIMER_1_HZ, 0);
 }
 
 MODULE_DEFINE(TIMER, "Timer", init, deinit);
