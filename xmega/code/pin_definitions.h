@@ -9,6 +9,8 @@
 #ifndef PIN_DEFINITIONS_H_
 #define PIN_DEFINITIONS_H_
 
+#define REV_1
+
 #define F_CPU           16000000UL
 
 #define LED_PORT            PORTB
