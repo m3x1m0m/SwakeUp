@@ -49,8 +49,6 @@ static uint8_t deinit(void) {
 }
 
 ISR(RTC_OVF_vect) {
-    // LED_PORT.OUTTGL = LED_PIN;
-    //uart_write_blocked('O', CP_PORT);
     event_fire(&EVENT_TIMER_1_HZ, 0);
 }
 
