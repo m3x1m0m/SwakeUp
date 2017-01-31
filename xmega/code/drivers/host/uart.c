@@ -62,7 +62,7 @@ void uart_speed(UART_BAUDRATE baudrate, USART_t * port) {
     case B2400:
         break;
     case B4800:
-        (*port).BAUDCTRLA = 3317;
+        port->BAUDCTRLA = 3317;
         port->BAUDCTRLB = -4;
         break;
     case B9600:
@@ -70,8 +70,12 @@ void uart_speed(UART_BAUDRATE baudrate, USART_t * port) {
         port->BAUDCTRLB = 0;
         break;
     case B38400:
-        port->BAUDCTRLA = 3205;
-        port->BAUDCTRLB = -7;
+        port->BAUDCTRLA = 25;
+        port->BAUDCTRLB = 0;
+        break;
+    case B115200:
+        port->BAUDCTRLA = 123;
+        port->BAUDCTRLB = -4;
         break;
     }
 }
@@ -189,33 +193,32 @@ static void _send(USART_t * port, struct JobBuffer * uartJob) {
         LED_PORT.OUTCLR = LED_PIN;
         return;
     }
-    struct Job * currentJob = curJob[id];
-    port->DATA = currentJob->data[currentJob->i];
-    if (++currentJob->i != currentJob->len) {
-        port->CTRLA               |= USART_RXCINTLVL_LO_gc;
-    }
-    //UCSR0B |= (1 << TXEN0) | (1 << UDRIE0); //enable the interrupts!
+    port->CTRLA               |= USART_DREINTLVL_LO_gc;
+//     struct Job * currentJob = curJob[id];
+//     port->DATA = currentJob->data[currentJob->i];
+//     if (++currentJob->i != currentJob->len) {
+//         port->CTRLA               |= USART_DREINTLVL_LO_gc;
+//}
+//UCSR0B |= (1 << TXEN0) | (1 << UDRIE0); //enable the interrupts!
 }
 
 //UDR0 Empty interrupt service routine
-ISR(USARTE0_TXC_vect) {
+
+ISR(USARTE0_DRE_vect) {
     //LED_PORT.OUTCLR = LED_PIN;
     uint8_t id = getId(&CP_PORT);
     struct Job * currentJob = curJob[id];
     if (currentJob == 0) {
-        //LOG_ERROR("curJob == 0");
-        LED_PORT.OUTCLR = LED_PIN;
         return;
     }
-    //LED_PORT.OUTCLR = LED_PIN;
     CP_PORT.DATA = currentJob->data[currentJob->i];
     if (++currentJob->i == currentJob->len) {
-        event_fire(&EVENT_UART_JOB, SYSTEM_ADDRESS_CAST currentJob);
+        event_fire(&EVENT_UART_JOB, SYSTEM_ADDRESS_CAST(currentJob));
         currentJob->i = 0;
         if (!job_get(uartBuffers[id], &currentJob)) {
             curJob[id] = 0;
             //disable UDR0 empty interrupt
-            USARTE0.CTRLA &= ~(USART_RXCINTLVL_LO_gc);
+            USARTE0.CTRLA &= ~(USART_DREINTLVL_LO_gc);
             sending[id] = 0;
         }
     }
@@ -234,7 +237,7 @@ static uint8_t init(void) {
     CP_PORT.CTRLA               = USART_RXCINTLVL_LO_gc;
     CP_PORT.CTRLB               = USART_RXEN_bm |  USART_TXEN_bm;
     CP_PORT.CTRLC               = USART_CHSIZE_8BIT_gc;
-    uart_speed(B9600, &CP_PORT);
+    uart_speed(B38400, &CP_PORT);
     return 1;
 }
 
