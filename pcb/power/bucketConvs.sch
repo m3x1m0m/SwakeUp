@@ -138,7 +138,7 @@ F 4 "311-150HRCT-ND" V 1800 3300 60  0001 C CNN "Digikey"
 	1    1800 3300
 	1    0    0    -1  
 $EndComp
-Text Notes 1200 1900 0    60   ~ 0
+Text Notes 1175 1375 0    60   ~ 0
 2.8 V for µC\n---------------------------\nVout=0.765 V (1 + (27k/ 10.15k))=2.8 V\n27k/10.15k= 2.66
 $Comp
 L INDUCTOR L1
@@ -311,7 +311,7 @@ F 4 "TS30012-M050QFNRCT-ND " H 3050 5500 60  0001 C CNN "Digikey"
 	1    3050 5500
 	1    0    0    -1  
 $EndComp
-Text Notes 1400 5000 0    60   ~ 0
+Text Notes 1325 4875 0    60   ~ 0
 5V for Mobile Phone\n-----------------------\nVout,max=5 V\nAout,max = 2A
 $Comp
 L GND #PWR010
@@ -490,7 +490,7 @@ Connection ~ 4850 5400
 Wire Wire Line
 	5750 5250 5750 5500
 Wire Wire Line
-	6200 5400 6200 5500
+	6200 4925 6200 5500
 Wire Wire Line
 	4850 5800 4850 6300
 Wire Wire Line
@@ -509,13 +509,6 @@ Wire Wire Line
 Wire Wire Line
 	3900 5600 4100 5600
 Connection ~ 4550 5400
-Wire Wire Line
-	2300 5600 2150 5600
-Wire Wire Line
-	2150 5600 2150 6300
-Wire Wire Line
-	4700 6300 4700 5400
-Connection ~ 4700 5400
 Connection ~ 6200 5400
 Wire Wire Line
 	4100 5800 3900 5800
@@ -534,8 +527,6 @@ Wire Wire Line
 	4550 5400 4550 5600
 Wire Wire Line
 	5550 5400 6850 5400
-Wire Wire Line
-	2150 6300 4700 6300
 Wire Wire Line
 	4850 6300 6600 6300
 Wire Wire Line
@@ -561,4 +552,14 @@ Wire Wire Line
 	3650 2400 3650 2775
 Wire Wire Line
 	1200 1950 4350 1950
+Wire Wire Line
+	6200 4925 1325 4925
+Wire Wire Line
+	1325 4925 1325 5900
+Wire Wire Line
+	2300 5600 2150 5600
+Wire Wire Line
+	2150 5600 2150 5900
+Wire Wire Line
+	2150 5900 1325 5900
 $EndSCHEMATC
