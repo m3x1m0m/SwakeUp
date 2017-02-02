@@ -110,9 +110,11 @@ void terminal_flush(void) {
 
 
 char terminal_getc(void) {
+    return '0';
 }
 
 uint8_t terminal_level_in(void) {
+    return 0;
 }
 
 static void callback(Event * event, uint8_t * data) {
@@ -138,7 +140,7 @@ static uint8_t init(void) {
         characterIndex[i] = 0;
     }
     event_addListener(&EVENT_UART_JOB, callback);
-    event_addListener(&EVENT_UART_JOB, initalizeCallback);
+    //event_addListener(&EVENT_UART_JOB, initalizeCallback);
     return 1;
 }
 
