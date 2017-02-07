@@ -181,6 +181,59 @@ uint8_t uart_read_blocked(char * data, uint8_t len, USART_t * port) {
     return readLen;
 }
 
+uint8_t uart_add_delimiter(char delimiter, void(*callback)(char *, uint8_t), USART_t * port) {
+    uint8_t id = getId(port);
+    struct UartStatus * tempStatus = &uartStatus[id];
+    if (tempStatus->delimiters_size == UART_MAX_DELIMITERS) {
+        //we are full boi
+        //  LOG_ERROR("No free delimiters");
+        LED_PORT.OUTCLR = LED_PIN;
+        return 0;
+    }
+    struct UartDelimiter * curDelimiter = &delimiters[id][tempStatus->delimiters_head];
+    curDelimiter->delimiter = delimiter;
+    curDelimiter->readDelimiter = 0;
+    tempStatus->delimiters_size++;
+    if (tempStatus->delimiters_head++ == UART_MAX_DELIMITERS) tempStatus->delimiters_head = 0;
+    return 1;
+}
+static inline uint8_t writeInBuf(uint8_t data, USART_t * port) {
+    uint8_t id = getId(port);
+    struct UartStatus * tempStatus = &uartStatus[id];
+    if (tempStatus->inBuffer_size == UART_MAX_IN_BUFFER) {
+        // LOG_ERROR("Uart buffer overrun");
+        //LED_PORT.OUTCLR = LED_PIN;
+        return 0;
+    }
+    inBuffer[id][tempStatus->inBuffer_head] = data;
+    tempStatus->inBuffer_size++;
+    if (tempStatus->inBuffer_head++ == UART_MAX_DELIMITERS) tempStatus->inBuffer_head = 0;
+    return 1;
+}
+
+ISR(USARTE0_TXC_vect) {
+    uint8_t read = USARTE0.DATA;
+    if (writeInBuf(read, &USARTE0)) {
+        uint8_t i = 0;
+        for (; i < UART_MAX_DELIMITERS; i++) {
+            char delimitChar = delimiters[USARTE_ID][i].delimiter;
+            if (delimitChar == 0) {
+                if (delimiters[USARTE_ID][i].readDelimiter > 0) {
+                    if (delimiters[USARTE_ID][i].tempReadDelimiter == 0) {
+                        event_fire(&EVENT_UART_DELIMITER, SYSTEM_ADDRESS_CAST & delimiters[USARTE_ID][i]);
+                    } else {
+                        delimiters[USARTE_ID][i].tempReadDelimiter--;
+                    }
+                }
+            } else if (delimitChar == read) {
+                event_fire(&EVENT_UART_DELIMITER, SYSTEM_ADDRESS_CAST & delimiters[USARTE_ID][i]);
+            }
+        }
+    } else {
+        //TODO buffer is full, whats next? Disable the read interrupt at least
+        CP_PORT.CTRLA &= ~(USART_RXCINTLVL_LO_gc);
+    }
+}
 
 ISR(USARTE0_DRE_vect) {
     uint8_t size = uartStatus[USARTE_ID].outBuffer_size;
