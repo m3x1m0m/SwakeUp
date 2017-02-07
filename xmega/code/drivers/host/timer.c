@@ -41,6 +41,7 @@ static uint8_t init(void) {
     RTC.COMP = 0;
     RTC.CTRL = ( RTC.CTRL & ~RTC_PRESCALER_gm ) | RTC_PRESCALER_DIV1_gc;
     RTC.INTCTRL = ( RTC.INTCTRL & ~( RTC_COMPINTLVL_gm | RTC_OVFINTLVL_gm ) ) | RTC_OVFINTLVL_LO_gc | RTC_COMPINTLVL_OFF_gc;
+    LOG_SYSTEM("Timer set up");
     return 1;
 }
 

@@ -13,9 +13,6 @@
 #include <stdarg.h>
 #include "../../util/module.h"
 
-#define TERMINAL_MAX_LINE   32
-#define TERMINAL_LINES      4
-
 uint8_t terminal_write(char * format, ...);
 void terminal_write_force(char * format, ...);
 void terminal_write_block(char * format, ...);

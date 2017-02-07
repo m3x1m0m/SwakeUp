@@ -17,29 +17,28 @@ LOG_INIT("Logger")
 void log_error() {
     while (1) {
         LED_PORT.OUTTGL = LED_PIN;
-        _delay_ms(500);
+        _delay_ms(250);
     }
 }
 
 void log_message(const char * format, ...) {
     va_list arg;
     va_start (arg, format);
-    terminal_format_force(format, arg);
+    terminal_format(format, arg);
     va_end (arg);
 }
 
 void callback(Event * event, uint8_t * data) {
     event_removeListener(&EVENT_UART_JOB, callback);
-    LOG_SYSTEM("Logger initialized");
+    //LOG_SYSTEM("Logger initialized");
 }
 
 uint8_t init(void) {
-    event_addListener(&EVENT_UART_JOB, callback);
+    LOG_SYSTEM("Logger initialized");
     return 1;
 }
 
 uint8_t deinit(void) {
-    event_removeListener(&EVENT_UART_JOB, callback);
     return 1;
 }
 
