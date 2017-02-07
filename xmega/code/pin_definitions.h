@@ -11,6 +11,13 @@
 
 #define REV_1
 
+//#define EVENT_SUPPORTS_SLEEP
+
+#define DEBUG_LED_TOG       LED_PORT.OUTTGL = LED_PIN;
+#define DEBUG_LED_ON        LED_PORT.OUTCLR = LED_PIN;
+#define DEBUG_LED_OFF       LED_PORT.OUTSET = LED_PIN;
+#define DEBUG_UART          USARTE0
+
 #define F_CPU           16000000UL
 
 #define LED_PORT            PORTB

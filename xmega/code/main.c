@@ -50,9 +50,9 @@ int main(void) {
     LED_PORT.DIR = LED_PIN;
     LED_PORT.OUTTGL = LED_PIN;
 #ifdef EVENT_SUPPORTS_SLEEP
-    // event_init(sleep, wakeUp);
-    // sleep_enable();
-    // set_sleep_mode(SLEEP_MODE_IDLE);
+    event_init(sleep, wakeUp);
+    sleep_enable();
+    set_sleep_mode(SLEEP_MODE_IDLE);
 #endif
     //module_init(&Screen);
     //PMIC.CTRL = PMIC_LOLVLEN_bm | PMIC_MEDLVLEN_bm | PMIC_HILVLEN_bm; //peripheral enable - interrupt levels (ALL)
