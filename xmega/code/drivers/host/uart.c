@@ -17,7 +17,7 @@ static const char _emptyJob[] = "\n\r No more jobs \n\r";
 static const char _fullJob[] = "\n\r Jobs are full \n\r";
 static const char _zeroJob[] = "\n\r Zero job \n\r";
 
-JOB_BUFFER_INIT(CpUartJobs, UART_MAX_JOBS);
+JOB_BUFFER_INIT(CpUartJobs, 0);                 //Debug uart doesnt use jobs, but a direct buffer
 JOB_BUFFER_INIT(EspUartJobs, UART_MAX_JOBS);
 
 struct JobBuffer * uartBuffers[2] = {&CpUartJobs, &EspUartJobs};
@@ -57,7 +57,7 @@ char outBuffer                  [UART_CHANNELS][UART_MAX_OUT_BUFFER];
 
 static uint8_t sending          [UART_CHANNELS] = {0, 0};
 
-static void _send(USART_t * port, struct JobBuffer * uartJob);
+//static void _send(USART_t * port, struct JobBuffer * uartJob);
 
 #define USART_BAUDRATE 9600
 #define BAUD_PRESCALE (((F_CPU/(USART_BAUDRATE*16UL)))-1)
@@ -100,11 +100,28 @@ void uart_speed(UART_BAUDRATE baudrate, USART_t * port) {
 uint8_t uart_job(char * data, uint8_t len, void (* callback)(struct Job *), USART_t * port) {
     uart_writes_blocked(data, len, port);
     event_fire(&EVENT_UART_JOB, (uint8_t*)port);//(uint8_t *) callback);
+    return 1;
 }
 
-uint8_t uart_write(char * data, uint8_t len, uint8_t * eventData, USART_t * port) {
-    uart_writes_blocked(data, len, port);
-    event_fire(&EVENT_UART_JOB, eventData);
+uint8_t uart_write(char * data, uint8_t * len, uint8_t * eventData, USART_t * port) {
+    uint8_t id = getId(port);
+    uint8_t originLen = *len, l = *len, i = 0;
+    uint8_t spaceFree = UART_MAX_OUT_BUFFER - uartStatus[id].outBuffer_size;
+    *len = 0;
+    if (originLen > spaceFree) {
+        l = spaceFree;
+    }
+    for (; i < l; i++) {
+        outBuffer[id][uartStatus[id].outBuffer_head] = data[i];
+        uartStatus[id].outBuffer_head = (uartStatus[id].outBuffer_head + 1 >= UART_MAX_OUT_BUFFER) ? 0 : uartStatus[id].outBuffer_head + 1;
+        uartStatus[id].outBuffer_size++;
+        *len++;
+    }
+    if (!sending[id]) {
+        port->CTRLA |= USART_DREINTLVL0_bm;
+        // sending[id] = 1; //TODO implement this ?
+    }
+    return *len == originLen;
 }
 
 #define UART_THRESHOLD 16
@@ -120,6 +137,7 @@ uint8_t uart_writes(char data, uint8_t * eventData, USART_t * port) {
         port->CTRLA |= USART_DREINTLVL0_bm;
         // sending[id] = 1; //TODO implement this ?
     }
+    return 1;
 }
 
 uint8_t uart_buffer_level(USART_t * port) {
@@ -171,11 +189,8 @@ ISR(USARTE0_DRE_vect) {
         //uint8_t head = uartStatus[USARTE_ID].outBuffer_head;
         USARTE0.DATA = outBuffer[USARTE_ID][tail];
         uartStatus[USARTE_ID].outBuffer_size--;
-        if (tail + 1 == UART_MAX_OUT_BUFFER) {
-            uartStatus[USARTE_ID].outBuffer_tail = 0;
-        } else {
-            uartStatus[USARTE_ID].outBuffer_tail++;
-        }
+        if (++tail == UART_MAX_OUT_BUFFER) tail = 0;
+        uartStatus[USARTE_ID].outBuffer_tail = tail;
     } else {
         sending[USARTE_ID] = 0;
         USARTE0.CTRLA &= ~(USART_DREINTLVL0_bm);
@@ -198,7 +213,7 @@ static uint8_t init(void) {
     CP_PORT.CTRLB               = USART_RXEN_bm |  USART_TXEN_bm;
     CP_PORT.CTRLC               = USART_CHSIZE_8BIT_gc;
     uart_speed(B38400, &CP_PORT);
-    uart_writes_blocked(_initialized, sizeof(_initialized), &CP_PORT);
+    uart_writes_blocked(_initialized, sizeof(_initialized), &DEBUG_UART);
     return 1;
 }
 
