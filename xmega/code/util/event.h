@@ -16,7 +16,7 @@ extern "C" {
 #include <stdint.h>
 #define SYSTEM_ADDRESS      uint8_t *
 #define SYSTEM_ADDRESS_CAST (SYSTEM_ADDRESS)
-//#define EVENT_SUPPORTS_SLEEP
+#define EVENT_SUPPORTS_SLEEP
 
 #define EVENT_MAX_LISTENERS 14
 #define EVENT_MAX_BUFFER    16

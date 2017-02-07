@@ -126,7 +126,7 @@ uint8_t event_wait(Event * event, uint8_t timeout) {
                 listeners[i].callback(nextEvent->event, nextEvent->data);
             }
         }
-        if (nextEvent == event)
+        if (nextEvent->event == event)
             return 1;
         while (eventBufferHead != eventBufferTail);
     }
