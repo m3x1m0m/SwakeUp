@@ -31,8 +31,7 @@ EVENT_REGISTER(EVENT_UART_DELIMITER, "Got UART delimiter");
 
 struct UartDelimiter {
     char delimiter;
-    uint8_t readDelimiter;
-    uint8_t tempReadDelimiter;
+    uint8_t length;
 };
 
 struct UartStatus {
@@ -107,7 +106,7 @@ uint8_t uart_write(char * data, uint8_t * len, uint8_t * eventData, USART_t * po
     uint8_t id = getId(port);
     uint8_t originLen = *len, l = *len, i = 0;
     uint8_t spaceFree = UART_MAX_OUT_BUFFER - uartStatus[id].outBuffer_size;
-    *len = 0;
+    (*len) = 0;
     if (originLen > spaceFree) {
         l = spaceFree;
     }
@@ -115,7 +114,7 @@ uint8_t uart_write(char * data, uint8_t * len, uint8_t * eventData, USART_t * po
         outBuffer[id][uartStatus[id].outBuffer_head] = data[i];
         uartStatus[id].outBuffer_head = (uartStatus[id].outBuffer_head + 1 >= UART_MAX_OUT_BUFFER) ? 0 : uartStatus[id].outBuffer_head + 1;
         uartStatus[id].outBuffer_size++;
-        *len++;
+        (*len)++;
     }
     if (!sending[id]) {
         port->CTRLA |= USART_DREINTLVL0_bm;
@@ -181,6 +180,22 @@ uint8_t uart_read_blocked(char * data, uint8_t len, USART_t * port) {
     return readLen;
 }
 
+char uart_reads_blocked(USART_t * port) {
+    while (!((*port).STATUS & USART_RXCIF_bm));
+    return (*port).DATA;
+}
+
+uint8_t uart_read_buffer(char * data, uint8_t len, USART_t * port) {
+    uint8_t id = getId(port);
+    uint8_t l = 0;
+    while (l < len && uartStatus[id].inBuffer_size > 0) {
+        data[l] = inBuffer[id][uartStatus[id].inBuffer_tail];
+        if (++uartStatus[id].inBuffer_tail == UART_MAX_IN_BUFFER) uartStatus[id].inBuffer_tail = 0;
+        uartStatus[id].inBuffer_size--;
+    }
+    return l;
+}
+
 uint8_t uart_add_delimiter(char delimiter, void(*callback)(char *, uint8_t), USART_t * port) {
     uint8_t id = getId(port);
     struct UartStatus * tempStatus = &uartStatus[id];
@@ -192,7 +207,7 @@ uint8_t uart_add_delimiter(char delimiter, void(*callback)(char *, uint8_t), USA
     }
     struct UartDelimiter * curDelimiter = &delimiters[id][tempStatus->delimiters_head];
     curDelimiter->delimiter = delimiter;
-    curDelimiter->readDelimiter = 0;
+    curDelimiter->length = 0;
     tempStatus->delimiters_size++;
     if (tempStatus->delimiters_head++ == UART_MAX_DELIMITERS) tempStatus->delimiters_head = 0;
     return 1;
@@ -201,32 +216,24 @@ static inline uint8_t writeInBuf(uint8_t data, USART_t * port) {
     uint8_t id = getId(port);
     struct UartStatus * tempStatus = &uartStatus[id];
     if (tempStatus->inBuffer_size == UART_MAX_IN_BUFFER) {
-        // LOG_ERROR("Uart buffer overrun");
+        //LOG_ERROR("Uart buffer overrun");
         //LED_PORT.OUTCLR = LED_PIN;
         return 0;
     }
     inBuffer[id][tempStatus->inBuffer_head] = data;
     tempStatus->inBuffer_size++;
-    if (tempStatus->inBuffer_head++ == UART_MAX_DELIMITERS) tempStatus->inBuffer_head = 0;
+    if (++tempStatus->inBuffer_head == UART_MAX_DELIMITERS) tempStatus->inBuffer_head = 0;
     return 1;
 }
 
-ISR(USARTE0_TXC_vect) {
+ISR(USARTE0_RXC_vect) {
     uint8_t read = USARTE0.DATA;
     if (writeInBuf(read, &USARTE0)) {
         uint8_t i = 0;
         for (; i < UART_MAX_DELIMITERS; i++) {
-            char delimitChar = delimiters[USARTE_ID][i].delimiter;
-            if (delimitChar == 0) {
-                if (delimiters[USARTE_ID][i].readDelimiter > 0) {
-                    if (delimiters[USARTE_ID][i].tempReadDelimiter == 0) {
-                        event_fire(&EVENT_UART_DELIMITER, SYSTEM_ADDRESS_CAST & delimiters[USARTE_ID][i]);
-                    } else {
-                        delimiters[USARTE_ID][i].tempReadDelimiter--;
-                    }
-                }
-            } else if (delimitChar == read) {
-                event_fire(&EVENT_UART_DELIMITER, SYSTEM_ADDRESS_CAST & delimiters[USARTE_ID][i]);
+            delimiters[USARTE_ID][i].length++;
+            if (read == delimiters[USARTE_ID][i].delimiter) {
+                event_fire(&EVENT_UART_DELIMITER, SYSTEM_ADDRESS_CAST (&delimiters[USARTE_ID][i]));
             }
         }
     } else {
@@ -260,9 +267,11 @@ static uint8_t init(void) {
     ESP_UART_PORT.CTRLB         = USART_RXEN_bm |  USART_TXEN_bm;
     ESP_UART_PORT.CTRLC         = USART_CHSIZE_8BIT_gc;
     uart_speed(B9600, &ESP_UART_PORT);
-    CP_PIN_PORT.OUT             = CP_TX_PIN;
+    CP_PIN_PORT.DIRCLR          = CP_RX_PIN;
     CP_PIN_PORT.DIRSET          = CP_TX_PIN;
-    CP_PORT.CTRLA               = USART_RXCINTLVL_LO_gc;
+    CP_PIN_PORT.OUTCLR          = CP_RX_PIN;
+    CP_PIN_PORT.OUTSET          = CP_TX_PIN;
+    CP_PORT.CTRLA               = USART_RXCINTLVL_MED_gc;
     CP_PORT.CTRLB               = USART_RXEN_bm |  USART_TXEN_bm;
     CP_PORT.CTRLC               = USART_CHSIZE_8BIT_gc;
     uart_speed(B38400, &CP_PORT);

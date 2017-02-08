@@ -35,6 +35,8 @@ uint8_t uart_buffer_out_level(USART_t * port);
 void uart_write_blocked(char data, USART_t * port);
 void uart_writes_blocked(char * data, uint8_t len, USART_t * port);
 uint8_t uart_read_blocked(char * data, uint8_t len, USART_t * port);
+char uart_reads_blocked(USART_t * port);
+uint8_t uart_read_buffer(char * data, uint8_t len, USART_t * port);
 uint8_t uart_add_delimiter(char delimiter, void(*callback)(char *, uint8_t), USART_t * port);
 
 MODULE_EXP(UART);
