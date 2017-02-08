@@ -28,11 +28,6 @@ void log_message(const char * format, ...) {
     va_end (arg);
 }
 
-void callback(Event * event, uint8_t * data) {
-    event_removeListener(&EVENT_UART_JOB, callback);
-    //LOG_SYSTEM("Logger initialized");
-}
-
 uint8_t init(void) {
     LOG_SYSTEM("Logger initialized");
     return 1;
