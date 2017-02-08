@@ -55,21 +55,20 @@ int main(void) {
     set_sleep_mode(SLEEP_MODE_IDLE);
 #endif
     //module_init(&Screen);
-    //PMIC.CTRL = PMIC_LOLVLEN_bm | PMIC_MEDLVLEN_bm | PMIC_HILVLEN_bm; //peripheral enable - interrupt levels (ALL)
-    //uart_job(name, 5, 0, &CP_PORT);
-    PMIC.CTRL |= PMIC_LOLVLEN_bm | PMIC_MEDLVLEN_bm;
-    module_init(&LOGGER);
+    PMIC.CTRL |= PMIC_LOLVLEN_bm | PMIC_MEDLVLEN_bm;    //Peripheral enable - interrupt levels (ALL)
+    module_init(&LOGGER);                               //Initializing the logger for use
     _delay_ms(200);
-    module_init(&TIMER);
+    module_init(&TIMER);                                //Timer
     _delay_ms(200);
-    event_addListener(&EVENT_TIMER_1_HZ, callback);
-    sei();
+    event_addListener(&EVENT_TIMER_1_HZ, callback);     //TODO this can be removed
+    sei();                                              //Enabling interrupts
     _delay_ms(200);
     LOG_SYSTEM("System initialized");
     //event_addListener(&EVENT_UART_JOB, callback);
     while (1) {
+        //This is all that should happen in the main loop
+        //The system will go to sleep if no more events are to be processed
         event_process();
-        //_delay_ms(500);
     }
 }
 
@@ -80,19 +79,7 @@ static const char _job[] = "\n\r job \n\r";
 static void callback(Event * event, uint8_t * data) {
     static uint8_t i = 0;
     if (event == &EVENT_TIMER_1_HZ) {
-        LED_PORT.OUTTGL = LED_PIN;
+        //LED_PORT.OUTTGL = LED_PIN;
         LOG_DEBUG("Timer event %d ja", i++);
-    } else if (event == &EVENT_UART_JOB) {
-        //uart_writes_blocked("cb\n\r", 4, &CP_PORT);
-        //uart_writes_blocked(_job, sizeof(_job), &CP_PORT);
     }
 }
-
-
-
-// ISR(RTC_COMP_vect) {
-//while (!((CP_PORT).STATUS & USART_DREIF_bm));
-//(CP_PORT).DATA = 'c';
-//uart_write_blocked('C', CP_PORT);
-//LED_PORT.OUTTGL = LED_PIN;
-//}
