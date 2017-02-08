@@ -21,11 +21,16 @@ EVENT_EXP(EVENT_UART_DELIMITER);
 #define UART_MAX_OUT_BUFFER     128
 #define UART_MAX_JOBS           4
 
+//TODO move this struct to the C
+struct UartDelimiter {
+    USART_t * port;
+    char delimiter;
+    uint8_t length;
+};
+
 typedef enum {
     B115200, B38400, B9600, B4800, B2400
 } UART_BAUDRATE;
-
-
 
 void uart_speed(UART_BAUDRATE baudrate, USART_t * port);
 uint8_t uart_job(char * data, uint8_t len, void (* callback)(struct Job *), USART_t * port);
@@ -37,7 +42,8 @@ void uart_writes_blocked(char * data, uint8_t len, USART_t * port);
 uint8_t uart_read_blocked(char * data, uint8_t len, USART_t * port);
 char uart_reads_blocked(USART_t * port);
 uint8_t uart_read_buffer(char * data, uint8_t len, USART_t * port);
-uint8_t uart_add_delimiter(char delimiter, void(*callback)(char *, uint8_t), USART_t * port);
+uint8_t uart_reads_buffer(char * data, USART_t * port);
+uint8_t uart_add_delimiter(char delimiter, USART_t * port);
 
 MODULE_EXP(UART);
 

@@ -29,11 +29,6 @@ EVENT_REGISTER(EVENT_UART_DELIMITER, "Got UART delimiter");
 #define UART_MAX_DELIMITERS     3
 #define UART_CHANNELS           2
 
-struct UartDelimiter {
-    char delimiter;
-    uint8_t length;
-};
-
 struct UartStatus {
     uint8_t delimiters_head;
     uint8_t delimiters_tail;
@@ -196,7 +191,16 @@ uint8_t uart_read_buffer(char * data, uint8_t len, USART_t * port) {
     return l;
 }
 
-uint8_t uart_add_delimiter(char delimiter, void(*callback)(char *, uint8_t), USART_t * port) {
+uint8_t uart_reads_buffer(char * data, USART_t * port) {
+    uint8_t id = getId(port);
+    if (uartStatus[id].inBuffer_size == 0) return 0;
+    (*data) = inBuffer[id][uartStatus[id].inBuffer_tail];
+    if (++uartStatus[id].inBuffer_tail == UART_MAX_IN_BUFFER) uartStatus[id].inBuffer_tail = 0;
+    uartStatus[id].inBuffer_size--;
+    return 1;
+}
+
+uint8_t uart_add_delimiter(char delimiter, USART_t * port) {
     uint8_t id = getId(port);
     struct UartStatus * tempStatus = &uartStatus[id];
     if (tempStatus->delimiters_size == UART_MAX_DELIMITERS) {
@@ -233,6 +237,7 @@ ISR(USARTE0_RXC_vect) {
         for (; i < UART_MAX_DELIMITERS; i++) {
             delimiters[USARTE_ID][i].length++;
             if (read == delimiters[USARTE_ID][i].delimiter) {
+                delimiters[USARTE_ID][i].port = &USARTE0;
                 event_fire(&EVENT_UART_DELIMITER, SYSTEM_ADDRESS_CAST (&delimiters[USARTE_ID][i]));
             }
         }
