@@ -106,36 +106,36 @@ $EndComp
 $Comp
 L R R18
 U 1 1 58430FD2
-P 9250 3475
-F 0 "R18" V 9330 3475 50  0000 C CNN
-F 1 "47k" V 9250 3475 50  0000 C CNN
-F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 9180 3475 50  0001 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 9250 3475 50  0001 C CNN
-F 4 "311-47.0KHRCT-ND" V 9250 3475 60  0001 C CNN "Digikey"
-	1    9250 3475
+P 10350 3475
+F 0 "R18" V 10430 3475 50  0000 C CNN
+F 1 "47k" V 10350 3475 50  0000 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 10280 3475 50  0001 C CNN
+F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 10350 3475 50  0001 C CNN
+F 4 "311-47.0KHRCT-ND" V 10350 3475 60  0001 C CNN "Digikey"
+	1    10350 3475
 	0    1    1    0   
 $EndComp
 $Comp
 L C C9
 U 1 1 58430FDA
-P 9450 3725
-F 0 "C9" H 9475 3825 50  0000 L CNN
-F 1 "10n" H 9475 3625 50  0000 L CNN
-F 2 "Capacitors_SMD:C_0603_HandSoldering" H 9488 3575 50  0001 C CNN
-F 3 "http://www.yageo.com/documents/recent/UPY-GPHC_X7R_6.3V-to-50V_15.pdf" H 9450 3725 50  0001 C CNN
-F 4 "311-1085-1-ND" H 9450 3725 60  0001 C CNN "Digikey"
-	1    9450 3725
+P 9350 3725
+F 0 "C9" H 9375 3825 50  0000 L CNN
+F 1 "10n" H 9375 3625 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603_HandSoldering" H 9388 3575 50  0001 C CNN
+F 3 "http://www.yageo.com/documents/recent/UPY-GPHC_X7R_6.3V-to-50V_15.pdf" H 9350 3725 50  0001 C CNN
+F 4 "311-1085-1-ND" H 9350 3725 60  0001 C CNN "Digikey"
+	1    9350 3725
 	1    0    0    -1  
 $EndComp
 $Comp
 L GND #PWR018
 U 1 1 58430FE1
-P 10250 3975
-F 0 "#PWR018" H 10250 3725 50  0001 C CNN
-F 1 "GND" H 10250 3825 50  0000 C CNN
-F 2 "" H 10250 3975 50  0000 C CNN
-F 3 "" H 10250 3975 50  0000 C CNN
-	1    10250 3975
+P 10150 3975
+F 0 "#PWR018" H 10150 3725 50  0001 C CNN
+F 1 "GND" H 10150 3825 50  0000 C CNN
+F 2 "" H 10150 3975 50  0000 C CNN
+F 3 "" H 10150 3975 50  0000 C CNN
+	1    10150 3975
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -201,49 +201,49 @@ $EndComp
 $Comp
 L R R19
 U 1 1 58431010
-P 9650 3475
-F 0 "R19" V 9730 3475 50  0000 C CNN
-F 1 "47k" V 9650 3475 50  0000 C CNN
-F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 9580 3475 50  0001 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 9650 3475 50  0001 C CNN
-F 4 "311-47.0KHRCT-ND" V 9650 3475 60  0001 C CNN "Digikey"
-	1    9650 3475
+P 9550 3475
+F 0 "R19" V 9630 3475 50  0000 C CNN
+F 1 "47k" V 9550 3475 50  0000 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 9480 3475 50  0001 C CNN
+F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 9550 3475 50  0001 C CNN
+F 4 "311-47.0KHRCT-ND" V 9550 3475 60  0001 C CNN "Digikey"
+	1    9550 3475
 	0    1    1    0   
 $EndComp
 $Comp
 L R R20
 U 1 1 58431018
-P 10050 3475
-F 0 "R20" V 10130 3475 50  0000 C CNN
-F 1 "47k" V 10050 3475 50  0000 C CNN
-F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 9980 3475 50  0001 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 10050 3475 50  0001 C CNN
-F 4 "311-47.0KHRCT-ND" V 10050 3475 60  0001 C CNN "Digikey"
-	1    10050 3475
+P 9950 3475
+F 0 "R20" V 10030 3475 50  0000 C CNN
+F 1 "47k" V 9950 3475 50  0000 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 9880 3475 50  0001 C CNN
+F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 9950 3475 50  0001 C CNN
+F 4 "311-47.0KHRCT-ND" V 9950 3475 60  0001 C CNN "Digikey"
+	1    9950 3475
 	0    1    1    0   
 $EndComp
 $Comp
 L C C10
 U 1 1 58431020
-P 9850 3725
-F 0 "C10" H 9875 3825 50  0000 L CNN
-F 1 "10n" H 9875 3625 50  0000 L CNN
-F 2 "Capacitors_SMD:C_0603_HandSoldering" H 9888 3575 50  0001 C CNN
-F 3 "http://www.yageo.com/documents/recent/UPY-GPHC_X7R_6.3V-to-50V_15.pdf" H 9850 3725 50  0001 C CNN
-F 4 "311-1085-1-ND" H 9850 3725 60  0001 C CNN "Digikey"
-	1    9850 3725
+P 9750 3725
+F 0 "C10" H 9775 3825 50  0000 L CNN
+F 1 "10n" H 9775 3625 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603_HandSoldering" H 9788 3575 50  0001 C CNN
+F 3 "http://www.yageo.com/documents/recent/UPY-GPHC_X7R_6.3V-to-50V_15.pdf" H 9750 3725 50  0001 C CNN
+F 4 "311-1085-1-ND" H 9750 3725 60  0001 C CNN "Digikey"
+	1    9750 3725
 	1    0    0    -1  
 $EndComp
 $Comp
 L C C11
 U 1 1 58431029
-P 10250 3725
-F 0 "C11" H 10275 3825 50  0000 L CNN
-F 1 "10n" H 10275 3625 50  0000 L CNN
-F 2 "Capacitors_SMD:C_0603_HandSoldering" H 10288 3575 50  0001 C CNN
-F 3 "http://www.yageo.com/documents/recent/UPY-GPHC_X7R_6.3V-to-50V_15.pdf" H 10250 3725 50  0001 C CNN
-F 4 "311-1085-1-ND" H 10250 3725 60  0001 C CNN "Digikey"
-	1    10250 3725
+P 10150 3725
+F 0 "C11" H 10175 3825 50  0000 L CNN
+F 1 "10n" H 10175 3625 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603_HandSoldering" H 10188 3575 50  0001 C CNN
+F 3 "http://www.yageo.com/documents/recent/UPY-GPHC_X7R_6.3V-to-50V_15.pdf" H 10150 3725 50  0001 C CNN
+F 4 "311-1085-1-ND" H 10150 3725 60  0001 C CNN "Digikey"
+	1    10150 3725
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -257,7 +257,7 @@ F 3 "" H 7800 3675 50  0000 C CNN
 	1    7800 3675
 	1    0    0    -1  
 $EndComp
-Text Notes 9350 3300 0    60   ~ 0
+Text Notes 9300 3325 0    60   ~ 0
 Non-Invert. Amp.\n-----------------------\nA=(240k + 39k)/39k =7.154\nVin,max=2.8 V\nVout,max=20.031V
 Text Notes 4750 5075 0    60   ~ 0
 Differential Amp.\n-----------------------\nA=(3.9k+120k)/3.9k =31.769\nVin,max=30 mV\nVout,max=953.077 mV\nVref = 1.0 V
@@ -340,7 +340,7 @@ Text HLabel 6000 4475 0    60   Output ~ 0
 ADC_B
 Text HLabel 7950 4475 2    60   Output ~ 0
 ADC_G
-Text HLabel 10400 3475 2    60   Input ~ 0
+Text HLabel 10550 3475 2    60   Input ~ 0
 PWM_OLED
 Text HLabel 8350 2325 2    60   Output ~ 0
 ADC_OLED
@@ -529,30 +529,20 @@ F 3 "" H 6050 3375 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	9400 3475 9500 3475
+	9700 3475 9800 3475
 Wire Wire Line
-	9800 3475 9900 3475
+	9350 3925 10150 3925
 Wire Wire Line
-	9450 3925 10250 3925
+	9350 3925 9350 3875
+Connection ~ 10150 3925
 Wire Wire Line
-	9450 3925 9450 3875
-Connection ~ 10250 3925
+	9750 3875 9750 3925
+Connection ~ 9750 3925
 Wire Wire Line
-	9850 3875 9850 3925
-Connection ~ 9850 3925
+	9750 3575 9750 3475
+Connection ~ 9750 3475
 Wire Wire Line
-	9450 3575 9450 3475
-Connection ~ 9450 3475
-Wire Wire Line
-	9850 3575 9850 3475
-Connection ~ 9850 3475
-Wire Wire Line
-	10250 3875 10250 3975
-Wire Wire Line
-	10250 3575 10250 3475
-Wire Wire Line
-	10200 3475 10400 3475
-Connection ~ 10250 3475
+	10150 3875 10150 3975
 Wire Wire Line
 	7700 3275 8250 3275
 Wire Wire Line
@@ -682,8 +672,6 @@ Wire Wire Line
 	8675 3975 8650 3975
 Wire Wire Line
 	7700 4075 8250 4075
-Wire Wire Line
-	7700 3475 9100 3475
 Connection ~ 5700 4275
 Wire Wire Line
 	5700 4275 5700 4075
@@ -731,4 +719,16 @@ Wire Wire Line
 	6200 3475 6300 3475
 Wire Wire Line
 	6300 3200 6300 3275
+Wire Wire Line
+	7700 3475 9400 3475
+Wire Wire Line
+	9350 3575 9350 3475
+Connection ~ 9350 3475
+Wire Wire Line
+	10100 3475 10200 3475
+Wire Wire Line
+	10150 3475 10150 3575
+Connection ~ 10150 3475
+Wire Wire Line
+	10500 3475 10550 3475
 $EndSCHEMATC
