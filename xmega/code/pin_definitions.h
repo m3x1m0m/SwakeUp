@@ -9,6 +9,8 @@
 #ifndef PIN_DEFINITIONS_H_
 #define PIN_DEFINITIONS_H_
 
+#include <avr/io.h>
+
 #define REV_1
 
 //#define EVENT_SUPPORTS_SLEEP
@@ -46,11 +48,12 @@
 #define CP_RX_PIN           (1<<2)
 #define CP_TX_PIN           (1<<3)
 
-#define SCREEN_PORT         PORTC
-#define SCREEN_SCL          (1<<7)
-#define SCREEN_SDI          (1<<5)
-#define SCREEN_RS           (1<<3)
-#define SCREEN_CSB          (1<<2)
+#define SEPS525F_PORT       PORTC
+#define SEPS525F_SCL        (1<<7)
+#define SEPS525F_SDI        (1<<5)
+#define SEPS525F_NOT        (1<<4)   //NOTE THIS SHOULD NOT BE USED
+#define SEPS525F_RS         (1<<3)
+#define SEPS525F_CSB        (1<<2)
 
 #define PWM_PORT            PORTD
 #define PWM_1               (1<<0)
