@@ -19,7 +19,7 @@ static void (* commands[26])(uint8_t, uint8_t *) = {0};
 static int8_t translateCommand(char command) {
     int8_t val = (uint8_t) command;
     if (val > 90) {
-        LOG_WARNING("Command(%c) is not capitalized", command);
+        //  LOG_WARNING("Command(%c) is not capitalized", command); //Todo, do we really want this? we correct it either way
         val -= 32;
     }
     val -= 65;
@@ -72,38 +72,37 @@ void callback(Event * event, uint8_t * data) {
         if (!uart_reads_buffer(&command, &DEBUG_UART)) {
             LOG_ERROR("No bytes in buffer but we expect something");
         } else {
-            int8_t val = translateCommand(command);
+            int8_t val = translateCommand(command),  len = 0;
+            char data[delimiter->length], read;
+            while (uart_reads_buffer(&read, &DEBUG_UART)) {
+                data[len] = read;
+                len++;
+            }
             if (val != -1) {
                 if (commands[val] == 0) {
                     LOG_WARNING("Command %c is not assigned", command);
                 } else {
-                    char data[delimiter->length];
-                    uint8_t len = 0;
-                    char read;
-                    while (uart_reads_buffer(&read, &DEBUG_UART)) {
-                        if (read == '\n' || read == '\r') break;
-                        data[len] = read;
-                        len++;
-                    }
+                    LOG_SYSTEM("Received command: %c", command);
                     commands[val](len, data);
                 }
+            } else {
+                while (uart_reads_buffer(&read, &DEBUG_UART));  //flush the buffer
             }
+            //if its our uart
         }
-        //if its our uart
+        uart_delimiter_handled(delimiter);
     }
 }
-
 static uint8_t init(void) {
     event_addListener(&EVENT_UART_DELIMITER, callback);
     uart_add_delimiter('\n', &DEBUG_UART);
+    uart_add_delimiter('\r', &DEBUG_UART);
     LOG_SYSTEM("Command initialized");
     return 1;
 }
-
 static uint8_t deinit(void) {
     event_removeListener(&EVENT_UART_DELIMITER, callback);
     //TODO remove delimiter
     return 1;
 }
-
 MODULE_DEFINE(COMMAND, "Command", init, deinit, &LOGGER);

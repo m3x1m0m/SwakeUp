@@ -17,10 +17,32 @@
 #include "drivers/host/uart.h"
 #include "drivers/uart/terminal.h"
 #include "modules/log.h"
+#include "modules/command.h"
+#include "drivers/spi/SEPS525F.h"
+
+LOG_INIT("Main");
 
 static void callback(Event * event, uint8_t * data);
 
-LOG_INIT("Main");
+
+static void ledCommand(uint8_t len, uint8_t * data) {
+    switch (data[0]) {
+    case '1':
+        LOG_DEBUG("Turning led on");
+        DEBUG_LED_ON();
+        break;
+    case '0':
+        LOG_DEBUG("Turning led off");
+        DEBUG_LED_OFF();
+        break;
+    case 't':
+    case 'T':
+        LOG_DEBUG("Toggling led");
+        DEBUG_LED_TOG();
+        break;
+    }
+}
+
 
 static void sleep(void) {
     //sleep_enable();
@@ -57,11 +79,16 @@ int main(void) {
     //module_init(&Screen);
     PMIC.CTRL |= PMIC_LOLVLEN_bm | PMIC_MEDLVLEN_bm;    //Peripheral enable - interrupt levels (ALL)
     module_init(&LOGGER);                               //Initializing the logger for use
+    sei();                                              //Enabling interrupts
+    _delay_ms(200);
+    module_init(&COMMAND);
     _delay_ms(200);
     module_init(&TIMER);                                //Timer
     _delay_ms(200);
     event_addListener(&EVENT_TIMER_1_HZ, callback);     //TODO this can be removed
-    sei();                                              //Enabling interrupts
+    command_hook('L', &ledCommand);
+    _delay_ms(200);
+    module_init(&SEPS525F);
     _delay_ms(200);
     LOG_SYSTEM("System initialized");
     //event_addListener(&EVENT_UART_JOB, callback);
@@ -71,12 +98,17 @@ int main(void) {
         event_process();
     }
 }
+static const char testString0[] = "ONE1234567890qwertyuiopasdfghjklzxcvbnmONE1234567890qwertyuiopasdfghjklzxcvbnm\n\r";
+static const char testString1[] = "TWO1234567890qwertyuiopasdfghjklzxcvbnmTWO1234567890qwertyuiopasdfghjklzxcvbnm\n\r";
+static const char testString2[] = "THR1234567890qwertyuiopasdfghjklzxcvbnmTHR1234567890qwertyuiopasdfghjklzxcvbnm\n\r";
 
-static const char _job[] = "\n\r job \n\r";
 static void callback(Event * event, uint8_t * data) {
     static uint8_t i = 0;
     if (event == &EVENT_TIMER_1_HZ) {
         //LED_PORT.OUTTGL = LED_PIN;
-        LOG_DEBUG("Timer event %d ja", i++);
+        //LOG_DEBUG("Timer event %d ja", i++);
+        //uart_write(testString0, sizeof(testString0), &DEBUG_UART);
+        //uart_write(testString1, sizeof(testString0), &DEBUG_UART);
+        //uart_write(testString2, sizeof(testString0), &DEBUG_UART);
     }
 }
