@@ -34,8 +34,8 @@ typedef enum {
 
 void uart_speed(UART_BAUDRATE baudrate, USART_t * port);
 uint8_t uart_job(char * data, uint8_t len, void (* callback)(struct Job *), USART_t * port);
-uint8_t uart_write(char * data, uint8_t * len, uint8_t * eventData, USART_t * port);
-uint8_t uart_writes(char data, uint8_t * eventData, USART_t * port);
+uint8_t uart_write(char * data, uint8_t len, USART_t * port);
+uint8_t uart_writes(char data, USART_t * port);
 uint8_t uart_buffer_out_level(USART_t * port);
 void uart_write_blocked(char data, USART_t * port);
 void uart_writes_blocked(char * data, uint8_t len, USART_t * port);
@@ -44,7 +44,7 @@ char uart_reads_blocked(USART_t * port);
 uint8_t uart_read_buffer(char * data, uint8_t len, USART_t * port);
 uint8_t uart_reads_buffer(char * data, USART_t * port);
 uint8_t uart_add_delimiter(char delimiter, USART_t * port);
-
+void uart_delimiter_handled(struct UartDelimiter * delimiter);
 MODULE_EXP(UART);
 
 #endif /* UART_H_ */
