@@ -20,7 +20,7 @@ static void write_block(void * p, char c) {
 }
 
 static void write(void * p, char c) {
-    uart_writes(c, &DEBUG_UART, &DEBUG_UART);
+    uart_writes(c, &DEBUG_UART);
     //terminal_putc(c);
 }
 
