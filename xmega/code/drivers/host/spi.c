@@ -11,15 +11,36 @@
 
 LOG_INIT("SPI");
 
-void spiWriteByte(uint8_t byte) {
-    SPIC.DATA = byte;
-    //while ((SPIC.STATUS & SPI_IF_bm) == 0x00);
+static inline void SPI_SET_SS() {
+    SPIC_PORT.OUTSET = SPI_SS;
+}
+
+static inline void SPI_RESET_SS() {
+    SPIC_PORT.OUTCLR = SPI_SS;
+}
+
+uint8_t spiWriteByte(uint8_t byte) {
+    SPI_RESET_SS();
+    SPIC.DATA = byte;  //send it
+    while (!(SPIC.STATUS & SPI_IF_bm)); //wait for the transfer to end
+    SPI_SET_SS();
+    return SPIC.DATA;
 }
 
 static uint8_t init(void) {
     //1101 0000
-    SPIC.CTRL = SPI_MODE_0_gc | SPI_PRESCALER_DIV16_gc | SPI_ENABLE_bm | SPI_MASTER_bm;    // SPI master, clock idle low, data setup on trailing edge, data sampled on leading edge, double speed mode enabled
-    SPIC.INTCTRL = 0x00; // ensure SPI interrupts are disabled
+    SPIC_PORT.DIRSET = SPIC_SCK | SPIC_MOSI | SPI_SS;
+    SPIC_PORT.PIN4CTRL = PORT_OPC_WIREDANDPULL_gc; // wired AND & pull-up
+    SPIC_PORT.DIRCLR = SPIC_MISO;
+    SPIC_PORT.PIN6CTRL = PORT_OPC_PULLDOWN_gc;
+    SPI_SET_SS();
+    //out C5: DATA ABC (MOSI) d10
+    //in C6: not active input (MISO)
+    //out C7: DATA zegar (SCK) d21
+    SPIC.CTRL |= (SPI_ENABLE_bm | ~SPI_DORD_bm | SPI_MASTER_bm | SPI_MODE_0_gc | SPI_PRESCALER_DIV4_gc);
+    //SPIC.INTCTRL |= SPI_INTLVL_LO_gc;  //set interrupts
+    SPIC.STATUS;    //both these are to take IF down
+    SPIC.DATA;  //when I don't use interrupts
     LOG_SYSTEM("SPI initialized");
     return 1;
 }

@@ -11,7 +11,7 @@
 
 #include "../../util/module.h"
 
-void spiWriteByte(uint8_t byte);
+uint8_t spiWriteByte(uint8_t byte) ;
 
 MODULE_EXP(SPI);
 
