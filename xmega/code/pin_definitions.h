@@ -28,12 +28,13 @@
 #define BUTTON_PORT         PORTB
 #define BUTTON_PIN          (1<<1)
 
+#define ESP_GPIO_PORT       PORTA
 #define ESP_RST_PORT        PORTA
 #define ESP_RST_PIN         (1<<3)
 #define ESP_PWR_SAVE_N_PORT PORTA
 #define ESP_PWR_SAVE_N_PIN  (1<<2)
-#define ESP_PWR_PORT        PORTA
-#define ESP_PWR_PIN         (1<<1)
+#define ESP_ENABLE_PORT     PORTA
+#define ESP_ENABLE_PIN      (1<<1)
 #define ESP_SLEEP_PORT      PORTA
 #define ESP_SLEEP_PIN       (1<<3)
 #define ESP_FP_PORT         PORTA
@@ -47,6 +48,13 @@
 #define CP_PIN_PORT         PORTE
 #define CP_RX_PIN           (1<<2)
 #define CP_TX_PIN           (1<<3)
+
+#define SPIC_PORT           PORTC
+#define SPIC_SCK            (1<<7)
+#define SPIC_MISO           (1<<6)
+#define SPIC_MOSI           (1<<5)
+#define SPI_SS              (1<<4)
+
 
 #define SEPS525F_PORT       PORTC
 #define SEPS525F_SCL        (1<<7)

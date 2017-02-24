@@ -103,7 +103,7 @@ static void onlineDriver(void) {
     seps525_datastart();
     int n;
     for (n = 0; n < 160 * 128; n++) {
-        seps525_data(0xffaf);
+        seps525_data(0x0000);   // Initial colour
     }
     seps525_dataend();
 //digitalWrite(pinVddEnable, LOW);
@@ -146,6 +146,8 @@ static void datasheetDriver(void) {
 }
 
 
+static void drawColouredPixel(uint16_t x, uint16_t y, uint8_t r, uint8_t g, uint8_t b) {
+}
 
 void drawPixel(int16_t x, int16_t y, uint16_t color) {
     SEPS525F_set_region(x, y, 1, 1);
@@ -155,11 +157,38 @@ void drawPixel(int16_t x, int16_t y, uint16_t color) {
 }
 
 static uint8_t init(void) {
-    SEPS525F_PORT.DIRSET = SEPS525F_SDI | SEPS525F_CSB | SEPS525F_RS | SEPS525F_SCL | SEPS525F_NOT;
-    SEPS525F_PORT.OUTSET = SEPS525F_CSB | SEPS525F_NOT;
+    SEPS525F_PORT.DIRSET = SEPS525F_CSB | SEPS525F_RS;
+    SEPS525F_PORT.OUTSET = SEPS525F_CSB;
     SEPS525F_PORT.OUTCLR = SEPS525F_RS;
     LOG_SYSTEM("Launching driver");
-    datasheetDriver();
+    //datasheetDriver();
+    onlineDriver();
+    uint8_t x, y;
+//     for (x = 0; x < 30; x++) {
+//         for (y = 0; y < 30; y++) {
+//             drawPixel(40 + x, 40 + y, 0b1111111111111111);
+//         }
+//     }
+    for (x = 0; x < 10; x++) {
+        for (y = 0; y < 10; y++) {
+            drawPixel(50 + x, 50 + y, 0x001F);
+        }
+    }
+    for (x = 0; x < 10; x++) {
+        for (y = 0; y < 10; y++) {
+            drawPixel(60 + x, 50 + y, 0xF800);
+        }
+    }
+    for (x = 0; x < 10; x++) {
+        for (y = 0; y < 10; y++) {
+            drawPixel(60 + x, 60 + y, 0x07E0);
+        }
+    }
+    for (x = 0; x < 10; x++) {
+        for (y = 0; y < 10; y++) {
+            drawPixel(50 + x, 60 + y, 0xFFFF);
+        }
+    }
     LOG_SYSTEM("SEPS525F initialized");
     return 1;
 }
