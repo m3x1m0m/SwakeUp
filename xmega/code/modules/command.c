@@ -65,7 +65,7 @@ void command_remove_force(char command) {
     }
 }
 
-void callback(Event * event, uint8_t * data) {
+static void callback(Event * event, uint8_t * data) {
     struct UartDelimiter * delimiter = (struct UartDelimiter*)data;
     if (delimiter->port == &DEBUG_UART) {
         char command;
