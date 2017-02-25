@@ -24,9 +24,17 @@
 LOG_INIT("Main");
 
 static void callback(Event * event, uint8_t * data);
+#define TAB "\t\t\t\t"
+#define NL  "\r\n"
+static const char greeting[] = NL TAB"==================="NL
+                               TAB"Welcome to SwakeUpp!"NL
+                               TAB"Build date:"NL
+                               TAB __DATE__" "__TIME__ NL
+                               TAB"The time is:"NL
+                               TAB"18:08"NL
+                               TAB"==================="NL;
 
-
-static void ledCommand(uint8_t len, uint8_t * data) {
+static void ledCommand(uint8_t len __attribute__ ((unused)), uint8_t * data __attribute__ ((unused))) {
     switch (data[0]) {
     case '1':
         LOG_DEBUG("Turning led on");
@@ -42,6 +50,10 @@ static void ledCommand(uint8_t len, uint8_t * data) {
         DEBUG_LED_TOG();
         break;
     }
+}
+
+static void atCommand(uint8_t len __attribute__ ((unused)), uint8_t * data __attribute__ ((unused))) {
+    uart_write("AT\r\n", 4, &ESP_UART_PORT);
 }
 
 
@@ -85,9 +97,11 @@ int main(void) {
     module_init(&TIMER);                                //Timer
     event_addListener(&EVENT_TIMER_1_HZ, callback);     //TODO this can be removed
     command_hook('L', &ledCommand);
+    command_hook('A', &atCommand);
     module_init(&SEPS525F);
-    // module_init(&ESP8266);
+    module_init(&ESP8266);
     LOG_SYSTEM("System initialized");
+    LOG_SYSTEM(greeting);
     //event_addListener(&EVENT_UART_JOB, callback);
     while (1) {
         //This is all that should happen in the main loop
@@ -96,10 +110,10 @@ int main(void) {
     }
 }
 
-static void callback(Event * event, uint8_t * data) {
+static void callback(Event * event, uint8_t * data __attribute__ ((unused))) {
     //static uint8_t i = 0;
     if (event == &EVENT_TIMER_1_HZ) {
-        //LED_PORT.OUTTGL = LED_PIN;
+        LED_PORT.OUTTGL = LED_PIN;
         //LOG_DEBUG("Timer event %d ja", i++);
     }
 }
