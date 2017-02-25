@@ -73,9 +73,9 @@ static void callback(Event * event, uint8_t * data) {
             LOG_ERROR("No bytes in buffer but we expect something");
         } else {
             int8_t val = translateCommand(command),  len = 0;
-            char data[delimiter->length], read;
+            char readData[delimiter->length], read;
             while (uart_reads_buffer(&read, &DEBUG_UART)) {
-                data[len] = read;
+                readData[len] = read;
                 len++;
             }
             if (val != -1) {
@@ -83,7 +83,7 @@ static void callback(Event * event, uint8_t * data) {
                     LOG_WARNING("Command %c is not assigned", command);
                 } else {
                     LOG_SYSTEM("Received command: %c", command);
-                    commands[val](len, data);
+                    commands[val](len, (uint8_t*)readData);
                 }
             } else {
                 while (uart_reads_buffer(&read, &DEBUG_UART));  //flush the buffer
