@@ -14,11 +14,11 @@
 
 #include "../util/module.h"
 
-const static char _info[] =     "Inf";
-const static char _debug[] =    "Deb";
-const static char _system[] =   "Sys";
-const static char _warning[] =  "War";
-const static char _error[] =    "Err";
+static const char _info[] =     "Inf";
+static const char _debug[] =    "Deb";
+static const char _system[] =   "Sys";
+static const char _warning[] =  "War";
+static const char _error[] =    "Err";
 
 #define LOG_INFO(MSG, ...)          LOG_INTERNAL(_info, MSG, ##__VA_ARGS__)
 #define LOG_DEBUG(MSG, ...)         LOG_INTERNAL(_debug, MSG, ##__VA_ARGS__)
@@ -37,7 +37,7 @@ const static char _error[] =    "Err";
         log_message("\r\n");\
         log_error()
 
-void log_message(const char * format, ...);
+void log_message(char * format, ...);   //TODO make this const
 void log_error(void);
 
 #define LOG_INIT(NAME) \

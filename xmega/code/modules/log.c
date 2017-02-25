@@ -21,7 +21,7 @@ void log_error() {
     }
 }
 
-void log_message(const char * format, ...) {
+void log_message(char * format, ...) {
     va_list arg;
     va_start (arg, format);
     terminal_format(format, arg);
