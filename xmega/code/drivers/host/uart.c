@@ -104,10 +104,11 @@ uint8_t uart_job(char * data, uint8_t len, void (* callback)(struct Job *), USAR
     return 1;
 }
 
-uint8_t uart_write(const char * data, uint8_t len, USART_t * const port) {
+uint8_t uart_write(const char * const data, uint8_t len, USART_t * const port) {
     uint8_t id = getId(port), written = 0;
     while (written < len) {
         if (uartStatus[id].outBuffer_size >= UART_MAX_OUT_BUFFER) return written;
+        lock(id);
         outBuffer[id][uartStatus[id].outBuffer_head] = data[written];
         uartStatus[id].outBuffer_head = (uartStatus[id].outBuffer_head + 1 >= UART_MAX_OUT_BUFFER) ? 0 : uartStatus[id].outBuffer_head + 1;
         uartStatus[id].outBuffer_size++;
@@ -116,6 +117,7 @@ uint8_t uart_write(const char * data, uint8_t len, USART_t * const port) {
             // sending[id] = 1; //TODO implement this ?
         }
         written++;
+        unlock(id);
     }
     return written;
 }
@@ -286,11 +288,11 @@ USARTRXCISR(USARTD1, ESP_UART_PORT,  USARTD_ID);
 
 USARTDREISR(USARTD1, ESP_UART_PORT,  USARTD_ID);
 
-static const char _initialized[] = "\n\nUART initialized\n\r";
+static const char _initialized[] = "\f\f\n\nUART initialized\n\r";
 
 static uint8_t init(void) {
-    uartStatus[USARTE_ID].outBuffer_head = 1;
-    uartStatus[USARTD_ID].outBuffer_head = 1;
+    uartStatus[USARTE_ID].outBuffer_head = 0;
+    uartStatus[USARTD_ID].outBuffer_head = 0;
     ESP_UART_PIN_PORT.DIRCLR          = ESP_UART_RX;
     ESP_UART_PIN_PORT.OUTCLR          = ESP_UART_RX;
     ESP_UART_PIN_PORT.DIRSET          = ESP_UART_TX;
