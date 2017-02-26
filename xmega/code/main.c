@@ -21,6 +21,7 @@
 #include "drivers/spi/SEPS525F.h"
 #include "drivers/uart/esp8266.h"
 #include "modules/screenterminal.h"
+#include "modules/screen.h"
 
 LOG_INIT("Main");
 
@@ -105,8 +106,9 @@ int main(void) {
     module_init(&SEPS525F);
     module_init(&ESP8266);
     LOG_SYSTEM("System initialized");
-    log_redirectOutput(screenterminal_sink());
+    //log_redirectOutput(screenterminal_sink());
     LOG_SYSTEM(greeting);
+    module_init(&SCREEN);
     //event_addListener(&EVENT_UART_JOB, callback);
     while (1) {
         //This is all that should happen in the main loop

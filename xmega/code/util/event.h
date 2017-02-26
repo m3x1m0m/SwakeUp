@@ -19,7 +19,7 @@ extern "C" {
 #define EVENT_SUPPORTS_SLEEP
 
 #define EVENT_MAX_LISTENERS 14
-#define EVENT_MAX_BUFFER    16
+#define EVENT_MAX_BUFFER    32
 
 static const uint8_t eventIndex = 0;
 
