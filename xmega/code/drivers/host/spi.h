@@ -11,7 +11,10 @@
 
 #include "../../util/module.h"
 
-uint8_t spiWriteByte(uint8_t byte) ;
+uint8_t spi_write(uint8_t byte);
+uint8_t spi_writes(uint8_t * bytes, uint8_t len);
+uint8_t spi_write_blocked(uint8_t byte);
+uint8_t spi_writes_blocked(uint8_t * bytes, uint8_t len);
 
 MODULE_EXP(SPI);
 
