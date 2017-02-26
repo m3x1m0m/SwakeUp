@@ -14,5 +14,4 @@ void screenterminal_write(char * text, uint8_t len);
 void (*screenterminal_sink(void))(void *, char );
 
 
-
 #endif /* SCREENTERMINAL_H_ */
