@@ -20,19 +20,22 @@
 #include "modules/command.h"
 #include "drivers/spi/SEPS525F.h"
 #include "drivers/uart/esp8266.h"
+#include "modules/screenterminal.h"
 
 LOG_INIT("Main");
 
 static void callback(Event * event, uint8_t * data);
 #define TAB "\t\t\t\t"
 #define NL  "\r\n"
-static const char greeting[] = NL TAB"==================="NL
+
+static const char greeting[] = NL TAB"===================="NL
                                TAB"Welcome to SwakeUpp!"NL
                                TAB"Build date:"NL
                                TAB __DATE__" "__TIME__ NL
                                TAB"The time is:"NL
                                TAB"18:08"NL
-                               TAB"==================="NL;
+                               TAB"===================="NL;
+
 
 static void ledCommand(uint8_t len __attribute__ ((unused)), uint8_t * data __attribute__ ((unused))) {
     switch (data[0]) {
@@ -53,6 +56,7 @@ static void ledCommand(uint8_t len __attribute__ ((unused)), uint8_t * data __at
 }
 
 static void atCommand(uint8_t len __attribute__ ((unused)), uint8_t * data __attribute__ ((unused))) {
+    LOG_DEBUG("Writing AT\\n\\r");
     uart_write("AT\r\n", 4, &ESP_UART_PORT);
 }
 
@@ -101,6 +105,7 @@ int main(void) {
     module_init(&SEPS525F);
     module_init(&ESP8266);
     LOG_SYSTEM("System initialized");
+    log_redirectOutput(screenterminal_sink());
     LOG_SYSTEM(greeting);
     //event_addListener(&EVENT_UART_JOB, callback);
     while (1) {
@@ -114,6 +119,6 @@ static void callback(Event * event, uint8_t * data __attribute__ ((unused))) {
     //static uint8_t i = 0;
     if (event == &EVENT_TIMER_1_HZ) {
         LED_PORT.OUTTGL = LED_PIN;
-        //LOG_DEBUG("Timer event %d ja", i++);
+        //LOG_DEBUG("Time passed: %d", timer_runTime());
     }
 }
