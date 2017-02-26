@@ -20,7 +20,9 @@ void log_error() {
         _delay_ms(250);
     }
 }
-
+void (*log_current_sink(void))(void *, char ) {
+    return terminal_current_sink();
+}
 void log_redirectOutput(void (*sink) (void*, char)) {
     terminal_set_sink(sink);
 }

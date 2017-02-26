@@ -52,6 +52,7 @@ void log_message(char * format, ...);   //TODO make this const
 void log_error(void);
 
 void log_redirectOutput(void (*sink) (void*, char));
+void (*log_current_sink(void))(void *, char );
 
 #define LOG_INIT(NAME) \
     static char log_name[] __attribute__((unused)) = NAME;

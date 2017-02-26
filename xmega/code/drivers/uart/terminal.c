@@ -27,13 +27,16 @@ static void write_block(void * p, char c) {
 static void write(void * p, char c) {
     uart_writes(c, &DEBUG_UART);
 }
-
+void (*terminal_current_sink(void))(void *, char ) {
+    return sink;
+}
 void terminal_set_sink(void (*putcf) (void*, char)) {
     sink = putcf;
 }
 
 void terminal_default_sink(void) {
     sink = &write;                          //default
+    LOG_SYSTEM("Reverted back to default sink");
 }
 
 uint8_t terminal_write(char * format, ...) {
