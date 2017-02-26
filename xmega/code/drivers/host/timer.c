@@ -11,11 +11,22 @@
 #include "../../modules/log.h"
 #include "../../pin_definitions.h"
 #include "uart.h"
+
 EVENT_REGISTER(EVENT_TIMER_1_HZ, "1 second pulse");
+EVENT_REGISTER(EVENT_ALARM, "ms alarm");
+
 LOG_INIT("Timer");
 
+static uint16_t alarms[6];
+static uint16_t runTime = 0;
+static uint16_t msCounter = 0;
 
-
+uint16_t timer_runTime(void) {
+    return runTime;
+}
+int8_t   timer_timeOutEvent(uint16_t duration) {
+    return -1;
+}
 
 // ISR(RTC_OVF_vect) {
 //     while (!((CP_PORT).STATUS & USART_DREIF_bm));
@@ -51,6 +62,7 @@ static uint8_t deinit(void) {
 
 ISR(RTC_OVF_vect) {
     event_fire(&EVENT_TIMER_1_HZ, 0);
+    runTime++;
 }
 
 MODULE_DEFINE(TIMER, "Timer", init, deinit);
