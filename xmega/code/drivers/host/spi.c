@@ -11,8 +11,9 @@
 #include "../../modules/log.h"
 
 LOG_INIT("SPI");
+EVENT_REGISTER(SPI_FINISHED, "Completed SPI job");
 
-#define BUFFER_SIZE 64
+#define BUFFER_SIZE 128
 static uint8_t writeBuffer[BUFFER_SIZE];
 static uint8_t head = 0, tail = 0, size = 0;
 static uint8_t interruptEnabled = 0;
@@ -37,19 +38,21 @@ static inline void SPI_RESET_SS() {
 }
 
 ISR(SPIC_INT_vect) {
-    if (SPIC.STATUS & SPI_IF_bm) {
-        if (softlock()) {
-            if (size > 0) {
-                SPIC.DATA = writeBuffer[tail];
-                tail++;
-                if (tail == BUFFER_SIZE) tail = 0;
-            } else {
-                interruptEnabled = 0;
-                SPIC.INTCTRL &= ~SPI_INTLVL_MED_gc;
-            }
-            unlock();
+    //LOG_DEBUG("Writing byte!");
+    //if (SPIC.STATUS & SPI_IF_bm) {
+    if (softlock()) {
+        if (size > 0) {
+            SPIC.DATA = writeBuffer[tail];
+            tail++;
+            if (tail == BUFFER_SIZE) tail = 0;
+        } else {
+            event_fire(&SPI_FINISHED, (uint8_t*)head);
+            interruptEnabled = 0;
+            SPIC.INTCTRL &= ~SPI_INTLVL_MED_gc;
         }
+        unlock();
     }
+    // }
 }
 
 uint8_t spi_write(uint8_t byte) {
@@ -98,8 +101,14 @@ uint8_t spi_writes_blocked(uint8_t * bytes, uint8_t len) {
     }
     return 1;
 }
+
+static void callback(Event * event, uint8_t * data __attribute__ ((unused))) {
+    LOG_DEBUG("Finished %d ,%d", head, tail);
+}
+
 static uint8_t init(void) {
     //1101 0000
+    lock();
     SPIC_PORT.DIRSET = SPIC_SCK | SPIC_MOSI | SPI_SS;
     SPIC_PORT.PIN4CTRL = PORT_OPC_WIREDANDPULL_gc; // wired AND & pull-up
     SPIC_PORT.DIRCLR = SPIC_MISO;
@@ -113,6 +122,8 @@ static uint8_t init(void) {
     SPIC.STATUS;    //both these are to take IF down
     SPIC.DATA;  //when I don't use interrupts
     LOG_SYSTEM("SPI initialized");
+    unlock();
+    event_addListener(&SPI_FINISHED, &callback);
     return 1;
 }
 static uint8_t deinit(void) {

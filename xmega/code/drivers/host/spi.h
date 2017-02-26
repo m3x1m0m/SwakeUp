@@ -10,6 +10,9 @@
 #define SPI_H_
 
 #include "../../util/module.h"
+#include "../../util/event.h"
+
+EVENT_EXP(SPI_FINISHED);
 
 uint8_t spi_write(uint8_t byte);
 uint8_t spi_writes(uint8_t * bytes, uint8_t len);
