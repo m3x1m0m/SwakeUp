@@ -14,6 +14,10 @@
 
 #include "../util/module.h"
 
+#ifdef DEBUG
+#include "../drivers/host/timer.h"
+#endif
+
 static const char _info[] =     "Inf";
 static const char _debug[] =    "Deb";
 static const char _system[] =   "Sys";
@@ -26,11 +30,18 @@ static const char _error[] =    "Err";
 #define LOG_WARNING(MSG, ...)       LOG_INTERNAL(_warning, MSG, ##__VA_ARGS__)
 #define LOG_ERROR(MSG, ...)         LOG_INTERNAL_ERR(_error, MSG, ##__VA_ARGS__)
 
-#define LOG_INTERNAL(LEVEL, MSG, ...)\
-        log_message("[%s][%s]%s:%d ",LEVEL,log_name,__FILE__,__LINE__); \
-        log_message(MSG, ##__VA_ARGS__);\
+#ifdef  DEBUG
+#define LOG_INTERNAL(LEVEL, MSG, ...) \
+        log_message("[%04d][%s][%s]%s:%d ",timer_runTime(),LEVEL,log_name,__FILE__,__LINE__);   \
+        log_message(MSG, ##__VA_ARGS__);                                                        \
+        log_message("\r\n")
+#else
+#define LOG_INTERNAL(LEVEL, MSG, ...) \
+        log_message("[%s][%s]%s:%d ",LEVEL,log_name,__FILE__,__LINE__);                         \
+        log_message(MSG, ##__VA_ARGS__);                                                        \
         log_message("\r\n")
 
+#endif
 #define LOG_INTERNAL_ERR(LEVEL, MSG, ...)\
         log_message("[%s][%s]%s:%d ",LEVEL,log_name,__FILE__,__LINE__); \
         log_message(MSG, ##__VA_ARGS__);\
@@ -39,6 +50,8 @@ static const char _error[] =    "Err";
 
 void log_message(char * format, ...);   //TODO make this const
 void log_error(void);
+
+void log_redirectOutput(void (*sink) (void*, char));
 
 #define LOG_INIT(NAME) \
     static char log_name[] __attribute__((unused)) = NAME;

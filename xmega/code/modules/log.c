@@ -21,6 +21,10 @@ void log_error() {
     }
 }
 
+void log_redirectOutput(void (*sink) (void*, char)) {
+    terminal_set_sink(sink);
+}
+
 void log_message(char * format, ...) {
     va_list arg;
     va_start (arg, format);
