@@ -15,35 +15,47 @@
 
 LOG_INIT("Terminal");
 
+void (*sink) (void*, char);
+
+
+
+
 static void write_block(void * p, char c) {
     uart_write_blocked(c, &DEBUG_UART);
 }
 
 static void write(void * p, char c) {
     uart_writes(c, &DEBUG_UART);
-    //terminal_putc(c);
+}
+
+void terminal_set_sink(void (*putcf) (void*, char)) {
+    sink = putcf;
+}
+
+void terminal_default_sink(void) {
+    sink = &write;                          //default
 }
 
 uint8_t terminal_write(char * format, ...) {
-    init_printf((void*)0, write);
+    init_printf((void*)0, sink);
     va_list arg;
     va_start(arg, format);
-    tfp_format(0, write, format, arg);
+    tfp_format(0, sink, format, arg);
     va_end(arg);
     return 1;
 }
 
 void terminal_write_force(char * format, ...) {
-    init_printf((void*)0, write);
+    init_printf((void*)0, sink);
     va_list arg;
     va_start(arg, format);
-    tfp_format(0, write, format, arg);
+    tfp_format(0, sink, format, arg);
     va_end(arg);
 }
 
 uint8_t terminal_format(char *fmt, va_list va) {
-    init_printf((void*)0, write);
-    tfp_format(0, write, fmt, va);
+    init_printf((void*)0, sink);
+    tfp_format(0, sink, fmt, va);
     return 1;
 }
 
@@ -79,6 +91,7 @@ char terminal_getc(void) {
 }
 
 static uint8_t init(void) {
+    sink = &write;                          //default
     terminal_write("Terminal initialized\n\r");
     return 1;
 }

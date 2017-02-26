@@ -26,6 +26,9 @@ void terminal_putc(char c);
 void terminal_flush(void);
 char terminal_getc(void);
 
+void terminal_default_sink(void);
+void terminal_set_sink(void (*putcf) (void*, char));
+
 MODULE_EXP(TERMINAL);
 
 #endif /* TERMINAL_H_ */
