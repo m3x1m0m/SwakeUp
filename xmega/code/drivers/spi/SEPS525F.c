@@ -10,32 +10,31 @@
 #include "../../pin_definitions.h"
 #include "../../modules/log.h"
 
-#include <util/delay.h>
-
 LOG_INIT("SEPS525F");
+
+#include <util/delay.h>
+#include <avr/pgmspace.h>
 
 #define DATA_START 0x22
 
 static void SEPS525F_reg(int idx, int value) {
     SEPS525F_PORT.OUTCLR = SEPS525F_CSB | SEPS525F_RS;
-    _delay_ms(1);
-    spiWriteByte(idx);
+    spi_write_blocked(idx);
     SEPS525F_PORT.OUTSET = SEPS525F_RS;
     SEPS525F_PORT.OUTCLR = SEPS525F_CSB;
-    spiWriteByte(value);
-    _delay_ms(1);
+    spi_write_blocked(value);
     SEPS525F_PORT.OUTSET = SEPS525F_CSB;
 }
 
 static inline void seps525_datastart(void) {
     SEPS525F_PORT.OUTCLR = SEPS525F_CSB | SEPS525F_RS;
-    spiWriteByte(DATA_START);
+    spi_write_blocked(DATA_START);
     SEPS525F_PORT.OUTSET = SEPS525F_RS;
 }
 
 static inline void seps525_data(int value) {
-    spiWriteByte((value >> 8) & 0xFF);
-    spiWriteByte(value & 0xFF);
+    spi_write_blocked((value >> 8) & 0xFF);
+    spi_write_blocked(value & 0xFF);
 }
 
 static inline void seps525_dataend(void) {
@@ -61,7 +60,7 @@ static void SEPS525F_set_region(int x, int y, int xs, int ys) {
 
 static void onlineDriver(void) {
 //digitalWrite(pinReset, LOW);
-    _delay_ms(2);
+    //_delay_ms(2);
 //digitalWrite(pinReset, HIGH);
     _delay_ms(1);
 // display off, analog reset
@@ -69,7 +68,7 @@ static void onlineDriver(void) {
     _delay_ms(1);
 // normal mode
     SEPS525F_reg(0x04, 0x00);
-    _delay_ms(1);
+    //_delay_ms(1);
 // display off
     SEPS525F_reg(0x06, 0x00);
 // turn on internal oscillator using external resistor
@@ -87,7 +86,7 @@ static void onlineDriver(void) {
 // driving current r g b (uA)
     SEPS525F_reg(0x10, 0x45);
     SEPS525F_reg(0x11, 0x34);
-    SEPS525F_reg(0x12, 0x33);
+    SEPS525F_reg(0x12, 0x40);
 // precharge time r g b
     SEPS525F_reg(0x08, 0x04);
     SEPS525F_reg(0x09, 0x05);
@@ -101,100 +100,122 @@ static void onlineDriver(void) {
     SEPS525F_reg(0x13, 0x00);
     SEPS525F_set_region(0, 0, 160, 128);
     seps525_datastart();
-    int n;
+    uint16_t n;
     for (n = 0; n < 160 * 128; n++) {
-        seps525_data(0x0000);   // Initial colour
+        seps525_data(0b1111111111111111);   // Initial colour
     }
     seps525_dataend();
 //digitalWrite(pinVddEnable, LOW);
-    _delay_ms(100);
+    // _delay_ms(100);
     SEPS525F_reg(0x06, 0x01);
 }
-
-static void datasheetDriver(void) {
-    SEPS525F_reg(0x02, 0x01); //internal clock
-    SEPS525F_reg(0x04, 0x00); //power save normal
-    SEPS525F_reg(0x03, 0x30); //OSC 90 Hz
-    SEPS525F_reg(0x80, 0x00); //Reference volt
-    SEPS525F_reg(0x08, 0x01); //Pre-charge R
-    SEPS525F_reg(0x09, 0x01); //Pre-charge G
-    SEPS525F_reg(0x0A, 0x01); //Pre-charge B
-    SEPS525F_reg(0x0B, 0x0A); //Pre-charge current R
-    SEPS525F_reg(0x0C, 0x0A); //Pre-charge current G
-    SEPS525F_reg(0x0D, 0x0A); //Pre-charge current B
-    SEPS525F_reg(0x10, 0x52); //current R
-    SEPS525F_reg(0x11, 0x38); //current G
-    SEPS525F_reg(0x12, 0x3A); //current B
-    SEPS525F_reg(0x13, 0x00); //RGB Column 0->159
-    SEPS525F_reg(0x14, 0x01); //Ext interface: MPU
-    SEPS525F_reg(0x16, 0x76); //Write mode TODO
-    SEPS525F_reg(0x17, 0x00); //Column start
-    SEPS525F_reg(0x18, 0x9F); //Column end
-    SEPS525F_reg(0x19, 0x00); //Row start
-    SEPS525F_reg(0x1A, 0x7F); //Row end
-    SEPS525F_reg(0x20, 0x00); //X
-    SEPS525F_reg(0x21, 0x00); //Y
-    SEPS525F_reg(0x28, 0x7F); //Duty - 128
-    SEPS525F_reg(0x29, 0x00); //Start line
-    SEPS525F_reg(0x2E, 0x00); // Read start point X
-    SEPS525F_reg(0x2F, 0x00); // Read start point Y
-    SEPS525F_reg(0x33, 0x00); // Screen saver start X
-    SEPS525F_reg(0x34, 0x9F); // Screen saver end X
-    SEPS525F_reg(0x35, 0x00); // Screen saver start Y
-    SEPS525F_reg(0x36, 0x7F); // Screen saver end Y
-    SEPS525F_reg(0x06, 0x01); // Screen on
+void seps525f_fill(uint16_t x, uint16_t y, uint16_t length, uint16_t width, uint16_t color) {
+    SEPS525F_set_region(x, y, length, width);
+    seps525_datastart();
+    uint16_t n;
+    for (n = 0; n < length * width; n++) {
+        seps525_data(color);
+    }
+    seps525_dataend();
 }
 
-
-static void drawColouredPixel(uint16_t x, uint16_t y, uint8_t r, uint8_t g, uint8_t b) {
+void seps525f_scroll(uint8_t horizontal, uint8_t vertical) {
+    //how to?
 }
 
-void drawPixel(int16_t x, int16_t y, uint16_t color) {
+static uint8_t isDrawing = 0;
+
+uint8_t seps525f_start_draw(uint16_t x, uint16_t y, uint16_t w, uint16_t l) {
+    if (isDrawing) {
+        LOG_WARNING("We are already drawing");
+        return 0;
+    }
+    SEPS525F_set_region(x, y, w, l);
+    seps525_datastart();
+    isDrawing = 1;
+    return 1;
+}
+
+uint8_t seps525f_draw(uint16_t colour) {
+    if (!isDrawing) {
+        LOG_WARNING("We aren't drawing");
+        return 0;
+    }
+    seps525_data(colour);
+    return 1;
+}
+uint8_t seps525f_stop_draw(void) {
+    if (!isDrawing) {
+        LOG_WARNING("We aren't drawing");
+        return 0;
+    }
+    seps525_dataend();
+    isDrawing = 0;
+    return 1;
+}
+
+void seps525f_draw_pixel(uint16_t x, uint16_t y, uint16_t color) {
     SEPS525F_set_region(x, y, 1, 1);
     seps525_datastart();
     seps525_data(color);
     seps525_dataend();
 }
 
+void seps525f_draw_pixels_monochrone(const uint16_t * image, uint16_t x, uint16_t y, uint16_t l, uint16_t w, uint16_t color, uint16_t backgroundColor) {
+    SEPS525F_set_region(x, y, w, l);
+    seps525_datastart();
+    uint16_t x1 = 0, y1 = 0;
+    for (y1 = 0; y1 < l; y1++) {
+        uint16_t row = image[y1 * sizeof(uint16_t) + x1];
+        for (x1 = 0; x1 < w; x1++) {
+            if (row & (1 << x)) {
+                seps525_data(color);
+            } else {
+                seps525_data(backgroundColor);
+            }
+        }
+    }
+    seps525_dataend();
+}
+
+void seps525f_draw_pixels_coloured(const uint16_t * image, uint16_t x, uint16_t y, uint16_t length, uint16_t width) {
+    SEPS525F_set_region(x, y, length, width);
+    seps525_datastart();
+    uint16_t n;
+    for (n = 0; n < length * width ; n++) {
+        seps525_data(image[n]);   // Initial colour
+    }
+    seps525_dataend();
+}
+
+void seps525f_draw_pixels_coloured_flash(const uint16_t * image, uint16_t x, uint16_t y, uint16_t length, uint16_t width) {
+    SEPS525F_set_region(x, y, length, width);
+    seps525_datastart();
+    uint16_t n;
+    for (n = 0; n < length * width ; n++) {
+        seps525_data(pgm_read_word(&image[n]));   // Initial colour
+    }
+    seps525_dataend();
+}
+
+#define BLUE_BM     0b0000000000011111
+#define GREEN_BM    0b0000011111100000
+#define RED_BM      0b1111100000000000
+
+#define RGB565CONV(num)
+#include "image.h"
 static uint8_t init(void) {
     SEPS525F_PORT.DIRSET = SEPS525F_CSB | SEPS525F_RS;
     SEPS525F_PORT.OUTSET = SEPS525F_CSB;
     SEPS525F_PORT.OUTCLR = SEPS525F_RS;
     LOG_SYSTEM("Launching driver");
-    //datasheetDriver();
     onlineDriver();
-    uint8_t x, y;
-//     for (x = 0; x < 30; x++) {
-//         for (y = 0; y < 30; y++) {
-//             drawPixel(40 + x, 40 + y, 0b1111111111111111);
-//         }
-//     }
-    for (x = 0; x < 10; x++) {
-        for (y = 0; y < 10; y++) {
-            drawPixel(50 + x, 50 + y, 0x001F);
-        }
-    }
-    for (x = 0; x < 10; x++) {
-        for (y = 0; y < 10; y++) {
-            drawPixel(60 + x, 50 + y, 0xF800);
-        }
-    }
-    for (x = 0; x < 10; x++) {
-        for (y = 0; y < 10; y++) {
-            drawPixel(60 + x, 60 + y, 0x07E0);
-        }
-    }
-    for (x = 0; x < 10; x++) {
-        for (y = 0; y < 10; y++) {
-            drawPixel(50 + x, 60 + y, 0xFFFF);
-        }
-    }
+//     seps525f_draw_pixels_coloured_flash(imag1, 0, 0, 160, 64);
+//     seps525f_draw_pixels_coloured_flash(imag2, 0, 64, 160, 64);
     LOG_SYSTEM("SEPS525F initialized");
     return 1;
 }
-
 static uint8_t deinit(void) {
     return 1;
 }
-
 MODULE_DEFINE(SEPS525F, "SEPS525F", init, deinit, &SPI);
