@@ -11,17 +11,21 @@
 
 #include "../util/module.h"
 
-#define SCREEN_WIDTH    128
-#define SCREEN_HEIGHT    64
-#define SCREEN_BUFFER   (SCREEN_WIDTH*SCREEN_HEIGHT) / 8
+enum SCREEN_SHAPE_TYPE {
+    POINT, FILLED, LINE
+};
 
-void screen_text(char * text, uint8_t x, uint8_t y);
-void screen_rect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2);
-void screen_filled_rect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2);
-void screen_line(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2);
-void screen_pixel(uint8_t x, uint8_t y);
-void screen_refresh(void);
+void screen_draw_begin(enum SCREEN_SHAPE_TYPE type);
+void screen_draw_end(void);
+void screen_color(uint16_t color);
+void screen_text(char * text, uint8_t len, uint16_t x, uint16_t y);
+void screen_rect_to(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2);
+void screen_rect(uint16_t x1, uint16_t y1, uint16_t width, uint16_t height);
+void screen_line(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2);
+void screen_pixel(uint16_t x, uint16_t y);
+void screen_circle(uint16_t x, uint16_t y, int radius);
 
-MODULE_EXP(Screen);
+
+MODULE_EXP(SCREEN);
 
 #endif /* SCREEN_H_ */
