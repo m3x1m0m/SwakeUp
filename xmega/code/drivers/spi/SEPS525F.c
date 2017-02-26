@@ -202,16 +202,12 @@ void seps525f_draw_pixels_coloured_flash(const uint16_t * image, uint16_t x, uin
 #define GREEN_BM    0b0000011111100000
 #define RED_BM      0b1111100000000000
 
-#define RGB565CONV(num)
-#include "image.h"
 static uint8_t init(void) {
     SEPS525F_PORT.DIRSET = SEPS525F_CSB | SEPS525F_RS;
     SEPS525F_PORT.OUTSET = SEPS525F_CSB;
     SEPS525F_PORT.OUTCLR = SEPS525F_RS;
-    LOG_SYSTEM("Launching driver");
+    LOG_SYSTEM("Setting up SEPS525F driver");
     onlineDriver();
-//     seps525f_draw_pixels_coloured_flash(imag1, 0, 0, 160, 64);
-//     seps525f_draw_pixels_coloured_flash(imag2, 0, 64, 160, 64);
     LOG_SYSTEM("SEPS525F initialized");
     return 1;
 }
