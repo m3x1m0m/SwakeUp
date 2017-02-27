@@ -101,14 +101,14 @@ int main(void) {
     module_init(&COMMAND);
     module_init(&TIMER);                                //Timer
     event_addListener(&EVENT_TIMER_1_HZ, callback);     //TODO this can be removed
-    command_hook('L', &ledCommand);
-    command_hook('A', &atCommand);
-    module_init(&SEPS525F);
+    command_hook_description('L', &ledCommand, "L<option> options: T(toggle) 1(on) 0(off)\0");
+    command_hook_description('A', &atCommand, "Sends AT command to ESP, no options\0");
+    //module_init(&SEPS525F);
     module_init(&ESP8266);
     LOG_SYSTEM("System initialized");
     //log_redirectOutput(screenterminal_sink());
     LOG_SYSTEM(greeting);
-    module_init(&SCREEN);
+    //module_init(&SCREEN);
     //event_addListener(&EVENT_UART_JOB, callback);
     while (1) {
         //This is all that should happen in the main loop

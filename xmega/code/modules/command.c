@@ -8,6 +8,7 @@
 #include "command.h"
 #include "../drivers/host/uart.h"
 #include "log.h"
+#include "../drivers/uart/terminal.h"
 #include "../util/event.h"
 #include  "../pin_definitions.h"
 
@@ -15,7 +16,7 @@ LOG_INIT("Command");
 
 // Character of the command to hook to, callback(len,data)
 static void (* commands[26])(uint8_t, uint8_t *) = {0};
-
+static char * descriptions[26] = {0};
 static int8_t translateCommand(char command) {
     int8_t val = (uint8_t) command;
     if (val > 90) {
@@ -38,6 +39,19 @@ uint8_t command_hook(char command, void (* callback)(uint8_t, uint8_t *)) {
     }
     commands[val] = callback;
     LOG_DEBUG("Added command %c", command);
+    return 1;
+}
+
+uint8_t command_hook_description(char command, void (* callback)(uint8_t, uint8_t *), char * description) {
+    int8_t val = translateCommand(command);
+    if (val == -1) return 0;
+    if (commands[val] != 0) {
+        LOG_WARNING("Command %c not added, already in use!");
+        return 0;
+    }
+    commands[val] = callback;
+    descriptions[val] = description;
+    LOG_DEBUG("Added command %c %s", command, description);
     return 1;
 }
 
@@ -72,21 +86,38 @@ static void callback(Event * event, uint8_t * data) {
         if (!uart_reads_buffer(&command, &DEBUG_UART)) {
             LOG_ERROR("No bytes in buffer but we expect something");
         } else {
-            int8_t val = translateCommand(command),  len = 0;
-            char readData[delimiter->length], read;
-            while (uart_reads_buffer(&read, &DEBUG_UART)) {
-                readData[len] = read;
-                len++;
-            }
-            if (val != -1) {
-                if (commands[val] == 0) {
-                    LOG_WARNING("Command %c is not assigned", command);
-                } else {
-                    LOG_SYSTEM("Received command: %c", command);
-                    commands[val](len, (uint8_t*)readData);
+            if (command == '?') {
+                uint8_t i;
+                LOG_SYSTEM("Following commands are registered: ");
+                for (i = 0; i < 26; i++) {
+                    if (commands[i] != 0) {
+                        if (descriptions[i] != 0) {
+                            terminal_write("%c | %s\r\n", (char)(i + 65), descriptions[i]);
+                        } else {
+                            terminal_write("%c |\r\n", (char)(i + 65));
+                            //LOG_SYSTEM("%c", (char)(i + 65));
+                        }
+                    }
                 }
-            } else {
+                char read;
                 while (uart_reads_buffer(&read, &DEBUG_UART));  //flush the buffer
+            } else {
+                int8_t val = translateCommand(command),  len = 0;
+                char readData[delimiter->length], read;
+                while (uart_reads_buffer(&read, &DEBUG_UART)) {
+                    readData[len] = read;
+                    len++;
+                }
+                if (val != -1) {
+                    if (commands[val] == 0) {
+                        LOG_WARNING("Command %c is not assigned", command);
+                    } else {
+                        LOG_SYSTEM("Received command: %c", command);
+                        commands[val](len, (uint8_t*)readData);
+                    }
+                } else {
+                    while (uart_reads_buffer(&read, &DEBUG_UART));  //flush the buffer
+                }
             }
             //if its our uart
         }

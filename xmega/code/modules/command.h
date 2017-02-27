@@ -12,6 +12,7 @@
 #include "../util/module.h"
 
 uint8_t command_hook(char command, void (* callback)(uint8_t, uint8_t *));
+uint8_t command_hook_description(char command, void (* callback)(uint8_t, uint8_t *), char * description);
 uint8_t command_remove(char command, void (* callback)(uint8_t, uint8_t *));
 void command_remove_force(char command);
 
