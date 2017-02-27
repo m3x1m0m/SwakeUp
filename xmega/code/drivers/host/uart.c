@@ -242,10 +242,11 @@ static inline uint8_t writeInBuf(uint8_t data, USART_t * port) {
     return 1;
 }
 
-#define USARTRXCISR(NAME, PORT, USART_ID)               \
+#define USARTRXCISR(NAME, PORT, USART_ID, REC_FC)            \
 ISR(NAME##_RXC_vect) {                             \
     uint8_t read = PORT.DATA;                    \
     if (writeInBuf(read, &PORT)) {               \
+        REC_FC(read);                                   \
         uint8_t i = 0;                              \
         for (; i < UART_MAX_DELIMITERS; i++) {      \
             if (delimiters[USART_ID][i].delimiter != 0) {  \
@@ -279,12 +280,26 @@ ISR(NAME##_DRE_vect) {             \
         PORT.CTRLA &= ~(USART_DREINTLVL0_bm);\
     }\
 }
+static void received(char received) {
+    uart_writes(received, &DEBUG_UART);
+    if ((uint8_t)received == 8 || (uint8_t)received == 127) {
+        struct UartStatus * tempStatus = (struct UartStatus*)&uartStatus[USARTE_ID];
+        if (tempStatus->inBuffer_size > 1) {
+            tempStatus->inBuffer_size -= 2;
+            if (tempStatus->inBuffer_head == 1) {
+                tempStatus->inBuffer_head = UART_MAX_IN_BUFFER - 1;
+            } else {
+                tempStatus->inBuffer_head -= 2;
+            }
+        }
+    }
+}
 
-USARTRXCISR(USARTE0, DEBUG_UART,     USARTE_ID);
+USARTRXCISR(USARTE0, DEBUG_UART,     USARTE_ID, received);
 
 USARTDREISR(USARTE0, DEBUG_UART,     USARTE_ID);
 
-USARTRXCISR(USARTD1, ESP_UART_PORT,  USARTD_ID);
+USARTRXCISR(USARTD1, ESP_UART_PORT,  USARTD_ID, );
 
 USARTDREISR(USARTD1, ESP_UART_PORT,  USARTD_ID);
 
