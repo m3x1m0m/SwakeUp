@@ -51,7 +51,7 @@ uint8_t command_hook_description(char command, void (* callback)(uint8_t, uint8_
     }
     commands[val] = callback;
     descriptions[val] = description;
-    LOG_DEBUG("Added command %c %s", command, description);
+    LOG_DEBUG("Added command %c", command);
     return 1;
 }
 
@@ -89,6 +89,7 @@ static void callback(Event * event, uint8_t * data) {
             if (command == '?') {
                 uint8_t i;
                 LOG_SYSTEM("Following commands are registered: ");
+                terminal_write("? | Prints out this help\r\n");
                 for (i = 0; i < 26; i++) {
                     if (commands[i] != 0) {
                         if (descriptions[i] != 0) {

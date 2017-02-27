@@ -61,6 +61,18 @@ static void atCommand(uint8_t len __attribute__ ((unused)), uint8_t * data __att
     uart_write("AT\r\n", 4, &ESP_UART_PORT);
 }
 
+static void terminalCommand(uint8_t len __attribute__ ((unused)), uint8_t * data __attribute__ ((unused))) {
+    if (data[0] == 's' || data[0] == 'S') {
+        if (SCREEN.cnt > 0)
+            log_redirectOutput(screenterminal_sink());
+        else
+            LOG_WARNING("Screen is not initialized");
+    } else {
+        terminal_default_sink();
+    }
+}
+
+
 
 static void sleep(void) {
     //sleep_enable();
@@ -101,14 +113,15 @@ int main(void) {
     module_init(&COMMAND);
     module_init(&TIMER);                                //Timer
     event_addListener(&EVENT_TIMER_1_HZ, callback);     //TODO this can be removed
-    command_hook_description('L', &ledCommand, "L<option> options: T(toggle) 1(on) 0(off)\0");
-    command_hook_description('A', &atCommand, "Sends AT command to ESP, no options\0");
+    command_hook_description('T', &terminalCommand, "Log sink    T<option> options: U(Uart) S(Screen)\0");
+    command_hook_description('L', &ledCommand,      "Led control L<option> options: T(toggle) 1(on) 0(off)\0");
+    command_hook_description('A', &atCommand,       "Sends AT    A		   no options\0");
     //module_init(&SEPS525F);
     module_init(&ESP8266);
     LOG_SYSTEM("System initialized");
     //log_redirectOutput(screenterminal_sink());
     LOG_SYSTEM(greeting);
-    //module_init(&SCREEN);
+    module_init(&SCREEN);
     //event_addListener(&EVENT_UART_JOB, callback);
     while (1) {
         //This is all that should happen in the main loop
