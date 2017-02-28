@@ -8,6 +8,7 @@
 #include <avr/io.h>
 #include "../pin_definitions.h"
 #include <util/delay.h>
+#include <avr/interrupt.h>
 #include "log.h"
 #include "../drivers/uart/terminal.h"
 #include "../drivers/host/uart.h"
@@ -15,9 +16,11 @@
 LOG_INIT("Logger")
 
 void log_error() {
+    while (uart_buffer_out_level(&DEBUG_UART)); //Write our message
+    cli();  //disable interrupts
     while (1) {
         LED_PORT.OUTTGL = LED_PIN;
-        _delay_ms(250);
+        _delay_ms(100);
     }
 }
 void (*log_current_sink(void))(void *, char ) {

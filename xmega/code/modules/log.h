@@ -35,18 +35,26 @@ static const char _error[] =    "Err";
         log_message("[%04d][%s][%s]%s:%d ",timer_runTime(),LEVEL,log_name,__FILE__,__LINE__);   \
         log_message(MSG, ##__VA_ARGS__);                                                        \
         log_message("\r\n")
+
+#define LOG_INTERNAL_ERR(LEVEL, MSG, ...)\
+      log_message("[%04d][%s][%s]%s:%d ",timer_runTime(),LEVEL,log_name,__FILE__,__LINE__); \
+      log_message(MSG, ##__VA_ARGS__);\
+      log_message("\r\n");\
+      log_error()
+
 #else
 #define LOG_INTERNAL(LEVEL, MSG, ...) \
         log_message("[%s][%s]%s:%d ",LEVEL,log_name,__FILE__,__LINE__);                         \
         log_message(MSG, ##__VA_ARGS__);                                                        \
         log_message("\r\n")
 
-#endif
 #define LOG_INTERNAL_ERR(LEVEL, MSG, ...)\
-        log_message("[%s][%s]%s:%d ",LEVEL,log_name,__FILE__,__LINE__); \
-        log_message(MSG, ##__VA_ARGS__);\
-        log_message("\r\n");\
-        log_error()
+      log_message("[%s][%s]%s:%d ",LEVEL,log_name,__FILE__,__LINE__); \
+      log_message(MSG, ##__VA_ARGS__);\
+      log_message("\r\n");\
+      log_error()
+
+#endif
 
 void log_message(char * format, ...);   //TODO make this const
 void log_error(void);
