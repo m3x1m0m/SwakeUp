@@ -22,17 +22,24 @@ static void atCommand(uint8_t len, uint8_t * data) {
 
 static void callback(Event * event, uint8_t * data) {
     struct UartDelimiter * delimiter = (struct UartDelimiter*)data;
-    //LOG_DEBUG("Received callback: %s", event->description);
-    //if (delimiter->port == &ESP_UART_PORT) {
-    char readData[delimiter->length + 1], read;
-    uint8_t len = 0;
-    while (uart_reads_buffer(&read, &ESP_UART_PORT)) {
-        readData[len] = read;
-        len++;
+    if (delimiter->port == &ESP_UART_PORT) {
+        //LOG_DEBUG("Received callback: %s", event->description);
+        if (uart_buffer_in_level(&ESP_UART_PORT) > 0) {
+            char readData[delimiter->length + 1], read;
+            uint8_t len = 0;
+            while (uart_buffer_in_level(&ESP_UART_PORT) > 0) {
+                if (!uart_reads_buffer(&read, &ESP_UART_PORT)) {
+                    break;
+                }
+                if ((uint8_t)read >= (uint8_t)' ' || read == '\n') {
+                    readData[len] = read;
+                    len++;
+                }
+            }
+            readData[len] = '\0';
+            LOG_DEBUG("Received %s", readData);
+        }
     }
-    readData[delimiter->length + 1] = '\0';
-    //LOG_DEBUG("AT rcd: %s", readData);
-    // }
 }
 
 void esp_reset(void) {
@@ -60,7 +67,7 @@ uint16_t esp_update_write(uint8_t * datas, uint16_t len) {
 
 static uint8_t init(void) {
     uart_add_delimiter('\n', &ESP_UART_PORT);
-    uart_add_delimiter('\r', &ESP_UART_PORT);
+    //uart_add_delimiter('\r', &ESP_UART_PORT);
     event_addListener(&EVENT_UART_DELIMITER, callback);
     ESP_ENABLE_PORT.DIRSET = ESP_ENABLE_PIN | ESP_PWR_SAVE_N_PIN | ESP_RST_PIN;
     ESP_ENABLE_PORT.OUTSET = ESP_ENABLE_PIN;
