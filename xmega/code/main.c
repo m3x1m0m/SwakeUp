@@ -57,8 +57,9 @@ static void ledCommand(uint8_t len __attribute__ ((unused)), uint8_t * data __at
 }
 
 static void atCommand(uint8_t len __attribute__ ((unused)), uint8_t * data __attribute__ ((unused))) {
-    LOG_DEBUG("Writing AT\\n\\r");
-    uart_write("AT\r\n", 4, &ESP_UART_PORT);
+    LOG_DEBUG("Sending AT: %s\r\n", (char*)data);
+    uart_write(data, len, &ESP_UART_PORT);
+    uart_write("\r\n", 2, &ESP_UART_PORT);
 }
 
 static void terminalCommand(uint8_t len __attribute__ ((unused)), uint8_t * data __attribute__ ((unused))) {
@@ -106,7 +107,6 @@ int main(void) {
     sleep_enable();
     set_sleep_mode(SLEEP_MODE_IDLE);
 #endif
-    //module_init(&Screen);
     PMIC.CTRL |= PMIC_LOLVLEN_bm | PMIC_MEDLVLEN_bm;    //Peripheral enable - interrupt levels (ALL)
     module_init(&LOGGER);                               //Initializing the logger for use
     sei();                                              //Enabling interrupts
@@ -121,7 +121,7 @@ int main(void) {
     LOG_SYSTEM("System initialized");
     //log_redirectOutput(screenterminal_sink());
     LOG_SYSTEM(greeting);
-    module_init(&SCREEN);
+    //module_init(&SCREEN);
     //event_addListener(&EVENT_UART_JOB, callback);
     while (1) {
         //This is all that should happen in the main loop
