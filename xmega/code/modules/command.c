@@ -17,6 +17,7 @@ LOG_INIT("Command");
 // Character of the command to hook to, callback(len,data)
 static void (* commands[26])(uint8_t, uint8_t *) = {0};
 static char * descriptions[26] = {0};
+
 static int8_t translateCommand(char command) {
     int8_t val = (uint8_t) command;
     if (val > 90) {
@@ -114,7 +115,7 @@ static void callback(Event * event, uint8_t * data) {
                         LOG_WARNING("Command %c is not assigned", command);
                     } else {
                         LOG_SYSTEM("Received command: %c", command);
-                        commands[val](len, (uint8_t*)readData);
+                        commands[val](len - 1, (uint8_t*)readData); //we remove the \n
                     }
                 } else {
                     while (uart_reads_buffer(&read, &DEBUG_UART));  //flush the buffer
