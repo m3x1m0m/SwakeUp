@@ -37,6 +37,7 @@ uint8_t uart_job(char * data, uint8_t len, void (* callback)(struct Job *), USAR
 uint8_t uart_write(const char * const data, uint8_t len, USART_t * const port);
 uint8_t uart_writes(const char data, USART_t * const port);
 uint8_t uart_buffer_out_level(const USART_t * const port);
+uint8_t uart_buffer_in_level(const USART_t * const port);
 void uart_write_blocked(char data, USART_t * const port);
 void uart_writes_blocked(const char * const data, uint8_t len, USART_t * const port);
 uint8_t uart_read_blocked(char * data, uint8_t len, USART_t * const port);

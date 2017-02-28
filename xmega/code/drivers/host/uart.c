@@ -74,6 +74,10 @@ uint8_t uart_buffer_out_level(const USART_t * const port) {
     return uartStatus[getId(port)].outBuffer_size;
 }
 
+uint8_t uart_buffer_in_level(const USART_t * const port) {
+    return uartStatus[getId(port)].inBuffer_size;
+}
+
 void uart_speed(UART_BAUDRATE baudrate, USART_t * port) {
     switch (baudrate) {
     case B2400:
@@ -252,7 +256,7 @@ ISR(NAME##_RXC_vect) {                             \
             if (delimiters[USART_ID][i].delimiter != 0) {  \
                 delimiters[USART_ID][i].length++;          \
                 if (read == delimiters[USART_ID][i].delimiter) {   \
-                    delimiters[USART_ID][i].port = &USARTE0;       \
+                    delimiters[USART_ID][i].port = &PORT;       \
                     event_fire(&EVENT_UART_DELIMITER, SYSTEM_ADDRESS_CAST (&delimiters[USART_ID][i])); \
                 }   \
             }   \
@@ -313,7 +317,7 @@ static uint8_t init(void) {
     ESP_UART_PIN_PORT.DIRSET          = ESP_UART_TX;
     ESP_UART_PIN_PORT.OUTSET          = ESP_UART_TX;
     ESP_UART_PIN_PORT.REMAP           = PORT_USART0_bm;
-    //ESP_UART_PORT.CTRLA         = USART_RXCINTLVL_LO_gc;
+    ESP_UART_PORT.CTRLA         = USART_RXCINTLVL_LO_gc;
     ESP_UART_PORT.CTRLB         = USART_RXEN_bm |  USART_TXEN_bm;
     ESP_UART_PORT.CTRLC         = USART_CHSIZE_8BIT_gc;
     uart_speed(B115200, &ESP_UART_PORT);
