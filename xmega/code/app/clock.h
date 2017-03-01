@@ -31,7 +31,7 @@ void clock_time_set(struct Time * time);
 struct Time * clock_time_get(void);
 void clock_alarm_set(struct Time * time);
 struct Time * clock_alarm_get(void);
-void clock_draw(uint16_t x, uint16_t y);
-void clock_init(void);
+void clock_draw();
+void clock_init(uint16_t drawX, uint16_t drawY);
 void clock_deinit(void);
 #endif /* CLOCK_H_ */

@@ -9,9 +9,11 @@
 #include <avr/pgmspace.h>
 
 #include "clock.h"
+#include "core.h"
 #include "../util/event.h"
 #include "../modules/log.h"
 #include "../modules/screen.h"
+#include "../drivers/host/timer.h"  //TODO breach of layering!
 
 LOG_INIT("CLOCK");
 
@@ -21,6 +23,8 @@ static struct Time prevTime;
 static struct Time curAlarm;
 static uint8_t alarmEnabled = 0;
 static uint8_t clockInitialized = 0;
+
+static uint16_t x = 0, y = 0;
 
 static uint16_t secondColor = COLOR_TO656(255, 0, 0);
 static uint16_t minuteColor = COLOR_TO656(0, 255, 0);
@@ -56,7 +60,7 @@ struct Time * clock_alarm_get(void) {
         return (void*)0;
 }
 
-void clock_draw(uint16_t x, uint16_t y) {
+void clock_draw() {
     if (clockInitialized) {
         screen_draw_begin(LINE);
         screen_color(bckgrColor);
@@ -79,11 +83,48 @@ void clock_draw(uint16_t x, uint16_t y) {
     }
 }
 
-void clock_init(void) {
+static void callback(Event * event, uint8_t * data __attribute__ ((unused))) {
+    if (event == &EVENT_TIMER_1_HZ) {
+        curTime.second++;
+        if (curTime.second > 59) {
+            curTime.second = 0;
+            curTime.minute++;
+            if (curTime.minute > 59) {
+                curTime.minute = 0;
+                curTime.hour++;
+                if (curTime.hour > 23) curTime.hour = 0;
+            }
+        }
+    } else if (event == &TIME_CHANGE) {
+        clock_time_set((struct Time *)data);
+    } else {
+        LOG_WARNING("Unkown event %s", event->description);
+        return;
+    }
+    clock_draw();
+    char clockbuf[8];//hour : min : sec + \0
+    clockbuf[0] = curTime.hour / 10 + '0';
+    clockbuf[1] = curTime.hour % 10 + '0';
+    clockbuf[2] = ':';
+    clockbuf[3] = curTime.minute / 10 + '0';
+    clockbuf[4] = curTime.minute % 10 + '0';
+    clockbuf[5] = ':';
+    clockbuf[6] = curTime.second / 10 + '0';
+    clockbuf[7] = curTime.second % 10 + '0';
+    screen_text(clockbuf, 8, x, y + CLOCK_HEIGHT);
+}
+
+void clock_init(uint16_t drawX, uint16_t drawY) {
+    x = drawX;
+    y = drawY;
     module_init(&SCREEN);
+    event_addListener(&EVENT_TIMER_1_HZ, callback);
+    event_addListener(&TIME_CHANGE, callback);
     clockInitialized = 1;
 }
 void clock_deinit(void) {
     module_deinit(&SCREEN);
+    event_removeListener(&EVENT_TIMER_1_HZ, callback);
+    event_removeListener(&TIME_CHANGE, callback);
     clockInitialized = 0;
 }
