@@ -137,65 +137,31 @@ void screen_circle(uint16_t x, uint16_t y, int radius) {
     else screen_circle_empty(x, y, radius);
 }
 
-#define SECOND_PATH 64
+void screen_image(Image * image, uint16_t x, uint16_t y) {
+    if (image->isFlash) {
+        seps525f_draw_pixels_coloured_flash(image->image, x, y, IMAGE_WIDTH(image), IMAGE_HEIGHT(image));
+    } else {
+        seps525f_draw_pixels_coloured(image->image, x, y, IMAGE_WIDTH(image), IMAGE_HEIGHT(image));
+    }
+}
 
-uint16_t tempX = SECOND_PATH / 2;
-uint16_t tempY = 0;
-enum Side {
-    TOP, RIGHT, BOTTOM, LEFT
-};
+void screen_sub_image(Image * image, uint16_t x, uint16_t y, uint16_t imgX, uint16_t imgY, uint16_t imgWidth, uint16_t imgHeight) {
+    if (image->isFlash) {
+        seps525f_draw_pixels_coloured_flash(image->image[imgY * IMAGE_WIDTH(image) + x], x, y, imgWidth, imgHeight);
+    } else {
+        seps525f_draw_pixels_coloured(image->image[imgY * IMAGE_WIDTH(image) + x], x, y, imgWidth, imgHeight);
+    }
+}
 
-enum Side side = TOP;
-
-#define CLOCK_CENTER_X 127
-#define CLOCK_CENTER_Y 32
-#define CLOCK_SIZE     64
-#define CLOCK_BCKGROUND SEPS525F_TO656(20,20,20)
 uint8_t second = 0;
 uint8_t min = 0;
 uint8_t hour = 0;
 
-
-static void callback(Event * event, uint8_t * data __attribute__ ((unused))) {
-    second++;
-    if (second > 59) {
-        second = 0;
-        min++;
-        if (min > 59) {
-            min = 0;
-            hour++;
-            if (hour > 23) hour = 0;
-        }
-    }
-    char clockbuf[8];//hour : min : sec + \0
-    clockbuf[0] = hour / 10 + '0';
-    clockbuf[1] = hour % 10 + '0';
-    clockbuf[2] = ':';
-    clockbuf[3] = min / 10 + '0';
-    clockbuf[4] = min % 10 + '0';
-    clockbuf[5] = ':';
-    clockbuf[6] = second / 10 + '0';
-    clockbuf[7] = second % 10 + '0';
-    screen_text(clockbuf, 8, 160 - 8 * 8, CLOCK_SIZE + 3);
-}
 static uint8_t init(void) {
     if (log_current_sink() == screenterminal_sink()) {
         terminal_default_sink();
     }
     seps525f_fill(0, 0, 160, 128, 0x000);
-    //seps525f_draw_pixels_coloured_flash(imag1, 0, 0, 160, 64);
-    //seps525f_draw_pixels_coloured_flash(imag2, 0, 64, 160, 64);
-    screen_draw_begin(LINE);
-    screen_color(SEPS525F_TO656(20, 30, 160));
-    screen_rect(CLOCK_CENTER_X - CLOCK_SIZE / 2, CLOCK_CENTER_Y - CLOCK_SIZE / 2, CLOCK_SIZE, CLOCK_SIZE);
-    screen_color(SEPS525F_TO656(255, 255, 255));
-    screen_rect(CLOCK_CENTER_X - CLOCK_SIZE / 2 + 1, CLOCK_CENTER_Y - CLOCK_SIZE / 2 + 1, CLOCK_SIZE - 2, CLOCK_SIZE - 2);
-    screen_draw_end();
-    screen_draw_begin(FILLED);
-    screen_color(CLOCK_BCKGROUND);
-    screen_rect(CLOCK_CENTER_X - CLOCK_SIZE / 2 + 2, CLOCK_CENTER_Y - CLOCK_SIZE / 2 + 2, CLOCK_SIZE - 3, CLOCK_SIZE - 3);
-    screen_draw_end();
-    event_addListener(&EVENT_TIMER_1_HZ, callback);     //TODO this can be removed
     return 1;
 }
 static uint8_t deinit(void) {

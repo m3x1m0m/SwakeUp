@@ -10,6 +10,7 @@
 #define SCREEN_H_
 
 #include "../util/module.h"
+#include "../util/image.h"
 
 #define COLOR_TO656(r,g,b)((r>>3)<<11)|((g>>2)<<5)|(b>>3)
 #define COLOR_TO888(r,g,b)((r<<3)<<16)|((g<<2)<<8)|(b<<3)
@@ -27,6 +28,8 @@ void screen_rect(uint16_t x1, uint16_t y1, uint16_t width, uint16_t height);
 void screen_line(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2);
 void screen_pixel(uint16_t x, uint16_t y);
 void screen_circle(uint16_t x, uint16_t y, int radius);
+void screen_image(Image * image, uint16_t x, uint16_t y);
+void screen_sub_image(Image * image, uint16_t x, uint16_t y, uint16_t imgX, uint16_t imgY, uint16_t imgWidth, uint16_t imgHeight);
 
 
 MODULE_EXP(SCREEN);
