@@ -11,6 +11,9 @@
 
 #include "../util/module.h"
 
+#define COLOR_TO656(r,g,b)((r>>3)<<11)|((g>>2)<<5)|(b>>3)
+#define COLOR_TO888(r,g,b)((r<<3)<<16)|((g<<2)<<8)|(b<<3)
+
 enum SCREEN_SHAPE_TYPE {
     POINT, FILLED, LINE
 };

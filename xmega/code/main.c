@@ -22,20 +22,20 @@
 #include "drivers/uart/esp8266.h"
 #include "modules/screenterminal.h"
 #include "modules/screen.h"
-
+#include "app/clock.h"
 LOG_INIT("Main");
 
 static void callback(Event * event, uint8_t * data);
 #define TAB "\t\t\t\t"
 #define NL  "\r\n"
 
-static const char greeting[] = NL TAB"===================="NL
-                               TAB"Welcome to SwakeUpp!"NL
-                               TAB"Build date:"NL
-                               TAB __DATE__" "__TIME__ NL
-                               TAB"The time is:"NL
-                               TAB"18:08"NL
-                               TAB"===================="NL;
+#define greeting               NL TAB"===================="NL\
+                               TAB"Welcome to SwakeUpp!"NL\
+                               TAB"Build date:"NL\
+                               TAB __DATE__" "__TIME__ NL\
+                               TAB"The time is:"NL\
+                               TAB"18:08"NL\
+                               TAB"===================="NL
 
 
 static void ledCommand(uint8_t len __attribute__ ((unused)), uint8_t * data __attribute__ ((unused))) {
@@ -58,7 +58,7 @@ static void ledCommand(uint8_t len __attribute__ ((unused)), uint8_t * data __at
 
 static void atCommand(uint8_t len __attribute__ ((unused)), uint8_t * data __attribute__ ((unused))) {
     LOG_DEBUG("Sending AT: %s\r\n", (char*)data);
-    uart_write(data, len, &ESP_UART_PORT);
+    uart_write((char*)data, len, &ESP_UART_PORT);
     uart_write("\r\n", 2, &ESP_UART_PORT);
 }
 
@@ -122,6 +122,8 @@ int main(void) {
     //log_redirectOutput(screenterminal_sink());
     LOG_SYSTEM(greeting);
     //module_init(&SCREEN);
+    clock_init();
+    clock_draw(64, 0);
     //event_addListener(&EVENT_UART_JOB, callback);
     while (1) {
         //This is all that should happen in the main loop

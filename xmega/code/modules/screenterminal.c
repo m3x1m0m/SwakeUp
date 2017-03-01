@@ -4,6 +4,7 @@
  * Created: 2/25/2017 8:15:38 PM
  *  Author: elmar
  */
+#include <avr/pgmspace.h>
 #include "../util/font.h"
 #include "../drivers/spi/SEPS525F.h"
 #include "log.h"
@@ -37,7 +38,7 @@ void screenterminal_writes(char text) {
         uint16_t drawX = indexX * 8, drawY = indexY * 8;
         seps525f_start_draw(drawX, drawY, 8, 8);
         for (; y < 8; y++) {
-            uint8_t row = font_font8x8_basic[(uint8_t) text][y];
+            uint8_t row = pgm_read_byte(font_font8x8_basic[(uint8_t) text][y]);
             for (x = 0; x < 8; x++) {
                 if (row & (1 << x)) {
                     seps525f_draw(textColor);

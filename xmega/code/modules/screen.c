@@ -4,7 +4,8 @@
  * Created: 11/12/2016 6:02:02 PM
  *  Author: elmar
  */
-
+#include <avr/pgmspace.h>
+#include "../drivers/uart/terminal.h"
 #include "../drivers/spi/SEPS525F.h"
 #include "../drivers/host/timer.h"
 #include "../util/font.h"
@@ -33,7 +34,7 @@ void screen_text(char * text, uint8_t len, uint16_t x, uint16_t y) {
         seps525f_start_draw(x + i * 8, y, 8, 8);
         char letter = text[i];
         for (y0 = 0; y0 < 8; y0++) {
-            uint8_t row = font_font8x8_basic[(uint8_t) letter][y0];
+            uint8_t row = pgm_read_byte(font_font8x8_basic[(uint8_t) letter][y0]);
             for (x0 = 0; x0 < 8; x0++) {
                 if (row & (1 << x0)) {
                     seps525f_draw(curColor);
@@ -154,13 +155,8 @@ uint8_t second = 0;
 uint8_t min = 0;
 uint8_t hour = 0;
 
-const uint8_t circX[60] = {0x20, 0x23, 0x26, 0x29, 0x2d, 0x30, 0x32, 0x35, 0x37, 0x39, 0x3b, 0x3d, 0x3e, 0x3f, 0x3f, 0x40, 0x3f, 0x3f, 0x3e, 0x3d, 0x3b, 0x39, 0x37, 0x35, 0x32, 0x30, 0x2d, 0x29, 0x26, 0x23, 0x20, 0x1c, 0x19, 0x16, 0x12, 0x10, 0x0d, 0x0a, 0x08, 0x06, 0x04, 0x02, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x02, 0x04, 0x06, 0x08, 0x0a, 0x0d, 0x0f, 0x12, 0x16, 0x19, 0x1c};
-const uint8_t circY[60] = {0x00, 0x00, 0x00, 0x01, 0x02, 0x04, 0x06, 0x08, 0x0a, 0x0d, 0x10, 0x12, 0x16, 0x19, 0x1c, 0x20, 0x23, 0x26, 0x29, 0x2d, 0x30, 0x32, 0x35, 0x37, 0x39, 0x3b, 0x3d, 0x3e, 0x3f, 0x3f, 0x40, 0x3f, 0x3f, 0x3e, 0x3d, 0x3b, 0x39, 0x37, 0x35, 0x32, 0x30, 0x2d, 0x29, 0x26, 0x23, 0x20, 0x1c, 0x19, 0x16, 0x12, 0x0f, 0x0d, 0x0a, 0x08, 0x06, 0x04, 0x02, 0x01, 0x00, 0x00};
 
 static void callback(Event * event, uint8_t * data __attribute__ ((unused))) {
-    screen_draw_begin(LINE);
-    screen_color(CLOCK_BCKGROUND);
-    screen_line(128, 32, 128 + circX[second] - 32, circY[second]);
     second++;
     if (second > 59) {
         second = 0;
@@ -171,13 +167,6 @@ static void callback(Event * event, uint8_t * data __attribute__ ((unused))) {
             if (hour > 23) hour = 0;
         }
     }
-    screen_color(SEPS525F_TO656(100, 230, 0));
-    screen_line(128, 32, 128 + circX[second] - 32, circY[second]);
-    screen_color(SEPS525F_TO656(20, 30, 160));
-    screen_rect(CLOCK_CENTER_X - CLOCK_SIZE / 2, CLOCK_CENTER_Y - CLOCK_SIZE / 2, CLOCK_SIZE, CLOCK_SIZE);
-    screen_color(SEPS525F_TO656(255, 255, 255));
-    screen_rect(CLOCK_CENTER_X - CLOCK_SIZE / 2 + 1, CLOCK_CENTER_Y - CLOCK_SIZE / 2 + 1, CLOCK_SIZE - 2, CLOCK_SIZE - 2);
-    screen_draw_end();
     char clockbuf[8];//hour : min : sec + \0
     clockbuf[0] = hour / 10 + '0';
     clockbuf[1] = hour % 10 + '0';
