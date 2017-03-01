@@ -18,6 +18,36 @@ LOG_INIT("Command");
 static void (* commands[26])(uint8_t, uint8_t *) = {0};
 static char * descriptions[26] = {0};
 
+uint8_t command_arguments(uint8_t *data, uint8_t len) {
+    uint8_t index = 0;
+    uint8_t arguments = 0;
+    while (index < len) {
+        if (data[index] == ' ') arguments++;
+        index++;
+    }
+    return arguments;
+}
+
+uint8_t command_next_arg(uint8_t *data, uint8_t len) {
+    uint8_t tempIndex = 0;
+    while (data[tempIndex] < (uint8_t)'!' && tempIndex < len)    {
+        //skipping all the spaces and other non text variables
+        tempIndex++;
+    }
+    if (tempIndex == len) return 0;//we are at the end, no more characters!
+    return tempIndex;
+}
+
+uint32_t command_next_int(uint8_t *data, uint8_t * index, uint8_t len) {
+    uint32_t num =  0;
+    while (data[*index] >= '0' && data[*index] <= '9' && *index < len) {
+        num *= 10;
+        num += data[*index] - '0';
+        *(index)++;
+    }
+    return num;
+}
+
 static int8_t translateCommand(char command) {
     int8_t val = (uint8_t) command;
     if (val > 90) {

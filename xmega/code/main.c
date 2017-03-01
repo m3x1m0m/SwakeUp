@@ -23,6 +23,7 @@
 #include "modules/screenterminal.h"
 #include "modules/screen.h"
 #include "app/clock.h"
+#include "app/weather.h"
 LOG_INIT("Main");
 
 static void callback(Event * event, uint8_t * data);
@@ -73,6 +74,32 @@ static void terminalCommand(uint8_t len __attribute__ ((unused)), uint8_t * data
     }
 }
 
+static void setCommand(uint8_t len __attribute__ ((unused)), uint8_t * data __attribute__ ((unused))) {
+    uint8_t index = 1;
+    switch (data[index - 1]) {
+    case 'W':
+    case 'w':
+        weather_set((enum Weather)(data[index] - '0'));
+        //weather
+        break;
+    case 'T':
+    case 't':
+        if (command_arguments(&data[index], len - 1) < 3) {
+            LOG_WARNING("Not enough arguments for setting time");
+        } else {
+            uint32_t hour = command_next_int(&data[index], &index, len - 1);
+            uint32_t minute = command_next_int(&data[index], &index, len - 1);
+            uint32_t second = command_next_int(&data[index], &index, len - 1);
+            LOG_DEBUG("Setting time %d:%d:%d", hour, minute, second);
+        }
+        //time
+        break;
+    case 'S':
+    case 's':
+        //social
+        break;
+    }
+}
 
 
 static void sleep(void) {
@@ -116,15 +143,20 @@ int main(void) {
     command_hook_description('T', &terminalCommand, "Log sink    T<option> options: U(Uart) S(Screen)\0");
     command_hook_description('L', &ledCommand,      "Led control L<option> options: T(toggle) 1(on) 0(off)\0");
     command_hook_description('A', &atCommand,       "Sends AT    A		   no options\0");
+    command_hook_description('S', &setCommand,      "Sets an app state S<app> <options>\r\n\t"
+                             "W<options> options: 1-6 for different weather\r\n\t"
+                             "S<options> options: f(facebook) e(mail)\r\n\t"
+                             "T<options> options: hour minute second\0");
     //module_init(&SEPS525F);
     module_init(&ESP8266);
     LOG_SYSTEM("System initialized");
     //log_redirectOutput(screenterminal_sink());
     LOG_SYSTEM(greeting);
     //module_init(&SCREEN);
-    clock_init();
-    clock_draw(64, 0);
-    //event_addListener(&EVENT_UART_JOB, callback);
+    clock_init(64, 0);
+    weather_init(0, 64);
+    clock_draw();
+    weather_draw();
     while (1) {
         //This is all that should happen in the main loop
         //The system will go to sleep if no more events are to be processed
