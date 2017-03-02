@@ -30,7 +30,7 @@
  */
 
 #include "printf.h"
-
+#include <avr/pgmspace.h>
 typedef void (*putcf) (void*, char);
 static putcf stdout_putf;
 static void* stdout_putp;
@@ -125,7 +125,81 @@ static void putchw(void* putp, putcf putf, int n, char z, char* bf) {
     while ((ch = *bf++))
         putf(putp, ch);
 }
-
+void tfp_format_p(void* putp, void (*putf) (void*, char), char *fmt, va_list va) {
+    char bf[12];
+    char ch;
+    while ((ch = pgm_read_byte(fmt++))) {
+        if (ch != '%')
+            putf(putp, ch);
+        else {
+            char lz = 0;
+#ifdef  PRINTF_LONG_SUPPORT
+            char lng = 0;
+#endif
+            int w = 0;
+            ch = pgm_read_byte(fmt++);
+            if (ch == '0') {
+                ch = pgm_read_byte(fmt++);
+                lz = 1;
+            }
+            if (ch >= '0' && ch <= '9') {
+                ch = a2i(ch, &fmt, 10, &w);
+            }
+#ifdef  PRINTF_LONG_SUPPORT
+            if (ch == 'l') {
+                ch = pgm_read_byte(fmt++);
+                lng = 1;
+            }
+#endif
+            switch (ch) {
+            case 0:
+                goto abort;
+            case 'u' : {
+#ifdef  PRINTF_LONG_SUPPORT
+                if (lng)
+                    uli2a(va_arg(va, unsigned long int), 10, 0, bf);
+                else
+#endif
+                    ui2a(va_arg(va, unsigned int), 10, 0, bf);
+                putchw(putp, putf, w, lz, bf);
+                break;
+            }
+            case 'd' :  {
+#ifdef  PRINTF_LONG_SUPPORT
+                if (lng)
+                    li2a(va_arg(va, unsigned long int), bf);
+                else
+#endif
+                    i2a(va_arg(va, int), bf);
+                putchw(putp, putf, w, lz, bf);
+                break;
+            }
+            case 'x':
+            case 'X' :
+#ifdef  PRINTF_LONG_SUPPORT
+                if (lng)
+                    uli2a(va_arg(va, unsigned long int), 16, (ch == 'X'), bf);
+                else
+#endif
+                    ui2a(va_arg(va, unsigned int), 16, (ch == 'X'), bf);
+                putchw(putp, putf, w, lz, bf);
+                break;
+            case 'c' :
+                putf(putp, (char)(va_arg(va, int)));
+                break;
+            case 's' :
+                putchw(putp, putf, w, 0, va_arg(va, char*));
+                break;
+            case '%' :
+                putf(putp, ch);
+            default:
+                break;
+            }
+        }
+    }
+abort:
+    ;
+}
 void tfp_format(void* putp, putcf putf, char *fmt, va_list va) {
     char bf[12];
     char ch;

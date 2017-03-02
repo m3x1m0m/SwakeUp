@@ -33,30 +33,31 @@ static const char _error[] =    "Err";
 #ifdef  DEBUG
 #define LOG_INTERNAL(LEVEL, MSG, ...) \
         log_message("[%04d][%s][%s]%s:%d ",timer_runTime(),LEVEL,log_name,__FILE__,__LINE__);   \
-        log_message(PSTR(MSG), ##__VA_ARGS__);                                                        \
+        log_message_p(PSTR(MSG), ##__VA_ARGS__);                                                        \
         log_message("\r\n")
 
 #define LOG_INTERNAL_ERR(LEVEL, MSG, ...)\
       log_message("[%04d][%s][%s]%s:%d ",timer_runTime(),LEVEL,log_name,__FILE__,__LINE__); \
-      log_message(PSTR(MSG), ##__VA_ARGS__);\
+      log_message_p(PSTR(MSG), ##__VA_ARGS__);\
       log_message("\r\n");\
       log_error()
 
 #else
 #define LOG_INTERNAL(LEVEL, MSG, ...) \
         log_message("[%s][%s]%s:%d ",LEVEL,log_name,__FILE__,__LINE__);                         \
-        log_message(PSTR(MSG), ##__VA_ARGS__);                                                        \
+        log_message_p(PSTR(MSG), ##__VA_ARGS__);                                                        \
         log_message("\r\n")
 
 #define LOG_INTERNAL_ERR(LEVEL, MSG, ...)\
       log_message("[%s][%s]%s:%d ",LEVEL,log_name,__FILE__,__LINE__); \
-      log_message(PSTR(MSG), ##__VA_ARGS__);\
+      log_message_p(PSTR(MSG), ##__VA_ARGS__);\
       log_message("\r\n");\
       log_error()
 
 #endif
 
 void log_message(const char * format, ...);   //TODO make this const
+void log_message_p(const char * format, ...);
 void log_error(void);
 
 void log_redirectOutput(void (*sink) (void*, char));

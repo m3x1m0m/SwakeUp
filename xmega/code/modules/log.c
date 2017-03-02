@@ -37,6 +37,13 @@ void log_message(const char * format, ...) {
     va_end (arg);
 }
 
+void log_message_p(const char * format, ...) {
+    va_list arg;
+    va_start (arg, format);
+    terminal_format_p(format, arg);
+    va_end (arg);
+}
+
 uint8_t init(void) {
     LOG_SYSTEM("Logger initialized");
     return 1;
