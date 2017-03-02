@@ -64,20 +64,21 @@ void clock_draw() {
     if (clockInitialized) {
         screen_draw_begin(LINE);
         screen_color(bckgrColor);
-        screen_line(x, y + CLOCK_CENTER, x + pgm_read_byte(circ48X[prevTime.second]) - CLOCK_CENTER, pgm_read_byte(circ48Y[prevTime.second]));
-        screen_line(x, y + CLOCK_CENTER, x + pgm_read_byte(circ40X[prevTime.second]) - CLOCK_CENTER, pgm_read_byte(circ40Y[prevTime.second]));
-        screen_line(x, y + CLOCK_CENTER, x + pgm_read_byte(circ32X[prevTime.second]) - CLOCK_CENTER, pgm_read_byte(circ32Y[prevTime.second]));
+        screen_line(x + CLOCK_CENTER, y + CLOCK_CENTER, x + pgm_read_byte(&circ48X[prevTime.second]) , pgm_read_byte(&circ48Y[prevTime.second]));
+        screen_line(x + CLOCK_CENTER, y + CLOCK_CENTER, x + pgm_read_byte(&circ40X[prevTime.minute]) , pgm_read_byte(&circ40Y[prevTime.minute]));
+        screen_line(x + CLOCK_CENTER, y + CLOCK_CENTER, x + pgm_read_byte(&circ32X[prevTime.hour]) , pgm_read_byte(&circ32Y[prevTime.hour]));
         screen_color(hourColor);
-        screen_line(x, y + CLOCK_CENTER, x + pgm_read_byte(circ32X[curTime.second]) - CLOCK_CENTER, pgm_read_byte(circ32Y[curTime.second]));
+        screen_line(x + CLOCK_CENTER, y + CLOCK_CENTER, x + pgm_read_byte(&circ32X[curTime.hour]) , pgm_read_byte(&circ32Y[curTime.hour]));
         screen_color(minuteColor);
-        screen_line(x, y + CLOCK_CENTER, x + pgm_read_byte(circ40X[curTime.second]) - CLOCK_CENTER, pgm_read_byte(circ40Y[curTime.second]));
+        screen_line(x + CLOCK_CENTER, y + CLOCK_CENTER, x + pgm_read_byte(&circ40X[curTime.minute]) , pgm_read_byte(&circ40Y[curTime.minute]));
         screen_color(secondColor);
-        screen_line(x, y + CLOCK_CENTER, x + pgm_read_byte(circ48X[curTime.second]) - CLOCK_CENTER, pgm_read_byte(circ48Y[curTime.second]));
+        screen_line(x + CLOCK_CENTER, y + CLOCK_CENTER, x + pgm_read_byte(&circ48X[curTime.second]) , pgm_read_byte(&circ48Y[curTime.second]));
         screen_color(clockColor);
         screen_rect(x + CLOCK_CENTER - CLOCK_WIDTH / 2, CLOCK_CENTER - CLOCK_HEIGHT / 2, CLOCK_WIDTH, CLOCK_HEIGHT);
         screen_color(COLOR_TO656(255, 255, 255));
         screen_rect(x + CLOCK_CENTER - CLOCK_WIDTH / 2 + 1, CLOCK_CENTER - CLOCK_HEIGHT / 2 + 1, CLOCK_WIDTH - 2, CLOCK_HEIGHT - 2);
         screen_draw_end();
+        memcpy(&prevTime, &curTime, sizeof(struct Time));
     } else {
         LOG_WARNING("Trying to draw, but we are not initialized!");
     }
@@ -111,7 +112,7 @@ static void callback(Event * event, uint8_t * data __attribute__ ((unused))) {
     clockbuf[5] = ':';
     clockbuf[6] = curTime.second / 10 + '0';
     clockbuf[7] = curTime.second % 10 + '0';
-    screen_text(clockbuf, 8, x, y + CLOCK_HEIGHT);
+    screen_text(clockbuf, 8, x, y + CLOCK_HEIGHT + 1);
 }
 
 void clock_init(uint16_t drawX, uint16_t drawY) {
