@@ -34,7 +34,7 @@ void screen_text(char * text, uint8_t len, uint16_t x, uint16_t y) {
         seps525f_start_draw(x + i * 8, y, 8, 8);
         char letter = text[i];
         for (y0 = 0; y0 < 8; y0++) {
-            uint8_t row = pgm_read_byte(font_font8x8_basic[(uint8_t) letter][y0]);
+            uint8_t row = pgm_read_byte(&font_font8x8_basic[(uint8_t) letter][y0]);
             for (x0 = 0; x0 < 8; x0++) {
                 if (row & (1 << x0)) {
                     seps525f_draw(curColor);
@@ -146,22 +146,30 @@ void screen_image(Image * image, uint16_t x, uint16_t y) {
 }
 
 void screen_sub_image(Image * image, uint16_t x, uint16_t y, uint16_t imgX, uint16_t imgY, uint16_t imgWidth, uint16_t imgHeight) {
+    seps525f_start_draw(x, y, imgWidth, imgHeight);
+    uint16_t cX, cY;
     if (image->isFlash) {
-        seps525f_draw_pixels_coloured_flash(image->image[imgY * IMAGE_WIDTH(image) + x], x, y, imgWidth, imgHeight);
+        for (cY = imgY; cY < (imgY + imgHeight); cY++) {
+            for (cX = imgX; cX < (imgX + imgWidth); cX++) {
+                seps525f_draw(pgm_read_word(&image->image[cY * IMAGE_WIDTH(image) + cX]));
+            }
+        }
     } else {
-        seps525f_draw_pixels_coloured(image->image[imgY * IMAGE_WIDTH(image) + x], x, y, imgWidth, imgHeight);
+        for (cY = imgY; cY < (imgY + imgHeight); cY++) {
+            for (cX = imgX; cX < (imgX + imgWidth); cX++) {
+                seps525f_draw(image->image[cY * IMAGE_WIDTH(image) + cX]);
+            }
+        }
     }
+    seps525f_stop_draw();
 }
-
-uint8_t second = 0;
-uint8_t min = 0;
-uint8_t hour = 0;
 
 static uint8_t init(void) {
     if (log_current_sink() == screenterminal_sink()) {
         terminal_default_sink();
     }
-    seps525f_fill(0, 0, 160, 128, 0x000);
+    //seps525f_fill(0, 0, 160, 128, 0x000);
+    LOG_SYSTEM("Screen initialized");
     return 1;
 }
 static uint8_t deinit(void) {
