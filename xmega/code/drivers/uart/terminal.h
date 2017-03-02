@@ -18,6 +18,7 @@ void terminal_write_force(char * format, ...);
 void terminal_write_block(char * format, ...);
 
 uint8_t terminal_format(char *fmt, va_list va);
+uint8_t terminal_format_p(char *fmt, va_list va);
 void terminal_format_blocking(char *fmt, va_list va);
 
 void terminal_format_buffer(char *fmt, va_list va);
