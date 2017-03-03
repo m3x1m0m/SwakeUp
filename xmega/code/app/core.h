@@ -10,11 +10,17 @@
 #define CORE_H_
 
 #include "../util/event.h"
+#include "../util/module.h"
+#include "../modules/timekeeper.h"
 
 EVENT_EXP(TIME_CHANGE);
 EVENT_EXP(WEATHER_CHANGE);
 EVENT_EXP(SOCIAL_MEDIA);
 
+void core_time_set(uint8_t h, uint8_t m, uint8_t s);
+void core_time_get(struct Time * time);
+void core_screen(uint8_t on);
 
+MODULE_EXP(CORE);
 
 #endif /* CORE_H_ */

@@ -13,17 +13,9 @@
 #include <util/delay.h>
 
 #include "pin_definitions.h"
-#include "drivers/host/timer.h"
-#include "drivers/host/uart.h"
-#include "drivers/uart/terminal.h"
 #include "modules/log.h"
-#include "modules/command.h"
-#include "drivers/spi/SEPS525F.h"
-#include "drivers/uart/esp8266.h"
-#include "modules/screenterminal.h"
-#include "modules/screen.h"
-#include "app/clock.h"
-#include "app/weather.h"
+#include "app/core.h"
+
 LOG_INIT("Main");
 
 static void callback(Event * event, uint8_t * data);
@@ -37,69 +29,6 @@ static void callback(Event * event, uint8_t * data);
                                TAB"The time is:"NL\
                                TAB"18:08"NL\
                                TAB"===================="NL
-
-
-static void ledCommand(uint8_t len __attribute__ ((unused)), uint8_t * data __attribute__ ((unused))) {
-    switch (data[0]) {
-    case '1':
-        LOG_DEBUG("Turning led on");
-        DEBUG_LED_ON();
-        break;
-    case '0':
-        LOG_DEBUG("Turning led off");
-        DEBUG_LED_OFF();
-        break;
-    case 't':
-    case 'T':
-        LOG_DEBUG("Toggling led");
-        DEBUG_LED_TOG();
-        break;
-    }
-}
-
-static void atCommand(uint8_t len __attribute__ ((unused)), uint8_t * data __attribute__ ((unused))) {
-    LOG_DEBUG("Sending AT: %s\r\n", (char*)data);
-    uart_write((char*)data, len, &ESP_UART_PORT);
-    uart_write("\r\n", 2, &ESP_UART_PORT);
-}
-
-static void terminalCommand(uint8_t len __attribute__ ((unused)), uint8_t * data __attribute__ ((unused))) {
-    if (data[0] == 's' || data[0] == 'S') {
-        if (SCREEN.cnt > 0)
-            log_redirectOutput(screenterminal_sink());
-        else
-            LOG_WARNING("Screen is not initialized");
-    } else {
-        terminal_default_sink();
-    }
-}
-
-static void setCommand(uint8_t len __attribute__ ((unused)), uint8_t * data __attribute__ ((unused))) {
-    uint8_t index = 1;
-    switch (data[index - 1]) {
-    case 'W':
-    case 'w':
-        weather_set((enum Weather)(data[index] - '0'));
-        //weather
-        break;
-    case 'T':
-    case 't':
-        if (command_arguments(&data[index], len - 1) < 3) {
-            LOG_WARNING("Not enough arguments for setting time");
-        } else {
-            uint32_t hour = command_next_int(&data[index], &index, len - 1);
-            uint32_t minute = command_next_int(&data[index], &index, len - 1);
-            uint32_t second = command_next_int(&data[index], &index, len - 1);
-            LOG_DEBUG("Setting time %d:%d:%d", hour, minute, second);
-        }
-        //time
-        break;
-    case 'S':
-    case 's':
-        //social
-        break;
-    }
-}
 
 
 static void sleep(void) {
@@ -137,26 +66,11 @@ int main(void) {
     PMIC.CTRL |= PMIC_LOLVLEN_bm | PMIC_MEDLVLEN_bm;    //Peripheral enable - interrupt levels (ALL)
     module_init(&LOGGER);                               //Initializing the logger for use
     sei();                                              //Enabling interrupts
-    module_init(&COMMAND);
-    module_init(&TIMER);                                //Timer
+    module_init(&CORE);
     event_addListener(&EVENT_TIMER_1_HZ, callback);     //TODO this can be removed
-    command_hook_description('T', &terminalCommand, "Log sink    T<option> options: U(Uart) S(Screen)\0");
-    command_hook_description('L', &ledCommand,      "Led control L<option> options: T(toggle) 1(on) 0(off)\0");
-    command_hook_description('A', &atCommand,       "Sends AT    A		   no options\0");
-    command_hook_description('S', &setCommand,      "Sets an app state S<app> <options>\r\n\t"
-                             "W<options> options: 1-6 for different weather\r\n\t"
-                             "S<options> options: f(facebook) e(mail)\r\n\t"
-                             "T<options> options: hour minute second\0");
-    //module_init(&SEPS525F);
-    module_init(&ESP8266);
     LOG_SYSTEM("System initialized");
-    //log_redirectOutput(screenterminal_sink());
     LOG_SYSTEM(greeting);
     //module_init(&SCREEN);
-    clock_init(64, 0);
-    weather_init(0, 64);
-    clock_draw();
-    weather_draw();
     while (1) {
         //This is all that should happen in the main loop
         //The system will go to sleep if no more events are to be processed
@@ -165,9 +79,7 @@ int main(void) {
 }
 
 static void callback(Event * event, uint8_t * data __attribute__ ((unused))) {
-    //static uint8_t i = 0;
     if (event == &EVENT_TIMER_1_HZ) {
         LED_PORT.OUTTGL = LED_PIN;
-        //LOG_DEBUG("Time passed: %d", timer_runTime());
     }
 }
