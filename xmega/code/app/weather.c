@@ -22,21 +22,25 @@ const Image image = {192, 32, 1, imageArr};
 #define ICON_RAIN_INDEX     4
 #define ICON_THUNDER_INDEX  5
 
-static enum Weather curWeather = SUN;
+static enum Weather curWeather = CLOUDS;
 static uint16_t x, y;
 
 void weather_set(enum Weather weather) {
     curWeather = weather;
-};
+}
+
 enum Weather weather_get(void) {
     return curWeather;
-};
+}
+
 void weather_draw(void) {
     screen_sub_image(&image, x, y, ICON_WIDTH * curWeather, 0, ICON_WIDTH, ICON_HEIGHT);
 }
+
 void weather_init(uint16_t drawX, uint16_t drawY) {
     x = drawX;
     y = drawY;
 }
+
 void weather_deinit(void) {
 }
