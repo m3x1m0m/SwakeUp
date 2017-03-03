@@ -307,7 +307,7 @@ USARTRXCISR(USARTD1, ESP_UART_PORT,  USARTD_ID, );
 
 USARTDREISR(USARTD1, ESP_UART_PORT,  USARTD_ID);
 
-static const char _initialized[] = "\f\f\n\nUART initialized\n\r";
+static const char _initialized[] = "\fUART initialized\n\r";
 
 static uint8_t init(void) {
     uartStatus[USARTE_ID].outBuffer_head = 0;

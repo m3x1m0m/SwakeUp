@@ -6,7 +6,9 @@
  */
 #include "timekeeper.h"
 #include "../drivers/host/timer.h"
+#include "log.h"
 
+LOG_INIT("Timekeeper");
 static struct Time time;
 
 static void callback(Event * event, uint8_t * data __attribute__ ((unused))) {
@@ -41,10 +43,11 @@ void timekeeper_time_set(uint8_t h, uint8_t m, uint8_t s) {
     time.hour = h;
     time.minute = m;
     time.second = s;
+    LOG_SYSTEM("Time set to: %d:%d:%d", h, m, s);
 }
 
 
-void timekeeper_time_getstruct (struct Time * tim) {
+void timekeeper_time_get (struct Time * tim) {
     memcpy(tim, &time, sizeof(struct Time));
 }
 
