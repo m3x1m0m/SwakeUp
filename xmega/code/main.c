@@ -12,6 +12,8 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 
+#include "defines.h"
+
 #include "pin_definitions.h"
 #include "modules/log.h"
 #include "app/core.h"
@@ -19,26 +21,13 @@
 LOG_INIT("Main");
 
 static void callback(Event * event, uint8_t * data);
-#define TAB "\t\t\t\t"
-#define NL  "\r\n"
-
-#define greeting               NL TAB"===================="NL\
-                               TAB"Welcome to SwakeUpp!"NL\
-                               TAB"Build date:"NL\
-                               TAB __DATE__" "__TIME__ NL\
-                               TAB"The time is:"NL\
-                               TAB"18:08"NL\
-                               TAB"===================="NL
-
 
 static void sleep(void) {
-    //sleep_enable();
     sleep_cpu();
 }
 
 static void wakeUp(void) {
     sleep_disable();
-    //ADCSRA = adcsra;
 }
 
 void switchExternalCrystal_16mHz(void) {
@@ -70,7 +59,7 @@ int main(void) {
     event_addListener(&EVENT_TIMER_1_HZ, callback);     //TODO this can be removed
     LOG_SYSTEM("System initialized");
     LOG_SYSTEM(greeting);
-    //module_init(&SCREEN);
+    core_screen(SCREEN_ON);
     while (1) {
         //This is all that should happen in the main loop
         //The system will go to sleep if no more events are to be processed
