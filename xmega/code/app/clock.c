@@ -29,7 +29,7 @@ static uint16_t x = 0, y = 0;
 static uint16_t secondColor = COLOR_TO656(255, 0, 0);
 static uint16_t minuteColor = COLOR_TO656(0, 255, 0);
 static uint16_t hourColor =   COLOR_TO656(0, 0, 255);
-static uint16_t bckgrColor = COLOR_TO656(20, 20, 20);
+static uint16_t bckgrColor = COLOR_TO656(0, 0, 0);
 static uint16_t clockColor = COLOR_TO656(20, 30, 160);
 
 const uint8_t circ48X[60] PROGMEM = {0x30, 0x35, 0x39, 0x3e, 0x43, 0x48, 0x4c, 0x50, 0x53, 0x56, 0x59, 0x5b, 0x5d, 0x5e, 0x5f, 0x60, 0x5f, 0x5e, 0x5d, 0x5b, 0x59, 0x56, 0x53, 0x50, 0x4c, 0x48, 0x43, 0x3e, 0x39, 0x35, 0x30, 0x2a, 0x26, 0x21, 0x1c, 0x18, 0x13, 0x0f, 0x0c, 0x09, 0x06, 0x04, 0x02, 0x01, 0x00, 0x00, 0x00, 0x01, 0x02, 0x04, 0x06, 0x09, 0x0c, 0x0f, 0x13, 0x17, 0x1c, 0x21, 0x26, 0x2a};
@@ -51,6 +51,18 @@ struct Time * clock_time_get(void) {
 void clock_alarm_set(struct Time * time) {
     memcpy(&curAlarm, time, sizeof(struct Time));
     alarmEnabled = 1;
+    char clockbuf[8];//hour : min : sec + \0
+    clockbuf[0] = curAlarm.hour / 10 + '0';
+    clockbuf[1] = curAlarm.hour % 10 + '0';
+    clockbuf[2] = ':';
+    clockbuf[3] = curAlarm.minute / 10 + '0';
+    clockbuf[4] = curAlarm.minute % 10 + '0';
+    clockbuf[5] = ':';
+    clockbuf[6] = curAlarm.second / 10 + '0';
+    clockbuf[7] = curAlarm.second % 10 + '0';
+    screen_color(COLOR_TO656(200, 30, 50));
+    screen_text(clockbuf, 8, 160 - 8 * 8, y + CLOCK_HEIGHT + 1 + 8);
+    screen_color(COLOR_TO656(255, 255, 255));
 }
 
 struct Time * clock_alarm_get(void) {
@@ -65,14 +77,14 @@ void clock_draw() {
         screen_draw_begin(LINE);
         screen_color(bckgrColor);
         screen_line(x + CLOCK_CENTER, y + CLOCK_CENTER, x + pgm_read_byte(&circ48X[prevTime.second]) , pgm_read_byte(&circ48Y[prevTime.second]));
-        screen_line(x + CLOCK_CENTER, y + CLOCK_CENTER, x + pgm_read_byte(&circ40X[prevTime.minute]) , pgm_read_byte(&circ40Y[prevTime.minute]));
-        screen_line(x + CLOCK_CENTER, y + CLOCK_CENTER, x + pgm_read_byte(&circ32X[prevTime.hour]) , pgm_read_byte(&circ32Y[prevTime.hour]));
-        screen_color(hourColor);
-        screen_line(x + CLOCK_CENTER, y + CLOCK_CENTER, x + pgm_read_byte(&circ32X[curTime.hour]) , pgm_read_byte(&circ32Y[curTime.hour]));
-        screen_color(minuteColor);
-        screen_line(x + CLOCK_CENTER, y + CLOCK_CENTER, x + pgm_read_byte(&circ40X[curTime.minute]) , pgm_read_byte(&circ40Y[curTime.minute]));
+        screen_line(x + CLOCK_CENTER, y + CLOCK_CENTER, x + pgm_read_byte(&circ40X[prevTime.minute]) + 8, pgm_read_byte(&circ40Y[prevTime.minute]) + 8);
+        screen_line(x + CLOCK_CENTER, y + CLOCK_CENTER, x + pgm_read_byte(&circ32X[prevTime.hour]) + 16 , pgm_read_byte(&circ32Y[prevTime.hour]) + 16);
         screen_color(secondColor);
         screen_line(x + CLOCK_CENTER, y + CLOCK_CENTER, x + pgm_read_byte(&circ48X[curTime.second]) , pgm_read_byte(&circ48Y[curTime.second]));
+        screen_color(minuteColor);
+        screen_line(x + CLOCK_CENTER, y + CLOCK_CENTER, x + pgm_read_byte(&circ40X[curTime.minute]) + 8, pgm_read_byte(&circ40Y[curTime.minute]) + 8);
+        screen_color(hourColor);
+        screen_line(x + CLOCK_CENTER, y + CLOCK_CENTER, x + pgm_read_byte(&circ32X[curTime.hour]) + 16, pgm_read_byte(&circ32Y[curTime.hour]) + 16);
         screen_color(clockColor);
         screen_rect(x + CLOCK_CENTER - CLOCK_WIDTH / 2, CLOCK_CENTER - CLOCK_HEIGHT / 2, CLOCK_WIDTH, CLOCK_HEIGHT);
         screen_color(COLOR_TO656(255, 255, 255));
@@ -112,16 +124,21 @@ static void callback(Event * event, uint8_t * data __attribute__ ((unused))) {
     clockbuf[5] = ':';
     clockbuf[6] = curTime.second / 10 + '0';
     clockbuf[7] = curTime.second % 10 + '0';
-    screen_text(clockbuf, 8, x, y + CLOCK_HEIGHT + 1);
+    screen_color(COLOR_TO656(255, 255, 255));
+    screen_text(clockbuf, 8, 160 - 8 * 8, y + CLOCK_HEIGHT + 1);
 }
 
 void clock_init(uint16_t drawX, uint16_t drawY) {
+    curAlarm.hour = 7;
+    curAlarm.minute = 30;
+    curAlarm.second = 0;
     x = drawX;
     y = drawY;
     module_init(&SCREEN);
     event_addListener(&EVENT_TIMER_1_HZ, callback);
     event_addListener(&TIME_CHANGE, callback);
     clockInitialized = 1;
+    clock_alarm_set(&curAlarm);
 }
 void clock_deinit(void) {
     module_deinit(&SCREEN);
