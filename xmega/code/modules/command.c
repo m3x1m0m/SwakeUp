@@ -28,20 +28,23 @@ uint8_t command_arguments(char *data, uint8_t len) {
     return arguments;
 }
 
+char command_next_char(uint8_t * index, char * string, uint8_t size) {
+    while (!(string[*index] >= 'a' && string[(*index)] <= 'Z') && (*index) < size) {
+        (*index)++;
+    }
+    return string[*index];
+}
+
 uint32_t command_next_int(uint8_t * index, char * string, uint8_t size) {
     uint32_t num = 0;
-    LOG_DEBUG("index %d size %d char %c", *index, size, string[(*index)]);
     while (!(string[*index] >= '0' && string[(*index)] <= '9') && (*index) < size) {
-        LOG_DEBUG("index %d size %d", *index, size);
         (*index)++;
     }
     while (string[*index] >= '0' && string[(*index)] <= '9' && (*index) < size) {
-        LOG_DEBUG("index %d size %d char %c", *index, size, string[(*index)]);
         num *= 10;
         num += string[*index] - '0';
         (*index)++;
     }
-    LOG_DEBUG("Returning: %d", num);
     return num;
 }
 
