@@ -18,7 +18,7 @@ LOG_INIT("Command");
 static void (* commands[26])(uint8_t, uint8_t *) = {0};
 static char * descriptions[26] = {0};
 
-uint8_t command_arguments(uint8_t *data, uint8_t len) {
+uint8_t command_arguments(char *data, uint8_t len) {
     uint8_t index = 0;
     uint8_t arguments = 0;
     while (index < len) {
@@ -28,7 +28,24 @@ uint8_t command_arguments(uint8_t *data, uint8_t len) {
     return arguments;
 }
 
-uint8_t command_next_arg(uint8_t *data, uint8_t len) {
+uint32_t command_next_int(uint8_t * index, char * string, uint8_t size) {
+    uint32_t num = 0;
+    LOG_DEBUG("index %d size %d char %c", *index, size, string[(*index)]);
+    while (!(string[*index] >= '0' && string[(*index)] <= '9') && (*index) < size) {
+        LOG_DEBUG("index %d size %d", *index, size);
+        (*index)++;
+    }
+    while (string[*index] >= '0' && string[(*index)] <= '9' && (*index) < size) {
+        LOG_DEBUG("index %d size %d char %c", *index, size, string[(*index)]);
+        num *= 10;
+        num += string[*index] - '0';
+        (*index)++;
+    }
+    LOG_DEBUG("Returning: %d", num);
+    return num;
+}
+
+uint8_t command_next_arg(char *data, uint8_t len) {
     uint8_t tempIndex = 0;
     while (data[tempIndex] < (uint8_t)'!' && tempIndex < len)    {
         //skipping all the spaces and other non text variables
@@ -36,16 +53,6 @@ uint8_t command_next_arg(uint8_t *data, uint8_t len) {
     }
     if (tempIndex == len) return 0;//we are at the end, no more characters!
     return tempIndex;
-}
-
-uint32_t command_next_int(uint8_t *data, uint8_t * index, uint8_t len) {
-    uint32_t num =  0;
-    while (data[*index] >= '0' && data[*index] <= '9' && *index < len) {
-        num *= 10;
-        num += data[*index] - '0';
-        *(index)++;
-    }
-    return num;
 }
 
 static int8_t translateCommand(char command) {
@@ -61,7 +68,7 @@ static int8_t translateCommand(char command) {
     return (int8_t) val;
 }
 
-uint8_t command_hook(char command, void (* callback)(uint8_t, uint8_t *)) {
+uint8_t command_hook(char command, void (* callback)(uint8_t, char *)) {
     int8_t val = translateCommand(command);
     if (val == -1) return 0;
     if (commands[val] != 0) {
@@ -73,7 +80,7 @@ uint8_t command_hook(char command, void (* callback)(uint8_t, uint8_t *)) {
     return 1;
 }
 
-uint8_t command_hook_description(char command, void (* callback)(uint8_t, uint8_t *), char * description) {
+uint8_t command_hook_description(char command, void (* callback)(uint8_t, char *), char * description) {
     int8_t val = translateCommand(command);
     if (val == -1) return 0;
     if (commands[val] != 0) {
@@ -86,7 +93,7 @@ uint8_t command_hook_description(char command, void (* callback)(uint8_t, uint8_
     return 1;
 }
 
-uint8_t command_remove(char command, void (* callback)(uint8_t, uint8_t *)) {
+uint8_t command_remove(char command, void (* callback)(uint8_t, char *)) {
     int8_t val = translateCommand(command);
     if (val == -1) return 0;
     if (commands[val] == callback) {
