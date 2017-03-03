@@ -44,7 +44,14 @@ static void ledCommand(uint8_t len __attribute__ ((unused)), char * data __attri
 }
 
 static void atCommand(uint8_t len __attribute__ ((unused)), char * data __attribute__ ((unused))) {
-    LOG_DEBUG("Sending AT: %s\r\n", (char*)data);
+    LOG_DEBUG("Sending AT(%d):", len, data);
+    uint8_t i;
+    terminal_putc('\t');
+    for (i = 0; i < len; i++) {
+        terminal_putc(data[i]);
+    }
+    terminal_putc('\r');
+    terminal_putc('\n');
     uart_write((char*)data, len, &ESP_UART_PORT);
     uart_write("\r\n", 2, &ESP_UART_PORT);
 }
@@ -57,6 +64,16 @@ static void terminalCommand(uint8_t len __attribute__ ((unused)), char * data __
             LOG_WARNING("Screen is not initialized");
     } else {
         terminal_default_sink();
+    }
+}
+
+static void getCommand(uint8_t len __attribute__ ((unused)), char * data __attribute__ ((unused))) {
+    if (data[0] == 'W' || data[0] == 'w') {
+        LOG_SYSTEM("Weather: %d", weather_get());
+    } else if (data[0] == 'T' || data[0] == 't') {
+        struct Time time;
+        core_time_get(&time);
+        LOG_SYSTEM("Time: %d:%d:%d", time.hour, time.minute, time.second);
     }
 }
 
@@ -76,13 +93,11 @@ static void setCommand(uint8_t len __attribute__ ((unused)), char * data __attri
             LOG_WARNING("Not enough arguments for setting time");
         } else {
             uint8_t temp = 1;
-            LOG_DEBUG("index: %d", temp);
-            uint32_t hour = command_next_int(&temp, data, len);
-            LOG_DEBUG("index: %d hour %d", temp, hour);
-            uint32_t minute = command_next_int(&temp, data, len);
-            LOG_DEBUG("index: %d minute %d", temp, minute);
-            uint32_t second = command_next_int(&temp, data, len);
-            LOG_DEBUG("index: %d second %d", temp, second);
+            LOG_DEBUG("index: %d", index);
+            uint32_t hour = command_next_int(&index, data, len);
+            uint32_t minute = command_next_int(&index, data, len);
+            uint32_t second = command_next_int(&index, data, len);
+            timekeeper_time_set(hour & 0xFF, minute & 0xFF, second & 0xFF);
         }
         //time
         break;
@@ -127,10 +142,13 @@ static uint8_t init(void) {
                              "W<options> options: 1-6 for different weather\r\n\t"
                              "S<options> options: f(facebook) e(mail)\r\n\t"
                              "T<options> options: hour minute second\0");
+    command_hook_description('G', &getCommand,      "Gets state of an app S<app>\r\n\t"
+                             "W Get weather 		   no options \r\n\t"
+                             "T Get time    		   no options \0");
     return 1;
 }
 static uint8_t deinit(void) {
     return 1;
 }
 
-MODULE_DEFINE(CORE, "Central core", init, deinit, &TIME, &COMMAND);
+MODULE_DEFINE(CORE, "Central core", init, deinit, &TIME, &COMMAND, &ESP8266);
