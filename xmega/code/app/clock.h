@@ -18,14 +18,7 @@
 #define CLOCK_HOUR_LEN      32
 
 #include <stdint.h>
-
-struct Time {
-    uint8_t hour;
-    uint8_t minute;
-    uint8_t second;
-    uint8_t zone;
-    uint32_t posix;
-};
+#include "core.h"
 
 void clock_time_set(struct Time * time);
 struct Time * clock_time_get(void);
