@@ -23,22 +23,24 @@ static void atCommand(uint8_t len, uint8_t * data) {
 static void callback(Event * event, uint8_t * data) {
     struct UartDelimiter * delimiter = (struct UartDelimiter*)data;
     if (delimiter->port == &ESP_UART_PORT) {
-        //LOG_DEBUG("Received callback: %s", event->description);
         if (uart_buffer_in_level(&ESP_UART_PORT) > 0) {
-            char readData[delimiter->length + 1], read;
+            char readData[delimiter->length + 1], read; // could we have more delimiter->length than inbuffer length?
+            LOG_DEBUG("delimiter length: %d buffer level: %d", delimiter->length, uart_buffer_in_level(&ESP_UART_PORT));
             uint8_t len = 0;
             while (uart_buffer_in_level(&ESP_UART_PORT) > 0) {
                 if (!uart_reads_buffer(&read, &ESP_UART_PORT)) {
                     break;
                 }
-                if ((uint8_t)read >= (uint8_t)' ' || read == '\n') {
+                if ((uint8_t)read >= (uint8_t)' ' || read == '\n' || read == '\r') {
                     readData[len] = read;
                     len++;
+                    LOG_DEBUG("Read: %d %c", (uint8_t)read, read);
                 }
             }
             readData[len] = '\0';
-            LOG_DEBUG("Received %s", readData);
+            LOG_DEBUG("Received(%d) %s", len, readData);
         }
+        uart_delimiter_handled(delimiter);
     }
 }
 
