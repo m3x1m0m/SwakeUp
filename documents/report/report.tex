@@ -1,0 +1,128 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Author:      Maximilian Stiefel
+%% Date:        06.03.2017
+%% University:  Uppsala Universitet
+%% Department:  Institutionen för informationsteknologi 
+%% Course:      Microcontroller Programming
+%% Project:     Swakeup
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass{report}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Preamble
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Encoding of the input
+\usepackage[utf8x]{inputenc}
+% Geometry stuff
+\usepackage[head=24pt,a4paper,lmargin={2.5cm},rmargin={2.5cm},tmargin={2.5cm},
+bmargin={2.5cm}]{geometry}
+% For graphics
+\usepackage{graphicx}
+% For code highlighting
+\usepackage{minted}
+% For shaded
+\usepackage{xcolor}
+\usepackage{framed}
+\definecolor{shadecolor}{gray}{0.9}
+
+% For math
+\usepackage{amssymb}
+
+\setlength{\parindent}{0em} 
+
+% For title formatting 
+\usepackage{titlesec} 
+
+\titleformat%
+{\chapter}%
+[block]%
+{\bfseries\Huge}%
+{\thechapter\hspace{1cm}}%
+{0pt}%
+{\bfseries\Huge}%
+
+% For SI units.
+\usepackage{siunitx}
+
+% Input definition macros
+\input{mydefs.tex}
+
+\usepackage{hyperref}
+\hypersetup{
+	plainpages=false,
+	unicode=false,
+	pdftoolbar=true,
+	pdfmenubar=true,
+	pdffitwindow=false,
+	pdfstartview={FitH},
+	pdftitle={\mytitle},
+	pdfauthor={\myauthora ,\space\myauthorb ,\space\myauthorc},
+	pdfsubject={\mytypeofwork\space\myduedate},
+	pdfcreator={\myauthora ,\space\myauthorb ,\space\myauthorc},
+	pdfproducer={\myauthora ,\space\myauthorb ,\space\myauthorc},
+	pdfkeywords={\mykeywords},
+	pdfnewwindow=true,
+	pdfborder={0 0 0},
+	colorlinks=false,
+	linkcolor=black,
+	citecolor=black,
+	filecolor=black,
+	urlcolor=cyan
+}	
+
+\newcommand{\newpar}{\vspace{1em}\\}
+
+\usepackage{amsmath}
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Ttilepage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{titlepage.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Introduction
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Introduction}
+\label{chap:intro}
+\section{Idea}
+\label{sec:idea}
+\section{Sytem Overview}
+\label{sec:system}
+\begin{figure}[H]
+	\centering
+	\label{fig:block}
+	\includegraphics[width=0.6\textwidth]{../block/block.png}
+	\caption{Blockdiagram of the Swakeup wakeup light.}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Hardware
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Hardware}
+\label{chap:hardware}
+\section{Logic Board}
+\label{sec:logic}
+\section{Power Board}
+\label{sec:power}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Software
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Software}
+\label{chap:software}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Satus Quo and Outlook
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Status Quo and Outlook}
+\label{chap:status}
+\section{What works? What doesn't?}
+\label{sec:what}
+\section{Outlook}
+\label{sec:outlook}
+
+\end{document}
