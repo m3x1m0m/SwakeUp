@@ -95,7 +95,7 @@ void terminal_flush(void) {
 // }
 
 void terminal_putc(char c __attribute__ ((unused))) {
-    LOG_WARNING("Not implemented");
+    sink(0, c);
 }
 
 char terminal_getc(void) {
