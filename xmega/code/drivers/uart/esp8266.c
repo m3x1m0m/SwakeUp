@@ -13,13 +13,73 @@
 #include "../host/uart.h"
 #include "../../modules/command.h"
 #include "../../modules/log.h"
+#include "terminal.h"
+
 LOG_INIT("ESP8266");
 
-static void atCommand(uint8_t len, uint8_t * data) {
+#define WIFI_SSID   "elmar elmar"
+#define WIFI_PASS   "elmarelmar"
+
+//r = request, a = answer
+const char _at_r[] = "AT";
+const char _at_mode_r[] = "AT+CWMODE=1";
+const char _at_connect_r[] = "AT+CWJAP=\""WIFI_SSID"\",\""WIFI_PASS"\"";
+const char _at_list_r[] = "AT+CWLAP";
+
+const char _disconnect_a[] = "WIFI DISCONNECT";
+const char _connect_a[] = "WIFI CONNECT";
+const char _ok_a[] = "OK";
+const char _error_a[] = "ERROR";
+
+enum State {
+    UNKOWN, IDLE, MODE, SEARCHING, CONNECTING, CONNECTED, SENDING, RECEIVING
+};
+
+enum State state = UNKOWN;
+
+static void atCommand(uint8_t len, const char * data) {
     uint8_t i = 0;
     for (; i < len; i++) uart_writes(data[i], &ESP_UART_PORT);
 }
 
+static uint8_t contains(const char * data, uint8_t len, const char * containing, uint8_t len2) {
+    uint8_t i, b;
+    for (i = 0, b = 0; i < len; i++) {
+        if (data[i] == containing[b]) {
+            b++;
+            if (b == len2)
+                return 1;
+        } else {
+            b = 0;
+        }
+    }
+    return 0;
+}
+
+static void processState(char * data, uint8_t len) {
+    switch (state) {
+    case UNKOWN:
+        if (contains(data, len, _ok_a, sizeof(_ok_a))) {
+            state = MODE;
+            atCommand(sizeof(_at_mode_r), _at_mode_r);
+        }
+        break;
+    case MODE:
+        if (contains(data, len, _ok_a, sizeof(_ok_a))) {
+            state = CONNECTING;
+            atCommand(sizeof(_at_connect_r), _at_connect_r);
+        }
+        break;
+    case CONNECTING:
+        if (contains(data, len, _ok_a, sizeof(_ok_a))) {
+            state = CONNECTED;
+        } else {
+            LOG_WARNING("Unable to connect");
+            state = IDLE;
+        }
+        break;
+    }
+}
 static void callback(Event * event, uint8_t * data) {
     struct UartDelimiter * delimiter = (struct UartDelimiter*)data;
     if (delimiter->port == &ESP_UART_PORT) {
@@ -27,8 +87,10 @@ static void callback(Event * event, uint8_t * data) {
             char readData[delimiter->length + 1], read; // could we have more delimiter->length than inbuffer length?
             LOG_DEBUG("delimiter length: %d buffer level: %d", delimiter->length, uart_buffer_in_level(&ESP_UART_PORT));
             uint8_t len = 0;
+            //LOG_DEBUG("Response:");
             while (uart_buffer_in_level(&ESP_UART_PORT) > 0) {
                 if (!uart_reads_buffer(&read, &ESP_UART_PORT)) {
+                    LOG_WARNING("No more data to read but we are trying");
                     break;
                 }
                 if ((uint8_t)read >= (uint8_t)' ' || read == '\n' || read == '\r') {
@@ -37,20 +99,21 @@ static void callback(Event * event, uint8_t * data) {
                     LOG_DEBUG("Read: %d %c", (uint8_t)read, read);
                 }
             }
-            readData[len] = '\0';
-            LOG_DEBUG("Received(%d) %s", len, readData);
+            processState(readData, len);
         }
         uart_delimiter_handled(delimiter);
     }
 }
-
 void esp_reset(void) {
 }
 uint8_t esp_update_start(void) {
+    return 0;
 }
 uint8_t esp_update_stop(void) {
+    return 0;
 }
 uint16_t esp_update_write(uint8_t * datas, uint16_t len) {
+    return 0;
 }
 // #define ESP_RST_PORT        PORTA
 // #define ESP_RST_PIN         (1<<3)
@@ -66,7 +129,6 @@ uint16_t esp_update_write(uint8_t * datas, uint16_t len) {
 // #define ESP_UART_PORT       USARTD1
 // #define ESP_UART_RX         (1<<6)
 // #define ESP_UART_TX         (1<<7)
-
 static uint8_t init(void) {
     uart_add_delimiter('\n', &ESP_UART_PORT);
     //uart_add_delimiter('\r', &ESP_UART_PORT);
