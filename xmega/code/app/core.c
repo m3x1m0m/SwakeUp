@@ -6,11 +6,14 @@
  */
 #include <string.h>
 #include "core.h"
+#include "../modules/screenterminal.h"
 #include "../modules/timekeeper.h"
 #include "../modules/command.h"
 #include "../modules/screen.h"
 #include "../modules/log.h"
+#include "../drivers/host/uart.h"    //BREACH OF LAYERING
 #include "../drivers/uart/esp8266.h"    //BREACH OF LAYERING
+#include "../drivers/uart/terminal.h"   //BREACH OF LAYERING
 
 #include "../pin_definitions.h"
 
@@ -92,7 +95,6 @@ static void setCommand(uint8_t len __attribute__ ((unused)), char * data __attri
         if (command_arguments(&data[index], len - 1) < 3) {
             LOG_WARNING("Not enough arguments for setting time");
         } else {
-            uint8_t temp = 1;
             LOG_DEBUG("index: %d", index);
             uint32_t hour = command_next_int(&index, data, len);
             uint32_t minute = command_next_int(&index, data, len);

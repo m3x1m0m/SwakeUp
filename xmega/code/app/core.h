@@ -13,8 +13,11 @@
 #include "../util/module.h"
 #include "../modules/timekeeper.h"
 
+/** This event will get fired when a time change request occurs */
 EVENT_EXP(TIME_CHANGE);
+/** This event will get fired when a weather change request occurs */
 EVENT_EXP(WEATHER_CHANGE);
+/** This event will get fired when a social media change request occurs */
 EVENT_EXP(SOCIAL_MEDIA);
 
 void core_time_set(uint8_t h, uint8_t m, uint8_t s);
