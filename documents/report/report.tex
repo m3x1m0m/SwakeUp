@@ -79,6 +79,17 @@ bmargin={2.5cm}]{geometry}
 % For PDFs
 \usepackage{pdfpages}
 
+% Header and footer
+\usepackage{fancyhdr}
+\lhead{\ifnum\value{chapter}>0 \includegraphics[width=1cm]{./fig/uppsla_university} \fi}
+\chead{}
+\rhead{\ifnum\value{chapter}>0 {\rightmark}\\\textcolor{gray}{\leftmark} \fi}
+\lfoot{}
+\cfoot{\ifnum\value{chapter}>0 \thepage \fi}
+\rfoot{}
+\setlength{\headheight}{1cm}
+
+
 \begin{document}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -88,6 +99,8 @@ bmargin={2.5cm}]{geometry}
 
 \newcounter{roman}
 \pagenumbering{Roman}
+
+\pagestyle{fancy}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % TOC etc.
@@ -157,7 +170,7 @@ In order to facilitate all the functionality, code had to be written. Because th
 \clearpage
 \pagenumbering{Roman}
 \setcounter{page}{\value{roman}}
-
+\pagestyle{empty}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Appendix
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
