@@ -17,7 +17,7 @@ EVENT_REGISTER(EVENT_ALARM, "ms alarm");
 
 LOG_INIT("Timer");
 
-static uint16_t alarms[6];
+//static uint16_t alarms[6];
 static uint16_t runTime = 0;
 static uint16_t msCounter = 0;
 
