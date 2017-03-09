@@ -57,7 +57,7 @@ static void SEPS525F_set_region(int x, int y, int xs, int ys) {
 #define SPISC   5
 #define SPISS   4
 
-
+//https://github.com/avian2/SEPS525-OLED-Library/blob/master/SEPS525_OLED.cpp
 static void onlineDriver(void) {
 //digitalWrite(pinReset, LOW);
     //_delay_ms(2);
