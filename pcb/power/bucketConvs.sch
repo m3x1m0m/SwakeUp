@@ -36,8 +36,8 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 2 5
 Title "Bucket Converters for 5 V and 2.8 V"
-Date "2016-12-30"
-Rev "1.0"
+Date "2017-03-09"
+Rev "2.0"
 Comp "Uppsala University"
 Comment1 ""
 Comment2 ""
@@ -373,7 +373,7 @@ L TPS2514ADBV U3
 U 1 1 5865A2F4
 P 7900 3500
 F 0 "U3" H 8350 3150 60  0000 C CNN
-F 1 "TPS2514ADBV" H 7700 3150 60  0000 C CNN
+F 1 "TPS2514" H 7700 3150 60  0000 C CNN
 F 2 "TO_SOT_Packages_SMD:SOT-23-6" H 7900 3500 60  0001 C CNN
 F 3 "http://www.ti.com/lit/ds/symlink/tps2514a.pdf" H 7900 3500 60  0001 C CNN
 F 4 "296-40725-1-ND" H 7900 3500 60  0001 C CNN "Digikey"

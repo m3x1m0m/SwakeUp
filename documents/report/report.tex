@@ -76,12 +76,31 @@ bmargin={2.5cm}]{geometry}
 
 \usepackage{amsmath}
 
+% For PDFs
+\usepackage{pdfpages}
+
 \begin{document}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Ttilepage
+% Titlepage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \input{titlepage.tex}
+
+\newcounter{roman}
+\pagenumbering{Roman}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TOC etc.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\tableofcontents
+\listoffigures
+\newpage
+\listoftables
+
+\newpage
+\setcounter{roman}{\value{page}}
+\pagenumbering{arabic}
+\setcounter{page}{1}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Introduction
@@ -90,14 +109,10 @@ bmargin={2.5cm}]{geometry}
 \label{chap:intro}
 \section{Idea}
 \label{sec:idea}
+\input{./doc/idea.tex}
 \section{Sytem Overview}
 \label{sec:system}
-\begin{figure}[H]
-	\centering
-	\label{fig:block}
-	\includegraphics[width=0.6\textwidth]{../block/block.png}
-	\caption{Blockdiagram of the Swakeup wakeup light.}
-\end{figure}
+\input{./doc/overview.tex}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Hardware
@@ -137,4 +152,17 @@ bmargin={2.5cm}]{geometry}
 \section{Outlook}
 \label{sec:outlook}
 \input{./doc/outlook.tex}
+
+\clearpage
+\pagenumbering{Roman}
+\setcounter{page}{\value{roman}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Appendix
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\appendix
+% Introduce new geometry to be able to have more space for appendix
+\newgeometry{lmargin={2.5cm},rmargin={2.5cm},tmargin={0cm},bmargin={1,5cm}}
+\includepdf[pages={1},scale=0.8,pagecommand=\chapter{Schematics Power Board}\label{append:power}]{./fig/power.pdf}
+\includepdf[pages={2-},scale=0.8,pagecommand={}]{./fig/power.pdf}
 \end{document}

@@ -36,8 +36,8 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 5 5
 Title "RGB LED Driver "
-Date "2016-12-30"
-Rev "1.0"
+Date "2017-03-09"
+Rev "2.0"
 Comp "Uppsala University"
 Comment1 "Project: Swakeup"
 Comment2 ""
@@ -286,18 +286,6 @@ F 2 "TO_SOT_Packages_SMD:SOT-23_Handsoldering" H 3600 3350 50  0001 C CNN
 F 3 "http://www.diodes.com/_files/datasheets/DMG2305UX.pdf" H 3400 3250 50  0001 C CNN
 F 4 "DMG2305UX-13DICT-ND" H 3400 3250 60  0001 C CNN "Digikey"
 	1    3400 3250
-	0    -1   -1   0   
-$EndComp
-$Comp
-L Q_PMOS_DGS Q9
-U 1 1 5841A571
-P 3400 5450
-F 0 "Q9" V 3600 5350 50  0000 R CNN
-F 1 "DMG2305UX" V 3350 5350 50  0000 R CNN
-F 2 "TO_SOT_Packages_SMD:SOT-23_Handsoldering" H 3600 5550 50  0001 C CNN
-F 3 "http://www.diodes.com/_files/datasheets/DMG2305UX.pdf" H 3400 5450 50  0001 C CNN
-F 4 "DMG2305UX-13DICT-ND" H 3400 5450 60  0001 C CNN "Digikey"
-	1    3400 5450
 	0    -1   -1   0   
 $EndComp
 $Comp
@@ -814,4 +802,16 @@ Connection ~ 5450 5700
 Wire Wire Line
 	5800 5500 4950 5500
 Connection ~ 4950 5700
+$Comp
+L Q_PMOS_DGS Q9
+U 1 1 5841A571
+P 3400 5450
+F 0 "Q9" V 3600 5350 50  0000 R CNN
+F 1 "DMG2305UX" V 3350 5350 50  0000 R CNN
+F 2 "TO_SOT_Packages_SMD:SOT-23_Handsoldering" H 3600 5550 50  0001 C CNN
+F 3 "http://www.diodes.com/_files/datasheets/DMG2305UX.pdf" H 3400 5450 50  0001 C CNN
+F 4 "DMG2305UX-13DICT-ND" H 3400 5450 60  0001 C CNN "Digikey"
+	1    3400 5450
+	0    -1   -1   0   
+$EndComp
 $EndSCHEMATC
