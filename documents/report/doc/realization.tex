@@ -1,0 +1,87 @@
+The function of this chapter is to get a deeper understanding of the modules and code that has been written. Due to time constraints and hardware failure, the following modules were not realized: "Lamp, Social, Wi-Fi, Controller, ADC". Thus these modules will not be discussed in this chapter. 
+\subsection{platform}
+We start with the most tightly with the microcontroller integrated layer.
+\subsubsection{UART}
+The UART module delivers all the communication to the USB-Serial converter and ESP8266. The code has been kept as generic as possible so that adjustments to the external hardware has no influence to the driver code. It would even be possible to move to a different xmega model with more USART ports since a macro is used for generating the interrupt code. Every USART port has a status, an array with delimiters, an in and output buffer, a sending status and an id. The status contains variables for the buffers, and allows for a ringbuffer usage. A ringbuffer is chosen as it has little overhead compared to lists or queues, the order of the data matters, and we don't expect to go outside of our given buffer capacity. The delimiters are used for the USART to listen to certain characters on the receiving data. Once there is a match an event will be fired. The example below shows the usage of this delimiter.
+\begin{minted}[baselinestretch=1, fontsize=\small, linenos,frame=single,framesep=5pt]{C}
+uint8_t uart_add_delimiter(char delimiter, USART_t * port);
+static void callback(Event * event, uint8_t * data) {
+	if(event == EVENT_UART_DELIMITER){
+	struct UartDelimiter * delimiter = (struct UartDelimiter*)data;
+		if (delimiter->port == &ESP_UART_PORT) {
+			//Read buffers etc
+		}
+	}
+}
+static uint8_t init(void) {
+	uart_add_delimiter('\n', &ESP_UART_PORT);
+	event_addListener(&EVENT_UART_DELIMITER, callback);
+	return 1;
+}
+\end{minted}
+In this example, a certain module will tell the UART module to listen for a new line character, and the module will subscribe to the event. The UART module passes the delimiter information with it, so that there is knowledge about how much data can be read since the last delimiter event.\\ 
+The interrupts are generated with the following macros:
+\begin{minted}[baselinestretch=1, fontsize=\small, linenos,frame=single,framesep=5pt]{C}
+#define USARTRXCISR(NAME, PORT, USART_ID, REC_FC)            \
+ISR(NAME##_RXC_vect) {                             \
+	uint8_t read = PORT.DATA;                    \
+	if (writeInBuf(read, &PORT)) {               \
+		REC_FC(read);                                   \
+		uint8_t i = 0;                              \
+		for (; i < UART_MAX_DELIMITERS; i++) {      \
+			if (delimiters[USART_ID][i].delimiter != 0) {  \
+				delimiters[USART_ID][i].length++;          \
+				if (read == delimiters[USART_ID][i].delimiter) {   \
+					delimiters[USART_ID][i].port = &PORT;       \
+					event_fire(&EVENT_UART_DELIMITER,	\
+					 SYSTEM_ADDRESS_CAST (&delimiters[USART_ID][i])); \
+				}   \
+			}   \
+		}   \
+	} else {/*buffer full */    \
+		CP_PORT.CTRLA &= ~(USART_RXCINTLVL_LO_gc);  \
+	}   \
+}
+
+#define USARTDREISR(NAME, PORT, USART_ID)\
+ISR(NAME##_DRE_vect) {             \
+	uint8_t size = uartStatus[USART_ID].outBuffer_size;    \
+	if (size > 0) { \
+		if (softlock(USART_ID)) {\
+			uint8_t tail = uartStatus[USART_ID].outBuffer_tail;\
+			PORT.DATA = outBuffer[USART_ID][tail];  \
+			uartStatus[USART_ID].outBuffer_size--; \
+			tail++; \
+			if (tail >= UART_MAX_OUT_BUFFER) tail = 0;\
+			uartStatus[USART_ID].outBuffer_tail = tail;\
+			unlock(USART_ID);  \
+		}\
+	} else {\
+		sending[USART_ID] = 0;\
+		PORT.CTRLA &= ~(USART_DREINTLVL0_bm);\
+	}\
+}
+\end{minted}
+And to generate the following code can be used for every USART channel:
+\begin{minted}[baselinestretch=1, fontsize=\small, linenos,frame=single,framesep=5pt]{C}
+USARTRXCISR(USARTE0, DEBUG_UART,     USARTE_ID, received);
+USARTDREISR(USARTE0, DEBUG_UART,     USARTE_ID);
+USARTRXCISR(USARTD1, ESP_UART_PORT,  USARTD_ID, );
+USARTDREISR(USARTD1, ESP_UART_PORT,  USARTD_ID);
+\end{minted}
+Since the system could be writing to the buffer that is being handled in the interrupt, a lock has been implemented to prevent unexpected outcome. One lock waits while the lock signal is freed, while the other lock function returns a 0 upon failure to acquire the lock
+\begin{minted}[baselinestretch=1, fontsize=\small, linenos,frame=single,framesep=5pt]{C}
+#define lock(id) while (outBufferLock[id]); outBufferLock[id] = 1
+#define unlock(id) outBufferLock[id] = 0
+
+static inline uint8_t softlock(uint8_t id) {
+	if (outBufferLock[id]) return 0;
+	outBufferLock[id] = 1;
+	return 1;
+}
+\end{minted}
+The USART on both channels have the same settings. 8 bit words, medium level interrupts and a baudrate of 115200. This baudrate can go higher once the whole system is tested with good results.
+\subsubsection{SPI}
+The SPI driver is incomplete as is, a lot of performance optimizations can and should be done. One of the biggest pitfalls at the moment is that it is blocked writing. When a lot of data is being sent consecutively by the SPI driver, the event buffer fills up and might even get full. Interrupt based design should be looked at and investigated, as this would still allow the events to be handled. The caveat with this, however, is that a large buffer has to be allocated for the SPI. And memory is costly. DMA is another technique to be looked at, this would eliminate the need for a CPU at all and give the system all the time to process the other tasks. There needs to be some caution, as DMA has overhead on low data. This should be investigated.
+\subsubsection{Timer}
+The Timer design is incomplete, and only houses a RTC. Due to a hardware failure, the internal crystal is being used. Which offers a worse accuracy than an external one. However since the most recent time can be retrieved from the internet this is not a major issue. Future additions to the Timer module include: Alarm function for timeouts on waiting, PWM functionality and using the 32 RTC with the external crystal. The Timer module is set up to use it's overflow interrupt. If the internal counter overflows the period of 1023 a second pulse event will get fired and the run time will get incremented.
