@@ -23,7 +23,7 @@
                                 TAB"===================="NL
 
 //Change this to a 1 if you want to use the screen
-#define SCREEN_ON               0
+#define SCREEN_ON               1
 //Enables sleeping and more power efficiency
 #define EVENT_SUPPORTS_SLEEP
 
