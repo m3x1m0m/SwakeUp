@@ -131,7 +131,8 @@ bmargin={2.5cm}]{geometry}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Software}
 \label{chap:software}
-\section{Code Structure}
+In order to facilitate all the functionality, code had to be written. Because the system is quite complex with many different functions, a good and clear structure has to be realized. Much of the development time has been invested in the writing and testing of underlying code which don't have a direct result for the finalized product. In the following sub-chapters this system will be described, and explained why certain choices and compromises have been made.
+\section{Code Structure} 
 \label{sec:code_structure}
 \input{./doc/code_structure.tex}
 \section{Operating System}
@@ -165,4 +166,47 @@ bmargin={2.5cm}]{geometry}
 \newgeometry{lmargin={2.5cm},rmargin={2.5cm},tmargin={0cm},bmargin={1,5cm}}
 \includepdf[pages={1},scale=0.8,pagecommand=\chapter{Schematics Power Board}\label{append:power}]{./fig/power.pdf}
 \includepdf[pages={2-},scale=0.8,pagecommand={}]{./fig/power.pdf}
+\chapter{USART interrupt generation}
+\label{append:usartinterruptgen}
+\begin{minted}[baselinestretch=1, fontsize=\small, linenos,frame=single,framesep=5pt]{C}
+#define USARTRXCISR(NAME, PORT, USART_ID, REC_FC)            \
+ISR(NAME##_RXC_vect) {                             \
+	uint8_t read = PORT.DATA;                    \
+	if (writeInBuf(read, &PORT)) {               \
+	REC_FC(read);                                   \
+	uint8_t i = 0;                              \
+	for (; i < UART_MAX_DELIMITERS; i++) {      \
+		if (delimiters[USART_ID][i].delimiter != 0) {  \
+			delimiters[USART_ID][i].length++;          \
+			if (read == delimiters[USART_ID][i].delimiter) {   \
+				delimiters[USART_ID][i].port = &PORT;       \
+				event_fire(&EVENT_UART_DELIMITER,	\
+				SYSTEM_ADDRESS_CAST (&delimiters[USART_ID][i])); \
+				}   \
+			}   \
+		}   \
+	} else {/*buffer full */    \
+		CP_PORT.CTRLA &= ~(USART_RXCINTLVL_LO_gc);  \
+	}   \
+}
+
+#define USARTDREISR(NAME, PORT, USART_ID)\
+ISR(NAME##_DRE_vect) {             \
+	uint8_t size = uartStatus[USART_ID].outBuffer_size;    \
+	if (size > 0) { \
+		if (softlock(USART_ID)) {\
+			uint8_t tail = uartStatus[USART_ID].outBuffer_tail;\
+			PORT.DATA = outBuffer[USART_ID][tail];  \
+			uartStatus[USART_ID].outBuffer_size--; \
+			tail++; \
+			if (tail >= UART_MAX_OUT_BUFFER) tail = 0;\
+			uartStatus[USART_ID].outBuffer_tail = tail;\
+			unlock(USART_ID);  \
+		}\
+	} else {\
+		sending[USART_ID] = 0;\
+		PORT.CTRLA &= ~(USART_DREINTLVL0_bm);\
+	}\
+}
+\end{minted}
 \end{document}
