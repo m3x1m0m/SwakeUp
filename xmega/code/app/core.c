@@ -61,11 +61,21 @@ static void atCommand(uint8_t len __attribute__ ((unused)), char * data __attrib
 
 static void terminalCommand(uint8_t len __attribute__ ((unused)), char * data __attribute__ ((unused))) {
     if (data[0] == 's' || data[0] == 'S') {
-        if (SCREEN.cnt > 0)
+        if (SCREEN.cnt > 0) {
             log_redirectOutput(screenterminal_sink());
-        else
+            clock_deinit();
+        } else
             LOG_WARNING("Screen is not initialized");
     } else {
+        if (SCREEN.cnt > 0) {
+            screen_color(COLOR_TO656(0, 0, 0));
+            screen_draw_begin(FILLED);
+            screen_rect(0, 0, 160, 128);
+            screen_draw_end();
+            clock_init(64, 0);
+            weather_init(0, 96);
+            weather_draw();
+        }
         terminal_default_sink();
     }
 }
@@ -100,6 +110,9 @@ static void setCommand(uint8_t len __attribute__ ((unused)), char * data __attri
             uint32_t minute = command_next_int(&index, data, len);
             uint32_t second = command_next_int(&index, data, len);
             timekeeper_time_set(hour & 0xFF, minute & 0xFF, second & 0xFF);
+            struct Time tim;
+            timekeeper_time_get(&tim);
+            clock_time_set(&tim);
         }
         //time
         break;
@@ -128,6 +141,9 @@ void core_screen(uint8_t on) {
     if (on) {
         if (SCREEN.cnt == 0) {
             module_init(&SCREEN);
+            clock_init(64, 0);
+            weather_init(0, 96);
+            weather_draw();
         }
     } else {
         if (SCREEN.cnt >= 1) {
@@ -150,6 +166,7 @@ static uint8_t init(void) {
     return 1;
 }
 static uint8_t deinit(void) {
+    if (screenOn) module_deinit(&SCREEN);
     return 1;
 }
 

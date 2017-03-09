@@ -36,19 +36,20 @@ void screenterminal_writes(char text) {
     if ((uint8_t)text >= (uint8_t)' ') {
         uint8_t x = 0, y = 0;
         uint16_t drawX = indexX * 8, drawY = indexY * 8;
-        seps525f_start_draw(drawX, drawY, 8, 8);
-        for (; y < 8; y++) {
-            uint8_t row = pgm_read_byte(font_font8x8_basic[(uint8_t) text][y]);
-            for (x = 0; x < 8; x++) {
-                if (row & (1 << x)) {
-                    seps525f_draw(textColor);
-                    //seps525f_draw_pixel(drawX + x, drawY + y, color);
-                } else {
-                    seps525f_draw(backgroundColor);
-                }
-            }
-        }
-        seps525f_stop_draw();
+        screen_text(&text, 1, drawX, drawY);
+//         seps525f_start_draw(drawX, drawY, 8, 8);
+//         for (; y < 8; y++) {
+//             uint8_t row = pgm_read_byte(font_font8x8_basic[(uint8_t) text][y]);
+//             for (x = 0; x < 8; x++) {
+//                 if (row & (1 << x)) {
+//                     seps525f_draw(textColor);
+//                     //seps525f_draw_pixel(drawX + x, drawY + y, color);
+//                 } else {
+//                     seps525f_draw(backgroundColor);
+//                 }
+//             }
+//         }
+//         seps525f_stop_draw();
         indexX++;
     }
     if (text == '\r') indexX = 0;
