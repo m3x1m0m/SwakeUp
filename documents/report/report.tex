@@ -14,21 +14,30 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Encoding of the input
-\usepackage[utf8x]{inputenc}
+\usepackage[utf8]{inputenc}
+
 % Geometry stuff
 \usepackage[head=24pt,a4paper,lmargin={2.5cm},rmargin={2.5cm},tmargin={2.5cm},
 bmargin={2.5cm}]{geometry}
+
 % For graphics
 \usepackage{graphicx}
+
 % For code highlighting
 \usepackage{minted}
+
 % For shaded
 \usepackage{xcolor}
 \usepackage{framed}
 \definecolor{shadecolor}{gray}{0.9}
 
+% For some symbols
+\usepackage{textcomp}
+%\usepackage{eurosans}
+
 % For math
 \usepackage{amssymb}
+\usepackage{amsmath}
 
 \setlength{\parindent}{0em} 
 
@@ -73,8 +82,8 @@ bmargin={2.5cm}]{geometry}
 }	
 
 \newcommand{\newpar}{\vspace{1em}\\}
+\newcommand{\myemph}[1]{\textsl{#1}}
 
-\usepackage{amsmath}
 
 % For PDFs
 \usepackage{pdfpages}
@@ -89,6 +98,9 @@ bmargin={2.5cm}]{geometry}
 \rfoot{}
 \setlength{\headheight}{1cm}
 
+\usepackage[autostyle]{csquotes}
+\usepackage[style=ieee,backend=bibtex]{biblatex}
+\addbibresource{literature.bib}
 
 \begin{document}
 
@@ -120,6 +132,7 @@ bmargin={2.5cm}]{geometry}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Introduction}
 \label{chap:intro}
+Elmar has a small dick compare \cite{microsemi:igloo2_site}.
 \section{Idea}
 \label{sec:idea}
 \input{./doc/idea.tex}
@@ -166,6 +179,7 @@ In order to facilitate all the functionality, code had to be written. Because th
 \section{Outlook}
 \label{sec:outlook}
 \input{./doc/outlook.tex}
+\printbibliography[heading=bibintoc]
 
 \clearpage
 \pagenumbering{Roman}
