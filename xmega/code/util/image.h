@@ -8,7 +8,7 @@
 
 #ifndef IMAGE_H_
 #define IMAGE_H_
-
+#include <stdint-gcc.h>
 typedef struct {
     uint16_t width;
     uint16_t height;

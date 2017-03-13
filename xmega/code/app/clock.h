@@ -17,6 +17,8 @@
 #define CLOCK_MINUTE_LEN    40
 #define CLOCK_HOUR_LEN      32
 
+#define CLOCK_ANALOGUE      0
+
 #include <stdint.h>
 #include "core.h"
 
