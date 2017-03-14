@@ -164,6 +164,33 @@ void screen_sub_image(Image * image, uint16_t x, uint16_t y, uint16_t imgX, uint
     seps525f_stop_draw();
 }
 
+void screen_sub_image_col(Image * image, uint16_t x, uint16_t y, uint16_t imgX, uint16_t imgY, uint16_t imgWidth, uint16_t imgHeight, uint16_t color) {
+    seps525f_start_draw(x, y, imgWidth, imgHeight);
+    uint16_t cX, cY;
+    if (image->isFlash) {
+        for (cY = imgY; cY < (imgY + imgHeight); cY++) {
+            for (cX = imgX; cX < (imgX + imgWidth); cX++) {
+                uint16_t saturatedColor = pgm_read_word(&image->image[cY * IMAGE_WIDTH(image) + cX]);
+                if (saturatedColor != COLOR_TO656(0, 0, 0)) {
+                    saturatedColor -= color;
+                }
+                seps525f_draw(saturatedColor);
+            }
+        }
+    } else {
+        for (cY = imgY; cY < (imgY + imgHeight); cY++) {
+            for (cX = imgX; cX < (imgX + imgWidth); cX++) {
+                uint16_t saturatedColor = &image->image[cY * IMAGE_WIDTH(image) + cX];
+                if (saturatedColor != COLOR_TO656(0, 0, 0)) {
+                    saturatedColor -= color;
+                }
+                seps525f_draw(saturatedColor);
+            }
+        }
+    }
+    seps525f_stop_draw();
+}
+
 static uint8_t init(void) {
     if (log_current_sink() == screenterminal_sink()) {
         terminal_default_sink();

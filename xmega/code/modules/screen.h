@@ -30,6 +30,7 @@ void screen_pixel(uint16_t x, uint16_t y);
 void screen_circle(uint16_t x, uint16_t y, int radius);
 void screen_image(Image * image, uint16_t x, uint16_t y);
 void screen_sub_image(Image * image, uint16_t x, uint16_t y, uint16_t imgX, uint16_t imgY, uint16_t imgWidth, uint16_t imgHeight);
+void screen_sub_image_col(Image * image, uint16_t x, uint16_t y, uint16_t imgX, uint16_t imgY, uint16_t imgWidth, uint16_t imgHeight, uint16_t color);
 
 
 MODULE_EXP(SCREEN);
