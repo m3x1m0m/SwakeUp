@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cp}{\PYGZsh{}define EVENT\PYGZus{}REGISTER(eventName, desc)\PYGZbs{}}
+\PYG{c+cp}{        Event eventName = \PYGZbs{}}
+\PYG{c+cp}{        \PYGZob{}.eventId = \PYGZus{}\PYGZus{}COUNTER\PYGZus{}\PYGZus{}, .data = 0, .description = desc, .descLen = sizeof(desc) \PYGZcb{}}
+\PYG{n}{EVENT\PYGZus{}REGISTER}\PYG{p}{(}\PYG{n}{EVENT\PYGZus{}UART\PYGZus{}DELIMITER}\PYG{p}{,} \PYG{l+s}{\PYGZdq{}Got UART delimiter\PYGZdq{}}\PYG{p}{);}
+\end{Verbatim}
