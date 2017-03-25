@@ -141,7 +141,7 @@ static void callback(Event * event, uint8_t * data __attribute__ ((unused))) {
     } else if (event == &TIME_CHANGE) {
         clock_time_set((struct Time *)data);
     } else {
-        LOG_WARNING("Unkown event %s", event->description);
+        LOG_WARNING("Unknown event %s", event->description);
         return;
     }
     clock_draw();
