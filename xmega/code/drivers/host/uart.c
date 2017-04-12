@@ -62,12 +62,17 @@ static inline uint8_t softlock(uint8_t id) {
 }
 
 //static void _send(USART_t * port, struct JobBuffer * uartJob);
-#define USARTE_ID 0
+#define ESP_ID  0
 
-#define USARTD_ID 1
+#define CP_ID   1
 
 static inline uint8_t getId(const USART_t * const port) {
-    return port == &USARTD1;
+#ifdef REV_1
+    return port == &USARTE0;    //port == CP_ID
+#endif
+#ifdef REV_2
+    return port == &USARTD1;    //port == CP_ID
+#endif
 }
 
 uint8_t uart_buffer_out_level(const USART_t * const port) {
@@ -287,7 +292,7 @@ ISR(NAME##_DRE_vect) {             \
 static void received(char received) {
     uart_writes(received, &DEBUG_UART);
     if ((uint8_t)received == 8 || (uint8_t)received == 127) {
-        struct UartStatus * tempStatus = (struct UartStatus*)&uartStatus[USARTE_ID];
+        struct UartStatus * tempStatus = (struct UartStatus*)&uartStatus[CP_ID];
         if (tempStatus->inBuffer_size > 1) {
             tempStatus->inBuffer_size -= 2;
             if (tempStatus->inBuffer_head == 1) {
@@ -298,25 +303,30 @@ static void received(char received) {
         }
     }
 }
-
-USARTRXCISR(USARTE0, DEBUG_UART,     USARTE_ID, received);
-
-USARTDREISR(USARTE0, DEBUG_UART,     USARTE_ID);
-
-USARTRXCISR(USARTD1, ESP_UART_PORT,  USARTD_ID, );
-
-USARTDREISR(USARTD1, ESP_UART_PORT,  USARTD_ID);
-
+#ifdef REV_1
+USARTRXCISR(USARTE0, DEBUG_UART,     CP_ID, received);
+USARTDREISR(USARTE0, DEBUG_UART,     CP_ID);
+USARTRXCISR(USARTD1, ESP_UART_PORT,  ESP_ID, );
+USARTDREISR(USARTD1, ESP_UART_PORT,  ESP_ID);
+#endif
+#ifdef REV_2
+USARTRXCISR(USARTD1, DEBUG_UART,     CP_ID, received);
+USARTDREISR(USARTD1, DEBUG_UART,     CP_ID);
+USARTRXCISR(USARTC0, ESP_UART_PORT,  ESP_ID, );
+USARTDREISR(USARTC0, ESP_UART_PORT,  ESP_ID);
+#endif
 static const char _initialized[] = "\fUART initialized\n\r";
 
 static uint8_t init(void) {
-    uartStatus[USARTE_ID].outBuffer_head = 0;
-    uartStatus[USARTD_ID].outBuffer_head = 0;
+    uartStatus[ESP_ID].outBuffer_head = 0;
+    uartStatus[CP_ID].outBuffer_head = 0;
     ESP_UART_PIN_PORT.DIRCLR          = ESP_UART_RX;
     ESP_UART_PIN_PORT.OUTCLR          = ESP_UART_RX;
     ESP_UART_PIN_PORT.DIRSET          = ESP_UART_TX;
     ESP_UART_PIN_PORT.OUTSET          = ESP_UART_TX;
+#ifdef REV_1
     ESP_UART_PIN_PORT.REMAP           = PORT_USART0_bm;
+#endif
     ESP_UART_PORT.CTRLA         = USART_RXCINTLVL_LO_gc;
     ESP_UART_PORT.CTRLB         = USART_RXEN_bm |  USART_TXEN_bm;
     ESP_UART_PORT.CTRLC         = USART_CHSIZE_8BIT_gc;
@@ -325,6 +335,9 @@ static uint8_t init(void) {
     CP_PIN_PORT.DIRSET          = CP_TX_PIN;
     CP_PIN_PORT.OUTCLR          = CP_RX_PIN;
     CP_PIN_PORT.OUTSET          = CP_TX_PIN;
+#ifdef REV_2
+    CP_PIN_PORT.REMAP           = PORT_USART0_bm;
+#endif
     CP_PORT.CTRLA               = USART_RXCINTLVL_MED_gc;
     CP_PORT.CTRLB               = USART_RXEN_bm |  USART_TXEN_bm;
     CP_PORT.CTRLC               = USART_CHSIZE_8BIT_gc;
