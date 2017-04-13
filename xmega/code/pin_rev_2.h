@@ -46,10 +46,10 @@ static const IO_PP _led =     GPIO_PP(0, GPIO_PORTB);
 #define ESP_FP_PIN          (1<<2)
 #define ESP_UART_PIN_PORT   PORTC
 #define ESP_UART_PORT       USARTC0
-#define ESP_UART_RX         (1<<3)
-#define ESP_UART_RX_PP()    gpio_pp(3, GPIO_PORTD)
-#define ESP_UART_TX         (1<<4)
-#define ESP_UART_TX_PP()    gpio_pp(4, GPIO_PORTD)
+#define ESP_UART_RX         (1<<2)
+#define ESP_UART_RX_PP()    gpio_pp(2, GPIO_PORTD)
+#define ESP_UART_TX         (1<<3)
+#define ESP_UART_TX_PP()    gpio_pp(3, GPIO_PORTD)
 
 #define CP_PORT             USARTD1
 #define CP_PIN_PORT         PORTD
