@@ -13,7 +13,14 @@
 #include "../host/uart.h"
 #include "../../modules/command.h"
 #include "../../modules/log.h"
+#include "../../util/stream.h"
 #include "terminal.h"
+
+static uint8_t write_callback(pb_ostream_t *stream, uint8_t *buf, size_t count) {
+    return uart_write(buf, count, &ESP_UART_PORT);
+}
+
+Stream ESP8266_stream = STREAM_INIT(write_callback, stream_readCallback, NULL);
 
 LOG_INIT("ESP8266");
 
@@ -137,6 +144,7 @@ static uint8_t init(void) {
     ESP_ENABLE_PORT.OUTSET = ESP_ENABLE_PIN;
     ESP_SLEEP_PORT.DIRSET = ESP_SLEEP_PIN | ESP_FP_PIN;
     ESP_FP_PORT.OUTSET = ESP_FP_PIN;
+    ESP_RST_PORT.OUTCLR = ESP_RST_PIN;
     LOG_SYSTEM("ESP8266 initialized");
     return 1;
 }
