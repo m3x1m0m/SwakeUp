@@ -13,6 +13,7 @@
 #include "../host/uart.h"
 #include "../../modules/command.h"
 #include "../../modules/log.h"
+#include "../../modules/control.h"//move this out of here
 #include "terminal.h"
 
 static uint8_t write_callback(pb_ostream_t *stream, uint8_t *buf, size_t count) {
@@ -121,6 +122,12 @@ uint8_t esp_update_stop(void) {
 uint16_t esp_update_write(uint8_t * datas, uint16_t len) {
     return 0;
 }
+
+static void streamCallback(char data) {
+    if (stream_readByte(&ESP8266_stream, data)) {
+        messageReceived(&ESP8266_stream);
+    }
+}
 // #define ESP_RST_PORT        PORTA
 // #define ESP_RST_PIN         (1<<3)
 // #define ESP_PWR_SAVE_N_PORT PORTA
@@ -136,15 +143,16 @@ uint16_t esp_update_write(uint8_t * datas, uint16_t len) {
 // #define ESP_UART_RX         (1<<6)
 // #define ESP_UART_TX         (1<<7)
 static uint8_t init(void) {
-    uart_add_delimiter('\n', &ESP_UART_PORT);
+    //uart_add_delimiter('\n', &ESP_UART_PORT);
     //uart_add_delimiter('\r', &ESP_UART_PORT);
-    event_addListener(&EVENT_UART_DELIMITER, callback);
+    //event_addListener(&EVENT_UART_DELIMITER, callback);
     ESP_ENABLE_PORT.DIRSET = ESP_ENABLE_PIN | ESP_PWR_SAVE_N_PIN | ESP_RST_PIN;
     ESP_ENABLE_PORT.OUTSET = ESP_ENABLE_PIN;
     ESP_SLEEP_PORT.DIRSET = ESP_SLEEP_PIN | ESP_FP_PIN;
     ESP_FP_PORT.OUTSET = ESP_FP_PIN;
     ESP_RST_PORT.OUTCLR = ESP_RST_PIN;
     LOG_SYSTEM("ESP8266 initialized");
+    uart_set_callback(streamCallback, &ESP_UART_PORT);
     return 1;
 }
 static uint8_t deinit(void) {

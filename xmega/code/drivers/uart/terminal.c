@@ -17,8 +17,20 @@ LOG_INIT("Terminal");
 
 void (*sink) (void*, char);
 
-
-
+static void echo_uart(char received) {
+    uart_writes(received, &DEBUG_UART);
+    if ((uint8_t)received == 8 || (uint8_t)received == 127) {
+        struct UartBuffer * inBuf = getInBuffer(&CP_PORT);
+        if (inBuf->size > 1) {
+            inBuf->size -= 2;
+            if (inBuf->head == 1) {
+                inBuf->head = UART_MAX_IN_BUFFER - 1;
+            } else {
+                inBuf->head -= 2;
+            }
+        }
+    }
+}
 
 static void write_block(void * p __attribute__ ((unused)), char c) {
     uart_write_blocked(c, &DEBUG_UART);
@@ -105,6 +117,7 @@ char terminal_getc(void) {
 
 static uint8_t init(void) {
     sink = &write;                          //default
+    uart_set_callback(&echo_uart, &CP_PORT);
     terminal_write("Terminal initialized\n\r");
     return 1;
 }

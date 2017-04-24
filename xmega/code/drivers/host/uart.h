@@ -28,6 +28,12 @@ struct UartDelimiter {
     uint8_t length;
 };
 
+struct UartBuffer {
+    uint8_t head;
+    uint8_t tail;
+    uint8_t size;
+};
+
 typedef enum {
     B115200, B38400, B9600, B4800, B2400
 } UART_BAUDRATE;
@@ -46,6 +52,9 @@ uint8_t uart_read_buffer(char * data, uint8_t len, USART_t * const port);
 uint8_t uart_reads_buffer(char * data, USART_t * const port);
 uint8_t uart_add_delimiter(char delimiter, USART_t * const port);
 void uart_delimiter_handled(struct UartDelimiter * delimiter);
+void uart_set_callback(void (*callback)(char), USART_t * const port);
+struct UartBuffer * getInBuffer(USART_t * const port);
+struct UartBuffer * getOutBuffer(USART_t * const port);
 MODULE_EXP(UART);
 
 #endif /* UART_H_ */

@@ -14,12 +14,12 @@ static uint8_t __attribute__((warn_unused_result)) buf_read(pb_istream_t *stream
     return 1;
 }
 
-void tnstream_init(Stream * stream) {
+void stream_init(Stream * stream) {
     stream->inputStream.stream.state = &stream->inputStream;
     stream->outputStream.stream.state = &stream->outputStream;
 }
 
-uint8_t buffer_readCallback(pb_istream_t *stream, uint8_t *buf, size_t count) {
+uint8_t stream_readCallback(pb_istream_t *stream, uint8_t *buf, size_t count) {
     LOG_DEBUG("prepare to read:%d bytes!\n", count);
     if (stream->bytes_left < count)
         PB_RETURN_ERROR(stream, "end-of-stream");
@@ -30,7 +30,7 @@ void logErrorExpected(uint8_t exp, uint8_t got) {
     LOG_WARNING("Expected %02x but got %02x\n", exp, got);
 }
 
-uint8_t tnstream_readByte(Stream * stream, uint8_t byte) {
+uint8_t stream_readByte(Stream * stream, uint8_t byte) {
     //printf("Byte: %02x state: %d flags: %d \n",byte,stream->state, stream->flags);
     switch (stream->state) {
     case PREFIX_AA:

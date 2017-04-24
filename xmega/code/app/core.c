@@ -14,6 +14,7 @@
 #include "../drivers/host/uart.h"    //BREACH OF LAYERING
 #include "../drivers/uart/esp8266.h"    //BREACH OF LAYERING
 #include "../drivers/uart/terminal.h"   //BREACH OF LAYERING
+#include "../modules/control.h"
 
 #include "../pin_definitions.h"
 
@@ -109,10 +110,18 @@ static void setCommand(uint8_t len __attribute__ ((unused)), char * data __attri
             uint32_t hour = command_next_int(&index, data, len);
             uint32_t minute = command_next_int(&index, data, len);
             uint32_t second = command_next_int(&index, data, len);
-            timekeeper_time_set(hour & 0xFF, minute & 0xFF, second & 0xFF);
-            struct Time tim;
-            timekeeper_time_get(&tim);
-            clock_time_set(&tim);
+            Stream * stream = ctrlGetStream(CTRL_STREAM_ESP);
+            MsgFrame * frame = stream->msgPointer;
+            frame->typ = MsgType_MSG_TYPE_TIME;
+            frame->which_pl = MsgFrame_time_tag;
+            frame->pl.time.hour = hour;
+            frame->pl.time.minute = minute;
+            frame->pl.time.second = second;
+            writeMessage(stream, frame);
+            //timekeeper_time_set(hour & 0xFF, minute & 0xFF, second & 0xFF);
+            //struct Time tim;
+            //timekeeper_time_get(&tim);
+            //clock_time_set(&tim);
         }
         //time
         break;

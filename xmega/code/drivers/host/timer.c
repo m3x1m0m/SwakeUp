@@ -12,6 +12,22 @@
 #include "../../pin_definitions.h"
 #include "uart.h"
 
+#undef REV_2
+#define REV_1
+
+#ifndef REV_1
+#include "rtc32.h"
+#undef RTC32
+#undef RTC
+#undef RTC_OVF_vect
+#define RTC_OVF_vect RTC32_OVF_vect
+/**
+ * \internal
+ * Workaround for missing CNT, PER and COMP in WinAVR header files
+ * \todo Remove when header files are fixed if WinAVR release
+ */
+#define RTC (*(RTC32_t2 *)0x0420)
+#endif
 EVENT_REGISTER(EVENT_TIMER_1_HZ, "1 second pulse");
 EVENT_REGISTER(EVENT_ALARM, "ms alarm");
 
@@ -43,10 +59,17 @@ int8_t   timer_timeOutEvent(uint16_t duration) {
 // }
 
 static uint8_t init(void) {
+#ifdef REV_1
     OSC.CTRL |= OSC_RC32KEN_bm;
     while ( ( OSC.STATUS & OSC_RC32KRDY_bm ) == 0);
     CLK.RTCCTRL = CLK_RTCSRC_RCOSC_gc | CLK_RTCEN_bm;
     while ( RTC.STATUS & RTC_SYNCBUSY_bm  );
+#else
+    OSC.CTRL |= OSC_XOSCEN_bm;
+    while ( ( OSC.STATUS & OSC_XOSCRDY_bm ) == 0);
+    CLK.RTCCTRL = CLK_RTCSRC_RCOSC_gc | CLK_RTCSRC_TOSC_gc;
+    while ( RTC.SYNCCTRL & RTC32_SYNCBUSY_bm  );
+#endif
     RTC.PER = 1023;
     RTC.CNT = 0;
     RTC.COMP = 0;

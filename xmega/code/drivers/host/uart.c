@@ -7,6 +7,7 @@
 
 #include "../../pin_definitions.h"
 #include "../uart/terminal.h"
+#include "../../util/stream.h"
 #include "uart.h"
 
 #include <avr/io.h>
@@ -29,15 +30,10 @@ EVENT_REGISTER(EVENT_UART_DELIMITER, "Got UART delimiter");
 #define UART_CHANNELS           2
 
 struct UartStatus {
-    uint8_t delimiters_head;
-    uint8_t delimiters_tail;
-    uint8_t delimiters_size;
-    uint8_t inBuffer_head;
-    uint8_t inBuffer_tail;
-    uint8_t inBuffer_size;
-    uint8_t outBuffer_head;
-    uint8_t outBuffer_tail;
-    uint8_t outBuffer_size;
+    void (*callback)(char);
+    struct UartBuffer delimiterBuffer;
+    struct UartBuffer inBuffer;
+    struct UartBuffer outBuffer;
 };
 
 static volatile struct UartStatus uartStatus    [UART_CHANNELS] = {{0}, {0}};
@@ -76,11 +72,11 @@ static inline uint8_t getId(const USART_t * const port) {
 }
 
 uint8_t uart_buffer_out_level(const USART_t * const port) {
-    return uartStatus[getId(port)].outBuffer_size;
+    return uartStatus[getId(port)].outBuffer.size;
 }
 
 uint8_t uart_buffer_in_level(const USART_t * const port) {
-    return uartStatus[getId(port)].inBuffer_size;
+    return uartStatus[getId(port)].inBuffer.size;
 }
 
 void uart_speed(UART_BAUDRATE baudrate, USART_t * port) {
@@ -113,14 +109,18 @@ uint8_t uart_job(char * data, uint8_t len, void (* callback)(struct Job *), USAR
     return 1;
 }
 
+static inline void incr_wrap(struct UartBuffer * buffer, uint8_t max) {
+    buffer->head = (buffer->head + 1 >= max) ? 0 : buffer->head + 1;
+    buffer->size++;
+}
+
 uint8_t uart_write(const char * const data, uint8_t len, USART_t * const port) {
     uint8_t id = getId(port), written = 0;
     while (written < len) {
-        if (uartStatus[id].outBuffer_size >= UART_MAX_OUT_BUFFER) return written;
+        if (uartStatus[id].outBuffer.size >= UART_MAX_OUT_BUFFER) return written;
         lock(id);
-        outBuffer[id][uartStatus[id].outBuffer_head] = data[written];
-        uartStatus[id].outBuffer_head = (uartStatus[id].outBuffer_head + 1 >= UART_MAX_OUT_BUFFER) ? 0 : uartStatus[id].outBuffer_head + 1;
-        uartStatus[id].outBuffer_size++;
+        outBuffer[id][uartStatus[id].outBuffer.head] = data[written];
+        incr_wrap(&uartStatus[id].outBuffer, UART_MAX_OUT_BUFFER);
         if (!sending[id]) {
             port->CTRLA |= USART_DREINTLVL0_bm;
             // sending[id] = 1; //TODO implement this ?
@@ -135,11 +135,10 @@ uint8_t uart_write(const char * const data, uint8_t len, USART_t * const port) {
 
 uint8_t uart_writes(char data, USART_t * const port) {
     uint8_t id = getId(port);
-    while (uartStatus[id].outBuffer_size >= UART_MAX_OUT_BUFFER - 1); // TODO make this nicer
+    while (uartStatus[id].outBuffer.size >= UART_MAX_OUT_BUFFER - 1); // TODO make this nicer
     lock(id);
-    outBuffer[id][uartStatus[id].outBuffer_head] = data;
-    uartStatus[id].outBuffer_head = (uartStatus[id].outBuffer_head + 1 >= UART_MAX_OUT_BUFFER) ? 0 : uartStatus[id].outBuffer_head + 1;
-    uartStatus[id].outBuffer_size++;
+    outBuffer[id][uartStatus[id].outBuffer.head] = data;
+    incr_wrap(&uartStatus[id].outBuffer, UART_MAX_OUT_BUFFER);
     if (!sending[id]) {
         port->CTRLA |= USART_DREINTLVL0_bm;
         // sending[id] = 1; //TODO implement this ?
@@ -150,7 +149,7 @@ uint8_t uart_writes(char data, USART_t * const port) {
 
 uint8_t uart_buffer_level(const USART_t * port) {
     struct UartStatus * tempStatus = (struct UartStatus*)&uartStatus[getId(port)];
-    if (tempStatus->inBuffer_head < tempStatus->inBuffer_tail) {
+    if (tempStatus->inBuffer.head < tempStatus->inBuffer.tail) {
         return UART_MAX_IN_BUFFER;
     }
     return 0;
@@ -197,20 +196,20 @@ char uart_reads_blocked(const USART_t * const port) {
 uint8_t uart_read_buffer(char * data, uint8_t len, USART_t * port) {
     uint8_t id = getId(port);
     uint8_t l = 0;
-    while (l < len && uartStatus[id].inBuffer_size > 0) {
-        data[l] = inBuffer[id][uartStatus[id].inBuffer_tail];
-        if (++uartStatus[id].inBuffer_tail == UART_MAX_IN_BUFFER) uartStatus[id].inBuffer_tail = 0;
-        uartStatus[id].inBuffer_size--;
+    while (l < len && uartStatus[id].inBuffer.size > 0) {
+        data[l] = inBuffer[id][uartStatus[id].inBuffer.tail];
+        if (++uartStatus[id].inBuffer.tail == UART_MAX_IN_BUFFER) uartStatus[id].inBuffer.tail = 0;
+        uartStatus[id].inBuffer.size--;
     }
     return l;
 }
 
 uint8_t uart_reads_buffer(char * data, USART_t * port) {
     uint8_t id = getId(port);
-    if (uartStatus[id].inBuffer_size == 0) return 0;
-    (*data) = inBuffer[id][uartStatus[id].inBuffer_tail];
-    if (++uartStatus[id].inBuffer_tail == UART_MAX_IN_BUFFER) uartStatus[id].inBuffer_tail = 0;
-    uartStatus[id].inBuffer_size--;
+    if (uartStatus[id].inBuffer.size == 0) return 0;
+    (*data) = inBuffer[id][uartStatus[id].inBuffer.tail ];
+    if (++uartStatus[id].inBuffer.tail  == UART_MAX_IN_BUFFER) uartStatus[id].inBuffer.tail  = 0;
+    uartStatus[id].inBuffer.size--;
     return 1;
 }
 
@@ -221,17 +220,17 @@ void uart_flush_buffer(USART_t * port) {
 uint8_t uart_add_delimiter(char delimiter, USART_t * port) {
     uint8_t id = getId(port);
     struct UartStatus * tempStatus = (struct UartStatus *)&uartStatus[id];
-    if (tempStatus->delimiters_size == UART_MAX_DELIMITERS) {
+    if (tempStatus->delimiterBuffer.size == UART_MAX_DELIMITERS) {
         //we are full
         //  LOG_ERROR("No free delimiters");
         LED_PORT.OUTCLR = LED_PIN;
         return 0;
     }
-    struct UartDelimiter * curDelimiter = &delimiters[id][tempStatus->delimiters_head];
+    struct UartDelimiter * curDelimiter = &delimiters[id][tempStatus->delimiterBuffer.head];
     curDelimiter->delimiter = delimiter;
     curDelimiter->length = 0;
-    tempStatus->delimiters_size++;
-    if (tempStatus->delimiters_head++ == UART_MAX_DELIMITERS) tempStatus->delimiters_head = 0;
+    tempStatus->delimiterBuffer.size++;
+    if (tempStatus->delimiterBuffer.size++ == UART_MAX_DELIMITERS) tempStatus->delimiterBuffer.head = 0;
     return 1;
 }
 void uart_delimiter_handled(struct UartDelimiter * delimiter) {
@@ -240,22 +239,22 @@ void uart_delimiter_handled(struct UartDelimiter * delimiter) {
 static inline uint8_t writeInBuf(uint8_t data, USART_t * port) {
     uint8_t id = getId(port);
     struct UartStatus * tempStatus = (struct UartStatus*)&uartStatus[id];
-    if (tempStatus->inBuffer_size == UART_MAX_IN_BUFFER) {
+    if (tempStatus->inBuffer.size == UART_MAX_IN_BUFFER) {
         //LOG_ERROR("UART buffer overrun");
         //LED_PORT.OUTCLR = LED_PIN;
         return 0;
     }
-    inBuffer[id][tempStatus->inBuffer_head] = data;
-    tempStatus->inBuffer_size++;
-    if (++tempStatus->inBuffer_head == UART_MAX_IN_BUFFER) tempStatus->inBuffer_head = 0;
+    inBuffer[id][tempStatus->inBuffer.head] = data;
+    tempStatus->inBuffer.size++;
+    if (++tempStatus->inBuffer.head == UART_MAX_IN_BUFFER) tempStatus->inBuffer.head = 0;
+    tempStatus->callback(data);
     return 1;
 }
 
-#define USARTRXCISR(NAME, PORT, USART_ID, REC_FC)            \
+#define USARTRXCISR(NAME, PORT, USART_ID)            \
 ISR(NAME##_RXC_vect) {                             \
     uint8_t read = PORT.DATA;                    \
     if (writeInBuf(read, &PORT)) {               \
-        REC_FC(read);                                   \
         uint8_t i = 0;                              \
         for (; i < UART_MAX_DELIMITERS; i++) {      \
             if (delimiters[USART_ID][i].delimiter != 0) {  \
@@ -273,15 +272,15 @@ ISR(NAME##_RXC_vect) {                             \
 
 #define USARTDREISR(NAME, PORT, USART_ID)\
 ISR(NAME##_DRE_vect) {             \
-    uint8_t size = uartStatus[USART_ID].outBuffer_size;    \
+    uint8_t size = uartStatus[USART_ID].outBuffer.size;    \
     if (size > 0) { \
         if (softlock(USART_ID)) {\
-            uint8_t tail = uartStatus[USART_ID].outBuffer_tail;\
+            uint8_t tail = uartStatus[USART_ID].outBuffer.tail;\
             PORT.DATA = outBuffer[USART_ID][tail];  \
-            uartStatus[USART_ID].outBuffer_size--; \
+            uartStatus[USART_ID].outBuffer.size--; \
             tail++; \
             if (tail >= UART_MAX_OUT_BUFFER) tail = 0;\
-            uartStatus[USART_ID].outBuffer_tail = tail;\
+            uartStatus[USART_ID].outBuffer.tail = tail;\
             unlock(USART_ID);  \
         }\
         } else {\
@@ -289,37 +288,40 @@ ISR(NAME##_DRE_vect) {             \
         PORT.CTRLA &= ~(USART_DREINTLVL0_bm);\
     }\
 }
-static void received(char received) {
-    uart_writes(received, &DEBUG_UART);
-    if ((uint8_t)received == 8 || (uint8_t)received == 127) {
-        struct UartStatus * tempStatus = (struct UartStatus*)&uartStatus[CP_ID];
-        if (tempStatus->inBuffer_size > 1) {
-            tempStatus->inBuffer_size -= 2;
-            if (tempStatus->inBuffer_head == 1) {
-                tempStatus->inBuffer_head = UART_MAX_IN_BUFFER - 1;
-            } else {
-                tempStatus->inBuffer_head -= 2;
-            }
-        }
-    }
+
+static void emptyCallback(char data) {
 }
+
+void uart_set_callback(void (*callback)(char), USART_t * const port) {
+    uartStatus[getId(port)].callback = callback;
+}
+
+struct UartBuffer * getInBuffer(USART_t * const port) {
+    return &uartStatus[getId(port)].inBuffer;
+}
+struct UartBuffer * getOutBuffer(USART_t * const port) {
+    return &uartStatus[getId(port)].outBuffer;
+}
+
 #ifdef REV_1
-USARTRXCISR(USARTE0, DEBUG_UART,     CP_ID, received);
+USARTRXCISR(USARTE0, DEBUG_UART,     CP_ID);
 USARTDREISR(USARTE0, DEBUG_UART,     CP_ID);
-USARTRXCISR(USARTD1, ESP_UART_PORT,  ESP_ID, );
+USARTRXCISR(USARTD1, ESP_UART_PORT,  ESP_ID);
 USARTDREISR(USARTD1, ESP_UART_PORT,  ESP_ID);
 #endif
 #ifdef REV_2
-USARTRXCISR(USARTD1, DEBUG_UART,     CP_ID, received);
+USARTRXCISR(USARTD1, DEBUG_UART,     CP_ID);
 USARTDREISR(USARTD1, DEBUG_UART,     CP_ID);
-USARTRXCISR(USARTC0, ESP_UART_PORT,  ESP_ID, );
+USARTRXCISR(USARTC0, ESP_UART_PORT,  ESP_ID);
 USARTDREISR(USARTC0, ESP_UART_PORT,  ESP_ID);
 #endif
 static const char _initialized[] = "\fUART initialized\n\r";
 
 static uint8_t init(void) {
-    uartStatus[ESP_ID].outBuffer_head = 0;
-    uartStatus[CP_ID].outBuffer_head = 0;
+    uartStatus[ESP_ID].outBuffer.head = 0;
+    uartStatus[CP_ID].outBuffer.head = 0;
+    uart_set_callback(emptyCallback, &ESP_UART_PORT);
+    uart_set_callback(emptyCallback, &CP_PORT);
     ESP_UART_PIN_PORT.DIRCLR          = ESP_UART_RX;
     ESP_UART_PIN_PORT.OUTCLR          = ESP_UART_RX;
     ESP_UART_PIN_PORT.DIRSET          = ESP_UART_TX;
