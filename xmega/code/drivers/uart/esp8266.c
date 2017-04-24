@@ -13,7 +13,6 @@
 #include "../host/uart.h"
 #include "../../modules/command.h"
 #include "../../modules/log.h"
-#include "../../util/stream.h"
 #include "terminal.h"
 
 static uint8_t write_callback(pb_ostream_t *stream, uint8_t *buf, size_t count) {

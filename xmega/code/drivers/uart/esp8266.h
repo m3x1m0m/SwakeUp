@@ -11,6 +11,9 @@
 
 #include <stdint.h>
 #include "../../util/module.h"
+#include "../../util/stream.h"
+
+extern Stream ESP8266_stream;
 
 void esp_reset(void);
 
