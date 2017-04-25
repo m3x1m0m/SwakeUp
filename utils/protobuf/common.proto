@@ -1,0 +1,44 @@
+/*
+   Tremornet Node protocol buffer interface
+
+   Copyright 2015 Innoseis
+   
+   Authors: VvB, EvR
+   
+   History
+   =================================================================================
+   2015-10-02    VvB     Added smoe new common structures, moved GPS to messages.
+   
+ */
+
+syntax = "proto3";
+
+
+enum DataInterface
+{
+	MCU							= 0;	/// Use the MCU for datatransfer from node to host
+	FPGA						= 1;	/// Use the FPGA for datatransfer from node to host
+}
+
+/**
+ * Generic date
+ */
+message Date
+{
+    uint32 day              = 1;     /// Day
+    uint32 month            = 2;     /// Month
+    uint32 year             = 3;     /// Year (w/o century)
+}
+
+/**
+ * Version object.
+ *
+ * For example version 2.7 build 1 -> maj=2, min=7, build=32
+ */
+message Version
+{
+    uint32 maj              = 1;       /// Major version
+    uint32 min              = 2;       /// Minor version
+    uint32 build            = 3;       /// Revision 
+}
+
