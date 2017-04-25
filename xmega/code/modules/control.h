@@ -9,7 +9,7 @@
 #include "../util/event.h"
 #include "../util/protobuf/swakeup.pb.h"
 
-EVENT_EXP( streamSent);
+EVENT_EXP(ProtoReceive);
 
 /**
  * Streams the controller supports.
@@ -31,5 +31,7 @@ void resetInstreamStream(Stream * stream);
 void processMessage(Stream * stream, MsgFrame * frame);
 
 void messageSent(Stream * stream, MsgFrame * message);
+
+MODULE_EXP(CONTROL);
 
 #endif /* CONTROL_H_ */
