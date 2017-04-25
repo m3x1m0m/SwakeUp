@@ -11,6 +11,8 @@
 
 #include <stdint.h>
 
+#define F_CPU               16000000UL
+
 #define TAB "\t\t\t\t"
 #define NL  "\r\n"
 

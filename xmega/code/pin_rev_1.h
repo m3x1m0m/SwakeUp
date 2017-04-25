@@ -26,8 +26,6 @@ static const IO_PP _led =     GPIO_PP(0, GPIO_PORTB);
 
 #define DEBUG_UART            USARTE0
 
-#define F_CPU               16000000UL
-
 #define BUTTON_PORT         PORTB
 #define BUTTON_PIN          (1<<1)
 #define BUTTON_PP()         gpio_pp(1, GPIO_PORTB)
