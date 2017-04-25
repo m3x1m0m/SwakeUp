@@ -14,7 +14,10 @@
 #include "../../modules/command.h"
 #include "../../modules/log.h"
 #include "../../modules/control.h"//move this out of here
+#include <util/delay.h>
 #include "terminal.h"
+
+LOG_INIT("ESP8266");
 
 static uint8_t write_callback(pb_ostream_t *stream, uint8_t *buf, size_t count) {
     return uart_write(buf, count, &ESP_UART_PORT);
@@ -22,7 +25,7 @@ static uint8_t write_callback(pb_ostream_t *stream, uint8_t *buf, size_t count) 
 
 Stream ESP8266_stream = STREAM_INIT(write_callback, stream_readCallback, NULL);
 
-LOG_INIT("ESP8266");
+
 
 #define WIFI_SSID   "elmar elmar"
 #define WIFI_PASS   "elmarelmar"
