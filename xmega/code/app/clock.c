@@ -17,10 +17,10 @@
 
 LOG_INIT("CLOCK");
 
-static struct Time curTime;
-static struct Time prevTime;
+static struct TimeKeeper curTime;
+static struct TimeKeeper prevTime;
 
-static struct Time curAlarm;
+static struct TimeKeeper curAlarm;
 static uint8_t alarmEnabled = 0;
 static uint8_t clockInitialized = 0;
 
@@ -42,16 +42,16 @@ const uint8_t circ32Y[60] PROGMEM = {0x00, 0x00, 0x00, 0x01, 0x02, 0x04, 0x06, 0
 #include "../util/number.h"
 #endif
 
-void clock_time_set(struct Time * time) {
-    memcpy(&curTime, time, sizeof(struct Time));
+void clock_time_set(struct TimeKeeper * time) {
+    memcpy(&curTime, time, sizeof(struct TimeKeeper));
 }
 
-struct Time * clock_time_get(void) {
+struct TimeKeeper * clock_time_get(void) {
     return &curTime;
 }
 
-void clock_alarm_set(struct Time * time) {
-    memcpy(&curAlarm, time, sizeof(struct Time));
+void clock_alarm_set(struct TimeKeeper * time) {
+    memcpy(&curAlarm, time, sizeof(struct TimeKeeper));
     alarmEnabled = 1;
     char clockbuf[8];//hour : min : sec + \0
     clockbuf[0] = curAlarm.hour / 10 + '0';
@@ -67,7 +67,7 @@ void clock_alarm_set(struct Time * time) {
     screen_color(COLOR_TO656(255, 255, 255));
 }
 
-struct Time * clock_alarm_get(void) {
+struct TimeKeeper * clock_alarm_get(void) {
     if (alarmEnabled)
         return &curAlarm;
     else
@@ -114,7 +114,7 @@ void clock_draw() {
         }
         screen_draw_end();
 #endif
-        memcpy(&prevTime, &curTime, sizeof(struct Time));
+        memcpy(&prevTime, &curTime, sizeof(struct TimeKeeper));
     } else {
         LOG_WARNING("Trying to draw, but we are not initialized!");
     }
@@ -139,7 +139,7 @@ static void callback(Event * event, uint8_t * data __attribute__ ((unused))) {
             }
         }
     } else if (event == &TIME_CHANGE) {
-        clock_time_set((struct Time *)data);
+        clock_time_set((struct TimeKeeper *)data);
     } else {
         LOG_WARNING("Unknown event %s", event->description);
         return;

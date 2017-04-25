@@ -9,7 +9,7 @@
 #include "log.h"
 
 LOG_INIT("Timekeeper");
-static struct Time time;
+static struct TimeKeeper time;
 
 static void callback(Event * event, uint8_t * data __attribute__ ((unused))) {
     if (++time.second >= 60) {
@@ -47,8 +47,8 @@ void timekeeper_time_set(uint8_t h, uint8_t m, uint8_t s) {
 }
 
 
-void timekeeper_time_get (struct Time * tim) {
-    memcpy(tim, &time, sizeof(struct Time));
+void timekeeper_time_get (struct TimeKeeper * tim) {
+    memcpy(tim, &time, sizeof(struct TimeKeeper));
 }
 
 static uint8_t init(void) {

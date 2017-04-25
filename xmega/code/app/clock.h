@@ -22,10 +22,10 @@
 #include <stdint.h>
 #include "core.h"
 
-void clock_time_set(struct Time * time);
-struct Time * clock_time_get(void);
-void clock_alarm_set(struct Time * time);
-struct Time * clock_alarm_get(void);
+void clock_time_set(struct TimeKeeper * time);
+struct TimeKeeper * clock_time_get(void);
+void clock_alarm_set(struct TimeKeeper * time);
+struct TimeKeeper * clock_alarm_get(void);
 void clock_draw();
 void clock_init(uint16_t drawX, uint16_t drawY);
 void clock_deinit(void);

@@ -11,6 +11,7 @@
 #include "../modules/command.h"
 #include "../modules/screen.h"
 #include "../modules/log.h"
+#include "../modules/control.h"
 #include "../drivers/host/uart.h"    //BREACH OF LAYERING
 #include "../drivers/uart/esp8266.h"    //BREACH OF LAYERING
 #include "../drivers/uart/terminal.h"   //BREACH OF LAYERING
@@ -85,7 +86,7 @@ static void getCommand(uint8_t len __attribute__ ((unused)), char * data __attri
     if (data[0] == 'W' || data[0] == 'w') {
         LOG_SYSTEM("Weather: %d", weather_get());
     } else if (data[0] == 'T' || data[0] == 't') {
-        struct Time time;
+        struct TimeKeeper time;
         core_time_get(&time);
         LOG_SYSTEM("Time: %d:%d:%d", time.hour, time.minute, time.second);
     }
@@ -106,10 +107,10 @@ static void setCommand(uint8_t len __attribute__ ((unused)), char * data __attri
         if (command_arguments(&data[index], len - 1) < 3) {
             LOG_WARNING("Not enough arguments for setting time");
         } else {
-            LOG_DEBUG("index: %d", index);
             uint32_t hour = command_next_int(&index, data, len);
             uint32_t minute = command_next_int(&index, data, len);
             uint32_t second = command_next_int(&index, data, len);
+            LOG_DEBUG("Request for time: %d %d %d", hour, minute, second);
             Stream * stream = ctrlGetStream(CTRL_STREAM_ESP);
             MsgFrame * frame = stream->msgPointer;
             frame->typ = MsgType_MSG_TYPE_TIME;
@@ -141,7 +142,7 @@ void core_time_set(uint8_t h, uint8_t m, uint8_t s) {
 }
 
 
-void core_time_get(struct Time * time) {
+void core_time_get(struct TimeKeeper * time) {
     timekeeper_time_get(time);
 }
 
@@ -179,4 +180,4 @@ static uint8_t deinit(void) {
     return 1;
 }
 
-MODULE_DEFINE(CORE, "Central core", init, deinit, &TIME, &COMMAND, &ESP8266);
+MODULE_DEFINE(CORE, "Central core", init, deinit, &TIME, &COMMAND, &CONTROL, &ESP8266);
