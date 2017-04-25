@@ -1,7 +1,7 @@
 #include "stream.h"
 #include "../modules/log.h"
-
-LOG_INIT("TnStream");
+#include "../pin_definitions.h"
+LOG_INIT("Stream");
 
 static uint8_t __attribute__((warn_unused_result)) buf_read(pb_istream_t *stream, uint8_t *buf, size_t count) {
     struct stream_in * readStream = stream->state;
@@ -27,11 +27,10 @@ uint8_t stream_readCallback(pb_istream_t *stream, uint8_t *buf, size_t count) {
 }
 
 void logErrorExpected(uint8_t exp, uint8_t got) {
-    LOG_WARNING("Expected %02x but got %02x\n", exp, got);
+    LOG_ERROR("Expected %02x but got %02x\n", exp, got);
 }
 
 uint8_t stream_readByte(Stream * stream, uint8_t byte) {
-    //printf("Byte: %02x state: %d flags: %d \n",byte,stream->state, stream->flags);
     switch (stream->state) {
     case PREFIX_AA:
         if (byte == 0xAA) {
@@ -71,10 +70,10 @@ uint8_t stream_readByte(Stream * stream, uint8_t byte) {
     case SIZE_2: {
         uint8_t temp1 = stream->inputStream.toRead;
         uint8_t temp2 = byte;
-        stream->inputStream.toRead = (temp1 << 8) | temp2;
+        stream->inputStream.toRead = (temp1) | temp2 << 8;
         stream->state = DATAS;
         if (stream->inputStream.toRead > MAX_IN_SIZE) {
-            LOG_WARNING("Max input-size exceeded");
+            LOG_ERROR("Max input-size exceeded");
             return 0;
         }
     }
