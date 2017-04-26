@@ -89,6 +89,26 @@ static void getCommand(uint8_t len __attribute__ ((unused)), char * data __attri
         struct TimeKeeper time;
         core_time_get(&time);
         LOG_SYSTEM("Time: %d:%d:%d", time.hour, time.minute, time.second);
+    } else if (data[0] == 'A' || data[0] == 'a') {
+        if (len < 2) {
+            LOG_SYSTEM("Please define an application. Implemented:\r\n \t GA[S] get stream information");
+        } else {
+            switch (data[1]) {
+            case 'S':
+            case 's': {
+                Stream * stream = ctrlGetStream(CTRL_STREAM_ESP);
+                struct UartBuffer * inputBuf = getInBuffer(&ESP_UART_PORT);
+                struct UartBuffer * outputBuf = getOutBuffer(&ESP_UART_PORT);
+                LOG_SYSTEM("ESP Input UART information\r\n\tHead %d \r\n\tTail %d \r\n\tSize %d", inputBuf->head, inputBuf->tail , inputBuf->size);
+                LOG_SYSTEM("ESP Output UART information\r\n\tHead %d \r\n\tTail %d \r\n\tSize %d", outputBuf->head, outputBuf->tail , outputBuf->size);
+                LOG_SYSTEM("ESP STREAM information\r\n\tStatus %d", stream->state);
+                LOG_SYSTEM("ESP Input Stream information\r\n\tToRead %d \r\n\tReadPos %d \r\n\tWritePos %d",
+                           stream->inputStream.toRead, stream->inputStream.readBufferPos, stream->inputStream.writeBufferPos);
+                LOG_SYSTEM("ESP Output Stream information\r\n\tFlush function %d", stream->outputStream.flush);
+            }
+            break;
+            }
+        }
     }
 }
 
@@ -110,42 +130,40 @@ static void setCommand(uint8_t len __attribute__ ((unused)), char * data __attri
             uint32_t hour = command_next_int(&index, data, len);
             uint32_t minute = command_next_int(&index, data, len);
             uint32_t second = command_next_int(&index, data, len);
-            LOG_DEBUG("Request for time: %d %d %d", hour, minute, second);
+#ifdef PROTO_TEST
             Stream * stream = ctrlGetStream(CTRL_STREAM_ESP);
             MsgFrame * frame = stream->msgPointer;
             frame->typ = MsgType_MSG_TYPE_TIME;
             frame->which_pl = MsgFrame_time_tag;
-            frame->pl.time.hour = hour;
-            frame->pl.time.minute = minute;
-            frame->pl.time.second = second;
+            frame->pl.time.hour = (hour & 0xFF);
+            frame->pl.time.minute = (minute & 0xFF);
+            frame->pl.time.second = (second & 0xFF);
             writeMessage(stream, frame);
-            //timekeeper_time_set(hour & 0xFF, minute & 0xFF, second & 0xFF);
-            //struct Time tim;
-            //timekeeper_time_get(&tim);
-            //clock_time_set(&tim);
+#else
+            core_time_set(hour & 0xFF, minute & 0xFF, second & 0xFF);
+#endif
         }
         //time
         break;
     case 'S':
     case 's':
-        LOG_SYSTEM("Not implemented yet");
         //social
         break;
     default:
-        LOG_WARNING("Unrecognized set command: %c", (char)data[index]);
+        LOG_WARNING("Unrecognized set command: % c", (char)data[index]);
         break;
     }
 }
-
 void core_time_set(uint8_t h, uint8_t m, uint8_t s) {
     timekeeper_time_set(h, m, s);
+    struct TimeKeeper tim;
+    timekeeper_time_get(&tim);
+    clock_time_set(&tim);
 }
-
-
 void core_time_get(struct TimeKeeper * time) {
     timekeeper_time_get(time);
+    clock_time_set(time);
 }
-
 void core_screen(uint8_t on) {
     screenOn = on;
     if (on) {
@@ -161,23 +179,21 @@ void core_screen(uint8_t on) {
         }
     }
 }
-
 static uint8_t init(void) {
     command_hook_description('T', &terminalCommand, "Log sink    T<option> options: U(Uart) S(Screen)\0");
-    command_hook_description('L', &ledCommand,      "Led control L<option> options: T(toggle) 1(on) 0(off)\0");
-    command_hook_description('A', &atCommand,       "Sends AT    A		   no options\0");
+    command_hook_description('L', &ledCommand,      "Led control L<option> options: T(Toggle) 1(on) 0(off)\0");
+    command_hook_description('A', &atCommand,       "Sends AT    A         no options\0");
     command_hook_description('S', &setCommand,      "Sets an app state S<app> <options>\r\n\t"
-                             "W<options> options: 1-6 for different weather\r\n\t"
-                             "S<options> options: f(facebook) e(mail)\r\n\t"
-                             "T<options> options: hour minute second\0");
-    command_hook_description('G', &getCommand,      "Gets state of an app S<app>\r\n\t"
-                             "W Get weather 		   no options \r\n\t"
-                             "T Get time    		   no options \0");
+                             "W<options> options: 1 - 6 for different weather\r\n\t"
+                             "S<options> options : f(Facebook) e(Mail)\r\n\t"
+                             "T<options> options : hour minute second\0");
+    command_hook_description('G', &getCommand,      "Gets state of an app A<App>\r\n\t"
+                             "W Get weather            no options \r\n\t"
+                             "T Get time               no options \0");
     return 1;
 }
 static uint8_t deinit(void) {
     if (screenOn) module_deinit(&SCREEN);
     return 1;
 }
-
 MODULE_DEFINE(CORE, "Central core", init, deinit, &TIME, &COMMAND, &CONTROL, &ESP8266);
