@@ -18,6 +18,8 @@
 #define PP
 #endif
 
+#define PROTO_TEST
+
 #ifdef REV_1
 #include "pin_rev_1.h"
 #else
