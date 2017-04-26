@@ -20,7 +20,13 @@
 LOG_INIT("ESP8266");
 
 static uint8_t write_callback(pb_ostream_t *stream, uint8_t *buf, size_t count) {
-    return uart_write(buf, count, &ESP_UART_PORT);
+    uint8_t i = 0;
+    for (; i < count; i++) {
+        LOG_DEBUG("Sending: %d", buf[i]);
+    }
+    uint8_t written = uart_write(buf, count, &ESP_UART_PORT);
+    LOG_DEBUG("count: %d written: %d", count, written);
+    return written;
 }
 
 Stream ESP8266_stream = STREAM_INIT(write_callback, stream_readCallback, NULL);
@@ -127,6 +133,8 @@ uint16_t esp_update_write(uint8_t * datas, uint16_t len) {
 }
 
 static void streamCallback(char data) {
+    //struct UartBuffer * inBuf = getInBuffer(&ESP_UART_PORT);
+    uart_reads_buffer(&data, &ESP_UART_PORT);   //TODO this is strange, maybe create event and handle later?
     if (stream_readByte(&ESP8266_stream, data)) {
         messageReceived(&ESP8266_stream);
     }
