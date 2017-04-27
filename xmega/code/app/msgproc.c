@@ -15,7 +15,7 @@
 LOG_INIT("MsgProc");
 
 void processMessage(Stream * stream, MsgFrame * message) {
-    LOG_DEBUG("Received message: %d", message->typ);
+    LOG_INFO("Received message: %d", message->typ);
     switch (message->typ) {
     case MsgType_MSG_TUPE_LOCATION:
         break;

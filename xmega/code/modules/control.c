@@ -61,7 +61,6 @@ Stream * ctrlGetStream(CtrlStreams stream) {
 static void callback(Event * event, uint8_t * data) {
     Stream * stream = (Stream *) data;
     uint8_t status = pb_decode(&stream->inputStream.stream, MsgFrame_fields, &message);
-    LOG_INFO("PB CB");
     if (status) {
         processMessage(stream, &message);
     } else {

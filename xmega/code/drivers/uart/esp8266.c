@@ -20,13 +20,7 @@
 LOG_INIT("ESP8266");
 
 static uint8_t write_callback(pb_ostream_t *stream, uint8_t *buf, size_t count) {
-    uint8_t i = 0;
-    for (; i < count; i++) {
-        LOG_DEBUG("Sending: %d", buf[i]);
-    }
-    uint8_t written = uart_write(buf, count, &ESP_UART_PORT);
-    LOG_DEBUG("count: %d written: %d", count, written);
-    return written;
+    return uart_write(buf, count, &ESP_UART_PORT);
 }
 
 Stream ESP8266_stream = STREAM_INIT(write_callback, stream_readCallback, NULL);
