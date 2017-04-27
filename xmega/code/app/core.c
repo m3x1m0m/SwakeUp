@@ -102,9 +102,12 @@ static void getCommand(uint8_t len __attribute__ ((unused)), char * data __attri
                 LOG_SYSTEM("ESP Input UART information\r\n\tHead %d \r\n\tTail %d \r\n\tSize %d", inputBuf->head, inputBuf->tail , inputBuf->size);
                 LOG_SYSTEM("ESP Output UART information\r\n\tHead %d \r\n\tTail %d \r\n\tSize %d", outputBuf->head, outputBuf->tail , outputBuf->size);
                 LOG_SYSTEM("ESP STREAM information\r\n\tStatus %d", stream->state);
-                LOG_SYSTEM("ESP Input Stream information\r\n\tToRead %d \r\n\tReadPos %d \r\n\tWritePos %d",
-                           stream->inputStream.toRead, stream->inputStream.readBufferPos, stream->inputStream.writeBufferPos);
-                LOG_SYSTEM("ESP Output Stream information\r\n\tFlush function %d", stream->outputStream.flush);
+                LOG_SYSTEM("ESP Input Stream information\r\n\tToRead %d \r\n\tReadPos %d \r\n\tWritePos %d \r\n\tErrmsg: %s \r\n\tBytes left: %d \r\n\tState: %d",
+                           stream->inputStream.toRead, stream->inputStream.readBufferPos, stream->inputStream.writeBufferPos,
+                           stream->inputStream.stream.errmsg, stream->inputStream.stream.bytes_left, stream->inputStream.stream.state);
+                LOG_SYSTEM("ESP Output Stream information\r\n\tFlush function %d \r\n\tErrmsg: %s \r\n\tBytes written: %d \r\n\tMax size: %d \r\n\tState: %d",
+                           stream->outputStream.flush,
+                           stream->outputStream.stream.errmsg, stream->outputStream.stream.bytes_written, stream->outputStream.stream.max_size, stream->outputStream.stream.state);
             }
             break;
             }
