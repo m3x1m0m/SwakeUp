@@ -120,6 +120,9 @@ void seps525f_fill(uint16_t x, uint16_t y, uint16_t length, uint16_t width, uint
 }
 
 void seps525f_scroll(uint8_t horizontal, uint8_t vertical) {
+    (void)horizontal;
+    (void)vertical;
+    //TODO
     //how to?
 }
 

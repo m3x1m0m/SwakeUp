@@ -121,49 +121,51 @@ void command_remove_force(char command) {
 }
 
 static void callback(Event * event, uint8_t * data) {
-    struct UartDelimiter * delimiter = (struct UartDelimiter*)data;
-    if (delimiter->port == &DEBUG_UART) {
-        char command;
-        if (!uart_reads_buffer(&command, &DEBUG_UART)) {
-            LOG_ERROR("No bytes in buffer but we expect something");
-        } else {
-            if (command == '?') {
-                uint8_t i;
-                LOG_SYSTEM("Following commands are registered: ");
-                terminal_write("? | Prints out this help\r\n");
-                for (i = 0; i < 26; i++) {
-                    if (commands[i] != 0) {
-                        if (descriptions[i] != 0) {
-                            terminal_write("%c | %s\r\n", (char)(i + 65), descriptions[i]);
-                        } else {
-                            terminal_write("%c |\r\n", (char)(i + 65));
-                            //LOG_SYSTEM("%c", (char)(i + 65));
+    if (event == &EVENT_UART_DELIMITER) {
+        struct UartDelimiter * delimiter = (struct UartDelimiter*)data;
+        if (delimiter->port == &DEBUG_UART) {
+            char command;
+            if (!uart_reads_buffer(&command, &DEBUG_UART)) {
+                LOG_ERROR("No bytes in buffer but we expect something");
+            } else {
+                if (command == '?') {
+                    uint8_t i;
+                    LOG_SYSTEM("Following commands are registered: ");
+                    terminal_write("? | Prints out this help\r\n");
+                    for (i = 0; i < 26; i++) {
+                        if (commands[i] != 0) {
+                            if (descriptions[i] != 0) {
+                                terminal_write("%c | %s\r\n", (char)(i + 65), descriptions[i]);
+                            } else {
+                                terminal_write("%c |\r\n", (char)(i + 65));
+                                //LOG_SYSTEM("%c", (char)(i + 65));
+                            }
                         }
                     }
-                }
-                char read;
-                while (uart_reads_buffer(&read, &DEBUG_UART));  //flush the buffer
-            } else {
-                int8_t val = translateCommand(command),  len = 0;
-                char readData[delimiter->length], read;
-                while (uart_reads_buffer(&read, &DEBUG_UART)) {
-                    readData[len] = read;
-                    len++;
-                }
-                if (val != -1) {
-                    if (commands[val] == 0) {
-                        LOG_WARNING("Command %c is not assigned", command);
-                    } else {
-                        LOG_SYSTEM("Received command: %c", command);
-                        commands[val](len - 1, (uint8_t*)readData); //we remove the \n
-                    }
-                } else {
+                    char read;
                     while (uart_reads_buffer(&read, &DEBUG_UART));  //flush the buffer
+                } else {
+                    int8_t val = translateCommand(command),  len = 0;
+                    char readData[delimiter->length], read;
+                    while (uart_reads_buffer(&read, &DEBUG_UART)) {
+                        readData[len] = read;
+                        len++;
+                    }
+                    if (val != -1) {
+                        if (commands[val] == 0) {
+                            LOG_WARNING("Command %c is not assigned", command);
+                        } else {
+                            LOG_SYSTEM("Received command: %c", command);
+                            commands[val](len - 1, (uint8_t*)readData); //we remove the \n
+                        }
+                    } else {
+                        while (uart_reads_buffer(&read, &DEBUG_UART));  //flush the buffer
+                    }
                 }
+                //if its our uart
             }
-            //if its our uart
+            uart_delimiter_handled(delimiter);
         }
-        uart_delimiter_handled(delimiter);
     }
 }
 static uint8_t init(void) {

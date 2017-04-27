@@ -5,6 +5,8 @@
  *  Author: elmar
  */
 #include <avr/pgmspace.h>
+#include <stdlib.h>
+#include "screenterminal.h"
 #include "../drivers/uart/terminal.h"
 #include "../drivers/spi/SEPS525F.h"
 #include "../drivers/host/timer.h"
@@ -145,7 +147,7 @@ void screen_image(Image * image, uint16_t x, uint16_t y) {
     }
 }
 
-void screen_sub_image(Image * image, uint16_t x, uint16_t y, uint16_t imgX, uint16_t imgY, uint16_t imgWidth, uint16_t imgHeight) {
+void screen_sub_image(const Image * image, uint16_t x, uint16_t y, uint16_t imgX, uint16_t imgY, uint16_t imgWidth, uint16_t imgHeight) {
     seps525f_start_draw(x, y, imgWidth, imgHeight);
     uint16_t cX, cY;
     if (image->isFlash) {
@@ -164,7 +166,7 @@ void screen_sub_image(Image * image, uint16_t x, uint16_t y, uint16_t imgX, uint
     seps525f_stop_draw();
 }
 
-void screen_sub_image_col(Image * image, uint16_t x, uint16_t y, uint16_t imgX, uint16_t imgY, uint16_t imgWidth, uint16_t imgHeight, uint16_t color) {
+void screen_sub_image_col(const Image * image, uint16_t x, uint16_t y, uint16_t imgX, uint16_t imgY, uint16_t imgWidth, uint16_t imgHeight, uint16_t color) {
     seps525f_start_draw(x, y, imgWidth, imgHeight);
     uint16_t cX, cY;
     if (image->isFlash) {
@@ -180,7 +182,7 @@ void screen_sub_image_col(Image * image, uint16_t x, uint16_t y, uint16_t imgX, 
     } else {
         for (cY = imgY; cY < (imgY + imgHeight); cY++) {
             for (cX = imgX; cX < (imgX + imgWidth); cX++) {
-                uint16_t saturatedColor = &image->image[cY * IMAGE_WIDTH(image) + cX];
+                uint16_t saturatedColor = (uint16_t) &image->image[cY * IMAGE_WIDTH(image) + cX];
                 if (saturatedColor != COLOR_TO656(0, 0, 0)) {
                     saturatedColor -= color;
                 }

@@ -103,7 +103,9 @@ uint8_t spi_writes_blocked(uint8_t * bytes, uint8_t len) {
 }
 
 static void callback(Event * event, uint8_t * data __attribute__ ((unused))) {
-    LOG_DEBUG("Finished %d ,%d", head, tail);
+    if (event == &SPI_FINISHED) {
+        LOG_DEBUG("Finished %d ,%d", head, tail);
+    }
 }
 
 static uint8_t init(void) {

@@ -21,7 +21,7 @@ static uint16_t backgroundColor = 0x0000;
 static uint8_t indexX = 0, indexY = 0;
 
 
-static void write(void * p, char c) {
+static void write(void * p __attribute__ ((unused)), char c) {
     screenterminal_writes(c);
 }
 
@@ -34,8 +34,9 @@ uint8_t half = 0;
 uint8_t hasCleared = 0;
 void screenterminal_writes(char text) {
     if ((uint8_t)text >= (uint8_t)' ') {
-        uint8_t x = 0, y = 0;
+//        uint8_t x = 0, y = 0;
         uint16_t drawX = indexX * 8, drawY = indexY * 8;
+        screen_color(textColor);
         screen_text(&text, 1, drawX, drawY);
 //         seps525f_start_draw(drawX, drawY, 8, 8);
 //         for (; y < 8; y++) {

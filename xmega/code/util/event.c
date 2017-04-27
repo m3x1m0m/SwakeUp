@@ -117,6 +117,7 @@ void event_process(void) {
 }
 
 uint8_t event_wait(Event * event, uint8_t timeout) {
+    (void)timeout; //TODO
     //todo set alarm
     //while event != alarm event
     while (1) {

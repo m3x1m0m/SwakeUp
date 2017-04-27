@@ -17,6 +17,7 @@ static const char _bufOverRun[] = "\n\r Uart buffer overrun \n\r";
 static const char _emptyJob[] = "\n\r No more jobs \n\r";
 static const char _fullJob[] = "\n\r Jobs are full \n\r";
 static const char _zeroJob[] = "\n\r Zero job \n\r";
+static const char _noImpl[] = "\n\r Not implemented \n\r";
 
 JOB_BUFFER_INIT(CpUartJobs, 0);                 //Debug uart doesnt use jobs, but a direct buffer
 JOB_BUFFER_INIT(EspUartJobs, UART_MAX_JOBS);
@@ -36,7 +37,7 @@ struct UartStatus {
     struct UartBuffer outBuffer;
 };
 
-static volatile struct UartStatus uartStatus    [UART_CHANNELS] = {{0}, {0}};
+static struct UartStatus uartStatus    [UART_CHANNELS] = {{0}, {0}};
 
 static struct UartDelimiter delimiters [UART_CHANNELS][UART_MAX_DELIMITERS];
 
@@ -104,6 +105,8 @@ void uart_speed(UART_BAUDRATE baudrate, USART_t * port) {
 
 
 uint8_t uart_job(char * data, uint8_t len, void (* callback)(struct Job *), USART_t * const port) {
+    (void)callback; //TODO make this working again, or remove it
+    uart_writes_blocked(_noImpl, sizeof(_noImpl), &DEBUG_UART);
     uart_writes_blocked(data, len, port);
     event_fire(&EVENT_UART_JOB, (uint8_t*)port);//(uint8_t *) callback);
     return 1;
@@ -214,6 +217,8 @@ uint8_t uart_reads_buffer(char * data, USART_t * port) {
 }
 
 void uart_flush_buffer(USART_t * port) {
+    (void)port; // TODO this can be used!
+    uart_writes_blocked(_noImpl, sizeof(_noImpl), &DEBUG_UART);
     //uint8_t id = getId(port);
 }
 
@@ -289,7 +294,7 @@ ISR(NAME##_DRE_vect) {             \
     }\
 }
 
-static void emptyCallback(char data) {
+static void emptyCallback(char data __attribute__ ((unused))) {
 }
 
 void uart_set_callback(void (*callback)(char), USART_t * const port) {

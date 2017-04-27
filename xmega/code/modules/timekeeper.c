@@ -4,6 +4,7 @@
  * Created: 3/3/2017 1:13:49 PM
  *  Author: elmar
  */
+#include <string.h>
 #include "timekeeper.h"
 #include "../drivers/host/timer.h"
 #include "log.h"
@@ -12,28 +13,30 @@ LOG_INIT("Timekeeper");
 static struct TimeKeeper time;
 
 static void callback(Event * event, uint8_t * data __attribute__ ((unused))) {
-    if (++time.second >= 60) {
-        time.second = 0;
-        if (++time.minute >= 60) {
-            time.minute = 0;
-            switch (time.amPm) {
-            case 1:
-                if (++time.hour >= 12) {
-                    time.hour = 0;
-                    time.amPm = 2;
+    if (event == &EVENT_TIMER_1_HZ) {
+        if (++time.second >= 60) {
+            time.second = 0;
+            if (++time.minute >= 60) {
+                time.minute = 0;
+                switch (time.amPm) {
+                case 1:
+                    if (++time.hour >= 12) {
+                        time.hour = 0;
+                        time.amPm = 2;
+                    }
+                    break;
+                case 2:
+                    if (++time.hour >= 12) {
+                        time.hour = 0;
+                        time.amPm = 1;
+                    }
+                    break;
+                case 3:
+                    if (++time.hour >= 24) {
+                        time.hour = 0;
+                    }
+                    break;
                 }
-                break;
-            case 2:
-                if (++time.hour >= 12) {
-                    time.hour = 0;
-                    time.amPm = 1;
-                }
-                break;
-            case 3:
-                if (++time.hour >= 24) {
-                    time.hour = 0;
-                }
-                break;
             }
         }
     }

@@ -11,7 +11,7 @@ static MsgFrame message;
 
 LOG_INIT("Control");
 
-EVENT_REGISTER(ProtoReceive, "When a message has been received");
+EVENT_REGISTER(PROTO_RECEIVE, "When a message has been received");
 
 void resetInstreamStream(Stream * stream) {
     stream->inputStream.toRead = 0;
@@ -21,16 +21,16 @@ void resetInstreamStream(Stream * stream) {
     stream->state = PREFIX_AA;
 }
 
-const static char startDelimitation[] = {0xAA, 0xBB, 0xCC, 0xDD} ;
+static const pb_byte_t startDelimitation[] = {0xAA, 0xBB, 0xCC, 0xDD} ;
 
 void writeMessage(Stream * stream, MsgFrame * frame) {
     size_t size;
     pb_get_encoded_size(&size, MsgFrame_fields, frame);
     stream->outputStream.stream.bytes_written = 0; //TODO this should not be required
-    uint16_t tempSize = size;
+    const pb_byte_t tempSize[] = {(size ) & 0xFF, (size >> 8) & 0xFF};
     LOG_DEBUG("Sending with size: %d ", size);
-    stream->outputStream.stream.callback(stream, startDelimitation, 4);
-    stream->outputStream.stream.callback(stream, &tempSize, 2);
+    stream->outputStream.stream.callback(&stream->outputStream.stream, startDelimitation, 4);
+    stream->outputStream.stream.callback(&stream->outputStream.stream, tempSize, 2);
     pb_encode(&stream->outputStream.stream, MsgFrame_fields, frame);
     //stream->outputStream.flush(stream); TODO
 }
@@ -38,7 +38,7 @@ void writeMessage(Stream * stream, MsgFrame * frame) {
 
 void messageReceived(Stream * stream) {
     stream->msgPointer = &message;
-    event_fire(&ProtoReceive, stream);
+    event_fire(&PROTO_RECEIVE, (uint8_t *) stream);
 }
 
 Stream * ctrlGetStream(CtrlStreams stream) {
@@ -59,23 +59,25 @@ Stream * ctrlGetStream(CtrlStreams stream) {
 }
 
 static void callback(Event * event, uint8_t * data) {
-    Stream * stream = (Stream *) data;
-    uint8_t status = pb_decode(&stream->inputStream.stream, MsgFrame_fields, &message);
-    if (status) {
-        processMessage(stream, &message);
-    } else {
-        LOG_WARNING("Decoding failed: %s\n", stream->inputStream.stream.errmsg);
+    if (event == &PROTO_RECEIVE) {
+        Stream * stream = (Stream *) data;
+        uint8_t status = pb_decode(&stream->inputStream.stream, MsgFrame_fields, &message);
+        if (status) {
+            processMessage(stream, &message);
+        } else {
+            LOG_WARNING("Decoding failed: %s\n", stream->inputStream.stream.errmsg);
+        }
+        resetInstreamStream(stream);
     }
-    resetInstreamStream(stream);
 }
 
 static uint8_t init(void) {
-    event_addListener(&ProtoReceive, callback);
+    event_addListener(&PROTO_RECEIVE, callback);
     LOG_SYSTEM("Control initialized");
     return 1;
 }
 static uint8_t deinit(void) {
-    event_removeListener(&ProtoReceive, callback);
+    event_removeListener(&PROTO_RECEIVE, callback);
     return 1;
 }
 MODULE_DEFINE(CONTROL, "Communication Control", init, deinit, &LOGGER, &ESP8266);

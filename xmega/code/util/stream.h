@@ -25,7 +25,6 @@ struct stream_in {
 
 struct stream_out {
     pb_ostream_t stream;
-    uint8_t (*flush)(struct stream_t *);
 };
 
 typedef struct stream_t {
@@ -36,21 +35,20 @@ typedef struct stream_t {
     uint8_t idleTimer;
 } Stream;
 
-#define STREAM_INIT(WRITEPOINTER,READPOINTER,FLUSH)             \
+#define STREAM_INIT(WRITEPOINTER,READPOINTER)             \
      {                                          \
         .outputStream.stream.callback = WRITEPOINTER,                   \
         .outputStream.stream.max_size = MAX_OUT_SIZE,                   \
-        .outputStream.flush = FLUSH,                                    \
         .inputStream.stream.callback = READPOINTER,                     \
         .inputStream.readBufferPos = 0,                                 \
         .inputStream.writeBufferPos = 0,                                \
         .inputStream.toRead = 0,                                        \
         .idleTimer = 0,                                                 \
         .msgPointer = NULL,                                             \
-        .state = PREFIX_AA,                                             \
+        .state = PREFIX_AA                                              \
     };
 
-uint8_t stream_readCallback(pb_istream_t *stream, uint8_t *buf, size_t count);
+uint8_t stream_readCallback(pb_istream_t *stream, const pb_byte_t *buf, size_t count);
 uint8_t stream_readByte(Stream * stream, uint8_t byte);
 void stream_init(Stream * stream);
 

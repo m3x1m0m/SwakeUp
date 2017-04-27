@@ -29,9 +29,9 @@ struct UartDelimiter {
 };
 
 struct UartBuffer {
-    uint8_t head;
-    uint8_t tail;
-    uint8_t size;
+    volatile uint8_t head;
+    volatile uint8_t tail;
+    volatile uint8_t size;
 };
 
 typedef enum {
@@ -40,7 +40,7 @@ typedef enum {
 
 void uart_speed(UART_BAUDRATE baudrate, USART_t * port);
 uint8_t uart_job(char * data, uint8_t len, void (* callback)(struct Job *), USART_t * port);
-uint8_t uart_write(const char * const data, uint8_t len, USART_t * const port);
+uint8_t uart_write(const char * const data, uint8_t len, USART_t * const port); //TODO maybe cahnge the len in a size_t?
 uint8_t uart_writes(const char data, USART_t * const port);
 uint8_t uart_buffer_out_level(const USART_t * const port);
 uint8_t uart_buffer_in_level(const USART_t * const port);

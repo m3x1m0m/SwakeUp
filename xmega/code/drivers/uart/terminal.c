@@ -70,21 +70,21 @@ void terminal_write_force(char * format, ...) {
     va_end(arg);
 }
 
-uint8_t terminal_format_p(char *fmt, va_list va) {
+uint8_t terminal_format_p(const char *fmt, va_list va) {
     init_printf((void*)0, sink);
-    tfp_format_p(0, sink, fmt, va);
+    tfp_format_p(0, sink, (char *) fmt, va); //stupid printf library, casting here is bad practice!
     return 1;
 }
 
-uint8_t terminal_format(char *fmt, va_list va) {
+uint8_t terminal_format(const char *fmt, va_list va) {
     init_printf((void*)0, sink);
-    tfp_format(0, sink, fmt, va);
+    tfp_format(0, sink, (char *) fmt, va); //stupid printf library, casting here is bad practice!
     return 1;
 }
 
-void terminal_format_blocking(char *fmt, va_list va) {
+void terminal_format_blocking(const char *fmt, va_list va) {
     init_printf((void*)0, write_block);
-    tfp_format(0, write_block, fmt, va);
+    tfp_format(0, write_block, (char *) fmt, va); //stupid printf library, casting here is bad practice!
 }
 
 void terminal_write_block(char * format, ...) {

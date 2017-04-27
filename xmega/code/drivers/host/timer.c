@@ -35,12 +35,14 @@ LOG_INIT("Timer");
 
 //static uint16_t alarms[6];
 static uint16_t runTime = 0;
-static uint16_t msCounter = 0;
+// static uint16_t msCounter = 0; // TODO implement?
 
 uint16_t timer_runTime(void) {
     return runTime;
 }
 int8_t   timer_timeOutEvent(uint16_t duration) {
+    (void)duration; //TODO
+    LOG_ERROR("Not implemented");
     return -1;
 }
 

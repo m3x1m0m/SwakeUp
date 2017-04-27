@@ -15,8 +15,14 @@
 LOG_INIT("MsgProc");
 
 void processMessage(Stream * stream, MsgFrame * message) {
+    (void)stream; //This will be used in the future to send back information
     LOG_INFO("Received message: %d", message->typ);
     switch (message->typ) {
+    case   MsgType_MSG_TYPE_NONE:
+        LOG_WARNING("Type has not been set! This should not happen");
+        break;
+    case MsgType_MSG_TYPE_POWER:
+        break;
     case MsgType_MSG_TUPE_LOCATION:
         break;
     case MsgType_MSG_TYPE_TIME: {

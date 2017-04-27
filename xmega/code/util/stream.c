@@ -19,7 +19,7 @@ void stream_init(Stream * stream) {
     stream->outputStream.stream.state = &stream->outputStream;
 }
 
-uint8_t stream_readCallback(pb_istream_t *stream, uint8_t *buf, size_t count) {
+uint8_t stream_readCallback(pb_istream_t *stream, const pb_byte_t *buf, size_t count) {
     LOG_DEBUG("prepare to read:%d bytes!\n", count);
     if (stream->bytes_left < count)
         PB_RETURN_ERROR(stream, "end-of-stream");
