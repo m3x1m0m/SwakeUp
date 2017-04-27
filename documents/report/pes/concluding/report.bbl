@@ -1,0 +1,83 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 2.8 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\sortlist[entry]{none/global/}
+  \entry{github:oled}{online}{}
+    \name{author}{1}{}{%
+      {{hash=Tomaolc}{%
+         family={{\myemph{Tomaž Šolc}}},
+         familyi={{\myemph{Tomaž Šolc}}},
+      }}%
+    }
+    \strng{namehash}{Tomaolc1}
+    \strng{fullhash}{Tomaolc1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{title}{{{Arduino library for the SEPS525 OLED shield}}}
+    \verb{url}
+    \verb https://github.com/avian2/SEPS525-OLED-Library
+    \endverb
+    \field{year}{2013}
+    \field{urlday}{02}
+    \field{urlmonth}{02}
+    \field{urlyear}{2017}
+  \endentry
+
+  \entry{sparetimelabs:tinyprintf}{online}{}
+    \name{author}{1}{}{%
+      {{hash=KustaaNyholm}{%
+         family={{\myemph{Kustaa Nyholm}}},
+         familyi={{\myemph{Kustaa Nyholm}}},
+      }}%
+    }
+    \strng{namehash}{KustaaNyholm1}
+    \strng{fullhash}{KustaaNyholm1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{title}{{{A tiny printf for embedded applications}}}
+    \verb{url}
+    \verb http://www.sparetimelabs.com/tinyprintf/tinyprintf.php
+    \endverb
+    \field{year}{2012}
+    \field{urlday}{13}
+    \field{urlmonth}{02}
+    \field{urlyear}{2017}
+  \endentry
+
+  \entry{lonestar:at}{online}{}
+    \name{author}{1}{}{%
+      {{hash=FrankDurdaIV}{%
+         family={{\myemph{Frank Durda IV}}},
+         familyi={{\myemph{Frank Durda IV}}},
+      }}%
+    }
+    \strng{namehash}{FrankDurdaIV1}
+    \strng{fullhash}{FrankDurdaIV1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{title}{{{The AT Command Set Reference - History }}}
+    \verb{url}
+    \verb http://www.sparetimelabs.com/tinyprintf/tinyprintf.php
+    \endverb
+    \field{year}{2004}
+    \field{urlday}{23}
+    \field{urlmonth}{02}
+    \field{urlyear}{2017}
+  \endentry
+\endsortlist
+\endinput
