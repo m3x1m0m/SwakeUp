@@ -166,9 +166,12 @@ static void callback(Event * event, uint8_t * data) {
             }
             uart_delimiter_handled(delimiter);
         }
+    } else if (event == &EVENT_TERMINAL_SPECIAL) {
+        LOG_DEBUG("Special key %d", data);
     }
 }
 static uint8_t init(void) {
+    event_addListener(&EVENT_TERMINAL_SPECIAL, callback);
     event_addListener(&EVENT_UART_DELIMITER, callback);
     uart_add_delimiter('\n', &DEBUG_UART);
     uart_add_delimiter('\r', &DEBUG_UART);

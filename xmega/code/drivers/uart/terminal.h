@@ -12,6 +12,13 @@
 #include <stdint.h>
 #include <stdarg.h>
 #include "../../util/module.h"
+#include "../../util/event.h"
+
+EVENT_EXP(EVENT_TERMINAL_SPECIAL);
+
+enum TERMINAL_SPECIAL_KEY {
+    ARR_UP, ARR_DOWN, ARR_LEFT, ARR_RIGHT, KEY_TAB
+};
 
 uint8_t terminal_write(char * format, ...);
 void terminal_write_force(char * format, ...);
