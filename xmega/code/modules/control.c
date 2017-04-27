@@ -70,7 +70,7 @@ static void callback(Event * event, uint8_t * data) {
 
 static uint8_t init(void) {
     event_addListener(&ProtoReceive, callback);
-    LOG_SYSTEM("Command initialized");
+    LOG_SYSTEM("Control initialized");
     return 1;
 }
 static uint8_t deinit(void) {
