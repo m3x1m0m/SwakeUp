@@ -78,8 +78,7 @@ Thumbs.db
 *.so.*
 *.dylib
 
-# Executables
-*.exe
+# Executables 
 *.out
 *.app
 *.i*86
@@ -143,6 +142,8 @@ MyStuff/*
 
 # LaTeX #
 #####################
+*.pygtex
+*.pygstyle
 *.aux
 *.backup 
 *.log 
