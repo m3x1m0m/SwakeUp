@@ -26,6 +26,7 @@ const static char startDelimitation[] = {0xAA, 0xBB, 0xCC, 0xDD} ;
 void writeMessage(Stream * stream, MsgFrame * frame) {
     size_t size;
     pb_get_encoded_size(&size, MsgFrame_fields, frame);
+    stream->outputStream.stream.bytes_written = 0; //TODO this should not be required
     uint16_t tempSize = size;
     LOG_DEBUG("Sending with size: %d ", size);
     stream->outputStream.stream.callback(stream, startDelimitation, 4);
@@ -60,6 +61,7 @@ Stream * ctrlGetStream(CtrlStreams stream) {
 static void callback(Event * event, uint8_t * data) {
     Stream * stream = (Stream *) data;
     uint8_t status = pb_decode(&stream->inputStream.stream, MsgFrame_fields, &message);
+    LOG_INFO("PB CB");
     if (status) {
         processMessage(stream, &message);
     } else {
