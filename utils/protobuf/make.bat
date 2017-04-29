@@ -1,4 +1,2 @@
-IF NOT EXIST embc   mkdir embc
-IF NOT EXIST cpp    mkdir cpp
+"generator\protoc.exe" --nanopb_out=../../code/xmega/util/protobuf --nanopb_out=../../code/esp/Basic_Serial/app --java_out=../../code/backend/src/main/java/com/swakeup/common swakeup.proto
 
-"generator\protoc.exe" --nanopb_out=embc --cpp_out=cpp swakeup.proto
