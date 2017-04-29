@@ -19,6 +19,7 @@
 #endif
 
 #define PROTO_TEST
+#define PROTO_PRINT
 
 #ifdef REV_1
 #include "pin_rev_1.h"

@@ -27,7 +27,7 @@ uint8_t stream_readCallback(pb_istream_t *stream, const pb_byte_t *buf, size_t c
 }
 
 void logErrorExpected(uint8_t exp, uint8_t got) {
-    LOG_ERROR("Expected %02x but got %02x\n", exp, got);
+    //LOG_ERROR("Expected %02x but got %02x\n", exp, got); //TODO
 }
 
 uint8_t stream_readByte(Stream * stream, uint8_t byte) {
@@ -46,6 +46,7 @@ uint8_t stream_readByte(Stream * stream, uint8_t byte) {
         if (byte == 0xBB) {
             stream->state = PREFIX_CC;
         } else {
+            stream->state = PREFIX_AA;
             logErrorExpected(0xBB, byte);
         }
         break;
@@ -53,6 +54,7 @@ uint8_t stream_readByte(Stream * stream, uint8_t byte) {
         if (byte == 0xCC) {
             stream->state = PREFIX_DD;
         } else {
+            stream->state = PREFIX_AA;
             logErrorExpected(0xCC, byte);
         }
         break;
@@ -73,7 +75,7 @@ uint8_t stream_readByte(Stream * stream, uint8_t byte) {
         stream->inputStream.toRead = (temp1) | temp2 << 8;
         stream->state = DATAS;
         if (stream->inputStream.toRead > MAX_IN_SIZE) {
-            LOG_ERROR("Max input-size exceeded");
+            //LOG_ERROR("Max input-size exceeded");
             return 0;
         }
     }

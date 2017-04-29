@@ -1,6 +1,10 @@
 #ifndef STREAM_H_
 #define STREAM_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "protobuf/pb.h"
 #include "protobuf/pb_encode.h"
 #include "protobuf/pb_decode.h"
@@ -51,5 +55,9 @@ typedef struct stream_t {
 uint8_t stream_readCallback(pb_istream_t *stream, const pb_byte_t *buf, size_t count);
 uint8_t stream_readByte(Stream * stream, uint8_t byte);
 void stream_init(Stream * stream);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* STREAM_H_ */

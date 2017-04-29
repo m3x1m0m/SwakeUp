@@ -1,9 +1,11 @@
 
 #include "log.h"
+#include "../pin_definitions.h"
 #include "../drivers/uart/esp8266.h"
 #include "control.h"
 #include "../util/protobuf/pb_decode.h"
 #include "../util/protobuf/pb_encode.h"
+#include "../drivers/uart/terminal.h"
 #include <stdio.h>
 #include "control.h"
 
@@ -62,6 +64,15 @@ static void callback(Event * event, uint8_t * data) {
     if (event == &PROTO_RECEIVE) {
         Stream * stream = (Stream *) data;
         uint8_t status = pb_decode(&stream->inputStream.stream, MsgFrame_fields, &message);
+#ifdef PROTO_PRINT
+        LOG_DEBUG("Printing a message with size of: %d", stream->inputStream.toRead);
+        terminal_write("\t");
+        uint8_t i = 0, l = stream->inputStream.toRead;
+        for (; i < l; i++) {
+            terminal_write("(%d) ", (uint8_t)stream->inputStream.readBuffer[i]);
+        }
+        terminal_write("\r\n");
+#endif
         if (status) {
             processMessage(stream, &message);
         } else {
