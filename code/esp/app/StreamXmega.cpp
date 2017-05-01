@@ -7,6 +7,8 @@
 
 #include "StreamXmega.h"
 
+StreamXmega xmegaStream;
+
 static bool writeSerial(pb_ostream_t * stream __attribute__ ((unused)),
 		const pb_byte_t *buf, size_t count) {
 	uint8_t i = 0;
@@ -18,9 +20,9 @@ static bool writeSerial(pb_ostream_t * stream __attribute__ ((unused)),
 
 StreamXmega::StreamXmega() :
 		ProtoStream(&writeSerial) {
-	Serial.setCallback(
-			StreamDataReceivedDelegate(&StreamXmega::onReceive, this));
+	Serial.setCallback(StreamDataReceivedDelegate(&StreamXmega::onReceive, this));
 	Serial.begin(SERIAL_BAUD_RATE);
+	Serial.systemDebugOutput(false);
 }
 
 void StreamXmega::onReceive(Stream& stream, char arrivedChar, unsigned short availableCharsCount) {

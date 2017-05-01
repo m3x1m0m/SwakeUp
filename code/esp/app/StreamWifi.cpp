@@ -7,7 +7,7 @@
 
 #include "StreamWifi.h"
 
-static StreamWifi wifiStream;
+StreamWifi wifiStream;
 
 static bool writeSerial(pb_ostream_t * stream __attribute__ ((unused)),
 		const pb_byte_t *buf, size_t count) {
@@ -16,7 +16,7 @@ static bool writeSerial(pb_ostream_t * stream __attribute__ ((unused)),
 
 StreamWifi::StreamWifi() :
 		ProtoStream(&writeSerial), client(
-				TcpClientDataDelegate(StreamWifi::onReceive, this)) {
+				TcpClientDataDelegate(&StreamWifi::onReceive, &wifiStream)) {
 }
 
 bool StreamWifi::onReceive(TcpClient& client, char *data, int size) {

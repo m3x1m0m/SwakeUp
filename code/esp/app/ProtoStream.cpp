@@ -23,8 +23,11 @@ void ProtoStream::writeMessage(MsgFrame frame) {
 	ostream.callback(&ostream, startDelimitation, 4);
 	ostream.callback(&ostream, tempSize, 2);
 	pb_encode(&ostream, MsgFrame_fields, &frame);
+	flush();
 }
+void ProtoStream::flush(){
 
+}
 bool ProtoStream::processByte(uint8_t byte) {
 	switch (state) {
 	case PREFIX_AA:

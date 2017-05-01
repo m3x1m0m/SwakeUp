@@ -25,6 +25,7 @@ public:
 	void writeMessage(MsgFrame frame);
 	virtual ~ProtoStream();
 protected:
+	virtual void flush();
 	enum ProtocolState {
 		PREFIX_AA, PREFIX_BB, PREFIX_CC, PREFIX_DD, SIZE_1, SIZE_2, DATAS
 	};
