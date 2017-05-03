@@ -20,12 +20,16 @@ public:
 	void flush() override;
 	bool writeBytes(const char * byte, int len);
 	void processed(HttpClient& client, bool successful)		{
+		if(successful){
+			Serial.printf("Success: %s response: %s \r\n", client.getPostBody(), client.getResponseString());
+		}
+
 	}
 	virtual ~StreamRest();
 private:
 	const char *url = "http://enigmatic-savannah-85833.herokuapp.com/swakeup";
 	int writePointer = 0;
-	uint8_t buffer[128];	//TODO this can be abottleneck
+	unsigned char buffer[128];	//TODO this can be abottleneck
 };
 extern StreamRest restStream;
 #endif /* APP_RESTSTREAM_H_ */
