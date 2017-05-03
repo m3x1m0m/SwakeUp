@@ -31,13 +31,13 @@ protected:
 	};
 	ProtocolState state = PREFIX_AA;
 	bool processByte(uint8_t byte);
-private:
+	pb_ostream_t ostream;
 	pb_istream_t istream;
+private:
 	uint8_t readBuffer[MAX_IN_SIZE];
 	size_t readBufferPos = 0;
 	size_t writeBufferPos = 0;
 	uint16_t toRead = 0;
-	pb_ostream_t ostream;
 };
 
 #endif /* APP_STREAMS_PROTOSTREAM_H_ */

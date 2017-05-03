@@ -11,6 +11,7 @@ static const pb_byte_t startDelimitation[] = { 0xAA, 0xBB, 0xCC, 0xDD };
 
 ProtoStream::ProtoStream(t_write_callback write_callback) {
 	ostream.callback = write_callback;
+	ostream.max_size = 128;
 	// TODO Auto-generated constructor stub
 }
 
@@ -23,6 +24,7 @@ void ProtoStream::writeMessage(MsgFrame frame) {
 	ostream.callback(&ostream, startDelimitation, 4);
 	ostream.callback(&ostream, tempSize, 2);
 	pb_encode(&ostream, MsgFrame_fields, &frame);
+	Serial.printf("PB size: %d error: %s \r\n", size, ostream.errmsg);
 	flush();
 }
 void ProtoStream::flush(){
@@ -37,7 +39,6 @@ bool ProtoStream::processByte(uint8_t byte) {
 			state = PREFIX_CC;
 		} else {
 			//TODO
-			return 0;
 		}
 		break;
 	case PREFIX_BB:
@@ -75,7 +76,7 @@ bool ProtoStream::processByte(uint8_t byte) {
 		state = DATAS;
 		if (toRead > MAX_IN_SIZE) {
 			//LOG_ERROR("Max input-size exceeded"); TODO
-			return 0;
+			return false;
 		}
 	}
 		break;
@@ -85,11 +86,11 @@ bool ProtoStream::processByte(uint8_t byte) {
 		if (writeBufferPos >= toRead) {
 			istream = pb_istream_from_buffer(readBuffer, toRead);
 			state = PREFIX_AA;
-			return 1;
+			return true;
 		}
 		break;
 	}
-	return 0;
+	return false;
 }
 
 ProtoStream::~ProtoStream() {
