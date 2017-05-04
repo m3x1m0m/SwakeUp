@@ -7,7 +7,7 @@
 
 #include "StreamXmega.h"
 
-StreamXmega xmegaStream;
+//StreamXmega xmegaStream;
 
 static bool writeSerial(pb_ostream_t * stream __attribute__ ((unused)),
 		const pb_byte_t *buf, size_t count) {

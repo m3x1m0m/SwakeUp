@@ -16,5 +16,5 @@ public:
 	void onReceive(Stream& stream, char arrivedChar, unsigned short availableCharsCount);
 	virtual ~StreamXmega();
 };
-extern StreamXmega xmegaStream;
+//extern StreamXmega xmegaStream;
 #endif /* APP_STREAMS_STREAMXMEGA_H_ */

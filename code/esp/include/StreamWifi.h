@@ -23,6 +23,6 @@ private:
 	TcpClient client;
 };
 
-extern StreamWifi wifiStream;
+//extern StreamWifi wifiStream;
 
 #endif /* APP_STREAMWIFI_H_ */
