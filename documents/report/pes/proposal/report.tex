@@ -1,0 +1,141 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Author:      Maximilian Stiefel
+%% Date:        06.03.2017
+%% University:  Uppsala Universitet
+%% Department:  Institutionen för informationsteknologi 
+%% Course:      Microcontroller Programming
+%% Project:     Swakeup
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass{report}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Preamble
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Encoding of the input
+\usepackage[utf8]{inputenc}
+
+% Geometry stuff
+\usepackage[head=24pt,a4paper,lmargin={2.5cm},rmargin={2.5cm},tmargin={2.5cm},
+bmargin={2.5cm}]{geometry}
+
+% For graphics
+\usepackage{graphicx}
+
+% For code highlighting
+\usepackage{minted}
+
+% For shaded
+\usepackage{xcolor}
+\usepackage{framed}
+\definecolor{shadecolor}{gray}{0.9}
+
+% For some symbols
+\usepackage{textcomp}
+%\usepackage{eurosans}
+
+% For math
+\usepackage{amssymb}
+\usepackage{amsmath}
+
+\setlength{\parindent}{0em} 
+
+% For title formatting 
+\usepackage{titlesec} 
+
+\titleformat%
+{\chapter}%
+[block]%
+{\bfseries\Huge}%
+{\thechapter\hspace{1cm}}%
+{0pt}%
+{\bfseries\Huge}%
+
+% For SI units.
+\usepackage{siunitx}
+
+% Input definition macros
+\input{mydefs.tex}
+
+\usepackage{hyperref}
+\hypersetup{
+	plainpages=false,
+	unicode=false,
+	pdftoolbar=true,
+	pdfmenubar=true,
+	pdffitwindow=false,
+	pdfstartview={FitH},
+	pdftitle={\mytitle},
+	pdfauthor={\myauthora ,\space\myauthorb ,\space\myauthorc},
+	pdfsubject={\mytypeofwork\space\myduedate},
+	pdfcreator={\myauthora ,\space\myauthorb ,\space\myauthorc},
+	pdfproducer={\myauthora ,\space\myauthorb ,\space\myauthorc},
+	pdfkeywords={\mykeywords},
+	pdfnewwindow=true,
+	pdfborder={0 0 0},
+	colorlinks=false,
+	linkcolor=black,
+	citecolor=black,
+	filecolor=black,
+	urlcolor=cyan
+}	
+
+\newcommand{\newpar}{\vspace{1em}\\}
+\newcommand{\myemph}[1]{\textsl{#1}}
+
+
+% For PDFs
+\usepackage{pdfpages}
+
+% Header and footer
+\usepackage{fancyhdr}
+\lhead{\ifnum\value{chapter}>0 \includegraphics[width=1cm]{./fig/uppsla_university} \fi}
+\chead{}
+\rhead{\ifnum\value{chapter}>0 {\rightmark}\\\textcolor{gray}{\leftmark} \fi}
+\lfoot{}
+\cfoot{\ifnum\value{chapter}>0 \thepage \fi}
+\rfoot{}
+\setlength{\headheight}{1cm}
+
+\usepackage[autostyle]{csquotes}
+\usepackage[style=ieee,backend=bibtex]{biblatex}
+\addbibresource{literature.bib}
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Titlepage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{titlepage.tex}
+
+\newcounter{roman}
+\pagenumbering{Roman}
+
+\pagestyle{fancy}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TOC etc.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\tableofcontents
+
+\newpage
+\setcounter{roman}{\value{page}}
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Introduction
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{General Description}
+\label{chap:description}
+\input{./doc/description.tex}
+\chapter{Objectives and Requirements}
+\label{chap:requirements}
+\input{./doc/requirements.tex}
+\chapter{Organization}
+\label{chap:organization}
+Multiple dedicated days have been allocated on which the team shall gather, and discuss progress and problems that have been run into. To communicate during other days, telegram will be used to talk. The tasks will be divided equally among all the members. To allow for seamless collaboration, version control will be used. The whole project is hosted on github where issues can be made, and progress can be committed.
+
+
+\end{document}

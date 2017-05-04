@@ -1,0 +1,6 @@
+*.cproj
+*.componentinfo.xml
+*.atsln
+/.vs/
+/Debug/
+*.pyxel

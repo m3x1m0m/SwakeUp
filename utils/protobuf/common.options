@@ -1,0 +1,11 @@
+# Commom limits
+
+Date.day              int_size:IS_8
+Date.month            int_size:IS_8
+Date.year             int_size:IS_8
+
+Version.maj           int_size:IS_8
+Version.min           int_size:IS_8
+Version.build         int_size:IS_8
+
+
