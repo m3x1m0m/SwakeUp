@@ -37,8 +37,8 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 3 5
 Title "Test Points"
-Date "2017-03-09"
-Rev "2.0"
+Date "2016-12-02"
+Rev "1.0"
 Comp "Uppsala University"
 Comment1 "Project: Swakeup"
 Comment2 ""

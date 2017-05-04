@@ -37,8 +37,8 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 5 5
 Title "RGB LED Driver "
-Date "2017-03-09"
-Rev "2.0"
+Date "2016-12-30"
+Rev "1.0"
 Comp "Uppsala University"
 Comment1 "Project: Swakeup"
 Comment2 ""
@@ -266,93 +266,6 @@ F 4 "311-10KGRCT-ND" V 2600 3400 60  0001 C CNN "Digikey"
 	-1   0    0    1   
 $EndComp
 $Comp
-<<<<<<< HEAD
-=======
-L Q_PMOS_DGS Q8
-U 1 1 5841A28D
-P 3400 3250
-F 0 "Q8" V 3600 3150 50  0000 R CNN
-F 1 "DMG2305UX" V 3350 3150 50  0000 R CNN
-F 2 "TO_SOT_Packages_SMD:SOT-23_Handsoldering" H 3600 3350 50  0001 C CNN
-F 3 "http://www.diodes.com/_files/datasheets/DMG2305UX.pdf" H 3400 3250 50  0001 C CNN
-F 4 "DMG2305UX-13DICT-ND" H 3400 3250 60  0001 C CNN "Digikey"
-	1    3400 3250
-	0    -1   -1   0   
-$EndComp
-$Comp
-L Q_NPN_BCE Q4
-U 1 1 5837C3ED
-P 2850 1650
-F 0 "Q4" H 3100 1750 50  0000 R CNN
-F 1 "MMBT3904" H 3400 1550 50  0000 R CNN
-F 2 "TO_SOT_Packages_SMD:SOT-23_Handsoldering" H 3050 1750 50  0001 C CNN
-F 3 "http://www.mccsemi.com/up_pdf/MMBT3904(SOT-23).pdf" H 2850 1650 50  0001 C CNN
-F 4 "MMBT3904TPMSCT-ND" H 3550 1600 60  0001 C CNN "Digikey"
-	1    2850 1650
-	1    0    0    -1  
-$EndComp
-$Comp
-L Q_NPN_BCE Q5
-U 1 1 5841AE74
-P 2850 3700
-F 0 "Q5" H 3100 3800 50  0000 R CNN
-F 1 "MMBT3904" H 3400 3600 50  0000 R CNN
-F 2 "TO_SOT_Packages_SMD:SOT-23_Handsoldering" H 3050 3800 50  0001 C CNN
-F 3 "http://www.mccsemi.com/up_pdf/MMBT3904(SOT-23).pdf" H 2850 3700 50  0001 C CNN
-F 4 "MMBT3904TPMSCT-ND" H 3550 3650 60  0001 C CNN "Digikey"
-	1    2850 3700
-	1    0    0    -1  
-$EndComp
-$Comp
-L Q_NPN_BCE Q6
-U 1 1 5841B110
-P 2850 5900
-F 0 "Q6" H 3100 6000 50  0000 R CNN
-F 1 "MMBT3904" H 3400 5800 50  0000 R CNN
-F 2 "TO_SOT_Packages_SMD:SOT-23_Handsoldering" H 3050 6000 50  0001 C CNN
-F 3 "http://www.mccsemi.com/up_pdf/MMBT3904(SOT-23).pdf" H 2850 5900 50  0001 C CNN
-F 4 "MMBT3904TPMSCT-ND" H 3550 5850 60  0001 C CNN "Digikey"
-	1    2850 5900
-	1    0    0    -1  
-$EndComp
-$Comp
-L Q_NPN_BCE Q1
-U 1 1 5841C01A
-P 2500 2500
-F 0 "Q1" H 2750 2600 50  0000 R CNN
-F 1 "MMBT3904" H 3050 2400 50  0000 R CNN
-F 2 "TO_SOT_Packages_SMD:SOT-23_Handsoldering" H 2700 2600 50  0001 C CNN
-F 3 "http://www.mccsemi.com/up_pdf/MMBT3904(SOT-23).pdf" H 2500 2500 50  0001 C CNN
-F 4 "MMBT3904TPMSCT-ND" H 3200 2450 60  0001 C CNN "Digikey"
-	1    2500 2500
-	1    0    0    -1  
-$EndComp
-$Comp
-L Q_NPN_BCE Q2
-U 1 1 5841C212
-P 2500 4550
-F 0 "Q2" H 2750 4650 50  0000 R CNN
-F 1 "MMBT3904" H 3050 4450 50  0000 R CNN
-F 2 "TO_SOT_Packages_SMD:SOT-23_Handsoldering" H 2700 4650 50  0001 C CNN
-F 3 "http://www.mccsemi.com/up_pdf/MMBT3904(SOT-23).pdf" H 2500 4550 50  0001 C CNN
-F 4 "MMBT3904TPMSCT-ND" H 3200 4500 60  0001 C CNN "Digikey"
-	1    2500 4550
-	1    0    0    -1  
-$EndComp
-$Comp
-L Q_NPN_BCE Q3
-U 1 1 5841C4C0
-P 2500 6750
-F 0 "Q3" H 2750 6850 50  0000 R CNN
-F 1 "MMBT3904" H 3050 6650 50  0000 R CNN
-F 2 "TO_SOT_Packages_SMD:SOT-23_Handsoldering" H 2700 6850 50  0001 C CNN
-F 3 "http://www.mccsemi.com/up_pdf/MMBT3904(SOT-23).pdf" H 2500 6750 50  0001 C CNN
-F 4 "MMBT3904TPMSCT-ND" H 3200 6700 60  0001 C CNN "Digikey"
-	1    2500 6750
-	1    0    0    -1  
-$EndComp
-$Comp
->>>>>>> master
 L D D7
 U 1 1 5841D6DF
 P 3400 4100
@@ -788,7 +701,6 @@ Connection ~ 5450 5700
 Wire Wire Line
 	5800 5500 4950 5500
 Connection ~ 4950 5700
-<<<<<<< HEAD
 Wire Wire Line
 	3600 1100 3750 1100
 Wire Wire Line
@@ -902,18 +814,5 @@ F 3 "http://www.diodes.com/_files/datasheets/DMG2305UX.pdf" H 3400 5450 50  0001
 F 4 "-" H 3400 5450 60  0001 C CNN "Digikey"
 	1    3400 5450
 	0    1    -1   0   
-=======
-$Comp
-L Q_PMOS_DGS Q9
-U 1 1 5841A571
-P 3400 5450
-F 0 "Q9" V 3600 5350 50  0000 R CNN
-F 1 "DMG2305UX" V 3350 5350 50  0000 R CNN
-F 2 "TO_SOT_Packages_SMD:SOT-23_Handsoldering" H 3600 5550 50  0001 C CNN
-F 3 "http://www.diodes.com/_files/datasheets/DMG2305UX.pdf" H 3400 5450 50  0001 C CNN
-F 4 "DMG2305UX-13DICT-ND" H 3400 5450 60  0001 C CNN "Digikey"
-	1    3400 5450
-	0    -1   -1   0   
->>>>>>> master
 $EndComp
 $EndSCHEMATC

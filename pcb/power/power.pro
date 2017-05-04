@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 update=mån 24 apr 2017 09:05:34
-=======
-update=tor  9 mar 2017 15:14:47
->>>>>>> master
 version=1
 last_client=kicad
 [pcbnew]
