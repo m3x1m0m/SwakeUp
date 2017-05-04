@@ -4,7 +4,7 @@
 #include "StreamXmega.h"
 #include "StreamRest.h"
 #include "swakeup.pb.h"
-
+#include "StreamWebsocket.h"
 #ifndef WIFI_SSID
 #define WIFI_SSID "Abcdeff" // Put you SSID and Password here
 #define WIFI_PWD "ElmarElmar"
@@ -37,9 +37,11 @@ void testPrintf() {
 void testXmega(MsgFrame frame) {
 	//xmegaStream.writeMessage(frame);
 }
-
+StreamWebsocket web;
 void testRest(MsgFrame frame) {
+	Serial.println("Hallo");
 	restStream.writeMessage(frame);
+	//web.sendMsg();
 }
 
 void protoTest() {
@@ -54,11 +56,13 @@ void protoTest() {
 }
 
 void periodTest() {
-	procTimer.initializeMs(20 * 1000, protoTest).start(true); // every 20 seconds
+	//web.connect();
+	procTimer.initializeMs(10 * 1000, protoTest).start(true); // every 20 seconds
 }
 
 void init() {
 	pinMode(2, OUTPUT);
+	Serial.begin(SERIAL_BAUD_RATE);
 	Serial.systemDebugOutput(true); // Debug output to serial
 	//periodTest();
 	WifiStation.config(WIFI_SSID, WIFI_PWD);
