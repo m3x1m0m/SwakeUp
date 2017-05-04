@@ -115,3 +115,19 @@ void event_process(void) {
     }
 #endif
 }
+
+uint8_t event_wait(Event * event, uint8_t timeout) {
+    //todo set alarm
+    //while event != alarm event
+    while (1) {
+        InternalEvent * nextEvent = getNext();
+        for (uint8_t i = 0; i < listenerIndex; i++) {
+            if (listeners[i].event == nextEvent->event) {
+                listeners[i].callback(nextEvent->event, nextEvent->data);
+            }
+        }
+        if (nextEvent->event == event)
+            return 1;
+        while (eventBufferHead != eventBufferTail);
+    }
+}

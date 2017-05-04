@@ -15,52 +15,59 @@
 
 LOG_INIT("Terminal");
 
-static uint8_t buffer[TERMINAL_LINES][TERMINAL_MAX_LINE];
-static uint8_t characterIndex[TERMINAL_LINES];
-static uint8_t sendStatus[TERMINAL_LINES];
-static uint8_t currentLine = 0;
+void (*sink) (void*, char);
 
 
-static void write_block(void * p, char c) {
-    uart_write_blocked(c, &CP_PORT);
+
+
+static void write_block(void * p __attribute__ ((unused)), char c) {
+    uart_write_blocked(c, &DEBUG_UART);
 }
-static void write(void * p, char c) {
-    terminal_putc(c);
+
+static void write(void * p __attribute__ ((unused)), char c) {
+    uart_writes(c, &DEBUG_UART);
 }
+
+void (*terminal_current_sink(void))(void *, char ) {
+    return sink;
+}
+
+void terminal_set_sink(void (*putcf) (void*, char)) {
+    sink = putcf;
+}
+
+void terminal_default_sink(void) {
+    sink = &write;                          //default
+    LOG_SYSTEM("Reverted back to default sink");
+}
+
 uint8_t terminal_write(char * format, ...) {
-    if (sendStatus[currentLine]) return 0;
-    init_printf((void*)0, write);
+    init_printf((void*)0, sink);
     va_list arg;
     va_start(arg, format);
-    tfp_format(0, write, format, arg);
+    tfp_format(0, sink, format, arg);
     va_end(arg);
     return 1;
 }
 
 void terminal_write_force(char * format, ...) {
-    while (sendStatus[currentLine]) {
-        event_process();
-    }
-    init_printf((void*)0, write);
+    init_printf((void*)0, sink);
     va_list arg;
     va_start(arg, format);
-    tfp_format(0, write, format, arg);
+    tfp_format(0, sink, format, arg);
     va_end(arg);
 }
 
-uint8_t terminal_format(char *fmt, va_list va) {
-    if (sendStatus[currentLine]) return 0;
-    init_printf((void*)0, write);
-    tfp_format(0, write, fmt, va);
+uint8_t terminal_format_p(char *fmt, va_list va) {
+    init_printf((void*)0, sink);
+    tfp_format_p(0, sink, fmt, va);
     return 1;
 }
 
-void terminal_format_force(char *fmt, va_list va) {
-    while (sendStatus[currentLine]) {
-        event_process();
-    }
-    init_printf((void*)0, write);
-    tfp_format(0, write, fmt, va);
+uint8_t terminal_format(char *fmt, va_list va) {
+    init_printf((void*)0, sink);
+    tfp_format(0, sink, fmt, va);
+    return 1;
 }
 
 void terminal_format_blocking(char *fmt, va_list va) {
@@ -76,77 +83,34 @@ void terminal_write_block(char * format, ...) {
     va_end(arg);
 }
 
-void terminal_putc(char c) {
-    if (sendStatus[currentLine]) {
-        uint8_t tempLine = (currentLine + 1 == TERMINAL_LINES) ? 0 : currentLine + 1;
-        if (characterIndex[tempLine] < TERMINAL_MAX_LINE - 1) {
-            //we are sending, but next line is free
-            currentLine = tempLine;
-            buffer[currentLine][characterIndex[currentLine]++] = c;
-            //todo check if c == \n
-            return;
-        } else {
-            //we are sending and everything else is full
-            while (sendStatus[currentLine]) {
-                event_process();
-            }
-            //once we are not sending anymore we resume normally
-        }
-    }
-    buffer[currentLine][characterIndex[currentLine]] = c;
-    if (++characterIndex[currentLine] == TERMINAL_MAX_LINE) {
-        terminal_flush();  //We are filled up
-    } else if (c == '\n') terminal_flush();
-}
-
 void terminal_flush(void) {
-    if (sendStatus[currentLine] == 1) return; //we are already sending what we can
-    sendStatus[currentLine] = 1;
-    uart_job(buffer[currentLine], characterIndex[currentLine], 0, &CP_PORT);
-    if (++currentLine == TERMINAL_LINES) {
-        currentLine = 0;
-    }
+    //lets keep it easy, it always flushes for now
 }
 
+
+// static void callback(Event * event, uint8_t * data) {
+//     if (event == &EVENT_UART_JOB) {
+//         // don't have to do anything i guess
+//     }
+// }
+
+void terminal_putc(char c __attribute__ ((unused))) {
+    sink(0, c);
+}
 
 char terminal_getc(void) {
+    LOG_WARNING("Not implemented");
     return '0';
 }
 
-uint8_t terminal_level_in(void) {
-    return 0;
-}
-
-static void callback(Event * event, uint8_t * data) {
-    if (event == &EVENT_UART_JOB) {
-        struct Job * job = (struct Job *)data;
-        for (uint8_t i = 0; i < TERMINAL_LINES; i++) {
-            if (buffer[i] == job->data) {
-                characterIndex[i] = 0;
-                sendStatus[i] = 0;
-                break;
-            }
-        }
-    }
-}
-
-static void initalizeCallback(Event * event, uint8_t * data) {
-    LOG_SYSTEM("Uart set up");
-    event_removeListener(&EVENT_UART_JOB, initalizeCallback);
-}
-
 static uint8_t init(void) {
-    for (uint8_t i = 0; i < TERMINAL_LINES; i++) {
-        characterIndex[i] = 0;
-    }
-    event_addListener(&EVENT_UART_JOB, callback);
-    //event_addListener(&EVENT_UART_JOB, initalizeCallback);
+    sink = &write;                          //default
+    terminal_write("Terminal initialized\n\r");
     return 1;
 }
 
 static uint8_t deinit(void) {
-    event_removeListener(&EVENT_UART_JOB, callback);
-    event_removeListener(&EVENT_UART_JOB, initalizeCallback);
+    //event_removeListener(&EVENT_UART_JOB, callback);
     return 1;
 }
 

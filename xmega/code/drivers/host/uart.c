@@ -6,30 +6,27 @@
 */
 
 #include "../../pin_definitions.h"
-
+#include "../uart/terminal.h"
 #include "uart.h"
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-JOB_BUFFER_INIT(CpUartJobs, UART_MAX_JOBS);
+static const char _bufOverRun[] = "\n\r Uart buffer overrun \n\r";
+static const char _emptyJob[] = "\n\r No more jobs \n\r";
+static const char _fullJob[] = "\n\r Jobs are full \n\r";
+static const char _zeroJob[] = "\n\r Zero job \n\r";
+
+JOB_BUFFER_INIT(CpUartJobs, 0);                 //Debug uart doesnt use jobs, but a direct buffer
 JOB_BUFFER_INIT(EspUartJobs, UART_MAX_JOBS);
 
 struct JobBuffer * uartBuffers[2] = {&CpUartJobs, &EspUartJobs};
-
 
 EVENT_REGISTER(EVENT_UART_JOB,      "Completed UART job");
 EVENT_REGISTER(EVENT_UART_DELIMITER, "Got UART delimiter");
 
 #define UART_MAX_DELIMITERS     3
-#define UART_MAX_IN_BUFFER      64
 #define UART_CHANNELS           2
-
-struct UartDelimiter {
-    char delimiter;
-    uint8_t readDelimiter;
-    uint8_t tempReadDelimiter;
-};
 
 struct UartStatus {
     uint8_t delimiters_head;
@@ -38,23 +35,47 @@ struct UartStatus {
     uint8_t inBuffer_head;
     uint8_t inBuffer_tail;
     uint8_t inBuffer_size;
+    uint8_t outBuffer_head;
+    uint8_t outBuffer_tail;
+    uint8_t outBuffer_size;
 };
 
-struct UartStatus uartStatus    [UART_CHANNELS];
+static volatile struct UartStatus uartStatus    [UART_CHANNELS] = {{0}, {0}};
 
-struct UartDelimiter delimiters [UART_CHANNELS][UART_MAX_DELIMITERS];
+static struct UartDelimiter delimiters [UART_CHANNELS][UART_MAX_DELIMITERS];
 
-char inBuffer                   [UART_CHANNELS][UART_MAX_IN_BUFFER];
+static char inBuffer                   [UART_CHANNELS][UART_MAX_IN_BUFFER];
 
-static uint8_t sending          [UART_CHANNELS] = {0, 0};
+static char outBuffer                  [UART_CHANNELS][UART_MAX_OUT_BUFFER];
 
-static void _send(USART_t * port, struct JobBuffer * uartJob);
+static volatile uint8_t outBufferLock  [UART_CHANNELS] = {0, 0};
 
-#define USART_BAUDRATE 9600
-#define BAUD_PRESCALE (((F_CPU/(USART_BAUDRATE*16UL)))-1)
+static volatile uint8_t sending        [UART_CHANNELS] = {0, 0};
 
-static uint8_t getId(USART_t * port) {
-    return port == &USARTC0;
+#define lock(id) while (outBufferLock[id]); outBufferLock[id] = 1
+#define unlock(id) outBufferLock[id] = 0
+
+static inline uint8_t softlock(uint8_t id) {
+    if (outBufferLock[id]) return 0;
+    outBufferLock[id] = 1;
+    return 1;
+}
+
+//static void _send(USART_t * port, struct JobBuffer * uartJob);
+#define USARTE_ID 0
+
+#define USARTD_ID 1
+
+static inline uint8_t getId(const USART_t * const port) {
+    return port == &USARTD1;
+}
+
+uint8_t uart_buffer_out_level(const USART_t * const port) {
+    return uartStatus[getId(port)].outBuffer_size;
+}
+
+uint8_t uart_buffer_in_level(const USART_t * const port) {
+    return uartStatus[getId(port)].inBuffer_size;
 }
 
 void uart_speed(UART_BAUDRATE baudrate, USART_t * port) {
@@ -62,7 +83,7 @@ void uart_speed(UART_BAUDRATE baudrate, USART_t * port) {
     case B2400:
         break;
     case B4800:
-        port->BAUDCTRLA = 3317;
+        port->BAUDCTRLA = 207;
         port->BAUDCTRLB = -4;
         break;
     case B9600:
@@ -74,47 +95,82 @@ void uart_speed(UART_BAUDRATE baudrate, USART_t * port) {
         port->BAUDCTRLB = 0;
         break;
     case B115200:
-        port->BAUDCTRLA = 123;
-        port->BAUDCTRLB = -4;
+        port->BAUDCTRLA = 8;
+        port->BAUDCTRLB = 0;
         break;
     }
 }
 
 
-uint8_t uart_job(char * data, uint8_t len, void (* callback)(struct Job *), USART_t * port) {
-    uint8_t id = getId(port);
-    if (job_add(uartBuffers[id], data, len, callback) == 0) {
-        //LOG_ERROR("No free jobs");
-        //we are full boi
-        //LED_PORT.OUTCLR = LED_PIN;
-        return 0;
-    }
-    if (!sending[id]) _send(port, uartBuffers[id]);
+uint8_t uart_job(char * data, uint8_t len, void (* callback)(struct Job *), USART_t * const port) {
+    uart_writes_blocked(data, len, port);
+    event_fire(&EVENT_UART_JOB, (uint8_t*)port);//(uint8_t *) callback);
     return 1;
 }
 
-uint8_t uart_buffer_level(USART_t * port) {
-    struct UartStatus * tempStatus = &uartStatus[getId(port)];
+uint8_t uart_write(const char * const data, uint8_t len, USART_t * const port) {
+    uint8_t id = getId(port), written = 0;
+    while (written < len) {
+        if (uartStatus[id].outBuffer_size >= UART_MAX_OUT_BUFFER) return written;
+        lock(id);
+        outBuffer[id][uartStatus[id].outBuffer_head] = data[written];
+        uartStatus[id].outBuffer_head = (uartStatus[id].outBuffer_head + 1 >= UART_MAX_OUT_BUFFER) ? 0 : uartStatus[id].outBuffer_head + 1;
+        uartStatus[id].outBuffer_size++;
+        if (!sending[id]) {
+            port->CTRLA |= USART_DREINTLVL0_bm;
+            // sending[id] = 1; //TODO implement this ?
+        }
+        written++;
+        unlock(id);
+    }
+    return written;
+}
+
+#define UART_THRESHOLD 16
+
+uint8_t uart_writes(char data, USART_t * const port) {
+    uint8_t id = getId(port);
+    while (uartStatus[id].outBuffer_size >= UART_MAX_OUT_BUFFER - 1); // TODO make this nicer
+    lock(id);
+    outBuffer[id][uartStatus[id].outBuffer_head] = data;
+    uartStatus[id].outBuffer_head = (uartStatus[id].outBuffer_head + 1 >= UART_MAX_OUT_BUFFER) ? 0 : uartStatus[id].outBuffer_head + 1;
+    uartStatus[id].outBuffer_size++;
+    if (!sending[id]) {
+        port->CTRLA |= USART_DREINTLVL0_bm;
+        // sending[id] = 1; //TODO implement this ?
+    }
+    unlock(id);
+    return 1;
+}
+
+uint8_t uart_buffer_level(const USART_t * port) {
+    struct UartStatus * tempStatus = (struct UartStatus*)&uartStatus[getId(port)];
     if (tempStatus->inBuffer_head < tempStatus->inBuffer_tail) {
         return UART_MAX_IN_BUFFER;
     }
     return 0;
 }
 
-void uart_write_blocked(char data, USART_t * port) {
-    while (!((*port).STATUS & USART_DREIF_bm));
+void uart_write_blocked(const char data, USART_t * port) {
+    register8_t backUp =  port->CTRLA;
+    port->CTRLA &= ~USART_DREINTLVL_LO_gc;
     (*port).DATA = data;
+    while (!((*port).STATUS & USART_DREIF_bm));
+    port->CTRLA = backUp;
 }
 
-void uart_writes_blocked(char * data, uint8_t len, USART_t * port) {
+void uart_writes_blocked(const char * data, uint8_t len, USART_t * const port) {
+    register8_t backUp =  port->CTRLA;
+    port->CTRLA &= ~USART_DREINTLVL_LO_gc;
     uint8_t i = 0;
     while (i < len) {
-        /*Data buffer must be empty*/
-        while (!((*port).STATUS & USART_DREIF_bm));
         /*Write character by character*/
         (*port).DATA = data[i];
         i++;
+        /*Data buffer must be empty*/
+        while (!((*port).STATUS & USART_DREIF_bm));
     }
+    port->CTRLA = backUp;
 }
 
 uint8_t uart_read_blocked(char * data, uint8_t len, USART_t * port) {
@@ -128,116 +184,152 @@ uint8_t uart_read_blocked(char * data, uint8_t len, USART_t * port) {
     return readLen;
 }
 
-uint8_t uart_add_delimiter(char delimiter, void(*callback)(char *, uint8_t), USART_t * port) {
+char uart_reads_blocked(const USART_t * const port) {
+    while (!((*port).STATUS & USART_RXCIF_bm));
+    return (*port).DATA;
+}
+
+uint8_t uart_read_buffer(char * data, uint8_t len, USART_t * port) {
     uint8_t id = getId(port);
-    struct UartStatus * tempStatus = &uartStatus[id];
+    uint8_t l = 0;
+    while (l < len && uartStatus[id].inBuffer_size > 0) {
+        data[l] = inBuffer[id][uartStatus[id].inBuffer_tail];
+        if (++uartStatus[id].inBuffer_tail == UART_MAX_IN_BUFFER) uartStatus[id].inBuffer_tail = 0;
+        uartStatus[id].inBuffer_size--;
+    }
+    return l;
+}
+
+uint8_t uart_reads_buffer(char * data, USART_t * port) {
+    uint8_t id = getId(port);
+    if (uartStatus[id].inBuffer_size == 0) return 0;
+    (*data) = inBuffer[id][uartStatus[id].inBuffer_tail];
+    if (++uartStatus[id].inBuffer_tail == UART_MAX_IN_BUFFER) uartStatus[id].inBuffer_tail = 0;
+    uartStatus[id].inBuffer_size--;
+    return 1;
+}
+
+void uart_flush_buffer(USART_t * port) {
+    //uint8_t id = getId(port);
+}
+
+uint8_t uart_add_delimiter(char delimiter, USART_t * port) {
+    uint8_t id = getId(port);
+    struct UartStatus * tempStatus = (struct UartStatus *)&uartStatus[id];
     if (tempStatus->delimiters_size == UART_MAX_DELIMITERS) {
-        //we are full boi
+        //we are full
         //  LOG_ERROR("No free delimiters");
         LED_PORT.OUTCLR = LED_PIN;
         return 0;
     }
     struct UartDelimiter * curDelimiter = &delimiters[id][tempStatus->delimiters_head];
     curDelimiter->delimiter = delimiter;
-    curDelimiter->readDelimiter = 0;
+    curDelimiter->length = 0;
     tempStatus->delimiters_size++;
     if (tempStatus->delimiters_head++ == UART_MAX_DELIMITERS) tempStatus->delimiters_head = 0;
     return 1;
 }
+void uart_delimiter_handled(struct UartDelimiter * delimiter) {
+    delimiter->length = 0;
+}
 static inline uint8_t writeInBuf(uint8_t data, USART_t * port) {
     uint8_t id = getId(port);
-    struct UartStatus * tempStatus = &uartStatus[id];
+    struct UartStatus * tempStatus = (struct UartStatus*)&uartStatus[id];
     if (tempStatus->inBuffer_size == UART_MAX_IN_BUFFER) {
-        // LOG_ERROR("Uart buffer overrun");
-        LED_PORT.OUTCLR = LED_PIN;
+        //LOG_ERROR("UART buffer overrun");
+        //LED_PORT.OUTCLR = LED_PIN;
         return 0;
     }
     inBuffer[id][tempStatus->inBuffer_head] = data;
     tempStatus->inBuffer_size++;
-    if (tempStatus->inBuffer_head++ == UART_MAX_DELIMITERS) tempStatus->inBuffer_head = 0;
+    if (++tempStatus->inBuffer_head == UART_MAX_IN_BUFFER) tempStatus->inBuffer_head = 0;
     return 1;
 }
-//RX Complete interrupt service routine
-// ISR(USARTC0_RXC_vect) {
-//     uint8_t read = UDR0;
-//     if (writeInBuf(read)) {
-//         uint8_t i = 0;
-//         for (; i < UART_MAX_DELIMITERS; i++) {
-//             char delimitChar = delimiters[i].delimiter;
-//             if (delimitChar == 0) {
-//                 if (delimiters[i].readDelimiter > 0) {
-//                     if (delimiters[i].tempReadDelimiter == 0) {
-//                         event_fire(&EVENT_UART_DELIMITER, SYSTEM_ADDRESS_CAST & delimiters[i]);
-//                     } else {
-//                         delimiters[i].tempReadDelimiter--;
-//                     }
-//                 }
-//             } else if (delimitChar == read) {
-//                 event_fire(&EVENT_UART_DELIMITER, SYSTEM_ADDRESS_CAST & delimiters[i]);
-//             }
-//         }
-//     } else {
-//         //TODO buffer is full, whats next? Disable the read interrupt at least
-//         UCSR0B &= ~((1 << RXEN0) | (1 << RXCIE0));
-//     }
-// }
 
-static struct Job * curJob[UART_CHANNELS];
-
-static void _send(USART_t * port, struct JobBuffer * uartJob) {
-    uint8_t id = getId(port);
-    sending[id] = 1;
-    if (!job_get(uartJob, &curJob[id])) {
-        //LOG_ERROR("Jobs is empty");
-        //Error, we are trying to send but we are empty
-        LED_PORT.OUTCLR = LED_PIN;
-        return;
-    }
-    port->CTRLA               |= USART_DREINTLVL_LO_gc;
-//     struct Job * currentJob = curJob[id];
-//     port->DATA = currentJob->data[currentJob->i];
-//     if (++currentJob->i != currentJob->len) {
-//         port->CTRLA               |= USART_DREINTLVL_LO_gc;
-//}
-//UCSR0B |= (1 << TXEN0) | (1 << UDRIE0); //enable the interrupts!
+#define USARTRXCISR(NAME, PORT, USART_ID, REC_FC)            \
+ISR(NAME##_RXC_vect) {                             \
+    uint8_t read = PORT.DATA;                    \
+    if (writeInBuf(read, &PORT)) {               \
+        REC_FC(read);                                   \
+        uint8_t i = 0;                              \
+        for (; i < UART_MAX_DELIMITERS; i++) {      \
+            if (delimiters[USART_ID][i].delimiter != 0) {  \
+                delimiters[USART_ID][i].length++;          \
+                if (read == delimiters[USART_ID][i].delimiter) {   \
+                    delimiters[USART_ID][i].port = &PORT;       \
+                    event_fire(&EVENT_UART_DELIMITER, SYSTEM_ADDRESS_CAST (&delimiters[USART_ID][i])); \
+                }   \
+            }   \
+        }   \
+        } else {/*buffer full */    \
+        CP_PORT.CTRLA &= ~(USART_RXCINTLVL_LO_gc);  \
+    }   \
 }
 
-//UDR0 Empty interrupt service routine
-
-ISR(USARTE0_DRE_vect) {
-    //LED_PORT.OUTCLR = LED_PIN;
-    uint8_t id = getId(&CP_PORT);
-    struct Job * currentJob = curJob[id];
-    if (currentJob == 0) {
-        return;
-    }
-    CP_PORT.DATA = currentJob->data[currentJob->i];
-    if (++currentJob->i == currentJob->len) {
-        event_fire(&EVENT_UART_JOB, SYSTEM_ADDRESS_CAST(currentJob));
-        currentJob->i = 0;
-        if (!job_get(uartBuffers[id], &currentJob)) {
-            curJob[id] = 0;
-            //disable UDR0 empty interrupt
-            USARTE0.CTRLA &= ~(USART_DREINTLVL_LO_gc);
-            sending[id] = 0;
+#define USARTDREISR(NAME, PORT, USART_ID)\
+ISR(NAME##_DRE_vect) {             \
+    uint8_t size = uartStatus[USART_ID].outBuffer_size;    \
+    if (size > 0) { \
+        if (softlock(USART_ID)) {\
+            uint8_t tail = uartStatus[USART_ID].outBuffer_tail;\
+            PORT.DATA = outBuffer[USART_ID][tail];  \
+            uartStatus[USART_ID].outBuffer_size--; \
+            tail++; \
+            if (tail >= UART_MAX_OUT_BUFFER) tail = 0;\
+            uartStatus[USART_ID].outBuffer_tail = tail;\
+            unlock(USART_ID);  \
+        }\
+        } else {\
+        sending[USART_ID] = 0;\
+        PORT.CTRLA &= ~(USART_DREINTLVL0_bm);\
+    }\
+}
+static void received(char received) {
+    uart_writes(received, &DEBUG_UART);
+    if ((uint8_t)received == 8 || (uint8_t)received == 127) {
+        struct UartStatus * tempStatus = (struct UartStatus*)&uartStatus[USARTE_ID];
+        if (tempStatus->inBuffer_size > 1) {
+            tempStatus->inBuffer_size -= 2;
+            if (tempStatus->inBuffer_head == 1) {
+                tempStatus->inBuffer_head = UART_MAX_IN_BUFFER - 1;
+            } else {
+                tempStatus->inBuffer_head -= 2;
+            }
         }
     }
 }
 
+USARTRXCISR(USARTE0, DEBUG_UART,     USARTE_ID, received);
+
+USARTDREISR(USARTE0, DEBUG_UART,     USARTE_ID);
+
+USARTRXCISR(USARTD1, ESP_UART_PORT,  USARTD_ID, );
+
+USARTDREISR(USARTD1, ESP_UART_PORT,  USARTD_ID);
+
+static const char _initialized[] = "\fUART initialized\n\r";
+
 static uint8_t init(void) {
-    ESP_UART_PIN_PORT.REMAP     = PORT_USART0_bm;
-    ESP_UART_PIN_PORT.OUT       = ESP_UART_TX;
-    ESP_UART_PIN_PORT.DIRSET    = ESP_UART_RX;
+    uartStatus[USARTE_ID].outBuffer_head = 0;
+    uartStatus[USARTD_ID].outBuffer_head = 0;
+    ESP_UART_PIN_PORT.DIRCLR          = ESP_UART_RX;
+    ESP_UART_PIN_PORT.OUTCLR          = ESP_UART_RX;
+    ESP_UART_PIN_PORT.DIRSET          = ESP_UART_TX;
+    ESP_UART_PIN_PORT.OUTSET          = ESP_UART_TX;
+    ESP_UART_PIN_PORT.REMAP           = PORT_USART0_bm;
     ESP_UART_PORT.CTRLA         = USART_RXCINTLVL_LO_gc;
     ESP_UART_PORT.CTRLB         = USART_RXEN_bm |  USART_TXEN_bm;
     ESP_UART_PORT.CTRLC         = USART_CHSIZE_8BIT_gc;
-    uart_speed(B9600, &ESP_UART_PORT);
-    CP_PIN_PORT.OUT             = CP_TX_PIN;
+    uart_speed(B115200, &ESP_UART_PORT);
+    CP_PIN_PORT.DIRCLR          = CP_RX_PIN;
     CP_PIN_PORT.DIRSET          = CP_TX_PIN;
-    CP_PORT.CTRLA               = USART_RXCINTLVL_LO_gc;
+    CP_PIN_PORT.OUTCLR          = CP_RX_PIN;
+    CP_PIN_PORT.OUTSET          = CP_TX_PIN;
+    CP_PORT.CTRLA               = USART_RXCINTLVL_MED_gc;
     CP_PORT.CTRLB               = USART_RXEN_bm |  USART_TXEN_bm;
     CP_PORT.CTRLC               = USART_CHSIZE_8BIT_gc;
-    uart_speed(B38400, &CP_PORT);
+    uart_speed(B115200, &CP_PORT);
+    uart_writes_blocked(_initialized, sizeof(_initialized), &DEBUG_UART);
     return 1;
 }
 

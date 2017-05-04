@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{event\PYGZus{}addListener}\PYG{p}{(}\PYG{o}{\PYGZam{}}\PYG{n}{EVENT\PYGZus{}UART\PYGZus{}DELIMITER}\PYG{p}{,} \PYG{n}{callback}\PYG{p}{);}
+\end{Verbatim}

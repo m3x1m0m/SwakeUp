@@ -174,3 +174,4 @@ MyStuff/*
 *blx.bib 
 *.run.xml
 *.synctex.gz
+documents/report/_minted-report/

@@ -1,5 +1,6 @@
 EESchema-DOCLIB  Version 2.0
 #
+<<<<<<< HEAD
 $CMP DMG2305UX
 D DMG2305UX
 K pmos p-mos p-mosfet transistor
@@ -10,6 +11,8 @@ D MMBT3904
 K npn transistor
 $ENDCMP
 #
+=======
+>>>>>>> master
 $CMP Q_PMOS_DGS
 D Transistor P-MOSFET (general)
 K pmos p-mos p-mosfet transistor

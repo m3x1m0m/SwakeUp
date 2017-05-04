@@ -18,8 +18,8 @@ extern "C" {
 #define SYSTEM_ADDRESS_CAST (SYSTEM_ADDRESS)
 #define EVENT_SUPPORTS_SLEEP
 
-#define EVENT_MAX_LISTENERS 12
-#define EVENT_MAX_BUFFER    16
+#define EVENT_MAX_LISTENERS 14
+#define EVENT_MAX_BUFFER    32
 
 static const uint8_t eventIndex = 0;
 
@@ -52,6 +52,7 @@ void event_fire(Event * event, uint8_t * data);
 uint8_t event_addListener(Event * event, EventCallback callback);
 void event_removeListener(Event * event, EventCallback callback);
 void event_process(void);
+uint8_t event_wait(Event * event, uint8_t timeout);
 
 #ifdef __cplusplus
 }

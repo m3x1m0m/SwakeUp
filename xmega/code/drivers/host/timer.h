@@ -13,6 +13,11 @@
 #include "../../util/module.h"
 
 EVENT_EXP(EVENT_TIMER_1_HZ);
+EVENT_EXP(EVENT_ALARM);
+
+uint16_t timer_runTime(void);
+int8_t   timer_timeOutEvent(uint16_t duration);
+
 MODULE_EXP(TIMER);
 
 #endif /* TIMER_H_ */

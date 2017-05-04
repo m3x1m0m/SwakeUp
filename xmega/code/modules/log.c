@@ -8,6 +8,7 @@
 #include <avr/io.h>
 #include "../pin_definitions.h"
 #include <util/delay.h>
+#include <avr/interrupt.h>
 #include "log.h"
 #include "../drivers/uart/terminal.h"
 #include "../drivers/host/uart.h"
@@ -15,31 +16,40 @@
 LOG_INIT("Logger")
 
 void log_error() {
+    while (uart_buffer_out_level(&DEBUG_UART)); //Write our message
+    cli();  //disable interrupts
     while (1) {
         LED_PORT.OUTTGL = LED_PIN;
-        _delay_ms(500);
+        _delay_ms(100);
     }
+}
+void (*log_current_sink(void))(void *, char ) {
+    return terminal_current_sink();
+}
+void log_redirectOutput(void (*sink) (void*, char)) {
+    terminal_set_sink(sink);
 }
 
 void log_message(const char * format, ...) {
     va_list arg;
     va_start (arg, format);
-    terminal_format_force(format, arg);
+    terminal_format(format, arg);
     va_end (arg);
 }
 
-void callback(Event * event, uint8_t * data) {
-    event_removeListener(&EVENT_UART_JOB, callback);
-    LOG_SYSTEM("Logger initialized");
+void log_message_p(const char * format, ...) {
+    va_list arg;
+    va_start (arg, format);
+    terminal_format_p(format, arg);
+    va_end (arg);
 }
 
 uint8_t init(void) {
-    event_addListener(&EVENT_UART_JOB, callback);
+    LOG_SYSTEM("Logger initialized");
     return 1;
 }
 
 uint8_t deinit(void) {
-    event_removeListener(&EVENT_UART_JOB, callback);
     return 1;
 }
 

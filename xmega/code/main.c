@@ -9,26 +9,25 @@
 
 #include <avr/io.h>
 #include <avr/sleep.h>
-#include "pin_definitions.h"
-
 #include <avr/interrupt.h>
 #include <util/delay.h>
-#include "drivers/host/uart.h"
-//#include "drivers/host/pwm.h"
-#include "drivers/host/timer.h"
+
+#include "defines.h"
+
+#include "pin_definitions.h"
+#include "modules/log.h"
+#include "app/core.h"
+
+LOG_INIT("Main");
 
 static void callback(Event * event, uint8_t * data);
 
-//LOG_INIT("Main");
-
 static void sleep(void) {
-    //sleep_enable();
     sleep_cpu();
 }
 
 static void wakeUp(void) {
     sleep_disable();
-    //ADCSRA = adcsra;
 }
 
 void switchExternalCrystal_16mHz(void) {
@@ -43,47 +42,33 @@ void switchExternalCrystal_16mHz(void) {
     CCP = CCP_IOREG_gc;
     CLK_CTRL = CLK_SCLKSEL_XOSC_gc;
 }
-//static char * name = "elmar";
-//static char * name1 = "ELMAR";
+
 int main(void) {
-    event_addListener(&EVENT_TIMER_1_HZ, callback);
     switchExternalCrystal_16mHz();
     LED_PORT.DIR = LED_PIN;
     LED_PORT.OUTTGL = LED_PIN;
-    module_init(&UART);
-    module_init(&TIMER);
 #ifdef EVENT_SUPPORTS_SLEEP
     event_init(sleep, wakeUp);
     sleep_enable();
     set_sleep_mode(SLEEP_MODE_IDLE);
 #endif
-    //module_init(&Screen);
-    //PMIC.CTRL = PMIC_LOLVLEN_bm | PMIC_MEDLVLEN_bm | PMIC_HILVLEN_bm; //peripheral enable - interrupt levels (ALL)
-    //uart_job(name, 5, 0, &CP_PORT);
-    PMIC.CTRL |= PMIC_LOLVLEN_bm;
-    sei();
+    PMIC.CTRL |= PMIC_LOLVLEN_bm | PMIC_MEDLVLEN_bm;    //Peripheral enable - interrupt levels (ALL)
+    module_init(&LOGGER);                               //Initializing the logger for use
+    sei();                                              //Enabling interrupts
+    module_init(&CORE);
+    event_addListener(&EVENT_TIMER_1_HZ, callback);     //TODO this can be removed
+    LOG_SYSTEM("System initialized");
+    LOG_SYSTEM(greeting);
+    core_screen(SCREEN_ON);
     while (1) {
-        //uart_writes_blocked("Elmar", 5, &CP_PORT);
+        //This is all that should happen in the main loop
+        //The system will go to sleep if no more events are to be processed
         event_process();
-        _delay_ms(500);
-        while (!((CP_PORT).STATUS & USART_DREIF_bm));
-        (CP_PORT).DATA = 'o';
     }
 }
 
-static void callback(Event * event, uint8_t * data) {
-    static uint8_t i = 0;
+static void callback(Event * event, uint8_t * data __attribute__ ((unused))) {
     if (event == &EVENT_TIMER_1_HZ) {
-        //LOG_DEBUG("Timer event %d", i++);
         LED_PORT.OUTTGL = LED_PIN;
     }
 }
-
-
-
-// ISR(RTC_COMP_vect) {
-//while (!((CP_PORT).STATUS & USART_DREIF_bm));
-//(CP_PORT).DATA = 'c';
-//uart_write_blocked('C', CP_PORT);
-//LED_PORT.OUTTGL = LED_PIN;
-//}
