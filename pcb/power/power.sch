@@ -1,4 +1,5 @@
 EESchema Schematic File Version 2
+LIBS:power-rescue
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -104,7 +105,7 @@ ADC_OLED
 Text GLabel 10350 1550 3    60   Input ~ 0
 VOLED
 $Comp
-L LED D1
+L LED-RESCUE-power D1
 U 1 1 583D79A8
 P 2300 3700
 F 0 "D1" H 2300 3800 50  0000 C CNN
@@ -264,7 +265,7 @@ F14 "LED_G" O R 7300 3900 60
 F15 "LED_GND" O R 7300 4000 60 
 $EndSheet
 $Comp
-L USB_A P4
+L USB_A-RESCUE-power P4
 U 1 1 584373B8
 P 10050 3450
 F 0 "P4" H 10250 3250 50  0000 C CNN

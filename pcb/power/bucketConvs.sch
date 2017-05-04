@@ -1,4 +1,5 @@
 EESchema Schematic File Version 2
+LIBS:power-rescue
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -165,7 +166,7 @@ F 4 "490-12323-1-ND" H 4350 2900 60  0001 C CNN "Digikey"
 	1    0    0    -1  
 $EndComp
 $Comp
-L LED D3
+L LED-RESCUE-power D3
 U 1 1 5842EC88
 P 4800 2650
 F 0 "D3" H 4800 2750 50  0000 C CNN
@@ -274,7 +275,7 @@ F 4 "10MQ060NPBFCT-ND" V 4900 6250 60  0001 C CNN "Digikey"
 	0    1    1    0   
 $EndComp
 $Comp
-L LED D5
+L LED-RESCUE-power D5
 U 1 1 5842F8E3
 P 6600 5650
 F 0 "D5" H 6600 5750 50  0000 C CNN
