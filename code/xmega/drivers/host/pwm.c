@@ -9,17 +9,16 @@
 #include "../../util/module.h"
 #include "pwm.h"
 
-void init()
-{
-}
-
 void init_PWMRed(uint16_t period){
 	// Configuring timer TCD0
-	PORTD.DIR |= PWM_RED;
+	PORTD.DIRSET |= PWM_RED;
 	TCD0.PER = period;
-	TCD0.CTRLA |= TC_CLKSEL_DIV1_gc;			// No prescaling
 	TCD0.CTRLB |= TC_WGMODE_SINGLESLOPE_gc;		// Single slope
 	TCD0.CTRLB |= TC0_CCAEN_bm;					// Activate channel A (red)
+	TCD0.CTRLA |= TC_CLKSEL_DIV1_gc;			// No prescaling
+	TCD0.CCABUF = period/2;
+	while( (TCD0.INTFLAGS &&  0x01) == 0);
+	TCD0.INTFLAGS = 0x00;
 }
 
 void setPeriod_PWMRed(uint16_t period){
@@ -29,8 +28,6 @@ void setPeriod_PWMRed(uint16_t period){
 }
 
 void setDutyCycle_PWMRed(uint16_t cycle){
-	if(cycle < 0)
-		cycle = 0;
 	TCD0.CCABUF = cycle;
 	while( (TCD0.INTFLAGS &&  0x01) == 0);
 	TCD0.INTFLAGS = 0x00;
@@ -46,4 +43,4 @@ static uint8_t deinit(void) {
 	return 1;
 }
 
-MODULE_DEFINE(PWM, "PWM", init, deinit);
+MODULE_DEFINE(PWM, "PWM", &init, &deinit);

@@ -27,6 +27,18 @@
     <BootSegment>2</BootSegment>
     <eraseonlaunchrule>0</eraseonlaunchrule>
     <avrtool />
+    <AsfFrameworkConfig>
+      <framework-data xmlns="">
+  <options />
+  <configurations />
+  <files />
+  <documentation help="" />
+  <offline-documentation help="" />
+  <dependencies>
+    <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.34.1" />
+  </dependencies>
+</framework-data>
+    </AsfFrameworkConfig>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ToolchainSettings>
@@ -143,6 +155,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="drivers\host\gpio.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="drivers\host\pwm.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="drivers\host\pwm.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="drivers\host\rtc32.h">

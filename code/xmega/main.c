@@ -18,6 +18,7 @@
 #include "modules/log.h"
 #include "app/core.h"
 #include "drivers/host/timer.h"
+#include "drivers/host/pwm.h"
 
 LOG_INIT("Main");
 
@@ -56,7 +57,8 @@ int main(void) {
     PMIC.CTRL |= PMIC_LOLVLEN_bm | PMIC_MEDLVLEN_bm;    //Peripheral enable - interrupt levels (ALL)
     module_init(&LOGGER);                               //Initializing the logger for use
     sei();                                              //Enabling interrupts
-    module_init(&CORE);
+	module_init(&PWM);
+	module_init(&CORE);
     event_addListener(&EVENT_TIMER_1_HZ, callback);     //TODO this can be removed
     LOG_SYSTEM("System initialized");
     LOG_SYSTEM(greeting);
