@@ -14,10 +14,22 @@ enum MsgType {
 	MSG_TYPE_MAIL					= 0x15;		 /// Mail
 }
 
-enum Weather {
-	WEATHER_SUNNY					= 0x00;
-	WEATHER_RAINY					= 0x01;
-	WEATHER_SNOWY					= 0x02;
+enum WeatherType {
+	WEATHER_THUNDER					= 0x00;
+	WEATHER_SNOW					= 0x01;
+	WEATHER_RAIN					= 0x02;
+	WEATHER_CLOUDY					= 0x03;
+	WEATHER_OVERCAST				= 0x04;
+	WEATHER_SUN						= 0x05;
+}
+
+message Weather{
+	WeatherType weatherType			= 1;
+	uint32		temperature			= 2;
+	string		unit				= 3;
+	string		city				= 4;
+	uint32		sunrise				= 5;
+	uint32		sunset				= 6;
 }
 
 message Location {

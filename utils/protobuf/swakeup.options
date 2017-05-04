@@ -11,3 +11,7 @@ Time.second          	int_size:IS_8
 Location.country		max_size:8
 Location.city			max_size:8
 
+
+Weather.unit			max_size:1
+Weather.city			max_size:8
+Weather.temperature		int_size:IS_16
