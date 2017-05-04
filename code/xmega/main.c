@@ -17,6 +17,7 @@
 #include "pin_definitions.h"
 #include "modules/log.h"
 #include "app/core.h"
+#include "drivers/host/timer.h"
 
 LOG_INIT("Main");
 

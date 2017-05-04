@@ -19,10 +19,9 @@
 #define DEBUG_LED_ON()        LED_PORT.OUTCLR = LED_PIN
 #define DEBUG_LED_OFF()       LED_PORT.OUTSET = LED_PIN
 #else
-static const IO_PP _led =     GPIO_PP(0, GPIO_PORTB);
-#define DEBUG_LED_TOG()       gpio_toggle(_led)
-#define DEBUG_LED_ON()        gpio_clr(_led)
-#define DEBUG_LED_OFF()       gpio_set(_led)
+#define DEBUG_LED_TOG()       LED_PORT.OUTTGL = LED_PIN
+#define DEBUG_LED_ON()        LED_PORT.OUTCLR = LED_PIN
+#define DEBUG_LED_OFF()       LED_PORT.OUTSET = LED_PIN
 #endif
 
 #define DEBUG_UART            USARTD1
