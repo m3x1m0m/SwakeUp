@@ -18,7 +18,8 @@
 
 // Predefined period register values for certain freq. 
 // High resolution extension plus (x8) has to be activated for these values to be correct.
-#define MIN_PERIOD 8
+#define PWM_MIN_PERIOD 8
+#define PWM_MAX_PERIOD 65535
 #define PWM_FREQ_2MHZ 63
 #define PWM_FREQ_1MHZ 127
 #define PWM_FREQ_800KHZ 159
@@ -27,7 +28,10 @@
 #define PWM_FREQ_125KHZ 1020
 #define PWM_FREQ_64KHZ 2000  
 
-#define INIT_DUTY_CYCLE 0.1
+#define INIT_DUTY_CYCLE 50
+
+#define PWM_MIN_FREQ ( (16e6 * 8) / 65536 )
+#define PWM_MAX_FREQ 16e6
 
 // Was not available although it is declared in avr/iox128a4u.h.
 #define HIRES_HRPLUS_bm  0x04  /* High Resolution Plus bit mask. */
@@ -37,7 +41,6 @@
 // Prototypes
 /////////////////////////////////////////////////////////////////////////////////
 void init_PWMRed(uint16_t period);
-void init_PWMGreen(uint16_t period);
 void setDutyCycle_PWMRed(float cycle);
 void setPeriod_PWMRed(uint16_t period);
 

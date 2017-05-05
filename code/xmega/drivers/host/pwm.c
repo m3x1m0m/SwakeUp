@@ -19,10 +19,6 @@ void init_PWMRed(uint16_t period){
 	setDutyCycle_PWMRed(INIT_DUTY_CYCLE);								// Initialize with 5% duty cycle               
 }
 
-void init_PWMGreen(uint16_t period){
-	
-}
-
 void setPeriod_PWMRed(uint16_t period){
 	if(period < MIN_PERIOD)
 		period = MIN_PERIOD;
@@ -40,8 +36,37 @@ void setDutyCycle_PWMRed(float cycle){
 	}
 }
 
+float setFrequency_PWMRed(float frequency){
+	uint16_t period = 0;
+	uint16_t alternative1 = 0;
+	uint16_t alternative2 = 0;
+	
+	if( (frequency > PWM_MAX_FREQ) || (frequency < PWM_MIN_FREQ) )
+		return 1;
+	period = (uint16_t)( (float)(PWM_MAX_FREQ*8) / frequency  -1 );
+	if( (period % 8) != 0){
+		alternative1 = period + (period % 8);
+		alternative2 = period - (period % 8);
+		if( abs(period - alternative1) < abs(period - alternative2)){
+			if( (alternative1 > PWM_MAX_PERIOD) )
+				period = alternative2;
+			else
+				period = alternative1;
+		}
+		else{
+			if( (alternative2 < PWM_MIN_PERIOD) )
+				period = alternative1;
+			else
+				period = alternative2;
+		}
+	}
+	setPeriod_PWMRed(period);
+	return ( (float)PWM_MAX_FREQ * 8) / ( (float)period + 1.0 );
+}
+
 static uint8_t init(void) {
 	// Initialize all PWM channels needed
+	//pwm_init();
 	init_PWMRed(PWM_FREQ_500KHZ);
 	return 1;
 }
