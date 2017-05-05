@@ -7,11 +7,13 @@ enum MsgType {
     
     // -------------------------------------------------------------------------------
 	MSG_TUPE_LOCATION				= 0x10;		 /// the location set by the user 
-    MSG_TYPE_TIME                   = 0x11;      /// for the time 
-    MSG_TYPE_DATE                   = 0x12;      /// for the date 
-    MSG_TYPE_WEATHER            	= 0x13;      /// for the weather
-	MSG_TYPE_SOCIAL					= 0x14;		 /// Social media
-	MSG_TYPE_MAIL					= 0x15;		 /// Mail
+    MSG_TYPE_DATE_TIME              = 0x11;      /// for the time and date
+    MSG_TYPE_WEATHER            	= 0x12;      /// for the weather
+	MSG_TYPE_SOCIAL					= 0x13;		 /// Social media
+	MSG_TYPE_MAIL					= 0x14;		 /// Mail
+	
+	MSG_TYPE_ALARM_SET				= 0x20;
+	MSG_TYPE_ALARM_GET				= 0x21;
 }
 
 enum WeatherType {
@@ -37,16 +39,13 @@ message Location {
 	string city						= 2;
 }
 
-message Time{
-	uint32 hour						= 1;
-	uint32 minute					= 2;
-	uint32 second					= 3;
-}
-
-message Date{
+message DateAndTime{
 	uint32 year						= 1;
 	uint32 month					= 2;
 	uint32 day						= 3;
+	uint32 hour						= 4;
+	uint32 minute					= 5;
+	uint32 second					= 6;
 }
  
 
@@ -55,9 +54,8 @@ message MsgFrame {
 	bool request									= 0x02;
     oneof pl {                                      
         Location	location						= 0x10;
-        Time		time							= 0x11;
-        Date		date							= 0x12;
-        Weather		weather							= 0x13;
+        DateAndTime dateAndTime						= 0x11;
+        Weather		weather							= 0x12;
     }
 };
 

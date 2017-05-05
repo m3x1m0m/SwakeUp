@@ -1,12 +1,12 @@
 # Commom limits
 
-Date.day             	int_size:IS_8
-Date.month           	int_size:IS_8
-Date.year            	int_size:IS_8
+DateAndTime.day             	int_size:IS_8
+DateAndTime.month           	int_size:IS_8
+DateAndTime.year            	int_size:IS_8
 	                    
-Time.hour            	int_size:IS_8
-Time.minute          	int_size:IS_8
-Time.second          	int_size:IS_8
+DateAndTime.hour            	int_size:IS_8
+DateAndTime.minute          	int_size:IS_8
+DateAndTime.second          	int_size:IS_8
 
 Location.country		max_size:8
 Location.city			max_size:8
