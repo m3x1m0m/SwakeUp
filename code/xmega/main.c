@@ -46,6 +46,7 @@ void switchExternalCrystal_16mHz(void) {
 }
 
 int main(void) {
+	//PORTD.DIRSET = PWM_GREEN;
     switchExternalCrystal_16mHz();
     LED_PORT.DIR = LED_PIN;
     LED_PORT.OUTTGL = LED_PIN;
@@ -73,5 +74,6 @@ int main(void) {
 static void callback(Event * event, uint8_t * data __attribute__ ((unused))) {
     if (event == &EVENT_TIMER_1_HZ) {
         LED_PORT.OUTTGL = LED_PIN;
+		//PORTD.OUTTGL = PWM_GREEN;
 	}
 }
