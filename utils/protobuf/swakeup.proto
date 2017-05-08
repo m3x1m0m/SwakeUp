@@ -52,10 +52,10 @@ message DateAndTime{
 message MsgFrame {
     MsgType typ                                     = 0x01;
 	bool request									= 0x02;
+	Location	location							= 0x03;
     oneof pl {                                      
-        Location	location						= 0x10;
-        DateAndTime dateAndTime						= 0x11;
-        Weather		weather							= 0x12;
+        DateAndTime dateAndTime						= 0x10;
+        Weather		weather							= 0x11;
     }
 };
 
