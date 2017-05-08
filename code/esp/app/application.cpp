@@ -18,21 +18,21 @@ bool state = true;
 void blink() {
 	digitalWrite(2, state);
 	state = !state;
-}
-
-String city = "Graz";
-String country = "Austria";
-
-void protoTest() {
-	blink();
 	MsgFrame frame;
 	frame.typ = MsgType_MSG_TYPE_DATE_TIME;
 	msgCallback(&frame, NULL);
 }
 
+String city = "Graz";
+String country = "Austria";
+
 void periodTest() {
 	//web.connect();
-	procTimer.initializeMs(10 * 1000, protoTest).start(true); // every 20 seconds
+	MsgFrame frame;
+	frame.typ = MsgType_MSG_TYPE_DATE_TIME;
+	msgCallback(&frame, NULL);
+	procTimer.initializeMs(10 * 1000, blink).start(true); // every 20 seconds
+
 }
 
 void init() {

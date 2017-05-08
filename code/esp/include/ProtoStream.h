@@ -30,15 +30,15 @@ public:
 	virtual ~ProtoStream();
 protected:
 	virtual void flush();
+	;bool processByte(uint8_t byte);
 	enum ProtocolState {
 		PREFIX_AA, PREFIX_BB, PREFIX_CC, PREFIX_DD, SIZE_1, SIZE_2, DATAS
 	};
+	t_msg_callback receiveCallback;
 	ProtocolState state = PREFIX_AA;
-	;bool processByte(uint8_t byte);
 	pb_ostream_t ostream;
 	pb_istream_t istream;
 private:
-	t_msg_callback receiveCallback;
 	uint8_t readBuffer[MAX_IN_SIZE];
 	size_t readBufferPos = 0;
 	size_t writeBufferPos = 0;

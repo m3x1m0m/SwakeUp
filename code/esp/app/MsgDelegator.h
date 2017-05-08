@@ -15,9 +15,13 @@
 
 #include "application.h"
 
+#include <SmingCore/HardwareSerial.h>
+
 void msgCallback(MsgFrame * frame, void * stream) {
 	// Seems a little redundant to do this every time
 	// TODO have a predefined location struct do this
+	Serial.printf("\r\n\r\nReceived type: %d stream: %d\r\n", frame->typ, stream);
+	Serial.flush();
 	strncpy(frame->location.city, userSettings.city.c_str(), sizeof(frame->location.city));
 	strncpy(frame->location.country, userSettings.country.c_str(), sizeof(frame->location.country));
 	switch (frame->typ) {
