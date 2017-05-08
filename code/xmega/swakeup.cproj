@@ -1,0 +1,350 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
+  <PropertyGroup>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>7.0</ProjectVersion>
+    <ToolchainName>com.Atmel.AVRGCC8.C</ToolchainName>
+    <ProjectGuid>dce6c7e3-ee26-4d79-826b-08594b9ad897</ProjectGuid>
+    <avrdevice>ATxmega128A4U</avrdevice>
+    <avrdeviceseries>none</avrdeviceseries>
+    <OutputType>Executable</OutputType>
+    <Language>C</Language>
+    <OutputFileName>$(MSBuildProjectName)</OutputFileName>
+    <OutputFileExtension>.elf</OutputFileExtension>
+    <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
+    <AssemblyName>swakeup</AssemblyName>
+    <Name>swakeup</Name>
+    <RootNamespace>swakeup</RootNamespace>
+    <ToolchainFlavour>Native</ToolchainFlavour>
+    <KeepTimersRunning>true</KeepTimersRunning>
+    <OverrideVtor>false</OverrideVtor>
+    <CacheFlash>true</CacheFlash>
+    <ProgFlashFromRam>true</ProgFlashFromRam>
+    <RamSnippetAddress>0x20000000</RamSnippetAddress>
+    <UncachedRange />
+    <preserveEEPROM>true</preserveEEPROM>
+    <OverrideVtorValue>exception_table</OverrideVtorValue>
+    <BootSegment>2</BootSegment>
+    <eraseonlaunchrule>0</eraseonlaunchrule>
+    <avrtool />
+    <AsfFrameworkConfig>
+      <framework-data xmlns="">
+  <options />
+  <configurations />
+  <files />
+  <documentation help="" />
+  <offline-documentation help="" />
+  <dependencies>
+    <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.34.1" />
+  </dependencies>
+</framework-data>
+    </AsfFrameworkConfig>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <ToolchainSettings>
+      <AvrGcc>
+        <avrgcc.common.Device>-mmcu=atxmega128a4u -B "%24(PackRepoDir)\atmel\XMEGAA_DFP\1.1.63\gcc\dev\atxmega128a4u"</avrgcc.common.Device>
+        <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
+        <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
+        <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
+        <avrgcc.common.outputfiles.srec>True</avrgcc.common.outputfiles.srec>
+        <avrgcc.common.outputfiles.usersignatures>False</avrgcc.common.outputfiles.usersignatures>
+        <avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
+        <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
+        <avrgcc.compiler.symbols.DefSymbols>
+          <ListValues>
+            <Value>NDEBUG</Value>
+          </ListValues>
+        </avrgcc.compiler.symbols.DefSymbols>
+        <avrgcc.compiler.directories.IncludePaths>
+          <ListValues>
+            <Value>%24(PackRepoDir)\atmel\XMEGAA_DFP\1.1.63\include</Value>
+          </ListValues>
+        </avrgcc.compiler.directories.IncludePaths>
+        <avrgcc.compiler.optimization.level>Optimize for size (-Os)</avrgcc.compiler.optimization.level>
+        <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
+        <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
+        <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
+        <avrgcc.linker.libraries.Libraries>
+          <ListValues>
+            <Value>libm</Value>
+          </ListValues>
+        </avrgcc.linker.libraries.Libraries>
+        <avrgcc.assembler.general.IncludePaths>
+          <ListValues>
+            <Value>%24(PackRepoDir)\atmel\XMEGAA_DFP\1.1.63\include</Value>
+          </ListValues>
+        </avrgcc.assembler.general.IncludePaths>
+      </AvrGcc>
+    </ToolchainSettings>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <ToolchainSettings>
+      <AvrGcc>
+        <avrgcc.common.Device>-mmcu=atxmega128a4u -B "%24(PackRepoDir)\atmel\XMEGAA_DFP\1.1.63\gcc\dev\atxmega128a4u"</avrgcc.common.Device>
+        <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
+        <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
+        <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
+        <avrgcc.common.outputfiles.srec>True</avrgcc.common.outputfiles.srec>
+        <avrgcc.common.outputfiles.usersignatures>False</avrgcc.common.outputfiles.usersignatures>
+        <avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
+        <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
+        <avrgcc.compiler.symbols.DefSymbols>
+          <ListValues>
+            <Value>DEBUG</Value>
+          </ListValues>
+        </avrgcc.compiler.symbols.DefSymbols>
+        <avrgcc.compiler.directories.IncludePaths>
+          <ListValues>
+            <Value>%24(PackRepoDir)\atmel\XMEGAA_DFP\1.1.63\include</Value>
+            <Value>../util/protobuf</Value>
+          </ListValues>
+        </avrgcc.compiler.directories.IncludePaths>
+        <avrgcc.compiler.optimization.level>Optimize most (-O3)</avrgcc.compiler.optimization.level>
+        <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
+        <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
+        <avrgcc.compiler.optimization.DebugLevel>Default (-g2)</avrgcc.compiler.optimization.DebugLevel>
+        <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
+        <avrgcc.compiler.warnings.ExtraWarnings>True</avrgcc.compiler.warnings.ExtraWarnings>
+        <avrgcc.linker.libraries.Libraries>
+          <ListValues>
+            <Value>libm</Value>
+          </ListValues>
+        </avrgcc.linker.libraries.Libraries>
+        <avrgcc.assembler.general.IncludePaths>
+          <ListValues>
+            <Value>%24(PackRepoDir)\atmel\XMEGAA_DFP\1.1.63\include</Value>
+          </ListValues>
+        </avrgcc.assembler.general.IncludePaths>
+        <avrgcc.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcc.assembler.debugging.DebugLevel>
+      </AvrGcc>
+    </ToolchainSettings>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="app\clock.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="app\clock.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="app\core.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="app\core.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="app\msgproc.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="app\msgproc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="app\weather.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="app\weather.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="defines.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="drivers\host\eeprom.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="drivers\host\gpio.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="drivers\host\gpio.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="drivers\host\pwm.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="drivers\host\pwm.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="drivers\host\rtc32.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="drivers\host\spi.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="drivers\host\spi.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="drivers\host\timer.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="drivers\host\timer.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="drivers\host\uart.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="drivers\host\uart.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="drivers\spi\SEPS525F.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="drivers\spi\SEPS525F.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="drivers\uart\esp8266.c">
+      <SubType>compile</SubType>
+      <CustomCompilationSetting Condition="'$(Configuration)' == 'Debug'">
+      </CustomCompilationSetting>
+    </Compile>
+    <Compile Include="drivers\uart\esp8266.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="drivers\uart\terminal.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="drivers\uart\terminal.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="main.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="modules\command.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="modules\command.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="modules\control.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="modules\control.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="modules\image.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="modules\log.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="modules\log.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="modules\screen.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="modules\screen.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="modules\screenterminal.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="modules\screenterminal.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="modules\timekeeper.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="modules\timekeeper.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="pin_definitions.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="pin_rev_1.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="pin_rev_2.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="tinyprint\printf.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="tinyprint\printf.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="util\circularbuffer.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="util\circularbuffer.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="util\event.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="util\event.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="util\font.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="util\font.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="util\image.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="util\job.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="util\job.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="util\module.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="util\module.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="util\number.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="util\number.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="util\protobuf\pb.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="util\protobuf\pb_common.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="util\protobuf\pb_common.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="util\protobuf\pb_decode.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="util\protobuf\pb_decode.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="util\protobuf\pb_encode.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="util\protobuf\pb_encode.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="util\protobuf\swakeup.pb.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="util\protobuf\swakeup.pb.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="util\stream.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="util\stream.h">
+      <SubType>compile</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="drivers\" />
+    <Folder Include="drivers\host" />
+    <Folder Include="drivers\spi\" />
+    <Folder Include="drivers\uart\" />
+    <Folder Include="modules" />
+    <Folder Include="app" />
+    <Folder Include="tinyprint" />
+    <Folder Include="util\" />
+    <Folder Include="util\protobuf\" />
+    <Folder Include="util\protobuf\" />
+  </ItemGroup>
+  <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
+</Project>

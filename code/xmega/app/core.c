@@ -16,6 +16,7 @@
 #include "../drivers/uart/esp8266.h"    //BREACH OF LAYERING
 #include "../drivers/uart/terminal.h"   //BREACH OF LAYERING
 #include "../modules/control.h"
+#include "../drivers/host/pwm.h"
 
 
 #include "../pin_definitions.h"
@@ -47,6 +48,56 @@ static void ledCommand(uint8_t len __attribute__ ((unused)), char * data __attri
         DEBUG_LED_TOG();
         break;
     }
+}
+
+static void pwmCommand(uint8_t len __attribute__ ((unused)), char * data __attribute__ ((unused))) {
+	uint8_t index = 1;
+	uint16_t cycle;
+	char channel = data[index]; 
+	LOG_DEBUG("Channel: %c", channel);
+	cycle = command_next_int(&index, data, len);
+	switch(channel){
+	case 'R':
+		LOG_DEBUG("Cycle: %d", cycle);
+		LOG_DEBUG("Apply new settings to PWM_RED.");
+		setDutyCycle_PWMRed(cycle);
+		break;
+	case 'B':
+		LOG_DEBUG("Cycle: %d", cycle);
+		LOG_DEBUG("Apply new settings to PWM_RED.");
+		setDutyCycle_PWMBlue(cycle);
+		break;
+	case 'G':
+		LOG_DEBUG("Cycle: %d", cycle);
+		LOG_DEBUG("Apply new settings to PWM_RED.");
+		setDutyCycle_PWMGreen(cycle);
+		break;
+	case 'O':
+		LOG_DEBUG("Cycle: %d", cycle);
+		LOG_DEBUG("Apply new settings to PWM_RED.");
+		setDutyCycle_PWMOLED(cycle);
+		break;
+	default: 
+		LOG_DEBUG("Channel does not exist.");
+	}
+}
+
+static void TCD0Command(uint8_t len __attribute__ ((unused)), char * data __attribute__ ((unused))) {
+	uint8_t index = 1;
+	uint16_t period;
+	char option = data[index];
+	LOG_DEBUG("Option: %c", option);
+	switch(option){
+		case 'G':
+			LOG_DEBUG("Current period is: %d", getPeriod_TCD0());
+		break;
+		case 'S':
+			period = command_next_int(&index, data, len);
+			setPeriod_TCD0(period);			
+		break;
+		default:
+		LOG_DEBUG("Not a valid option.");
+	}
 }
 
 static void atCommand(uint8_t len __attribute__ ((unused)), char * data __attribute__ ((unused))) {
@@ -185,6 +236,8 @@ void core_screen(uint8_t on) {
 static uint8_t init(void) {
     command_hook_description('T', &terminalCommand, "Log sink    T<option> options: U(Uart) S(Screen)\0");
     command_hook_description('L', &ledCommand,      "Led control L<option> options: T(Toggle) 1(on) 0(off)\0");
+	command_hook_description('P', &pwmCommand,      "pwmControll P<option> options: Channel(R/B/G/O) DutyCycle\0");
+	command_hook_description('Z', &TCD0Command,      "TCD0Controll T<option> options: G(Get) or S(set) Period\0");
     command_hook_description('A', &atCommand,       "Sends AT    A         no options\0");
     command_hook_description('S', &setCommand,      "Sets an app state S<app> <options>\r\n\t"
                              "W<options> options: 1 - 6 for different weather\r\n\t"
