@@ -1,5 +1,4 @@
 EESchema Schematic File Version 2
-LIBS:power-rescue
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -29,7 +28,6 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
-LIBS:coolLib
 LIBS:power-cache
 EELAYER 25 0
 EELAYER END

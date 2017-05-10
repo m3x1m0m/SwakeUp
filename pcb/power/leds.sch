@@ -1,5 +1,4 @@
 EESchema Schematic File Version 2
-LIBS:power-rescue
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -29,7 +28,6 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
-LIBS:coolLib
 LIBS:power-cache
 EELAYER 25 0
 EELAYER END
@@ -173,18 +171,6 @@ F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 7930 4275 50  0001 C CNN
 F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 8000 4275 50  0001 C CNN
 F 4 "311-120KHRCT-ND" V 8000 4275 60  0001 C CNN "Digikey"
 	1    8000 4275
-	0    1    1    0   
-$EndComp
-$Comp
-L R R7
-U 1 1 58431000
-P 5500 4275
-F 0 "R7" V 5580 4275 50  0000 C CNN
-F 1 "3.9k" V 5500 4275 50  0000 C CNN
-F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 5430 4275 50  0001 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 5500 4275 50  0001 C CNN
-F 4 "311-3.90KHRCT-ND" V 5500 4275 60  0001 C CNN "Digikey"
-	1    5500 4275
 	0    1    1    0   
 $EndComp
 $Comp
@@ -529,6 +515,18 @@ F 3 "" H 6050 3375 50  0000 C CNN
 	1    6050 3375
 	1    0    0    -1  
 $EndComp
+$Comp
+L R R7
+U 1 1 58431000
+P 5500 4275
+F 0 "R7" V 5580 4275 50  0000 C CNN
+F 1 "3.9k" V 5500 4275 50  0000 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 5430 4275 50  0001 C CNN
+F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 5500 4275 50  0001 C CNN
+F 4 "311-3.90KHRCT-ND" V 5500 4275 60  0001 C CNN "Digikey"
+	1    5500 4275
+	0    1    1    0   
+$EndComp
 Wire Wire Line
 	9700 3475 9800 3475
 Wire Wire Line
@@ -684,8 +682,6 @@ Wire Wire Line
 	5725 3875 5725 3950
 Connection ~ 5725 3950
 Wire Wire Line
-	5325 3950 5350 3950
-Wire Wire Line
 	5325 4275 5350 4275
 Wire Wire Line
 	3400 3500 3500 3500
@@ -732,4 +728,6 @@ Wire Wire Line
 Connection ~ 10150 3475
 Wire Wire Line
 	10500 3475 10550 3475
+Wire Wire Line
+	5325 3950 5350 3950
 $EndSCHEMATC
