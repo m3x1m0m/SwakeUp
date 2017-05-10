@@ -13,15 +13,11 @@
 
 #define REST_BUF 128
 
-#define private public // illegal
-#include <SmingCore/Network/HttpClient.h>
 typedef Delegate<void(HttpClient& client, bool successful)> HttpClientCompletedDelegate;
-class StreamRest : public ProtoStream, public HttpClient {
+class StreamRest: public ProtoStream, public HttpClient {
 public:
-	StreamRest();
-	bool writeByte(const char byte);
-	void flush() override;
-	bool writeBytes(const char * byte, int len);
+	StreamRest();bool writeByte(const char byte);
+	void flush() override;bool writeBytes(const char * byte, int len);
 	void processed(HttpClient& client, bool successful);
 
 	virtual ~StreamRest();

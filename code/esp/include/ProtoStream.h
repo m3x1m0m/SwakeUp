@@ -17,20 +17,25 @@
 #define MAX_IN_SIZE MsgFrame_size
 #define MAX_OUT_SIZE MsgFrame_size
 
+//class ProtoStream;
+
 typedef bool (t_write_callback)(pb_ostream_t * stream __attribute__ ((unused)), const pb_byte_t *buf, size_t count);
+typedef void (*t_msg_callback)(MsgFrame * frame, void * receiver);
 
 class ProtoStream {
 public:
 	ProtoStream(t_write_callback write_callback);
-	void writeMessage(MsgFrame frame);
+	void writeMessage(MsgFrame * frame);
+	void setMsgCallback(t_msg_callback callback);
 	virtual ~ProtoStream();
 protected:
 	virtual void flush();
+	;bool processByte(uint8_t byte);
 	enum ProtocolState {
 		PREFIX_AA, PREFIX_BB, PREFIX_CC, PREFIX_DD, SIZE_1, SIZE_2, DATAS
 	};
+	t_msg_callback receiveCallback;
 	ProtocolState state = PREFIX_AA;
-	bool processByte(uint8_t byte);
 	pb_ostream_t ostream;
 	pb_istream_t istream;
 private:
