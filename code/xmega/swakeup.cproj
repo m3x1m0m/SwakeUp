@@ -29,15 +29,15 @@
     <avrtool />
     <AsfFrameworkConfig>
       <framework-data xmlns="">
-  <options />
-  <configurations />
-  <files />
-  <documentation help="" />
-  <offline-documentation help="" />
-  <dependencies>
-    <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.34.1" />
-  </dependencies>
-</framework-data>
+        <options />
+        <configurations />
+        <files />
+        <documentation help="" />
+        <offline-documentation help="" />
+        <dependencies>
+          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.34.1" />
+        </dependencies>
+      </framework-data>
     </AsfFrameworkConfig>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
@@ -146,6 +146,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="defines.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="drivers\host\adc.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="drivers\host\adc.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="drivers\host\eeprom.h">
@@ -345,6 +351,9 @@
     <Folder Include="util\" />
     <Folder Include="util\protobuf\" />
     <Folder Include="util\protobuf\" />
+    <Folder Include="xmega\" />
+    <Folder Include="xmega\drivers\" />
+    <Folder Include="xmega\drivers\host\" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>

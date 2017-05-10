@@ -64,17 +64,17 @@ static void pwmCommand(uint8_t len __attribute__ ((unused)), char * data __attri
 		break;
 	case 'B':
 		LOG_DEBUG("Cycle: %d", cycle);
-		LOG_DEBUG("Apply new settings to PWM_RED.");
+		LOG_DEBUG("Apply new settings to PWM_BLUE.");
 		setDutyCycle_PWMBlue(cycle);
 		break;
 	case 'G':
 		LOG_DEBUG("Cycle: %d", cycle);
-		LOG_DEBUG("Apply new settings to PWM_RED.");
+		LOG_DEBUG("Apply new settings to PWM_GREEN.");
 		setDutyCycle_PWMGreen(cycle);
 		break;
 	case 'O':
 		LOG_DEBUG("Cycle: %d", cycle);
-		LOG_DEBUG("Apply new settings to PWM_RED.");
+		LOG_DEBUG("Apply new settings to PWM_OLED.");
 		setDutyCycle_PWMOLED(cycle);
 		break;
 	default: 

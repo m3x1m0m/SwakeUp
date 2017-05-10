@@ -19,6 +19,7 @@
 #include "app/core.h"
 #include "drivers/host/timer.h"
 #include "drivers/host/pwm.h"
+#include "drivers/host/adc.h"
 
 LOG_INIT("Main");
 
@@ -46,7 +47,8 @@ void switchExternalCrystal_16mHz(void) {
 }
 
 int main(void) {
-	//PORTD.DIRSET = PWM_GREEN;
+	PORTA.DIRSET = (1 << 2);	// Activate USB charging 
+	PORTA.OUTSET = (1 << 2);
     switchExternalCrystal_16mHz();
     LED_PORT.DIR = LED_PIN;
     LED_PORT.OUTTGL = LED_PIN;
@@ -59,6 +61,7 @@ int main(void) {
     module_init(&LOGGER);                               //Initializing the logger for use
     sei();                                              //Enabling interrupts
 	module_init(&PWM);
+	module_init(&ADC);
 	module_init(&CORE);
     event_addListener(&EVENT_TIMER_1_HZ, callback);     //TODO this can be removed
     LOG_SYSTEM("System initialized");
@@ -74,6 +77,8 @@ int main(void) {
 static void callback(Event * event, uint8_t * data __attribute__ ((unused))) {
     if (event == &EVENT_TIMER_1_HZ) {
         LED_PORT.OUTTGL = LED_PIN;
-		//PORTD.OUTTGL = PWM_GREEN;
+		setDutyCycle_PWMOLED(7000);
+		LOG_DEBUG("Duty cycle is %d.", getDutyCycle_PWMOLED());
+		LOG_DEBUG("ADC Value is %d.", getVal_ADC_OLED());
 	}
 }
