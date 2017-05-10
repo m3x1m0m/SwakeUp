@@ -9,25 +9,33 @@
 
 static const pb_byte_t startDelimitation[] = { 0xAA, 0xBB, 0xCC, 0xDD };
 
+static void emptyHandler(MsgFrame * frame, void * receiver) {
+
+}
 ProtoStream::ProtoStream(t_write_callback write_callback) {
+	setMsgCallback(&emptyHandler);
 	ostream.callback = write_callback;
 	ostream.max_size = 128;
 	// TODO Auto-generated constructor stub
 }
 
-void ProtoStream::writeMessage(MsgFrame frame) {
+void ProtoStream::setMsgCallback(t_msg_callback callback) {
+	this->receiveCallback = callback;
+}
+
+void ProtoStream::writeMessage(MsgFrame * frame) {
 	size_t size;
-	pb_get_encoded_size(&size, MsgFrame_fields, &frame);
+	pb_get_encoded_size(&size, MsgFrame_fields, frame);
+	ostream.state = this;
 	ostream.bytes_written = 0; //TODO this should not be required
-	const pb_byte_t tempSize[] = { static_cast<pb_byte_t>((size) & 0xFF),
-			static_cast<pb_byte_t>((size >> 8) & 0xFF) };
+	const pb_byte_t tempSize[] = { static_cast<pb_byte_t>((size) & 0xFF), static_cast<pb_byte_t>((size >> 8) & 0xFF) };
 	ostream.callback(&ostream, startDelimitation, 4);
 	ostream.callback(&ostream, tempSize, 2);
-	pb_encode(&ostream, MsgFrame_fields, &frame);
+	pb_encode(&ostream, MsgFrame_fields, frame);
 	Serial.printf("PB size: %d error: %s \r\n", size, ostream.errmsg);
 	flush();
 }
-void ProtoStream::flush(){
+void ProtoStream::flush() {
 
 }
 bool ProtoStream::processByte(uint8_t byte) {

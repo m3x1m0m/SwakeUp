@@ -4,13 +4,15 @@
  *  Created on: May 2, 2017
  *      Author: elmar
  */
-#define private public // illegal
+
 #include "StreamRest.h"
 
 StreamRest restStream;
 
 static bool writeBuf(pb_ostream_t * stream __attribute__ ((unused)), const pb_byte_t *buf, size_t count) {
-	return restStream.writeBytes((char*) buf, count);
+	// TODO this is not very nice
+	StreamRest * str = (StreamRest*) stream->state;
+	return str->writeBytes((char*) buf, count);
 }
 
 StreamRest::StreamRest() :
@@ -30,6 +32,7 @@ void StreamRest::flush() {
 		sprintf(numstr, "%d ", buffer[i]);
 		reqString += numstr;
 	}
+	//TODO use binary instead
 	setRequestContentType("application/x-www-form-urlencoded");
 	setRequestHeader("User-Agent", "Mozilla/5.0");
 	setRequestHeader("Accept-Language", "en-US,en;q=0.5");
@@ -51,6 +54,10 @@ int command_arguments(char *data, int len) {
 }
 
 void StreamRest::processed(HttpClient& client, bool successful) {
+	if(!successful){
+		Serial.printf("\r\n\r\nNot successful\r\n\r\n");
+		return;
+	}
 	String responseString = client.getResponseString();
 	char * respChar = (char*) responseString.c_str();
 
@@ -70,7 +77,7 @@ void StreamRest::processed(HttpClient& client, bool successful) {
 	istream = pb_istream_from_buffer(bytes, args);
 	MsgFrame message;
 	uint8_t status = pb_decode(&istream, MsgFrame_fields, &message);
-	Serial.printf("\r\n\r\nReceived type: %d\r\n",message.typ);
+	this->receiveCallback(&message, this);
 	delete bytes;
 }
 
@@ -83,7 +90,6 @@ bool StreamRest::writeByte(const char byte) {
 
 bool StreamRest::writeBytes(const char * byte, int len) {
 	for (uint8_t i = 0; i < len; i++) {
-		Serial.printf("Write(%d): %d \r\n", writePointer, (uint8_t) byte[i]);
 		buffer[writePointer] = byte[i];
 		writePointer++;
 	}

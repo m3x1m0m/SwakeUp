@@ -24,7 +24,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         Swakeup.MsgFrame.Builder messageBuilder = Swakeup.MsgFrame.newBuilder();
-        messageBuilder.setTyp(Swakeup.MsgType.MSG_TYPE_TIME);
+        messageBuilder.setTyp(Swakeup.MsgType.MSG_TYPE_WEATHER).setLocation(Swakeup.Location.newBuilder().setCity("Graz").build());
         Swakeup.MsgFrame message = messageBuilder.build();
         post_test(message);
     }
@@ -42,15 +42,28 @@ public class Main {
 
         // Send post request
         con.setDoOutput(true);
+        String returnString = "";
         DataOutputStream wr = new DataOutputStream(con.getOutputStream());
         byte size[] = {(byte) ((serializedSize) & 0xFF), (byte) ((serializedSize >> 8) & 0xFF)};
         byte prefix[] = {(byte) 0xAA, (byte) 0xBB, (byte) 0xCC, (byte) 0xDD};
-        for(int i = 0; i<size.length; i++){
 
+        //wr.write(prefix);
+        //wr.write(size);
+        //frame.writeTo(wr);
+
+        byte returns[] = frame.toByteArray();
+        for(byte pre : prefix){
+            returnString += (int) (pre & 0xFF) + " ";
         }
-        wr.write(prefix);
-        wr.write(size);
-        frame.writeTo(wr);
+        for(byte siz : size){
+            returnString += (int) (siz & 0xFF) + " ";
+        }
+        for (byte ret : returns) {
+            returnString += (int) (ret & 0xFF) + " ";
+        }
+        System.out.println(returnString);
+        byte actualReturns[] = returnString.getBytes();
+        wr.write(actualReturns);
         wr.flush();
         wr.close();
 
@@ -69,6 +82,7 @@ public class Main {
 
         //print result
         System.out.println(response.toString());
+
     }
 
     public static void tcp_test(Swakeup.MsgFrame frame) {
