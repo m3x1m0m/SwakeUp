@@ -32,7 +32,6 @@ void ProtoStream::writeMessage(MsgFrame * frame) {
 	ostream.callback(&ostream, startDelimitation, 4);
 	ostream.callback(&ostream, tempSize, 2);
 	pb_encode(&ostream, MsgFrame_fields, frame);
-	Serial.printf("PB size: %d error: %s \r\n", size, ostream.errmsg);
 	flush();
 }
 void ProtoStream::flush() {
