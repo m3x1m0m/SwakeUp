@@ -163,6 +163,12 @@
     <Compile Include="drivers\host\gpio.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="drivers\host\pid.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="drivers\host\pid.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="drivers\host\pwm.c">
       <SubType>compile</SubType>
     </Compile>
@@ -232,12 +238,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="modules\log.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="modules\pid.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="modules\pid.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="modules\screen.c">

@@ -10,7 +10,6 @@
 // Includes
 /////////////////////////////////////////////////////////////////////////////////
 #include <avr/io.h>
-#include <stdarg.h>
 #include "../../util/module.h"
 #include "../../modules/log.h"
 #include "pwm.h"
@@ -19,7 +18,6 @@
 /////////////////////////////////////////////////////////////////////////////////
 // Defines
 /////////////////////////////////////////////////////////////////////////////////
-#define WORKING
 
 /////////////////////////////////////////////////////////////////////////////////
 // Timer TCD0 functions
@@ -157,8 +155,7 @@ uint16_t getDutyCycle_PWMOLED(void)
 /////////////////////////////////////////////////////////////////////////////////
 // Init and deinit of this module
 /////////////////////////////////////////////////////////////////////////////////
-#ifdef WORKING
-static uint8_t init(int num, ...)
+static uint8_t init()
 {
 	init_PWMRed(PWM_FREQ_16KHZ);
 	init_PWMBlue(PWM_FREQ_16KHZ);
@@ -166,25 +163,6 @@ static uint8_t init(int num, ...)
 	init_PWMOLED(PWM_FREQ_16KHZ);
 	return 1;
 }
-#else
-static uint8_t init(int num, ...)
-{
-	// Variables
-	va_list arguments;
-	
-	// Action
-	va_start(arguments, sum);					// Start variable arguments list
-	for(int i = 0; i< num, i++)
-	{
-		channel = va_arg(arguments, char);
-	}
-	init_PWMRed(PWM_FREQ_16KHZ);
-	init_PWMBlue(PWM_FREQ_16KHZ);
-	init_PWMGreen(PWM_FREQ_16KHZ);
-	init_PWMOLED(PWM_FREQ_16KHZ);
-	return 1;
-}
-#endif
 
 static uint8_t deinit(void) 
 {
