@@ -21,6 +21,7 @@ EVENT_EXP(WEATHER_CHANGE);
 EVENT_EXP(SOCIAL_MEDIA);
 
 void core_time_set(uint8_t h, uint8_t m, uint8_t s);
+	
 void core_time_get(struct TimeKeeper * time);
 void core_screen(uint8_t on);
 
