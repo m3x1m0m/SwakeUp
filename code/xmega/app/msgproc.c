@@ -25,14 +25,13 @@ void processMessage(Stream * stream, MsgFrame * message) {
         break;
     case MsgType_MSG_TUPE_LOCATION:
         break;
-    case MsgType_MSG_TYPE_TIME: {
-        Time * tim = &message->pl.time;
+    case MsgType_MSG_TYPE_DATE_TIME: {
+        DateAndTime * tim = &message->pl.dateAndTime;
         core_time_set(tim->hour, tim->minute, tim->second);
     }
     break;
-    case MsgType_MSG_TYPE_DATE:
-        break;
     case MsgType_MSG_TYPE_WEATHER:
+        LOG_DEBUG("Setting weather: %d", message->pl.weather.weatherType);
         weather_set(message->pl.weather);
         break;
     case MsgType_MSG_TYPE_SOCIAL:
