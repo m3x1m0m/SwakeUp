@@ -9,15 +9,21 @@
 /////////////////////////////////////////////////////////////////////////////////
 // Includes
 /////////////////////////////////////////////////////////////////////////////////
-
 #include <avr/io.h>
+#include <stdarg.h>
 #include "../../util/module.h"
+#include "../../modules/log.h"
 #include "pwm.h"
+#include "../../pin_definitions.h"
+
+/////////////////////////////////////////////////////////////////////////////////
+// Defines
+/////////////////////////////////////////////////////////////////////////////////
+#define WORKING
 
 /////////////////////////////////////////////////////////////////////////////////
 // Timer TCD0 functions
 /////////////////////////////////////////////////////////////////////////////////
-
 void setPeriod_TCD0(uint16_t period)
 {
 	if(period < PWM_MIN_PERIOD)
@@ -35,7 +41,6 @@ uint16_t getPeriod_TCD0()
 /////////////////////////////////////////////////////////////////////////////////
 // Functions for PWM_RED, TC0A
 /////////////////////////////////////////////////////////////////////////////////
-
 void init_PWMRed(uint16_t period)
 {
 	// Configuring timer TCD0 and compare channel A
@@ -65,11 +70,10 @@ uint16_t getDutyCycle_PWMRed(void)
 /////////////////////////////////////////////////////////////////////////////////
 // Functions for PWM_BLUE, TC0B
 /////////////////////////////////////////////////////////////////////////////////
-
 void init_PWMBlue(uint16_t period)
 {
 	// Configuring timer TCD0 and compare channel B
-	PORTD.DIRSET |= PWM_BLUE;											// Set the port PWM_RED as output
+	PWM_PORT.DIRSET |= PWM_BLUE;											// Set the port PWM_RED as output
 	setPeriod_TCD0(period);												// Set period
 	TCD0.CTRLB |= TC_WGMODE_SINGLESLOPE_gc | TC0_CCBEN_bm;				// Single slope PWM and TCD0 enable
 	TCD0.CTRLA |= TC_CLKSEL_DIV1_gc;
@@ -95,11 +99,10 @@ uint16_t getDutyCycle_PWMBlue(void)
 /////////////////////////////////////////////////////////////////////////////////
 // Functions for PWM_GREEN, TC0C
 /////////////////////////////////////////////////////////////////////////////////
-
 void init_PWMGreen(uint16_t period)
 {
 	// Configuring timer TCD0 and compare channel B
-	PORTD.DIRSET |= PWM_GREEN;											// Set the port PWM_RED as output
+	PWM_PORT.DIRSET |= PWM_GREEN;											// Set the port PWM_RED as output
 	setPeriod_TCD0(period);												// Set period
 	TCD0.CTRLB |= TC_WGMODE_SINGLESLOPE_gc | TC0_CCCEN_bm;				// Single slope PWM and TCD0 enable
 	TCD0.CTRLA |= TC_CLKSEL_DIV1_gc;
@@ -125,11 +128,10 @@ uint16_t getDutyCycle_PWMGreen(void)
 /////////////////////////////////////////////////////////////////////////////////
 // Functions for PWM_OLED, TC0C
 /////////////////////////////////////////////////////////////////////////////////
-
 void init_PWMOLED(uint16_t period)
 {
 	// Configuring timer TCD0 and compare channel B
-	PORTD.DIRSET |= PWM_OLED;											// Set the port PWM_RED as output
+	PWM_PORT.DIRSET |= PWM_OLED;											// Set the port PWM_RED as output
 	setPeriod_TCD0(period);												// Set period
 	TCD0.CTRLB |= TC_WGMODE_SINGLESLOPE_gc | TC0_CCDEN_bm;				// Single slope PWM and TCD0 enable
 	TCD0.CTRLA |= TC_CLKSEL_DIV1_gc;
@@ -155,16 +157,34 @@ uint16_t getDutyCycle_PWMOLED(void)
 /////////////////////////////////////////////////////////////////////////////////
 // Init and deinit of this module
 /////////////////////////////////////////////////////////////////////////////////
-
-static uint8_t init(void)
+#ifdef WORKING
+static uint8_t init(int num, ...)
 {
-	// Initialize all PWM channels needed
 	init_PWMRed(PWM_FREQ_16KHZ);
 	init_PWMBlue(PWM_FREQ_16KHZ);
 	init_PWMGreen(PWM_FREQ_16KHZ);
 	init_PWMOLED(PWM_FREQ_16KHZ);
 	return 1;
 }
+#else
+static uint8_t init(int num, ...)
+{
+	// Variables
+	va_list arguments;
+	
+	// Action
+	va_start(arguments, sum);					// Start variable arguments list
+	for(int i = 0; i< num, i++)
+	{
+		channel = va_arg(arguments, char);
+	}
+	init_PWMRed(PWM_FREQ_16KHZ);
+	init_PWMBlue(PWM_FREQ_16KHZ);
+	init_PWMGreen(PWM_FREQ_16KHZ);
+	init_PWMOLED(PWM_FREQ_16KHZ);
+	return 1;
+}
+#endif
 
 static uint8_t deinit(void) 
 {

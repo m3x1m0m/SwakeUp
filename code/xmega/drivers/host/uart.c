@@ -345,9 +345,9 @@ static uint8_t init(void) {
 #ifdef REV_2
     CP_PIN_PORT.REMAP           = PORT_USART0_bm;
 #endif
-    CP_PORT.CTRLA               = USART_RXCINTLVL_MED_gc;
-    CP_PORT.CTRLB               = USART_RXEN_bm |  USART_TXEN_bm;
-    CP_PORT.CTRLC               = USART_CHSIZE_8BIT_gc;
+    DEBUG_UART.CTRLA               = USART_RXCINTLVL_MED_gc;
+    DEBUG_UART.CTRLB               = USART_RXEN_bm |  USART_TXEN_bm;
+    DEBUG_UART.CTRLC               = USART_CHSIZE_8BIT_gc;
     uart_speed(B115200, &CP_PORT);
     uart_writes_blocked(_initialized, sizeof(_initialized), &DEBUG_UART);
     return 1;

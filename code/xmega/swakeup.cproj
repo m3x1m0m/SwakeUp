@@ -234,6 +234,12 @@
     <Compile Include="modules\log.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="modules\pid.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="modules\pid.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="modules\screen.c">
       <SubType>compile</SubType>
     </Compile>
@@ -351,9 +357,6 @@
     <Folder Include="util\" />
     <Folder Include="util\protobuf\" />
     <Folder Include="util\protobuf\" />
-    <Folder Include="xmega\" />
-    <Folder Include="xmega\drivers\" />
-    <Folder Include="xmega\drivers\host\" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>

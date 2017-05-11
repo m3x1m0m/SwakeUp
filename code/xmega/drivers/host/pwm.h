@@ -13,12 +13,6 @@
 // Defines
 /////////////////////////////////////////////////////////////////////////////////
 
-// PWM Pins
-#define PWM_RED (1 << 0)
-#define PWM_BLUE (1 << 1)
-#define PWM_GREEN (1 << 2)
-#define PWM_OLED (1 << 3)
-
 // Predefined period register values for certain freq. 
 // High resolution extension plus (x8) has to be activated for these values to be correct.
 #define PWM_MIN_PERIOD 8
