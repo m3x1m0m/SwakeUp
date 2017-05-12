@@ -28,6 +28,8 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
+LIBS:myOpAmps
+LIBS:myMOSFETs
 LIBS:power-cache
 EELAYER 25 0
 EELAYER END
@@ -44,690 +46,812 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L LM324QT U4
-U 1 1 58430F92
-P 7000 3675
-F 0 "U4" H 7450 2825 60  0000 C CNN
-F 1 "LM324QT" H 6700 2825 60  0000 C CNN
-F 2 "Additional:QFN-16-1EP_3x3mm_Pitch0.5mm" H 7000 3675 60  0001 C CNN
-F 3 "http://www.st.com/content/ccc/resource/technical/document/datasheet/58/13/52/7e/39/8c/4c/ba/CD00000457.pdf/files/CD00000457.pdf/jcr:content/translations/en.CD00000457.pdf" H 7000 3675 60  0001 C CNN
-F 4 "497-12005-1-ND" H 7000 3675 60  0001 C CNN "Digikey"
-	1    7000 3675
-	1    0    0    -1  
-$EndComp
-$Comp
-L R R9
-U 1 1 58430FA0
-P 5950 4275
-F 0 "R9" V 6030 4275 50  0000 C CNN
-F 1 "120k" V 5950 4275 50  0000 C CNN
-F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 5880 4275 50  0001 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 5950 4275 50  0001 C CNN
-F 4 "311-120KHRCT-ND" V 5950 4275 60  0001 C CNN "Digikey"
-	1    5950 4275
-	0    1    1    0   
-$EndComp
-$Comp
-L R R12
-U 1 1 58430FBC
-P 8000 3075
-F 0 "R12" V 8080 3075 50  0000 C CNN
-F 1 "240k" V 8000 3075 50  0000 C CNN
-F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 7930 3075 50  0001 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 8000 3075 50  0001 C CNN
-F 4 "311-240KHRCT-ND" V 8000 3075 60  0001 C CNN "Digikey"
-	1    8000 3075
-	0    1    1    0   
-$EndComp
-$Comp
-L R R16
-U 1 1 58430FC4
-P 8500 3075
-F 0 "R16" V 8580 3075 50  0000 C CNN
-F 1 "39k" V 8500 3075 50  0000 C CNN
-F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 8430 3075 50  0001 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 8500 3075 50  0001 C CNN
-F 4 "311-39.0KHRCT-ND" V 8500 3075 60  0001 C CNN "Digikey"
-	1    8500 3075
-	0    1    1    0   
-$EndComp
-$Comp
-L GND #PWR017
-U 1 1 58430FCB
-P 8700 3125
-F 0 "#PWR017" H 8700 2875 50  0001 C CNN
-F 1 "GND" H 8700 2975 50  0000 C CNN
-F 2 "" H 8700 3125 50  0000 C CNN
-F 3 "" H 8700 3125 50  0000 C CNN
-	1    8700 3125
-	1    0    0    -1  
-$EndComp
-$Comp
-L R R18
-U 1 1 58430FD2
-P 10350 3475
-F 0 "R18" V 10430 3475 50  0000 C CNN
-F 1 "47k" V 10350 3475 50  0000 C CNN
-F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 10280 3475 50  0001 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 10350 3475 50  0001 C CNN
-F 4 "311-47.0KHRCT-ND" V 10350 3475 60  0001 C CNN "Digikey"
-	1    10350 3475
-	0    1    1    0   
-$EndComp
-$Comp
-L C C9
-U 1 1 58430FDA
-P 9350 3725
-F 0 "C9" H 9375 3825 50  0000 L CNN
-F 1 "10n" H 9375 3625 50  0000 L CNN
-F 2 "Capacitors_SMD:C_0603_HandSoldering" H 9388 3575 50  0001 C CNN
-F 3 "http://www.yageo.com/documents/recent/UPY-GPHC_X7R_6.3V-to-50V_15.pdf" H 9350 3725 50  0001 C CNN
-F 4 "311-1085-1-ND" H 9350 3725 60  0001 C CNN "Digikey"
-	1    9350 3725
-	1    0    0    -1  
-$EndComp
-$Comp
-L GND #PWR018
-U 1 1 58430FE1
-P 10150 3975
-F 0 "#PWR018" H 10150 3725 50  0001 C CNN
-F 1 "GND" H 10150 3825 50  0000 C CNN
-F 2 "" H 10150 3975 50  0000 C CNN
-F 3 "" H 10150 3975 50  0000 C CNN
-	1    10150 3975
-	1    0    0    -1  
-$EndComp
-$Comp
-L R R8
-U 1 1 58430FE8
-P 5500 3075
-F 0 "R8" V 5580 3075 50  0000 C CNN
-F 1 "3.9k" V 5500 3075 50  0000 C CNN
-F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 5430 3075 50  0001 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 5500 3075 50  0001 C CNN
-F 4 "311-3.90KHRCT-ND" V 5500 3075 60  0001 C CNN "Digikey"
-	1    5500 3075
-	0    1    1    0   
-$EndComp
-$Comp
-L R R10
-U 1 1 58430FF0
-P 5900 3075
-F 0 "R10" V 5980 3075 50  0000 C CNN
-F 1 "120k" V 5900 3075 50  0000 C CNN
-F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 5830 3075 50  0001 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 5900 3075 50  0001 C CNN
-F 4 "311-120KHRCT-ND" V 5900 3075 60  0001 C CNN "Digikey"
-	1    5900 3075
-	0    1    1    0   
-$EndComp
-$Comp
-L R R13
-U 1 1 58430FF8
-P 8000 4275
-F 0 "R13" V 8080 4275 50  0000 C CNN
-F 1 "120k" V 8000 4275 50  0000 C CNN
-F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 7930 4275 50  0001 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 8000 4275 50  0001 C CNN
-F 4 "311-120KHRCT-ND" V 8000 4275 60  0001 C CNN "Digikey"
-	1    8000 4275
-	0    1    1    0   
-$EndComp
-$Comp
-L R R14
-U 1 1 58431008
-P 8500 4275
-F 0 "R14" V 8580 4275 50  0000 C CNN
-F 1 "3.9k" V 8500 4275 50  0000 C CNN
-F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 8430 4275 50  0001 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 8500 4275 50  0001 C CNN
-F 4 "311-3.90KHRCT-ND" V 8500 4275 60  0001 C CNN "Digikey"
-	1    8500 4275
-	0    1    1    0   
-$EndComp
-$Comp
 L R R19
 U 1 1 58431010
-P 9550 3475
-F 0 "R19" V 9630 3475 50  0000 C CNN
-F 1 "47k" V 9550 3475 50  0000 C CNN
-F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 9480 3475 50  0001 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 9550 3475 50  0001 C CNN
-F 4 "311-47.0KHRCT-ND" V 9550 3475 60  0001 C CNN "Digikey"
-	1    9550 3475
+P 8200 2300
+F 0 "R19" V 8280 2300 50  0000 C CNN
+F 1 "10k" V 8200 2300 50  0000 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 8130 2300 50  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/1788326.pdf" H 8200 2300 50  0001 C CNN
+F 4 "2141505" V 8200 2300 60  0001 C CNN "Farnell"
+	1    8200 2300
 	0    1    1    0   
 $EndComp
-$Comp
-L R R20
-U 1 1 58431018
-P 9950 3475
-F 0 "R20" V 10030 3475 50  0000 C CNN
-F 1 "47k" V 9950 3475 50  0000 C CNN
-F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 9880 3475 50  0001 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 9950 3475 50  0001 C CNN
-F 4 "311-47.0KHRCT-ND" V 9950 3475 60  0001 C CNN "Digikey"
-	1    9950 3475
-	0    1    1    0   
-$EndComp
-$Comp
-L C C10
-U 1 1 58431020
-P 9750 3725
-F 0 "C10" H 9775 3825 50  0000 L CNN
-F 1 "10n" H 9775 3625 50  0000 L CNN
-F 2 "Capacitors_SMD:C_0603_HandSoldering" H 9788 3575 50  0001 C CNN
-F 3 "http://www.yageo.com/documents/recent/UPY-GPHC_X7R_6.3V-to-50V_15.pdf" H 9750 3725 50  0001 C CNN
-F 4 "311-1085-1-ND" H 9750 3725 60  0001 C CNN "Digikey"
-	1    9750 3725
-	1    0    0    -1  
-$EndComp
-$Comp
-L C C11
-U 1 1 58431029
-P 10150 3725
-F 0 "C11" H 10175 3825 50  0000 L CNN
-F 1 "10n" H 10175 3625 50  0000 L CNN
-F 2 "Capacitors_SMD:C_0603_HandSoldering" H 10188 3575 50  0001 C CNN
-F 3 "http://www.yageo.com/documents/recent/UPY-GPHC_X7R_6.3V-to-50V_15.pdf" H 10150 3725 50  0001 C CNN
-F 4 "311-1085-1-ND" H 10150 3725 60  0001 C CNN "Digikey"
-	1    10150 3725
-	1    0    0    -1  
-$EndComp
-$Comp
-L GND #PWR019
-U 1 1 58431031
-P 7800 3675
-F 0 "#PWR019" H 7800 3425 50  0001 C CNN
-F 1 "GND" H 7800 3525 50  0000 C CNN
-F 2 "" H 7800 3675 50  0000 C CNN
-F 3 "" H 7800 3675 50  0000 C CNN
-	1    7800 3675
-	1    0    0    -1  
-$EndComp
-Text Notes 9300 3325 0    60   ~ 0
-Non-Invert. Amp.\n-----------------------\nA=(240k + 39k)/39k =7.154\nVin,max=2.8 V\nVout,max=20.031V
-Text Notes 4750 5075 0    60   ~ 0
-Differential Amp.\n-----------------------\nA=(3.9k+120k)/3.9k =31.769\nVin,max=30 mV\nVout,max=953.077 mV\nVref = 1.0 V
-$Comp
-L R R11
-U 1 1 5843103A
-P 8000 2475
-F 0 "R11" V 8080 2475 50  0000 C CNN
-F 1 "120k" V 8000 2475 50  0000 C CNN
-F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 7930 2475 50  0001 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 8000 2475 50  0001 C CNN
-F 4 "311-120KHRCT-ND" V 8000 2475 60  0001 C CNN "Digikey"
-	1    8000 2475
-	0    1    1    0   
-$EndComp
-$Comp
-L R R15
-U 1 1 58431042
-P 8500 2475
-F 0 "R15" V 8580 2475 50  0000 C CNN
-F 1 "2.7k" V 8500 2475 50  0000 C CNN
-F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 8430 2475 50  0001 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 8500 2475 50  0001 C CNN
-F 4 "311-2.70KHRCT-ND" V 8500 2475 60  0001 C CNN "Digikey"
-	1    8500 2475
-	0    1    1    0   
-$EndComp
-$Comp
-L R R17
-U 1 1 5843104A
-P 8850 2475
-F 0 "R17" V 8930 2475 50  0000 C CNN
-F 1 "3.3k" V 8850 2475 50  0000 C CNN
-F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 8780 2475 50  0001 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 8850 2475 50  0001 C CNN
-F 4 "311-3.30KHRCT-ND" V 8850 2475 60  0001 C CNN "Digikey"
-	1    8850 2475
-	0    1    1    0   
-$EndComp
-$Comp
-L GND #PWR020
-U 1 1 58431051
-P 9000 2875
-F 0 "#PWR020" H 9000 2625 50  0001 C CNN
-F 1 "GND" H 9000 2725 50  0000 C CNN
-F 2 "" H 9000 2875 50  0000 C CNN
-F 3 "" H 9000 2875 50  0000 C CNN
-	1    9000 2875
-	1    0    0    -1  
-$EndComp
+Text Notes 8850 1300 0    60   ~ 0
+Non-Invert. Amp.\n-----------------------\nA=(30k + 120k)/30k =5\nVin,max=3.3 V\nVout,max=16.5
+Text Notes 3425 2000 0    60   ~ 0
+Differential Amp.\n-----------------------\nA=(20k+120k)/20k = 6\nVin,max=300 mV\nVout,max=1.98 V\nVref = 3.3V/1.6
 $Comp
 L C C8
 U 1 1 58431061
-P 8300 2675
-F 0 "C8" H 8325 2775 50  0000 L CNN
-F 1 "10u" H 8325 2575 50  0000 L CNN
-F 2 "Capacitors_SMD:C_0603_HandSoldering" H 8338 2525 50  0001 C CNN
-F 3 "http://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRT188R61E106ME13-01.pdf" H 8300 2675 50  0001 C CNN
-F 4 "490-12323-1-ND" H 8300 2675 60  0001 C CNN "Digikey"
-	1    8300 2675
+P 9100 6250
+F 0 "C8" H 9125 6350 50  0000 L CNN
+F 1 "10u" H 9125 6150 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603_HandSoldering" H 9138 6100 50  0001 C CNN
+F 3 "http://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRT188R61E106ME13-01.pdf" H 9100 6250 50  0001 C CNN
+F 4 "490-12323-1-ND" H 9100 6250 60  0001 C CNN "Digikey"
+	1    9100 6250
 	0    1    1    0   
 $EndComp
-Text Notes 7800 1925 0    60   ~ 0
-Voltage Divider\n-----------------------\nA=6k/120k = 20\nVin,max=20 V\nVout,max=1 V (reference of ADC)
-Text Notes 4000 2300 0    60   ~ 0
-LED
-Text HLabel 1950 3150 0    60   Input ~ 0
+Text Notes 6750 1200 0    60   ~ 0
+Voltage divider\n-----------------------\nVin,max = 16.5 V\nVout,max = 1.5 V \nVref = (3.3V/1.6)
+Text HLabel 1400 5400 0    60   Input ~ 0
 V20
-Text HLabel 2100 3300 0    60   Input ~ 0
+Text HLabel 1550 5550 0    60   Input ~ 0
 PWM_R
-Text HLabel 2100 3700 0    60   Input ~ 0
+Text HLabel 1550 5950 0    60   Input ~ 0
 PWM_B
-Text HLabel 2100 4050 0    60   Input ~ 0
+Text HLabel 1550 6300 0    60   Input ~ 0
 PWM_G
-Text HLabel 6050 2675 0    60   Output ~ 0
-ADC_R
-Text HLabel 6050 3775 0    60   Input ~ 0
-V20
-Text HLabel 6000 4475 0    60   Output ~ 0
+Text HLabel 9875 6025 0    60   Output ~ 0
 ADC_B
-Text HLabel 7950 4475 2    60   Output ~ 0
+Text HLabel 10125 5650 2    60   Output ~ 0
 ADC_G
-Text HLabel 10550 3475 2    60   Input ~ 0
+Text HLabel 9200 2300 2    60   Input ~ 0
 PWM_OLED
-Text HLabel 8350 2325 2    60   Output ~ 0
+Text HLabel 7750 6250 2    60   Output ~ 0
 ADC_OLED
-Text HLabel 8350 2125 2    60   Output ~ 0
+Text HLabel 6575 6425 2    60   Output ~ 0
 VOLED
-Text HLabel 4050 2700 1    60   Output ~ 0
+Text HLabel 3500 4950 1    60   Output ~ 0
 LED_R
-Text HLabel 4150 2700 1    60   Output ~ 0
+Text HLabel 3600 4950 1    60   Output ~ 0
 LED_B
-Text HLabel 4250 2700 1    60   Output ~ 0
+Text HLabel 3700 4950 1    60   Output ~ 0
 LED_G
-Text HLabel 4350 2700 1    60   Output ~ 0
+Text HLabel 3800 4950 1    60   Output ~ 0
 LED_GND
 $Comp
 L C C21
 U 1 1 584CBAE2
-P 5700 3575
-F 0 "C21" V 5750 3625 50  0000 L CNN
-F 1 "2.2u" V 5750 3325 50  0000 L CNN
-F 2 "Capacitors_SMD:C_0603_HandSoldering" H 5738 3425 50  0001 C CNN
-F 3 "http://search.murata.co.jp/Ceramy/image/img/A01X/partnumbering_e_01.pdf" H 5700 3575 50  0001 C CNN
-F 4 "490-7204-1-ND" H 5700 3575 60  0001 C CNN "Digikey"
-	1    5700 3575
+P 9325 5600
+F 0 "C21" V 9375 5650 50  0000 L CNN
+F 1 "2.2u" V 9375 5350 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603_HandSoldering" H 9363 5450 50  0001 C CNN
+F 3 "http://search.murata.co.jp/Ceramy/image/img/A01X/partnumbering_e_01.pdf" H 9325 5600 50  0001 C CNN
+F 4 "490-7204-1-ND" H 9325 5600 60  0001 C CNN "Digikey"
+	1    9325 5600
 	0    -1   -1   0   
 $EndComp
 $Comp
 L GND #PWR021
 U 1 1 584CCA77
-P 5175 3625
-F 0 "#PWR021" H 5175 3375 50  0001 C CNN
-F 1 "GND" H 5175 3475 50  0000 C CNN
-F 2 "" H 5175 3625 50  0000 C CNN
-F 3 "" H 5175 3625 50  0000 C CNN
-	1    5175 3625
+P 10125 4825
+F 0 "#PWR021" H 10125 4575 50  0001 C CNN
+F 1 "GND" H 10125 4675 50  0000 C CNN
+F 2 "" H 10125 4825 50  0000 C CNN
+F 3 "" H 10125 4825 50  0000 C CNN
+	1    10125 4825
 	1    0    0    -1  
 $EndComp
-$Comp
-L R R37
-U 1 1 5866FDB9
-P 8000 3975
-F 0 "R37" V 8080 3975 50  0000 C CNN
-F 1 "120k" V 8000 3975 50  0000 C CNN
-F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 7930 3975 50  0001 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 8000 3975 50  0001 C CNN
-F 4 "311-120KHRCT-ND" V 8000 3975 60  0001 C CNN "Digikey"
-	1    8000 3975
-	0    1    1    0   
-$EndComp
-$Comp
-L R R38
-U 1 1 5866FDC0
-P 8500 3975
-F 0 "R38" V 8580 3975 50  0000 C CNN
-F 1 "3.9k" V 8500 3975 50  0000 C CNN
-F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 8430 3975 50  0001 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 8500 3975 50  0001 C CNN
-F 4 "311-3.90KHRCT-ND" V 8500 3975 60  0001 C CNN "Digikey"
-	1    8500 3975
-	0    1    1    0   
-$EndComp
-$Comp
-L GND #PWR022
-U 1 1 586714EB
-P 7850 3975
-F 0 "#PWR022" H 7850 3725 50  0001 C CNN
-F 1 "GND" H 7850 3825 50  0000 C CNN
-F 2 "" H 7850 3975 50  0000 C CNN
-F 3 "" H 7850 3975 50  0000 C CNN
-	1    7850 3975
-	1    0    0    -1  
-$EndComp
-Text GLabel 3500 3500 2    60   Input ~ 0
+Text GLabel 2950 5750 2    60   Input ~ 0
 OPAMP_R_P
-Text GLabel 3500 3600 2    60   Input ~ 0
+Text GLabel 2950 5850 2    60   Input ~ 0
 OPAMP_R_N
-Text GLabel 3500 3950 2    60   Input ~ 0
+Text GLabel 2950 6200 2    60   Input ~ 0
 OPAMP_B_P
-Text GLabel 3500 4050 2    60   Input ~ 0
+Text GLabel 2950 6300 2    60   Input ~ 0
 OPAMP_B_N
-Text GLabel 3500 4400 2    60   Input ~ 0
+Text GLabel 2950 6650 2    60   Input ~ 0
 OPAMP_G_P
-Text GLabel 3500 4500 2    60   Input ~ 0
+Text GLabel 2950 6750 2    60   Input ~ 0
 OPAMP_G_N
-Text GLabel 8675 3975 2    60   Input ~ 0
+Text GLabel 10450 5900 2    60   Input ~ 0
 OPAMP_G_N
-Text GLabel 8675 4275 2    60   Input ~ 0
+Text GLabel 10200 6175 2    60   Input ~ 0
 OPAMP_G_P
-$Comp
-L R R36
-U 1 1 5867CD8C
-P 5950 3950
-F 0 "R36" V 6030 3950 50  0000 C CNN
-F 1 "120k" V 5950 3950 50  0000 C CNN
-F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 5880 3950 50  0001 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 5950 3950 50  0001 C CNN
-F 4 "311-120KHRCT-ND" V 5950 3950 60  0001 C CNN "Digikey"
-	1    5950 3950
-	0    1    1    0   
-$EndComp
-$Comp
-L R R34
-U 1 1 5867CD99
-P 5500 3950
-F 0 "R34" V 5580 3950 50  0000 C CNN
-F 1 "3.9k" V 5500 3950 50  0000 C CNN
-F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 5430 3950 50  0001 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 5500 3950 50  0001 C CNN
-F 4 "311-3.90KHRCT-ND" V 5500 3950 60  0001 C CNN "Digikey"
-	1    5500 3950
-	0    1    1    0   
-$EndComp
 $Comp
 L GND #PWR023
 U 1 1 5867D2A9
-P 6100 3950
-F 0 "#PWR023" H 6100 3700 50  0001 C CNN
-F 1 "GND" H 6100 3800 50  0000 C CNN
-F 2 "" H 6100 3950 50  0000 C CNN
-F 3 "" H 6100 3950 50  0000 C CNN
-	1    6100 3950
+P 8750 5925
+F 0 "#PWR023" H 8750 5675 50  0001 C CNN
+F 1 "GND" H 8750 5775 50  0000 C CNN
+F 2 "" H 8750 5925 50  0000 C CNN
+F 3 "" H 8750 5925 50  0000 C CNN
+	1    8750 5925
 	1    0    0    -1  
 $EndComp
-Text GLabel 5325 3950 0    60   Input ~ 0
+Text GLabel 7275 6125 0    60   Input ~ 0
 OPAMP_B_N
-Text GLabel 5325 4275 0    60   Input ~ 0
+Text GLabel 8300 5850 0    60   Input ~ 0
 OPAMP_B_P
 $Sheet
-S 2256 3044 1144 1856
+S 1706 5294 1144 1856
 U 58430F64
 F0 "LED Driver 3 Chan. " 60
 F1 "rgbLedDriver.sch" 60
-F2 "LED_G_P" O R 3400 4200 60 
-F3 "LED_G_N" O R 3400 4300 60 
-F4 "PWM_B" I L 2256 3700 60 
-F5 "LED_B_P" O R 3400 3750 60 
-F6 "LED_B_N" O R 3400 3850 60 
-F7 "PWM_R" I L 2256 3300 60 
-F8 "LED_R_P" O R 3400 3300 60 
-F9 "LED_R_N" O R 3400 3400 60 
-F10 "V20" I L 2256 3150 60 
-F11 "PWM_G" I L 2256 4050 60 
-F12 "OPAMP_G_P" O R 3400 4400 60 
-F13 "OPAMP_B_P" O R 3400 3950 60 
-F14 "OPAMP_R_P" O R 3400 3500 60 
-F15 "OPAMP_R_N" O R 3400 3600 60 
-F16 "OPAMP_G_N" O R 3400 4500 60 
-F17 "OPAMP_B_N" O R 3400 4050 60 
+F2 "LED_G_P" O R 2850 6450 60 
+F3 "LED_G_N" O R 2850 6550 60 
+F4 "PWM_B" I L 1706 5950 60 
+F5 "LED_B_P" O R 2850 6000 60 
+F6 "LED_B_N" O R 2850 6100 60 
+F7 "PWM_R" I L 1706 5550 60 
+F8 "LED_R_P" O R 2850 5550 60 
+F9 "LED_R_N" O R 2850 5650 60 
+F10 "V20" I L 1706 5400 60 
+F11 "PWM_G" I L 1706 6300 60 
+F12 "OPAMP_G_P" O R 2850 6650 60 
+F13 "OPAMP_B_P" O R 2850 6200 60 
+F14 "OPAMP_R_P" O R 2850 5750 60 
+F15 "OPAMP_R_N" O R 2850 5850 60 
+F16 "OPAMP_G_N" O R 2850 6750 60 
+F17 "OPAMP_B_N" O R 2850 6300 60 
 $EndSheet
-$Comp
-L R R33
-U 1 1 5868439D
-P 5500 3375
-F 0 "R33" V 5580 3375 50  0000 C CNN
-F 1 "3.9k" V 5500 3375 50  0000 C CNN
-F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 5430 3375 50  0001 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 5500 3375 50  0001 C CNN
-F 4 "311-3.90KHRCT-ND" V 5500 3375 60  0001 C CNN "Digikey"
-	1    5500 3375
-	0    1    1    0   
-$EndComp
-$Comp
-L R R35
-U 1 1 586843A4
-P 5900 3375
-F 0 "R35" V 5980 3375 50  0000 C CNN
-F 1 "120k" V 5900 3375 50  0000 C CNN
-F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 5830 3375 50  0001 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 5900 3375 50  0001 C CNN
-F 4 "311-120KHRCT-ND" V 5900 3375 60  0001 C CNN "Digikey"
-	1    5900 3375
-	0    1    1    0   
-$EndComp
-Text GLabel 5325 3075 0    60   Input ~ 0
+Text GLabel 4000 2850 0    60   Input ~ 0
 OPAMP_R_P
-Text GLabel 5325 3375 0    60   Input ~ 0
+Text GLabel 4000 2350 0    60   Input ~ 0
 OPAMP_R_N
 $Comp
 L GND #PWR024
 U 1 1 58689DF6
-P 6050 3375
-F 0 "#PWR024" H 6050 3125 50  0001 C CNN
-F 1 "GND" H 6050 3225 50  0000 C CNN
-F 2 "" H 6050 3375 50  0000 C CNN
-F 3 "" H 6050 3375 50  0000 C CNN
-	1    6050 3375
+P 5350 2925
+F 0 "#PWR024" H 5350 2675 50  0001 C CNN
+F 1 "GND" H 5350 2775 50  0000 C CNN
+F 2 "" H 5350 2925 50  0000 C CNN
+F 3 "" H 5350 2925 50  0000 C CNN
+	1    5350 2925
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R7
-U 1 1 58431000
-P 5500 4275
-F 0 "R7" V 5580 4275 50  0000 C CNN
-F 1 "3.9k" V 5500 4275 50  0000 C CNN
-F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 5430 4275 50  0001 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 5500 4275 50  0001 C CNN
-F 4 "311-3.90KHRCT-ND" V 5500 4275 60  0001 C CNN "Digikey"
-	1    5500 4275
+L LM324QT U?
+U 1 1 59158B03
+P 6575 2950
+F 0 "U?" H 7025 2150 60  0000 C CNN
+F 1 "LM324QT" H 6225 2150 60  0000 C CNN
+F 2 "" H 6575 2950 60  0000 C CNN
+F 3 "" H 6575 2950 60  0000 C CNN
+	1    6575 2950
+	1    0    0    -1  
+$EndComp
+Text HLabel 8100 5225 0    60   Input ~ 0
+V19
+$Comp
+L R R?
+U 1 1 59163CBB
+P 8600 2300
+F 0 "R?" V 8680 2300 50  0000 C CNN
+F 1 "10k" V 8600 2300 50  0000 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 8530 2300 50  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/1788326.pdf" H 8600 2300 50  0001 C CNN
+F 4 "2141505" V 8600 2300 60  0001 C CNN "Farnell"
+	1    8600 2300
 	0    1    1    0   
 $EndComp
-Wire Wire Line
-	9700 3475 9800 3475
-Wire Wire Line
-	9350 3925 10150 3925
-Wire Wire Line
-	9350 3925 9350 3875
-Connection ~ 10150 3925
-Wire Wire Line
-	9750 3875 9750 3925
-Connection ~ 9750 3925
-Wire Wire Line
-	9750 3575 9750 3475
-Connection ~ 9750 3475
-Wire Wire Line
-	10150 3875 10150 3975
-Wire Wire Line
-	7700 3275 8250 3275
-Wire Wire Line
-	8150 2475 8350 2475
-Wire Wire Line
-	8650 2475 8700 2475
-Wire Wire Line
-	9000 2475 9000 2875
-Wire Wire Line
-	2256 3300 2100 3300
-Wire Wire Line
-	2256 3700 2100 3700
-Wire Wire Line
-	2100 4050 2256 4050
-Wire Wire Line
-	2256 3150 1950 3150
-Wire Wire Line
-	8150 3075 8350 3075
-Wire Wire Line
-	8250 3275 8250 3075
-Connection ~ 8250 3075
-Wire Wire Line
-	7700 3075 7850 3075
-Wire Wire Line
-	7850 2475 7800 2475
-Wire Wire Line
-	7800 2125 7800 3075
-Connection ~ 7800 3075
-Wire Wire Line
-	7700 4275 7850 4275
-Wire Wire Line
-	7950 4475 7750 4475
-Wire Wire Line
-	7750 4475 7750 4275
-Connection ~ 7750 4275
-Wire Wire Line
-	6100 4275 6300 4275
-Wire Wire Line
-	8150 4275 8350 4275
-Connection ~ 8250 4275
-Wire Wire Line
-	5700 4075 6300 4075
-Wire Wire Line
-	5650 4275 5800 4275
-Wire Wire Line
-	6000 4475 6200 4475
-Wire Wire Line
-	6200 4475 6200 4275
-Connection ~ 6200 4275
-Wire Wire Line
-	6050 3075 6300 3075
-Wire Wire Line
-	5650 3075 5750 3075
-Connection ~ 5700 3075
-Wire Wire Line
-	6250 3075 6250 2675
-Connection ~ 6250 3075
-Wire Wire Line
-	6250 2675 6050 2675
-Connection ~ 7800 2475
-Wire Wire Line
-	8350 2125 7800 2125
-Wire Wire Line
-	8150 2675 7800 2675
-Connection ~ 9000 2675
-Connection ~ 7800 2675
-Wire Wire Line
-	8450 2675 9000 2675
-Wire Wire Line
-	8350 2325 8250 2325
-Wire Wire Line
-	8250 2325 8250 2475
-Connection ~ 8250 2475
-Wire Wire Line
-	6300 3675 6200 3675
-Wire Wire Line
-	6200 3575 6200 3775
-Wire Wire Line
-	6200 3575 5850 3575
-Connection ~ 6200 3675
-Wire Wire Line
-	5175 3575 5175 3625
-Wire Wire Line
-	5175 3575 5550 3575
-Wire Wire Line
-	6200 3775 6050 3775
-Wire Wire Line
-	8150 3975 8350 3975
-Connection ~ 8250 3975
-Wire Wire Line
-	8250 4075 8250 4275
-Wire Wire Line
-	7700 3875 8250 3875
-Wire Wire Line
-	8250 3875 8250 3975
-Wire Wire Line
-	7700 3675 7800 3675
-Wire Wire Line
-	3400 4050 3500 4050
-Wire Wire Line
-	3400 4500 3500 4500
-Wire Wire Line
-	3400 3300 4050 3300
-Wire Wire Line
-	4050 3300 4050 2700
-Wire Wire Line
-	3400 3400 4350 3400
-Wire Wire Line
-	4350 2700 4350 4300
-Wire Wire Line
-	3400 3750 4150 3750
-Wire Wire Line
-	4150 3750 4150 2700
-Wire Wire Line
-	4350 3850 3400 3850
-Connection ~ 4350 3400
-Wire Wire Line
-	3400 4200 4250 4200
-Wire Wire Line
-	4250 4200 4250 2700
-Wire Wire Line
-	4350 4300 3400 4300
-Connection ~ 4350 3850
-Wire Wire Line
-	8675 4275 8650 4275
-Wire Wire Line
-	8675 3975 8650 3975
-Wire Wire Line
-	7700 4075 8250 4075
-Connection ~ 5700 4275
-Wire Wire Line
-	5700 4275 5700 4075
-Wire Wire Line
-	5650 3950 5800 3950
-Wire Wire Line
-	6300 3875 5725 3875
-Wire Wire Line
-	5725 3875 5725 3950
-Connection ~ 5725 3950
-Wire Wire Line
-	5325 4275 5350 4275
-Wire Wire Line
-	3400 3500 3500 3500
-Wire Wire Line
-	3400 3600 3500 3600
-Wire Wire Line
-	3400 3950 3500 3950
-Wire Wire Line
-	3500 4400 3400 4400
-Wire Wire Line
-	8650 3075 8700 3075
-Wire Wire Line
-	8700 3075 8700 3125
-Wire Wire Line
-	5650 3375 5750 3375
-Connection ~ 5700 3375
-Wire Wire Line
-	5700 3075 5700 3200
-Wire Wire Line
-	5700 3300 5700 3375
-Wire Wire Line
-	5700 3200 6300 3200
-Wire Wire Line
-	5350 3075 5325 3075
-Wire Wire Line
-	5350 3375 5325 3375
-Wire Wire Line
-	5700 3300 6200 3300
-Wire Wire Line
-	6200 3300 6200 3475
-Wire Wire Line
-	6200 3475 6300 3475
-Wire Wire Line
-	6300 3200 6300 3275
-Wire Wire Line
-	7700 3475 9400 3475
-Wire Wire Line
-	9350 3575 9350 3475
-Connection ~ 9350 3475
-Wire Wire Line
-	10100 3475 10200 3475
-Wire Wire Line
-	10150 3475 10150 3575
-Connection ~ 10150 3475
-Wire Wire Line
-	10500 3475 10550 3475
-Wire Wire Line
-	5325 3950 5350 3950
+$Comp
+L R R?
+U 1 1 59164915
+P 4275 2350
+F 0 "R?" V 4355 2350 50  0000 C CNN
+F 1 "20k" V 4275 2350 50  0000 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 4205 2350 50  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/1716707.pdf" H 4275 2350 50  0001 C CNN
+F 4 "2073421" V 4275 2350 60  0001 C CNN "Farnell"
+	1    4275 2350
+	0    1    1    0   
+$EndComp
+$Comp
+L R R?
+U 1 1 591650E7
+P 4975 2350
+F 0 "R?" V 5055 2350 50  0000 C CNN
+F 1 "120k" V 4975 2350 50  0000 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 4905 2350 50  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/1788326.pdf" H 4975 2350 50  0001 C CNN
+F 4 "2141505" V 4975 2350 60  0001 C CNN "Farnell"
+	1    4975 2350
+	0    1    1    0   
+$EndComp
+$Comp
+L C C?
+U 1 1 59165E13
+P 8400 2550
+F 0 "C?" H 8425 2650 50  0000 L CNN
+F 1 "47n" H 8425 2450 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603_HandSoldering" H 8438 2400 50  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/1901289.pdf" H 8400 2550 50  0001 C CNN
+F 4 "1759011" H 8400 2550 60  0001 C CNN "Farnell"
+	1    8400 2550
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R?
+U 1 1 5916688A
+P 4975 2850
+F 0 "R?" V 5055 2850 50  0000 C CNN
+F 1 "120k" V 4975 2850 50  0000 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 4905 2850 50  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/1788326.pdf" H 4975 2850 50  0001 C CNN
+F 4 "2141505" V 4975 2850 60  0001 C CNN "Farnell"
+	1    4975 2850
+	0    1    1    0   
+$EndComp
+$Comp
+L R R?
+U 1 1 591669D4
+P 4275 2850
+F 0 "R?" V 4355 2850 50  0000 C CNN
+F 1 "20k" V 4275 2850 50  0000 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 4205 2850 50  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/1716707.pdf" H 4275 2850 50  0001 C CNN
+F 4 "2073421" V 4275 2850 60  0001 C CNN "Farnell"
+	1    4275 2850
+	0    1    1    0   
+$EndComp
+$Comp
+L R R?
+U 1 1 59167D4D
+P 1800 1300
+F 0 "R?" V 1880 1300 50  0000 C CNN
+F 1 "47k" V 1800 1300 50  0000 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 1730 1300 50  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/1788326.pdf" H 1800 1300 50  0001 C CNN
+F 4 "9331255" V 1800 1300 60  0001 C CNN "Farnell"
+	1    1800 1300
+	0    1    1    0   
+$EndComp
+$Comp
+L C C?
+U 1 1 59167EAB
+P 1500 1550
+F 0 "C?" H 1525 1650 50  0000 L CNN
+F 1 "22nF" H 1525 1450 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603_HandSoldering" H 1538 1400 50  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/1901289.pdf" H 1500 1550 50  0001 C CNN
+F 4 "1759027" H 1500 1550 60  0001 C CNN "Farnell"
+	1    1500 1550
+	-1   0    0    1   
+$EndComp
+$Comp
+L GND #PWR?
+U 1 1 59168635
+P 1500 1775
+F 0 "#PWR?" H 1500 1525 50  0001 C CNN
+F 1 "GND" H 1500 1625 50  0000 C CNN
+F 2 "" H 1500 1775 50  0000 C CNN
+F 3 "" H 1500 1775 50  0000 C CNN
+	1    1500 1775
+	1    0    0    -1  
+$EndComp
+Text Notes 825  975  0    60   ~ 0
+Low-pass filter\n-----------------------\nf3dB = 153.9 Hz
+Text HLabel 1150 1300 0    60   Output ~ 0
+ADC_R
+$Comp
+L R R?
+U 1 1 5916BDEA
+P 1825 2225
+F 0 "R?" V 1905 2225 50  0000 C CNN
+F 1 "47k" V 1825 2225 50  0000 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 1755 2225 50  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/1788326.pdf" H 1825 2225 50  0001 C CNN
+F 4 "9331255" V 1825 2225 60  0001 C CNN "Farnell"
+	1    1825 2225
+	0    1    1    0   
+$EndComp
+$Comp
+L GND #PWR?
+U 1 1 5916BDF9
+P 1525 2700
+F 0 "#PWR?" H 1525 2450 50  0001 C CNN
+F 1 "GND" H 1525 2550 50  0000 C CNN
+F 2 "" H 1525 2700 50  0000 C CNN
+F 3 "" H 1525 2700 50  0000 C CNN
+	1    1525 2700
+	1    0    0    -1  
+$EndComp
+Text HLabel 1175 2225 0    60   Output ~ 0
+ADC_B
+$Comp
+L R R?
+U 1 1 5916C0E4
+P 1825 3175
+F 0 "R?" V 1905 3175 50  0000 C CNN
+F 1 "47k" V 1825 3175 50  0000 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 1755 3175 50  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/1788326.pdf" H 1825 3175 50  0001 C CNN
+F 4 "9331255" V 1825 3175 60  0001 C CNN "Farnell"
+	1    1825 3175
+	0    1    1    0   
+$EndComp
+$Comp
+L GND #PWR?
+U 1 1 5916C0F3
+P 1525 3650
+F 0 "#PWR?" H 1525 3400 50  0001 C CNN
+F 1 "GND" H 1525 3500 50  0000 C CNN
+F 2 "" H 1525 3650 50  0000 C CNN
+F 3 "" H 1525 3650 50  0000 C CNN
+	1    1525 3650
+	1    0    0    -1  
+$EndComp
+Text HLabel 1175 3175 0    60   Output ~ 0
+ADC_G
+$Comp
+L C C?
+U 1 1 5916D604
+P 1525 2475
+F 0 "C?" H 1550 2575 50  0000 L CNN
+F 1 "22nF" H 1550 2375 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603_HandSoldering" H 1563 2325 50  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/1901289.pdf" H 1525 2475 50  0001 C CNN
+F 4 "1759027" H 1525 2475 60  0001 C CNN "Farnell"
+	1    1525 2475
+	-1   0    0    1   
+$EndComp
+$Comp
+L C C?
+U 1 1 5916D802
+P 1525 3425
+F 0 "C?" H 1550 3525 50  0000 L CNN
+F 1 "22nF" H 1550 3325 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603_HandSoldering" H 1563 3275 50  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/1901289.pdf" H 1525 3425 50  0001 C CNN
+F 4 "1759027" H 1525 3425 60  0001 C CNN "Farnell"
+	1    1525 3425
+	-1   0    0    1   
+$EndComp
+Text GLabel 4000 3050 0    60   Input ~ 0
+OPAMP_B_P
+Text GLabel 4000 3550 0    60   Input ~ 0
+OPAMP_B_N
+$Comp
+L R R?
+U 1 1 59171CA2
+P 4275 3550
+F 0 "R?" V 4175 3550 50  0000 C CNN
+F 1 "20k" V 4275 3550 50  0000 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 4205 3550 50  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/1716707.pdf" H 4275 3550 50  0001 C CNN
+F 4 "2073421" V 4275 3550 60  0001 C CNN "Farnell"
+	1    4275 3550
+	0    1    -1   0   
+$EndComp
+$Comp
+L R R?
+U 1 1 59171CA9
+P 4975 3550
+F 0 "R?" V 4875 3550 50  0000 C CNN
+F 1 "120k" V 4975 3550 50  0000 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 4905 3550 50  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/1788326.pdf" H 4975 3550 50  0001 C CNN
+F 4 "2141505" V 4975 3550 60  0001 C CNN "Farnell"
+	1    4975 3550
+	0    1    -1   0   
+$EndComp
+$Comp
+L R R?
+U 1 1 59171CB0
+P 4975 3050
+F 0 "R?" V 4875 3050 50  0000 C CNN
+F 1 "120k" V 4975 3050 50  0000 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 4905 3050 50  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/1788326.pdf" H 4975 3050 50  0001 C CNN
+F 4 "2141505" V 4975 3050 60  0001 C CNN "Farnell"
+	1    4975 3050
+	0    1    -1   0   
+$EndComp
+$Comp
+L R R?
+U 1 1 59171CB7
+P 4275 3050
+F 0 "R?" V 4175 3050 50  0000 C CNN
+F 1 "20k" V 4275 3050 50  0000 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 4205 3050 50  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/1716707.pdf" H 4275 3050 50  0001 C CNN
+F 4 "2073421" V 4275 3050 60  0001 C CNN "Farnell"
+	1    4275 3050
+	0    1    -1   0   
+$EndComp
+$Comp
+L GND #PWR?
+U 1 1 591734F6
+P 7800 2925
+F 0 "#PWR?" H 7800 2675 50  0001 C CNN
+F 1 "GND" H 7800 2775 50  0000 C CNN
+F 2 "" H 7800 2925 50  0000 C CNN
+F 3 "" H 7800 2925 50  0000 C CNN
+	1    7800 2925
+	-1   0    0    -1  
+$EndComp
+Text GLabel 9150 3050 2    60   Input ~ 0
+OPAMP_B_P
+Text GLabel 9150 3550 2    60   Input ~ 0
+OPAMP_B_N
+$Comp
+L R R?
+U 1 1 59173500
+P 8875 3550
+F 0 "R?" V 8775 3550 50  0000 C CNN
+F 1 "20k" V 8875 3550 50  0000 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 8805 3550 50  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/1716707.pdf" H 8875 3550 50  0001 C CNN
+F 4 "2073421" V 8875 3550 60  0001 C CNN "Farnell"
+	1    8875 3550
+	0    -1   -1   0   
+$EndComp
+$Comp
+L R R?
+U 1 1 59173507
+P 8175 3550
+F 0 "R?" V 8075 3550 50  0000 C CNN
+F 1 "120k" V 8175 3550 50  0000 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 8105 3550 50  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/1788326.pdf" H 8175 3550 50  0001 C CNN
+F 4 "2141505" V 8175 3550 60  0001 C CNN "Farnell"
+	1    8175 3550
+	0    -1   -1   0   
+$EndComp
+$Comp
+L R R?
+U 1 1 5917350E
+P 8175 3050
+F 0 "R?" V 8075 3050 50  0000 C CNN
+F 1 "120k" V 8175 3050 50  0000 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 8105 3050 50  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/1788326.pdf" H 8175 3050 50  0001 C CNN
+F 4 "2141505" V 8175 3050 60  0001 C CNN "Farnell"
+	1    8175 3050
+	0    -1   -1   0   
+$EndComp
+$Comp
+L R R?
+U 1 1 59173515
+P 8875 3050
+F 0 "R?" V 8775 3050 50  0000 C CNN
+F 1 "20k" V 8875 3050 50  0000 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 8805 3050 50  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/1716707.pdf" H 8875 3050 50  0001 C CNN
+F 4 "2073421" V 8875 3050 60  0001 C CNN "Farnell"
+	1    8875 3050
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	8350 2300 8400 2300
+Wire Wire Line
+	8400 2300 8450 2300
+Wire Wire Line
+	8400 2850 8400 2700
+Wire Wire Line
+	8400 2400 8400 2300
+Connection ~ 8400 2300
+Wire Wire Line
+	1706 5550 1550 5550
+Wire Wire Line
+	1706 5950 1550 5950
+Wire Wire Line
+	1550 6300 1706 6300
+Wire Wire Line
+	1706 5400 1400 5400
+Wire Wire Line
+	2850 6300 2950 6300
+Wire Wire Line
+	2850 6750 2950 6750
+Wire Wire Line
+	2850 5550 3500 5550
+Wire Wire Line
+	3500 5550 3500 4950
+Wire Wire Line
+	2850 5650 3800 5650
+Wire Wire Line
+	3800 4950 3800 5650
+Wire Wire Line
+	3800 5650 3800 6100
+Wire Wire Line
+	3800 6100 3800 6550
+Wire Wire Line
+	2850 6000 3600 6000
+Wire Wire Line
+	3600 6000 3600 4950
+Wire Wire Line
+	3800 6100 2850 6100
+Connection ~ 3800 5650
+Wire Wire Line
+	2850 6450 3700 6450
+Wire Wire Line
+	3700 6450 3700 4950
+Wire Wire Line
+	3800 6550 2850 6550
+Connection ~ 3800 6100
+Wire Wire Line
+	2850 5750 2950 5750
+Wire Wire Line
+	2850 5850 2950 5850
+Wire Wire Line
+	2850 6200 2950 6200
+Wire Wire Line
+	2950 6650 2850 6650
+Wire Wire Line
+	8750 2300 9200 2300
+Wire Wire Line
+	4425 2350 4625 2350
+Wire Wire Line
+	4625 2350 4825 2350
+Connection ~ 4625 2350
+Wire Wire Line
+	4425 2850 4625 2850
+Wire Wire Line
+	4625 2850 4825 2850
+Wire Wire Line
+	4000 2350 4125 2350
+Wire Wire Line
+	4000 2850 4125 2850
+Wire Wire Line
+	1500 1400 1500 1300
+Wire Wire Line
+	1150 1300 1500 1300
+Wire Wire Line
+	1500 1300 1650 1300
+Wire Wire Line
+	1500 1700 1500 1775
+Connection ~ 1500 1300
+Wire Wire Line
+	1950 1300 2175 1300
+Wire Wire Line
+	1525 2325 1525 2225
+Wire Wire Line
+	1175 2225 1525 2225
+Wire Wire Line
+	1525 2225 1675 2225
+Wire Wire Line
+	1525 2625 1525 2700
+Connection ~ 1525 2225
+Wire Wire Line
+	1975 2225 2200 2225
+Wire Wire Line
+	1525 3275 1525 3175
+Wire Wire Line
+	1175 3175 1525 3175
+Wire Wire Line
+	1525 3175 1675 3175
+Wire Wire Line
+	1525 3575 1525 3650
+Connection ~ 1525 3175
+Wire Wire Line
+	1975 3175 2200 3175
+Wire Wire Line
+	4625 2750 5875 2750
+Wire Wire Line
+	4625 2750 4625 2850
+Connection ~ 4625 2850
+Wire Wire Line
+	4625 2550 5875 2550
+Wire Wire Line
+	4625 2350 4625 2550
+Wire Wire Line
+	5125 2350 5650 2350
+Wire Wire Line
+	5650 2350 5875 2350
+Wire Wire Line
+	5525 2150 5650 2150
+Wire Wire Line
+	5650 2150 5650 2350
+Connection ~ 5650 2350
+Wire Wire Line
+	4425 3550 4625 3550
+Wire Wire Line
+	4625 3550 4825 3550
+Connection ~ 4625 3550
+Wire Wire Line
+	4425 3050 4625 3050
+Wire Wire Line
+	4625 3050 4825 3050
+Wire Wire Line
+	4000 3550 4125 3550
+Wire Wire Line
+	4000 3050 4125 3050
+Wire Wire Line
+	4625 3150 5875 3150
+Wire Wire Line
+	4625 3150 4625 3050
+Connection ~ 4625 3050
+Wire Wire Line
+	4625 3350 5875 3350
+Wire Wire Line
+	4625 3550 4625 3350
+Wire Wire Line
+	5125 3550 5650 3550
+Wire Wire Line
+	5650 3550 5875 3550
+Wire Wire Line
+	5525 3750 5650 3750
+Wire Wire Line
+	5650 3750 5650 3550
+Connection ~ 5650 3550
+Wire Wire Line
+	5125 2850 5200 2850
+Wire Wire Line
+	5200 2850 5350 2850
+Wire Wire Line
+	5350 2850 5350 2925
+Wire Wire Line
+	5125 3050 5200 3050
+Wire Wire Line
+	5200 3050 5200 2850
+Connection ~ 5200 2850
+Wire Wire Line
+	8325 3550 8525 3550
+Wire Wire Line
+	8525 3550 8725 3550
+Connection ~ 8525 3550
+Wire Wire Line
+	8325 3050 8525 3050
+Wire Wire Line
+	8525 3050 8725 3050
+Wire Wire Line
+	9150 3550 9025 3550
+Wire Wire Line
+	9150 3050 9025 3050
+Wire Wire Line
+	8525 3150 7275 3150
+Wire Wire Line
+	8525 3150 8525 3050
+Connection ~ 8525 3050
+Wire Wire Line
+	8525 3350 7275 3350
+Wire Wire Line
+	8525 3550 8525 3350
+Wire Wire Line
+	7275 3550 7500 3550
+Wire Wire Line
+	7500 3550 8025 3550
+Wire Wire Line
+	7625 3750 7500 3750
+Wire Wire Line
+	7500 3750 7500 3550
+Connection ~ 7500 3550
+Wire Wire Line
+	7950 3050 8025 3050
+Wire Wire Line
+	7800 2925 7800 2850
+Wire Wire Line
+	7275 2750 7750 2750
+Wire Wire Line
+	7750 2750 7750 2300
+Wire Wire Line
+	7750 2300 7950 2300
+Wire Wire Line
+	7950 2300 8050 2300
+Wire Wire Line
+	7950 2400 7950 2300
+Connection ~ 7950 2300
+Text GLabel 5525 3750 0    60   Output ~ 0
+OPAMP_B_OUT
+Text GLabel 5525 2150 0    60   Output ~ 0
+OPAMP_R_OUT
+Text GLabel 2200 2225 2    60   Input ~ 0
+OPAMP_B_OUT
+Text GLabel 2200 3175 2    60   Input ~ 0
+OPAMP_G_OUT
+Text GLabel 2175 1300 2    60   Input ~ 0
+OPAMP_R_OUT
+Text GLabel 7625 3750 2    60   Output ~ 0
+OPAMP_G_OUT
+$Comp
+L C C9
+U 1 1 58430FDA
+P 7950 2550
+F 0 "C9" H 7975 2650 50  0000 L CNN
+F 1 "47n" H 7975 2450 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0603_HandSoldering" H 7988 2400 50  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/1901289.pdf" H 7950 2550 50  0001 C CNN
+F 4 "1759011" H 7950 2550 60  0001 C CNN "Farnell"
+	1    7950 2550
+	1    0    0    -1  
+$EndComp
+Connection ~ 7950 2850
+Wire Wire Line
+	7950 2700 7950 2850
+Wire Wire Line
+	7950 2850 7950 3050
+$Comp
+L R R?
+U 1 1 5917A30B
+P 7925 1950
+F 0 "R?" V 8005 1950 50  0000 C CNN
+F 1 "120k" V 7925 1950 50  0000 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 7855 1950 50  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/1788326.pdf" H 7925 1950 50  0001 C CNN
+F 4 "2141505" V 7925 1950 60  0001 C CNN "Farnell"
+	1    7925 1950
+	0    1    1    0   
+$EndComp
+$Comp
+L R R?
+U 1 1 5917A759
+P 8600 1950
+F 0 "R?" V 8680 1950 50  0000 C CNN
+F 1 "30k" V 8600 1950 50  0000 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 8530 1950 50  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/1788326.pdf" H 8600 1950 50  0001 C CNN
+F 4 "9330984" V 8600 1950 60  0001 C CNN "Farnell"
+	1    8600 1950
+	0    1    1    0   
+$EndComp
+$Comp
+L GND #PWR?
+U 1 1 5917AF3B
+P 9000 2025
+F 0 "#PWR?" H 9000 1775 50  0001 C CNN
+F 1 "GND" H 9000 1875 50  0000 C CNN
+F 2 "" H 9000 2025 50  0000 C CNN
+F 3 "" H 9000 2025 50  0000 C CNN
+	1    9000 2025
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	7375 1950 7775 1950
+Wire Wire Line
+	8075 1950 8225 1950
+Wire Wire Line
+	8225 1950 8450 1950
+Wire Wire Line
+	8750 1950 9000 1950
+Wire Wire Line
+	9000 1950 9000 2025
+Wire Wire Line
+	8225 1950 8225 2175
+Wire Wire Line
+	8225 2175 7525 2175
+Wire Wire Line
+	7525 2175 7525 2550
+Wire Wire Line
+	7525 2550 7275 2550
+Connection ~ 8225 1950
+Wire Wire Line
+	7275 2350 7375 2350
+Wire Wire Line
+	7375 2350 7375 1950
+Wire Wire Line
+	7800 2850 7950 2850
+Wire Wire Line
+	7950 2850 8400 2850
+Text GLabel 7275 2950 2    60   UnSpc ~ 0
+V-
+Text GLabel 5875 2950 0    60   UnSpc ~ 0
+V+
+Text GLabel 6250 4100 0    60   UnSpc ~ 0
+V+
+Text GLabel 6925 4100 0    60   UnSpc ~ 0
+V-
+Text HLabel 6350 4100 2    60   Input ~ 0
+V20
+Wire Wire Line
+	6250 4100 6350 4100
+$Comp
+L GND #PWR?
+U 1 1 5917EE06
+P 7050 4100
+F 0 "#PWR?" H 7050 3850 50  0001 C CNN
+F 1 "GND" H 7050 3950 50  0000 C CNN
+F 2 "" H 7050 4100 50  0000 C CNN
+F 3 "" H 7050 4100 50  0000 C CNN
+	1    7050 4100
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	6925 4100 7050 4100
+$Comp
+L R R?
+U 1 1 59181A59
+P 7925 1650
+F 0 "R?" V 8005 1650 50  0000 C CNN
+F 1 "120k" V 7925 1650 50  0000 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 7855 1650 50  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/1788326.pdf" H 7925 1650 50  0001 C CNN
+F 4 "2141505" V 7925 1650 60  0001 C CNN "Farnell"
+	1    7925 1650
+	0    1    1    0   
+$EndComp
+$Comp
+L R R?
+U 1 1 59181C7D
+P 8600 1650
+F 0 "R?" V 8680 1650 50  0000 C CNN
+F 1 "120k" V 8600 1650 50  0000 C CNN
+F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 8530 1650 50  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/1788326.pdf" H 8600 1650 50  0001 C CNN
+F 4 "2141505" V 8600 1650 60  0001 C CNN "Farnell"
+	1    8600 1650
+	0    1    1    0   
+$EndComp
 $EndSCHEMATC

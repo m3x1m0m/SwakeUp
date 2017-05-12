@@ -1,0 +1,9 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP IRLML9301TRPbF
+D Vgs,max=+-20V; Vds,max=-30V; Id,max=-3.6A
+K MOSFET, PMOS
+F http://www.farnell.com/datasheets/1749827.pdf
+$ENDCMP
+#
+#End Doc Library
