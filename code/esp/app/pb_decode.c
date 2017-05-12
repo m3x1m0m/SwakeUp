@@ -1193,8 +1193,8 @@ static bool checkreturn pb_dec_varint(pb_istream_t *stream, const pb_field_t *fi
     else
         PB_RETURN_ERROR(stream, "invalid data_size");
 
-    if (clamped != svalue)
-        PB_RETURN_ERROR(stream, "integer too large");
+    //if (clamped != svalue)
+        //PB_RETURN_ERROR(stream, "integer too large");
     
     return true;
 }
@@ -1217,8 +1217,8 @@ static bool checkreturn pb_dec_uvarint(pb_istream_t *stream, const pb_field_t *f
     else
         PB_RETURN_ERROR(stream, "invalid data_size");
     
-    if (clamped != value)
-        PB_RETURN_ERROR(stream, "integer too large");
+    //if (clamped != value)
+       // PB_RETURN_ERROR(stream, "integer too large");
 
     return true;
 }
@@ -1241,8 +1241,8 @@ static bool checkreturn pb_dec_svarint(pb_istream_t *stream, const pb_field_t *f
     else
         PB_RETURN_ERROR(stream, "invalid data_size");
 
-    if (clamped != value)
-        PB_RETURN_ERROR(stream, "integer too large");
+   // if (clamped != value)
+       // PB_RETURN_ERROR(stream, "integer too large");
     
     return true;
 }

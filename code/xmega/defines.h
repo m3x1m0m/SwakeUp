@@ -24,11 +24,16 @@
                                 TAB"18:08"NL\
                                 TAB"===================="NL
 
+// Writes protobuf messages when setting the time
+#define PROTO_TEST
+// Prints out outgoing protobyf messages in binary
+// #define PROTO_PRINT
+
 //Change this to a 1 if you want to use the screen
 #define SCREEN_ON               1
 //Enables sleeping and more power efficiency
 #define EVENT_SUPPORTS_SLEEP
 // Switch between hardware versions
-//#define REV_1
-#define REV_2
+#define REV_1
+//#define REV_2
 #endif /* DEFINES_H_ */

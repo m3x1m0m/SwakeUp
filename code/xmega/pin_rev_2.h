@@ -69,9 +69,9 @@
 #define SEPS525F_SDI_PP()   gpio_pp(6, GPIO_PORTC)
 #define SEPS525F_NOT        (1<<4)   //NOTE THIS SHOULD NOT BE USED
 #define SEPS525F_NOT_PP()   gpio_pp(5, GPIO_PORTC)
-#define SEPS525F_RS         (1<<3)
+#define SEPS525F_RS         (1<<0)
 #define SEPS525F_RS_PP()    gpio_pp(4, GPIO_PORTC)
-#define SEPS525F_CSB        (1<<2)
+#define SEPS525F_CSB        (1<<1)
 #define SEPS525F_CSB_PP()   gpio_pp(3, GPIO_PORTC)
 
 #define PWM_PORT            PORTD

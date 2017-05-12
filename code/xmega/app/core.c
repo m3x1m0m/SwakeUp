@@ -50,6 +50,7 @@ static void ledCommand(uint8_t len __attribute__ ((unused)), char * data __attri
     }
 }
 
+<<<<<<< HEAD
 static void pwmCommand(uint8_t len __attribute__ ((unused)), char * data __attribute__ ((unused))) {
 	uint8_t index = 1;
 	uint16_t cycle;
@@ -125,6 +126,8 @@ static void TCD0Command(uint8_t len __attribute__ ((unused)), char * data __attr
 	}
 }
 
+=======
+>>>>>>> 6315b81585c00765a5928aa2de08cee05f87e756
 static void atCommand(uint8_t len __attribute__ ((unused)), char * data __attribute__ ((unused))) {
     LOG_DEBUG("Sending AT(%d):", len, data);
     uint8_t i;
@@ -197,7 +200,9 @@ static void setCommand(uint8_t len __attribute__ ((unused)), char * data __attri
     case 'W':
     case 'w':
         LOG_DEBUG("Setting weather: %d", (data[index] - '0'));
-        weather_set((enum Weather)(data[index] - '0'));
+        Weather weather = weather_get();
+        weather.weatherType = (WeatherType)(data[index] - '0');
+        weather_set(weather);
         weather_draw();
         //weather
         break;
@@ -212,11 +217,11 @@ static void setCommand(uint8_t len __attribute__ ((unused)), char * data __attri
 #ifdef PROTO_TEST
             Stream * stream = ctrlGetStream(CTRL_STREAM_ESP);
             MsgFrame * frame = stream->msgPointer;
-            frame->typ = MsgType_MSG_TYPE_TIME;
-            frame->which_pl = MsgFrame_time_tag;
-            frame->pl.time.hour = (hour & 0xFF);
-            frame->pl.time.minute = (minute & 0xFF);
-            frame->pl.time.second = (second & 0xFF);
+            frame->typ = MsgType_MSG_TYPE_DATE_TIME;
+            frame->which_pl = MsgFrame_dateAndTime_tag;
+            frame->pl.dateAndTime.hour = (hour & 0xFF);
+            frame->pl.dateAndTime.minute = (minute & 0xFF);
+            frame->pl.dateAndTime.second = (second & 0xFF);
             writeMessage(stream, frame);
 #else
             core_time_set(hour & 0xFF, minute & 0xFF, second & 0xFF);
@@ -261,12 +266,6 @@ void core_screen(uint8_t on) {
 static uint8_t init(void) {
     command_hook_description('T', &terminalCommand, "Log sink    T<option> options: U(Uart) S(Screen)\0");
     command_hook_description('L', &ledCommand,      "Led control L<option> options: T(Toggle) 1(on) 0(off)\0");
-	command_hook_description('P', &pwmCommand,      "pwmControll P<option> options: Channel(R/B/G/O) DutyCycle\0");
-	command_hook_description('Z', &TCD0Command,      "TCD0Controll Z<option> options: G(Get) or S(Set) Period\0");
-	command_hook_description('Y', &adcCommand,      "adcCommand Y<option> options: \r\n\t"
-								"R(Get red channel value.)\r\n\t"
-								"B(Blue red channel value.)\r\n\t" 
-								"G(Green red channel value.)\0");
     command_hook_description('A', &atCommand,       "Sends AT    A         no options\0");
     command_hook_description('S', &setCommand,      "Sets an app state S<app> <options>\r\n\t"
                              "W<options> options: 1 - 6 for different weather\r\n\t"

@@ -25,7 +25,6 @@ StreamRest::~StreamRest() {
 }
 
 void StreamRest::flush() {
-	Serial.printf("WP: %d \r\n Bytes: ", writePointer);
 	String reqString;
 	char numstr[4]; // enough to hold all numbers up to 64-bits
 	for (int i = 0; i < writePointer; i++) {
@@ -54,16 +53,13 @@ int command_arguments(char *data, int len) {
 }
 
 void StreamRest::processed(HttpClient& client, bool successful) {
-	if(!successful){
-		Serial.printf("\r\n\r\nNot successful\r\n\r\n");
+	if (!successful) {
 		return;
 	}
 	String responseString = client.getResponseString();
 	char * respChar = (char*) responseString.c_str();
-
 	int args = command_arguments((char *) responseString.c_str(), responseString.length());
 	uint8_t * bytes = (uint8_t *) malloc(sizeof(uint8_t) * args);
-
 	int bytesIndex = 0;
 	while (*respChar) {
 		if (isdigit(*respChar)) {

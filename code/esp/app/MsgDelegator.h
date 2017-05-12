@@ -17,13 +17,15 @@
 
 #include <SmingCore/HardwareSerial.h>
 
-void msgCallback(MsgFrame * frame, void * stream) {
+static void sendRest(MsgFrame * frame) {
 	// Seems a little redundant to do this every time
 	// TODO have a predefined location struct do this
-	Serial.printf("\r\n\r\nReceived type: %d stream: %d\r\n", frame->typ, stream);
-	Serial.flush();
 	strncpy(frame->location.city, userSettings.city.c_str(), sizeof(frame->location.city));
 	strncpy(frame->location.country, userSettings.country.c_str(), sizeof(frame->location.country));
+	restStream.writeMessage(frame);
+}
+
+void msgCallback(MsgFrame * frame, void * stream) {
 	switch (frame->typ) {
 	case MsgType_MSG_TYPE_NONE:
 		break;
@@ -32,12 +34,26 @@ void msgCallback(MsgFrame * frame, void * stream) {
 	case MsgType_MSG_TUPE_LOCATION:
 		break;
 	case MsgType_MSG_TYPE_DATE_TIME:
-	case MsgType_MSG_TYPE_WEATHER:
-		if (stream != (void*) &restStream) {
-			restStream.writeMessage(frame);
-		} else {
+		if (stream == (void*) &restStream) {
 			//print it out for debug purposes
-			//xmegaStream.writeMessage(frame);
+			DateAndTime * dat = &frame->pl.dateAndTime;
+			xmegaStream.writeMessage(frame);
+		} else if (stream == (void*) &xmegaStream) {
+			// Request it?
+			sendRest(frame);
+		} else {
+			sendRest(frame);
+		}
+		break;
+	case MsgType_MSG_TYPE_WEATHER:
+		if (stream == (void*) &restStream) {
+			Weather * wet = &frame->pl.weather;
+			xmegaStream.writeMessage(frame);
+		} else if (stream == (void*) &xmegaStream) {
+			// Request it?
+			sendRest(frame);
+		} else {
+			sendRest(frame);
 		}
 		break;
 	case MsgType_MSG_TYPE_SOCIAL:

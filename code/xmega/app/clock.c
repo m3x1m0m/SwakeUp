@@ -161,6 +161,9 @@ static void callback(Event * event, uint8_t * data __attribute__ ((unused))) {
 }
 
 void clock_init(uint16_t drawX, uint16_t drawY) {
+    prevTime.hour = 255;
+    prevTime.minute = 255;
+    prevTime.second = 255;
     curAlarm.hour = 7;
     curAlarm.minute = 30;
     curAlarm.second = 0;
