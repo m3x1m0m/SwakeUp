@@ -102,7 +102,7 @@ static void adcCommand(uint8_t len __attribute__ ((unused)), char * data __attri
 		LOG_DEBUG("ADC_RED value is %d.", getVal_ADCOLED());
 		break;
 		default:
-			LOG_DEBUG("Channel does not exist.");
+		LOG_DEBUG("Channel does not exist.");
 	}
 }
 
