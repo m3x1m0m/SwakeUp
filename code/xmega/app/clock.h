@@ -22,11 +22,9 @@
 #include <stdint.h>
 #include "core.h"
 
-void clock_time_set(struct TimeKeeper * time);
-struct TimeKeeper * clock_time_get(void);
-void clock_alarm_set(struct TimeKeeper * time);
-struct TimeKeeper * clock_alarm_get(void);
-void clock_draw();
-void clock_init(uint16_t drawX, uint16_t drawY);
+void clock_draw(uint8_t update, uint8_t display);
+void clock_init(void);
+void clock_init_screen(uint16_t drawX, uint16_t drawY, uint8_t on);
 void clock_deinit(void);
+
 #endif /* CLOCK_H_ */
