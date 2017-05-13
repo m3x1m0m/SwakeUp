@@ -6,14 +6,15 @@ enum MsgType {
 	MSG_TYPE_POWER                  = 0x01;      /// Power on message
     
     // -------------------------------------------------------------------------------
-	MSG_TUPE_LOCATION				= 0x10;		 /// the location set by the user 
+	MSG_TYPE_LOCATION				= 0x10;		 /// the location set by the user 
     MSG_TYPE_DATE_TIME              = 0x11;      /// for the time and date
     MSG_TYPE_WEATHER            	= 0x12;      /// for the weather
 	MSG_TYPE_SOCIAL					= 0x13;		 /// Social media
-	MSG_TYPE_MAIL					= 0x14;		 /// Mail
+	MSG_TYPE_EMAIL					= 0x14;		 /// E-Mail
 	
-	MSG_TYPE_ALARM_SET				= 0x20;
+	MSG_TYPE_ALARM_PUT				= 0x20;
 	MSG_TYPE_ALARM_GET				= 0x21;
+	MSG_TYPE_ALARM_REMOVE			= 0x22;
 }
 
 enum WeatherType {
@@ -23,6 +24,26 @@ enum WeatherType {
 	WEATHER_CLOUDY					= 0x03;
 	WEATHER_OVERCAST				= 0x04;
 	WEATHER_SUN						= 0x05;
+}
+
+message AlarmPut {
+	uint32 days						= 1;
+	uint32 hour						= 2;
+	uint32 minute					= 3;
+	uint32 second					= 4;	
+}
+
+message AlarmGet {
+	uint32 index					= 1;
+}
+
+message AlarmRemove {
+	uint32 index					= 1;
+}
+
+message Email {
+	string		subject				= 1;
+	string		sender				= 2;
 }
 
 message Weather{
@@ -54,8 +75,15 @@ message MsgFrame {
 	bool request									= 0x02;
 	Location	location							= 0x03;
     oneof pl {                                      
-        DateAndTime dateAndTime						= 0x10;
-        Weather		weather							= 0x11;
+        DateAndTime dateAndTime						= 0x11;
+        Weather		weather							= 0x12;
+		//Social, empty for now
+		Email		email							= 0x14;
+		
+		
+		AlarmPut	alarmPut						= 0x20;
+		AlarmGet	alarmGet						= 0x21;
+		AlarmRemove	alarmRemove						= 0x22;
     }
 };
 
