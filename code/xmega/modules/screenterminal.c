@@ -9,6 +9,7 @@
 #include "../drivers/spi/SEPS525F.h"
 #include "log.h"
 #include "screenterminal.h"
+#include "screen.h"
 
 #define WIDTH 20
 #define HEIGHT 16

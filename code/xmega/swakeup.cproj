@@ -121,22 +121,43 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="app\clock.c">
+    <Compile Include="app\app.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="app\clock.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="app\core.c">
+    <Compile Include="app\clock.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="app\console.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="app\console.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="app\core.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="app\core.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="app\mail.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="app\mail.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="app\msgproc.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="app\msgproc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="app\status.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="app\status.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="app\weather.c">
@@ -146,12 +167,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="defines.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="drivers\host\adc.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="drivers\host\adc.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="drivers\host\eeprom.h">
@@ -167,12 +182,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="drivers\host\pid.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="drivers\host\pwm.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="drivers\host\pwm.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="drivers\host\rtc32.h">
@@ -267,6 +276,12 @@
     <Compile Include="pin_rev_2.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="sprites.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="sprites.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="tinyprint\printf.c">
       <SubType>compile</SubType>
     </Compile>
@@ -304,12 +319,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="util\module.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="util\number.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="util\number.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="util\protobuf\pb.h">
