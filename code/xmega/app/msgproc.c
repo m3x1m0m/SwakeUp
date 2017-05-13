@@ -11,7 +11,7 @@
 #include "msgproc.h"
 #include "core.h"
 #include "weather.h"
-
+#include "clock.h"
 LOG_INIT("MsgProc");
 
 void processMessage(Stream * stream, MsgFrame * message) {
@@ -27,7 +27,12 @@ void processMessage(Stream * stream, MsgFrame * message) {
         break;
     case MsgType_MSG_TYPE_DATE_TIME: {
         DateAndTime * tim = &message->pl.dateAndTime;
-        core_time_set(tim->hour, tim->minute, tim->second);
+        if (tim->day != 0) {
+            //Day will only ever be 0 if there is no date set
+            timekeeper_set(tim->year, tim->month, tim->day, tim->hour, tim->minute, tim->second);
+        } else {
+            timekeeper_time_set(tim->hour, tim->minute, tim->second);
+        }
     }
     break;
     case MsgType_MSG_TYPE_WEATHER:
@@ -37,6 +42,10 @@ void processMessage(Stream * stream, MsgFrame * message) {
     case MsgType_MSG_TYPE_SOCIAL:
         break;
     case MsgType_MSG_TYPE_MAIL:
+        break;
+    case MsgType_MSG_TYPE_ALARM_GET:
+        break;
+    case MsgType_MSG_TYPE_ALARM_SET:
         break;
     }
 }
