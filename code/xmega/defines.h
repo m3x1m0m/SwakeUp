@@ -29,6 +29,9 @@ enum LOG_DISPLAY {
     TIME_LEVEL_NAME_FILE_LINE, LEVEL_NAME_FILE_LINE, LEVEL_NAME_FILE, LEVEL_NAME, NAME
 };
 
+// Prints out all the event that are being fired
+// #define EVENT_PRINT
+
 // This is the default log formatting
 #define DEFAULT_LOG_FORMAT TIME_LEVEL_NAME_FILE_LINE
 
@@ -40,6 +43,9 @@ enum LOG_DISPLAY {
 
 //Change this to a 1 if you want to use the screen
 #define SCREEN_ON               1
+
+// Draws boundary boxes around the apps
+//#define BOUNDARY_BOX
 
 //Enables sleeping and more power efficiency
 #define EVENT_SUPPORTS_SLEEP

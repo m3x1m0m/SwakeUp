@@ -17,7 +17,7 @@
 #include "../drivers/host/pwm.h"
 #include "../drivers/host/adc.h"
 #include "../pin_definitions.h"
-
+#include "mail.h"
 #include "console.h"
 #include "weather.h"
 #include "clock.h"
@@ -142,16 +142,18 @@ void core_screen(uint8_t on) {
     if (on) {
         if (SCREEN.cnt == 0) {
             module_init(&SCREEN);
-            weather_init(0, 96);
+            weather_init(APP_WEATHER_X, APP_WEATHER_Y);
             weather_draw();
             console_init();
-            clock_init_screen(64, 0, 1);
+            clock_init_screen(APP_CLOCK_X, APP_CLOCK_Y, 1);
+            status_init(APP_STATUS_X, APP_STATUS_Y);
+            mail_init(APP_MAIL_X, APP_MAIL_Y);
         }
     } else {
         if (SCREEN.cnt >= 1) {
             module_deinit(&SCREEN);
         }
-        clock_init_screen(64, 0, 0);
+        clock_init_screen(APP_CLOCK_X, APP_CLOCK_X, 0);
     }
 }
 static uint8_t init(void) {

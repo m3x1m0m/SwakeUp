@@ -15,7 +15,17 @@
 
 /** This event will get fired when a social media change request occurs */
 EVENT_EXP(SOCIAL_MEDIA);
+#define APP_CLOCK_X     64
+#define APP_CLOCK_Y     32
 
+#define APP_WEATHER_X   0
+#define APP_WEATHER_Y   96
+
+#define APP_STATUS_X    64
+#define APP_STATUS_Y    0
+
+#define APP_MAIL_X      0
+#define APP_MAIL_Y      0
 //void core_time_set(uint8_t h, uint8_t m, uint8_t s);
 
 //void core_time_get(struct TimeKeeper * time);
