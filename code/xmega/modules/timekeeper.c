@@ -47,7 +47,7 @@ static void updateDayDate(void) {
     uint8_t leap = isLeap(timeKeeper.date.day);
     timeKeeper.date.day++;
     updated |= TIMEKEEPER_UPDATE_DAY_BP;
-    if (timeKeeper.date.day > days(timeKeeper.date.year, leap)) {
+    if (timeKeeper.date.day > days(timeKeeper.date.month, leap)) {
         timeKeeper.date.day = 0;
         timeKeeper.date.month++;
         updated |= TIMEKEEPER_UPDATE_MONTH_BP;
@@ -61,29 +61,32 @@ static void updateDayDate(void) {
 
 static void callback(Event * event, uint8_t * data __attribute__ ((unused))) {
     if (event == &EVENT_TIMER_1_HZ) {
+        timeKeeper.time.second++;
         updated |= TIMEKEEPER_UPDATE_SEC_BP;
-        if (++timeKeeper.time.second >= 60) {
-            updated |= TIMEKEEPER_UPDATE_MIN_BP;
+        if (timeKeeper.time.second >= 60) {
             timeKeeper.time.second = 0;
-            if (++timeKeeper.time.minute >= 60) {
-                updated |= TIMEKEEPER_UPDATE_HOUR_BP;
+            timeKeeper.time.minute++;
+            updated |= TIMEKEEPER_UPDATE_MIN_BP;
+            if (timeKeeper.time.minute >= 60) {
                 timeKeeper.time.minute = 0;
+                timeKeeper.time.hour++;
+                updated |= TIMEKEEPER_UPDATE_HOUR_BP;
                 switch (timeKeeper.time.amPm) {
                 case 1:
-                    if (++timeKeeper.time.hour >= 12) {
+                    if (timeKeeper.time.hour >= 12) {
                         timeKeeper.time.hour = 0;
                         timeKeeper.time.amPm = 2;
                     }
                     break;
                 case 2:
-                    if (++timeKeeper.time.hour >= 12) {
+                    if (timeKeeper.time.hour >= 12) {
                         timeKeeper.time.hour = 0;
                         timeKeeper.time.amPm = 1;
                         updateDayDate();
                     }
                     break;
                 case 3:
-                    if (++timeKeeper.time.hour >= 24) {
+                    if (timeKeeper.time.hour >= 24) {
                         timeKeeper.time.hour = 0;
                         updateDayDate();
                     }
@@ -92,6 +95,7 @@ static void callback(Event * event, uint8_t * data __attribute__ ((unused))) {
             }
         }
         event_fire(&TIME_CHANGE, (void *)updated);
+        updated = TIMEKEEPER_UPDATE_NOTHING;
     }
 }
 
@@ -143,6 +147,7 @@ TimeKeeper timekeeper_get (void) {
 static uint8_t init(void) {
     event_addListener(&EVENT_TIMER_1_HZ, callback);     //TODO this can be removed
     timekeeper_set(0, 1, 1, 0, 0, 0);                   // THE YEAR IS 2000/1/1
+    timeKeeper.time.amPm = 3;
     return 1;
 }
 static uint8_t deinit(void) {
