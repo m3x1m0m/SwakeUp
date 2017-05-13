@@ -7,7 +7,7 @@
 
 #include "../modules/timekeeper.h"
 #include "../modules/screen.h"
-#include "../util/number.h"
+#include "../sprites.h"
 #include "clock.h"
 
 static uint8_t screenEnabled = 0;
@@ -31,32 +31,32 @@ void clock_draw(uint8_t update, uint8_t display) {
     char clockbuf[11];
     if (update & TIMEKEEPER_UPDATE_TIME) {
         struct timekeepertime_s displayTime = timekeeper_time_get();
+        if (display & CLOCK_DISPLAY_SMALL && (update & TIMEKEEPER_UPDATE_HOUR_BP || update & TIMEKEEPER_UPDATE_MIN_BP || update & TIMEKEEPER_UPDATE_SEC_BP)) {
+            clockbuf[0] = displayTime.hour / 10 + '0';
+            clockbuf[1] = displayTime.hour % 10 + '0';
+            clockbuf[2] = ':';
+            clockbuf[3] = displayTime.minute / 10 + '0';
+            clockbuf[4] = displayTime.minute % 10 + '0';
+            clockbuf[5] = ':';
+            clockbuf[6] = displayTime.second / 10 + '0';
+            clockbuf[7] = displayTime.second % 10 + '0';
+            screen_color(COLOR_TO656(255, 255, 255));
+            screen_text(clockbuf, 8, 158 - 8 * CLOCK_SMALL_FONT_SIZE, y + CLOCK_DIGITAL_HEIGHT + 2);
+        }
         if (display & CLOCK_DISPLAY_LARGE && (update & TIMEKEEPER_UPDATE_HOUR_BP || update & TIMEKEEPER_UPDATE_MIN_BP)) {
             screen_draw_begin(FILLED);
             screen_color(bckgrColor);
-            if (display & CLOCK_DISPLAY_SMALL && (update & TIMEKEEPER_UPDATE_HOUR_BP || update & TIMEKEEPER_UPDATE_MIN_BP || update & TIMEKEEPER_UPDATE_SEC_BP)) {
-                clockbuf[0] = displayTime.hour / 10 + '0';
-                clockbuf[1] = displayTime.hour % 10 + '0';
-                clockbuf[2] = ':';
-                clockbuf[3] = displayTime.minute / 10 + '0';
-                clockbuf[4] = displayTime.minute % 10 + '0';
-                clockbuf[5] = ':';
-                clockbuf[6] = displayTime.second / 10 + '0';
-                clockbuf[7] = displayTime.second % 10 + '0';
-                screen_color(COLOR_TO656(255, 255, 255));
-                screen_text(clockbuf, 8, 160 - 8 * 8, y + CLOCK_HEIGHT + 1);
-            }
             if (update & TIMEKEEPER_UPDATE_HOUR_BP) {
-                screen_rect(x, y + 10, 24, 60);
-                screen_sub_image(&numberImg, x, y + 10, (displayTime.hour / 10) * 24, 0, 24, 60);
-                screen_rect(x + 24 * 1, y + 10, 24, 60);
-                screen_sub_image(&numberImg, x + 24, y + 10, (displayTime.hour % 10) * 24, 0, 24, 60);
+                screen_rect(x, y + 1, 24, 60);
+                screen_sub_image(&sprite_numbers, x, y + 1, (displayTime.hour / 10) * 24, 0, 24, 60);
+                screen_rect(x + 24 * 1, y + 1, 24, 60);
+                screen_sub_image(&sprite_numbers, x + 24, y + 1, (displayTime.hour % 10) * 24, 0, 24, 60);
             }
             if (update & TIMEKEEPER_UPDATE_MIN_BP) {
-                screen_rect(x + 24 * 2, y + 10, 24, 60);
-                screen_sub_image(&numberImg, x + 48, y + 10, (displayTime.minute / 10) * 24, 0, 24, 60);
-                screen_rect(x + 24 * 3, y + 10, 24, 60);
-                screen_sub_image(&numberImg, x + 72, y + 10, (displayTime.minute % 10) * 24, 0, 24, 60);
+                screen_rect(x + 24 * 2, y + 1, 24, 60);
+                screen_sub_image(&sprite_numbers, x + 48, y + 1, (displayTime.minute / 10) * 24, 0, 24, 60);
+                screen_rect(x + 24 * 3, y + 1, 24, 60);
+                screen_sub_image(&sprite_numbers, x + 72, y + 1, (displayTime.minute % 10) * 24, 0, 24, 60);
             }
             screen_draw_end();
         }
@@ -72,17 +72,24 @@ void clock_draw(uint8_t update, uint8_t display) {
         clockbuf[6] = alarm.time.second / 10 + '0';
         clockbuf[7] = alarm.time.second % 10 + '0';
         screen_color(COLOR_TO656(200, 80, 120));
-        screen_text(clockbuf, 8, 160 - 8 * 8, y + CLOCK_HEIGHT + 1 + 8);
+        screen_text(clockbuf, 8, 158 - 8 * CLOCK_SMALL_FONT_SIZE, y + CLOCK_DIGITAL_HEIGHT + CLOCK_SMALL_LINE_SPACING + 1 + CLOCK_SMALL_FONT_SIZE);
         screen_color(COLOR_TO656(255, 255, 255));
     }
     if (update & TIMEKEEPER_UPDATE_DATE) {
         struct timekeeperdate_s data = timekeeper_date_get();
         //2000/01/01
         snprintf(clockbuf, 11, "20%02d/%02d/%02d", data.year, data.month, data.day);
-        screen_color(COLOR_TO656(200, 30, 50));
-        screen_text(clockbuf, 10, 160 - 8 * 10, y + CLOCK_HEIGHT + 1 + 8 + 8);
+        screen_color(COLOR_TO656(70, 30, 150));
+        screen_text(clockbuf, 10, 158 - 10 * CLOCK_SMALL_FONT_SIZE, y + CLOCK_DIGITAL_HEIGHT + (CLOCK_SMALL_LINE_SPACING * 2) + CLOCK_SMALL_FONT_SIZE * 2);
         screen_color(COLOR_TO656(255, 255, 255));
     }
+#ifdef BOUNDARY_BOX
+    screen_draw_begin(LINE);
+    screen_color(COLOR_TO656(30, 240, 30));
+    screen_rect(x, y, CLOCK_DIGITAL_WIDTH - 2, CLOCK_DIGITAL_HEIGHT );
+    screen_rect(x, y + CLOCK_DIGITAL_HEIGHT, CLOCK_DIGITAL_WIDTH - 2, CLOCK_SMALL_HEIGHT - 1);
+    screen_draw_end();
+#endif
 }
 static void callback(Event * event, uint8_t * data) {
     if (event == &TIME_CHANGE && screenEnabled) {
