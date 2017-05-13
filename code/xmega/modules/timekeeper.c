@@ -100,10 +100,12 @@ static void callback(Event * event, uint8_t * data __attribute__ ((unused))) {
 }
 
 void timekeeper_time_set(uint8_t h, uint8_t m, uint8_t s) {
+    if (h != timeKeeper.time.hour) updated |= TIMEKEEPER_UPDATE_HOUR_BP;
+    if (m != timeKeeper.time.minute) updated |= TIMEKEEPER_UPDATE_MIN_BP;
+    if (s != timeKeeper.time.second) updated |= TIMEKEEPER_UPDATE_SEC_BP;
     timeKeeper.time.hour = h;
     timeKeeper.time.minute = m;
     timeKeeper.time.second = s;
-    updated = TIMEKEEPER_UPDATE_TIME;
     LOG_SYSTEM("Time set to: %d:%d:%d", h, m, s);
     event_fire(&TIME_CHANGE, (void *)updated);
     updated = TIMEKEEPER_UPDATE_NOTHING;
@@ -114,7 +116,7 @@ void timekeeper_date_set(uint8_t y, uint8_t m, uint8_t d) {
     timeKeeper.date.month = m;
     timeKeeper.date.day = d;
     updated = TIMEKEEPER_UPDATE_DATE;
-    LOG_SYSTEM("Time set to: %d:%d:%d", 2000 + y, m, d);
+    LOG_SYSTEM("Date set to: 2000 + %d:%d:%d", y, m, d);
     event_fire(&TIME_CHANGE, (void *)updated);
     updated = TIMEKEEPER_UPDATE_NOTHING;
 }
