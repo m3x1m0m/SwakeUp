@@ -98,6 +98,9 @@ void event_removeListener(Event * event, EventCallback callback) {
 void event_process(void) {
     while (eventBufferHead != eventBufferTail) {
         InternalEvent * event = getNext();
+#ifdef EVENT_PRINT
+        LOG_DEBUG("Event: %s", event->event->description);
+#endif
         for (uint8_t i = 0; i < listenerIndex; i++) {
             if (listeners[i].event == event->event) {
                 listeners[i].callback(event->event, event->data);
