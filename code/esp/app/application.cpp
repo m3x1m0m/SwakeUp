@@ -43,11 +43,10 @@ String country = "Sweden";
 
 void periodTest() {
 	//web.connect();
-	MsgFrame frame;
-	frame.typ = MsgType_MSG_TYPE_DATE_TIME;
-	msgCallback(&frame, NULL);
+	requestTime();
+	requestWeather();
 	blinkTimer.initializeMs(5 * 1000, blink).start(true); // every 20 seconds
-	weatherTimer.initializeMs(500 * 1000, requestWeather).start(true); // every 20 seconds
+	weatherTimer.initializeMs(200 * 1000, requestWeather).start(true); // every 20 seconds
 	timeTimer.initializeMs(300 * 1000, requestTime).start(true); // every 20 seconds
 
 }
