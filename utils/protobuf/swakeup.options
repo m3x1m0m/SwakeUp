@@ -6,11 +6,11 @@ DateAndTime.hour            	int_size:IS_8
 DateAndTime.minute          	int_size:IS_8
 DateAndTime.second          	int_size:IS_8
 
-Location.country				max_size:8
-Location.city					max_size:8
+Location.country				max_size:10
+Location.city					max_size:10
 		
 Weather.unit					max_size:1
-Weather.city					max_size:8
+Weather.city					max_size:10
 Weather.temperature				int_size:IS_16
 
 AlarmPut.hour            		int_size:IS_8
