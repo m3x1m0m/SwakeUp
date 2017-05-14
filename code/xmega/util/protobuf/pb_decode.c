@@ -1038,7 +1038,8 @@ static bool checkreturn pb_dec_string(pb_istream_t *stream, const pb_field_t *fi
 #endif
     } else {
         if (alloc_size > field->data_size)
-            PB_RETURN_ERROR(stream, "string overflow");
+            alloc_size = field->data_size;
+        //PB_RETURN_ERROR(stream, "string overflow");
     }
     status = pb_read(stream, (pb_byte_t*)dest, size);
     *((pb_byte_t*)dest + size) = 0;
