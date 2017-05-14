@@ -42,15 +42,15 @@ message AlarmRemove {
 }
 
 message Email {
-	string		subject				= 1;
-	string		sender				= 2;
+	bytes		subject				= 1;
+	bytes		sender				= 2;
 }
 
 message Weather{
 	WeatherType weatherType			= 1;
 	uint32		temperature			= 2;
 	string		unit				= 3;
-	string		city				= 4;
+	bytes		city				= 4;
 	uint32		sunrise				= 5;
 	uint32		sunset				= 6;
 }
