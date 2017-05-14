@@ -23,7 +23,7 @@ void processMessage(Stream * stream, MsgFrame * message) {
         break;
     case MsgType_MSG_TYPE_POWER:
         break;
-    case MsgType_MSG_TUPE_LOCATION:
+    case MsgType_MSG_TYPE_LOCATION:
         break;
     case MsgType_MSG_TYPE_DATE_TIME: {
         DateAndTime * tim = &message->pl.dateAndTime;
@@ -36,16 +36,18 @@ void processMessage(Stream * stream, MsgFrame * message) {
     }
     break;
     case MsgType_MSG_TYPE_WEATHER:
-        LOG_DEBUG("Setting weather: %d", message->pl.weather.weatherType);
+        LOG_DEBUG("Setting weather: %c %c", message->pl.weather.city[0], message->pl.weather.city[1]);
         weather_set(message->pl.weather);
         break;
     case MsgType_MSG_TYPE_SOCIAL:
         break;
-    case MsgType_MSG_TYPE_MAIL:
+    case MsgType_MSG_TYPE_EMAIL:
         break;
     case MsgType_MSG_TYPE_ALARM_GET:
         break;
-    case MsgType_MSG_TYPE_ALARM_SET:
+    case MsgType_MSG_TYPE_ALARM_PUT:
         break;
+	case MsgType_MSG_TYPE_ALARM_REMOVE:
+		break;
     }
 }
