@@ -31,7 +31,7 @@ void msgCallback(MsgFrame * frame, void * stream) {
 		break;
 	case MsgType_MSG_TYPE_POWER:
 		break;
-	case MsgType_MSG_TUPE_LOCATION:
+	case MsgType_MSG_TYPE_LOCATION:
 		break;
 	case MsgType_MSG_TYPE_DATE_TIME:
 		if (stream == (void*) &restStream) {
@@ -47,7 +47,6 @@ void msgCallback(MsgFrame * frame, void * stream) {
 		break;
 	case MsgType_MSG_TYPE_WEATHER:
 		if (stream == (void*) &restStream) {
-			Weather * wet = &frame->pl.weather;
 			xmegaStream.writeMessage(frame);
 		} else if (stream == (void*) &xmegaStream) {
 			// Request it?
@@ -58,9 +57,9 @@ void msgCallback(MsgFrame * frame, void * stream) {
 		break;
 	case MsgType_MSG_TYPE_SOCIAL:
 		break;
-	case MsgType_MSG_TYPE_MAIL:
+	case MsgType_MSG_TYPE_EMAIL:
 		break;
-	case MsgType_MSG_TYPE_ALARM_SET:
+	case MsgType_MSG_TYPE_ALARM_PUT:
 		break;
 	case MsgType_MSG_TYPE_ALARM_GET:
 		break;
