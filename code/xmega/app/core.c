@@ -142,18 +142,28 @@ void core_screen(uint8_t on) {
     if (on) {
         if (SCREEN.cnt == 0) {
             module_init(&SCREEN);
+#if DRAW_CLOCK == 1
+            clock_init_screen(APP_CLOCK_X, APP_CLOCK_Y, 1);
+#endif
+#if DRAW_WEATHER == 1
             weather_init(APP_WEATHER_X, APP_WEATHER_Y);
             weather_draw();
-            console_init();
-            clock_init_screen(APP_CLOCK_X, APP_CLOCK_Y, 1);
+#endif
+#if DRAW_STATUS == 1
             status_init(APP_STATUS_X, APP_STATUS_Y);
+#endif
+#if DRAW_MAIL == 1
             mail_init(APP_MAIL_X, APP_MAIL_Y);
+#endif
+            console_init();
         }
     } else {
         if (SCREEN.cnt >= 1) {
             module_deinit(&SCREEN);
         }
+#if DRAW_CLOCK == 1
         clock_init_screen(APP_CLOCK_X, APP_CLOCK_X, 0);
+#endif
     }
 }
 static uint8_t init(void) {

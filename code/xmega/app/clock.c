@@ -26,6 +26,7 @@ static uint16_t bckgrColor = COLOR_TO656(0, 0, 0);
 static uint8_t displayWhat =    CLOCK_DISPLAY_NOTHING;
 
 void clock_draw(uint8_t update, uint8_t display) {
+    if(!screenEnabled) return;
     //hour : min : sec + \0
     //day/month/year + \0
     char clockbuf[11];

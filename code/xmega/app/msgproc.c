@@ -1,9 +1,9 @@
 /*
- * msgproc.c
- *
- * Created: 4/24/2017 1:28:53 PM
- *  Author: elmar
- */
+* msgproc.c
+*
+* Created: 4/24/2017 1:28:53 PM
+*  Author: elmar
+*/
 
 #include "../modules/log.h"
 #include "../util/protobuf/swakeup.pb.h"
@@ -14,9 +14,11 @@
 #include "clock.h"
 LOG_INIT("MsgProc");
 
+
 void processMessage(Stream * stream, MsgFrame * message) {
     (void)stream; //This will be used in the future to send back information
     LOG_INFO("Received message: %d", message->typ);
+    // if(message) return;
     switch (message->typ) {
     case   MsgType_MSG_TYPE_NONE:
         LOG_WARNING("Type has not been set! This should not happen");
@@ -36,7 +38,6 @@ void processMessage(Stream * stream, MsgFrame * message) {
     }
     break;
     case MsgType_MSG_TYPE_WEATHER:
-        LOG_DEBUG("Setting weather: %c %c", message->pl.weather.city[0], message->pl.weather.city[1]);
         weather_set(message->pl.weather);
         break;
     case MsgType_MSG_TYPE_SOCIAL:
@@ -47,7 +48,7 @@ void processMessage(Stream * stream, MsgFrame * message) {
         break;
     case MsgType_MSG_TYPE_ALARM_PUT:
         break;
-	case MsgType_MSG_TYPE_ALARM_REMOVE:
-		break;
+    case MsgType_MSG_TYPE_ALARM_REMOVE:
+        break;
     }
 }
