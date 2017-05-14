@@ -53,4 +53,7 @@ enum LOG_DISPLAY {
 // Switch between hardware versions
 //#define REV_1
 #define REV_2
+
+// Enable watchig timeout
+// #define WATCHDOG_ENABLE
 #endif /* DEFINES_H_ */

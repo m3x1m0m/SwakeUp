@@ -45,11 +45,22 @@ void switchExternalCrystal_16mHz(void) {
     CCP = CCP_IOREG_gc;
     CLK_CTRL = CLK_SCLKSEL_XOSC_gc;
 }
+#ifdef WATCHDOG_ENABLE
+void setupWatchdog(void) {
+    CCP = CCP_IOREG_gc;
+    WDT.WINCTRL = WDT_WCEN_bm;
+    CCP = CCP_IOREG_gc;
+    // 2 seconds
+    WDT.CTRL = WDT_PER_2KCLK_gc | WDT_ENABLE_bm | WDT_CEN_bm;
+    CCP = 0;
+}
+#endif
 
 int main(void) {
 //   CHARGER_PORT.DIRSET = CHARGER_PIN;  // Deactivate USB charging
 //   CHARGER_PORT.OUTCLR = CHARGER_PIN;
     switchExternalCrystal_16mHz();
+
     LED_PORT.DIR = LED_PIN;
     LED_PORT.OUTTGL = LED_PIN;
 #ifdef EVENT_SUPPORTS_SLEEP
@@ -61,12 +72,13 @@ int main(void) {
     module_init(&LOGGER);                               //Initializing the logger for use
     sei();                                              //Enabling interrupts
     module_init(&CORE);
-    //module_init(&PWM);
-    //module_init(&ADC);
-    event_addListener(&EVENT_TIMER_1_HZ, callback);     //TODO this can be removed
+    core_screen(SCREEN_ON);
+    event_addListener(&EVENT_TIMER_1_HZ, callback);     //TODO this can be removed when watchdog control is better
+#ifdef WATCHDOG_ENABLE
+    setupWatchdog();
+#endif
     LOG_SYSTEM("System initialized");
     LOG_SYSTEM(greeting);
-    core_screen(SCREEN_ON);
     while (1) {
         //This is all that should happen in the main loop
         //The system will go to sleep if no more events are to be processed
@@ -77,5 +89,9 @@ int main(void) {
 static void callback(Event * event, uint8_t * data __attribute__ ((unused))) {
     if (event == &EVENT_TIMER_1_HZ) {
         LED_PORT.OUTTGL = LED_PIN;
+#ifdef WATCHDOG_ENABLE
+        // Resets the watchdog important!
+        asm("wdr");
+#endif
     }
 }
