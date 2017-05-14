@@ -31,23 +31,34 @@ void blink() {
 void requestTime() {
 	MsgFrame frame;
 	frame.typ = MsgType_MSG_TYPE_DATE_TIME;
-	msgCallback(&frame, NULL);
+	frame.which_pl = MsgFrame_dateAndTime_tag;
+	msgCallback(&frame, (void*) &restStream);
 }
-void requestWeather() {
-	MsgFrame frame;
-	frame.typ = MsgType_MSG_TYPE_WEATHER;
-	msgCallback(&frame, NULL);
-}
+
 String city = "Uppsala";
 String country = "Sweden";
 
+int i = 0;
+void requestWeather() {
+	MsgFrame frame;
+	frame.typ = MsgType_MSG_TYPE_WEATHER;
+	frame.which_pl = MsgFrame_weather_tag;
+	frame.pl.weather.temperature = ++i;
+	frame.pl.weather.unit[0] = 'C';
+	frame.pl.weather.sunrise = 123123;
+	frame.pl.weather.sunset = 123123;
+	memcpy(&frame.pl.weather.city.bytes, city.c_str(), city.length() - 1);
+	frame.pl.weather.city.size = city.length() - 1;
+	msgCallback(&frame, (void*) &restStream);
+}
+
 void periodTest() {
 	//web.connect();
-	requestTime();
+	//requestTime();
 	requestWeather();
 	blinkTimer.initializeMs(5 * 1000, blink).start(true); // every 20 seconds
-	weatherTimer.initializeMs(200 * 1000, requestWeather).start(true); // every 20 seconds
-	timeTimer.initializeMs(300 * 1000, requestTime).start(true); // every 20 seconds
+	weatherTimer.initializeMs(5 * 1000, requestWeather).start(true); // every 20 seconds
+	//timeTimer.initializeMs(300 * 1000, requestTime).start(true); // every 20 seconds
 
 }
 
@@ -67,11 +78,11 @@ void init() {
 	// Setting callback for receiving the messages
 	restStream.setMsgCallback(&msgCallback);
 
-	//periodTest();
+	periodTest();
 	WifiStation.config(WIFI_SSID, WIFI_PWD);
 	WifiStation.enable(true);
 	WifiAccessPoint.enable(false);
 
 	// Run our method when station was connected to AP (or not connected)
-	WifiStation.waitConnection(periodTest);
+	//WifiStation.waitConnection(periodTest);
 }

@@ -36,7 +36,6 @@ void msgCallback(MsgFrame * frame, void * stream) {
 	case MsgType_MSG_TYPE_DATE_TIME:
 		if (stream == (void*) &restStream) {
 			//print it out for debug purposes
-			DateAndTime * dat = &frame->pl.dateAndTime;
 			xmegaStream.writeMessage(frame);
 		} else if (stream == (void*) &xmegaStream) {
 			// Request it?
