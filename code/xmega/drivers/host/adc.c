@@ -19,13 +19,6 @@
 LOG_INIT("ADC");
 
 /////////////////////////////////////////////////////////////////////////////////
-// Define
-/////////////////////////////////////////////////////////////////////////////////
-#define LOAD_ADC(adcchannel, semaphore)\
-	ADCA.CTRLA |= adcchannel;\
-	while(!semaphore)
-
-/////////////////////////////////////////////////////////////////////////////////
 // Global vars
 /////////////////////////////////////////////////////////////////////////////////
 static uint16_t offsetErr = 0;															// Offset error from the ADC
@@ -43,6 +36,37 @@ static volatile uint8_t loaded_OLED = 0;
 static uint16_t adcVals_OLED[NU_AVERAGING_VALS];
 
 /////////////////////////////////////////////////////////////////////////////////
+// Defines
+/////////////////////////////////////////////////////////////////////////////////
+#define LOAD_ADC(ADCCHANNEL, SEMAPHORE)\												
+	ADCA.CTRLA |= ADCCHANNEL;\
+	while(!SEMAPHORE)
+
+#define INIT_ADCA_CHANNEL(ADCCHANNEL, INTFLAG, ADCPIN)\									
+	ADCCHANNEL.CTRL |= ADC_CH_INPUTMODE_SINGLEENDED_gc;\									
+	ADCCHANNEL.MUXCTRL |= ADCPIN<<3;\
+	ADCA.INTFLAGS = INTFLAG;\
+	ADCCHANNEL.INTCTRL = ADC_CH_INTLVL1_bm | ADC_CH_INTLVL0_bm;\
+	PORTA.DIRCLR |= (1 << ADCPIN)
+	
+#define CREATE_ADCA_ISR(ADCVECTOR, VARSEMAPHORE, BUFFER, RESULTREG, STARTFLAG)\		
+	ISR(ADCVECTOR)\
+	{\
+		static cycles = 0;\
+		if(!VARSEMAPHORE)\
+		{\
+			BUFFER[cycles++] = RESULTREG;\
+			if(cycles < NU_AVERAGING_VALS)\												
+				ADCA.CTRLA |= STARTFLAG;\
+			else\
+			{\
+				VARSEMAPHORE = 1;\
+				cycles = 0;\
+			}\
+		}\
+	}
+
+/////////////////////////////////////////////////////////////////////////////////
 // Init ADCA
 /////////////////////////////////////////////////////////////////////////////////
 void init_ADCA(void)
@@ -52,29 +76,11 @@ void init_ADCA(void)
 	ADCA.CTRLB |= ADC_CURRLIMIT_MED_gc | ADC_CONMODE_bm;								// Current limit to max 1MSPS 12 bit resolution right
 	ADCA.CAL = (0x0FFF & ((PRODSIGNATURES_ADCACAL1 << 8) | PRODSIGNATURES_ADCACAL0));	// Load calibration value
 	ADCA.EVCTRL = 0x00;
-
 	
-	PORTA.DIRCLR |= ADC_RED | ADC_BLUE | ADC_GREEN | ADC_OLED;
-	
-	ADCA.CH0.CTRL |= ADC_CH_INPUTMODE_SINGLEENDED_gc;									// RED
-	ADCA.CH0.MUXCTRL |= ADC_CH_MUXPOS_PIN7_gc;	
-	ADCA.INTFLAGS = ADC_CH0IF_bm;
-	ADCA.CH0.INTCTRL = ADC_CH_INTLVL1_bm | ADC_CH_INTLVL0_bm;													
-	
-	ADCA.CH1.CTRL |= ADC_CH_INPUTMODE_SINGLEENDED_gc;									// BLUE			
-	ADCA.CH1.MUXCTRL |= ADC_CH_MUXPOS_PIN6_gc;	
-	ADCA.INTFLAGS = ADC_CH1IF_bm;
-	ADCA.CH1.INTCTRL = ADC_CH_INTLVL1_bm | ADC_CH_INTLVL0_bm;							
-	
-	ADCA.CH2.CTRL |= ADC_CH_INPUTMODE_SINGLEENDED_gc;									// GREEN
-	ADCA.CH2.MUXCTRL |=ADC_CH_MUXPOS_PIN5_gc;			
-	ADCA.INTFLAGS = ADC_CH2IF_bm;
-	ADCA.CH2.INTCTRL = ADC_CH_INTLVL1_bm | ADC_CH_INTLVL0_bm;									
-	
-	ADCA.CH3.CTRL |= ADC_CH_INPUTMODE_SINGLEENDED_gc;									// OLED
-	ADCA.CH3.MUXCTRL |= ADC_CH_MUXPOS_PIN4_gc;	
-	ADCA.INTFLAGS = ADC_CH3IF_bm;
-	ADCA.CH3.INTCTRL = ADC_CH_INTLVL1_bm | ADC_CH_INTLVL0_bm;							
+	INIT_ADCA_CHANNEL(ADC_RED_CHANNEL, ADC_RED_INTFLAG, ADC_RED_PIN_NU);				// Initialize the channels single-ended and enable interrupts
+	INIT_ADCA_CHANNEL(ADC_BLUE_CHANNEL, ADC_BLUE_INTFLAG, ADC_BLUE_PIN_NU);										
+	INIT_ADCA_CHANNEL(ADC_GREEN_CHANNEL, ADC_GREEN_INTFLAG, ADC_GREEN_PIN_NU);		
+	INIT_ADCA_CHANNEL(ADC_OLED_CHANNEL, ADC_OLED_INTFLAG, ADC_OLED_PIN_NU);					
 	
 	ADCA.CTRLA |= ADC_ENABLE_bm;														// Enable ADCA
 	for(int i=0; i < 24; i++)															// Wait until ADC is started up (in every case less than 24 cycles)
@@ -111,7 +117,7 @@ uint16_t getVal_ADCRed(void)
 	uint16_t i = 0;
 	
 	// Action
-	LOAD_ADC(ADC_CH1START_bm, loaded_BLUE);
+	//LOAD_ADC(ADC_CH1START_bm, loaded_BLUE);
 	while(i < NU_AVERAGING_VALS)
 	result += adcVals_BLUE[i++];									// Read out result
 	loaded_OLED = 0;												// Set semaphore back after emptying
@@ -128,7 +134,7 @@ uint16_t getVal_ADCBlue(void)
 	uint16_t i = 0;
 	
 	// Action
-	LOAD_ADC(ADC_CH1START_bm, loaded_BLUE);
+	//LOAD_ADC(ADC_CH1START_bm, loaded_BLUE);
 	while(i < NU_AVERAGING_VALS)
 	result += adcVals_BLUE[i++];									// Read out result
 	loaded_OLED = 0;												// Set semaphore back after emptying
@@ -145,7 +151,7 @@ uint16_t getVal_ADCGreen(void)
 	uint16_t i = 0;
 	
 	// Action
-	LOAD_ADC(ADC_CH2START_bm, loaded_GREEN);
+	//LOAD_ADC(ADC_CH2START_bm, loaded_GREEN);
 	while(i < NU_AVERAGING_VALS)
 	result += adcVals_GREEN[i++];									// Read out result
 	loaded_OLED = 0;												// Set semaphore back after emptying
@@ -170,80 +176,10 @@ uint16_t getVal_ADCOLED(void)
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-// ISR ADC_RED
+// ISRs
 /////////////////////////////////////////////////////////////////////////////////
-ISR(ADCA_CH0_vect)
-{
-	static cycles = 0;
-	if(!loaded_OLED)
-	{
-		adcVals_OLED[cycles++] = ADCA.CH0.RES;
-		if(cycles < NU_AVERAGING_VALS)
-		ADCA.CTRLA |= ADC_CH0START_bm;
-		else
-		{
-			loaded_OLED = 1;
-			cycles = 0;
-		}
-	}
-}
 
-/////////////////////////////////////////////////////////////////////////////////
-// ISR ADC_BLUE
-/////////////////////////////////////////////////////////////////////////////////
-ISR(ADCA_CH1_vect)
-{
-	static cycles = 0;
-	if(!loaded_OLED)
-	{
-		adcVals_OLED[cycles++] = ADCA.CH1.RES;
-		if(cycles < NU_AVERAGING_VALS)
-		ADCA.CTRLA |= ADC_CH1START_bm;
-		else
-		{
-			loaded_OLED = 1;
-			cycles = 0;
-		}
-	}
-}
-
-/////////////////////////////////////////////////////////////////////////////////
-// ISR ADC_GREEN
-/////////////////////////////////////////////////////////////////////////////////
-ISR(ADCA_CH2_vect)
-{
-	static cycles = 0;
-	if(!loaded_OLED)
-	{
-		adcVals_OLED[cycles++] = ADCA.CH2.RES; 
-		if(cycles < NU_AVERAGING_VALS)									
-			ADCA.CTRLA |= ADC_CH2START_bm;
-		else 
-		{
-			loaded_OLED = 1;
-			cycles = 0;
-		}
-	}
-}
-
-/////////////////////////////////////////////////////////////////////////////////
-// ISR ADC_OLED
-/////////////////////////////////////////////////////////////////////////////////
-ISR(ADCA_CH3_vect)
-{
-	static cycles = 0;
-	if(!loaded_OLED)
-	{
-		adcVals_OLED[cycles++] = ADCA.CH3.RES;
-		if(cycles < NU_AVERAGING_VALS)									// Start another conversion from ADCA channel 3 if not enough values are there
-		ADCA.CTRLA |= ADC_CH3START_bm;
-		else
-		{
-			loaded_OLED = 1;
-			cycles = 0;
-		}
-	}
-}
+CREATE_ADCA_ISR(ADC_OLED_VECT, loaded_OLED, adcVals_OLED, ADC_OLED_RESULTREG, ADC_OLED_STARTFLAG);
 
 /////////////////////////////////////////////////////////////////////////////////
 // Terminal commands for debugging

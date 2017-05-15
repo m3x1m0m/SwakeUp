@@ -80,10 +80,11 @@
 #define PWM_GREEN (1 << 2)
 #define PWM_OLED (1 << 3)
 
-#define ADC_RED (1 << 7)
-#define ADC_BLUE (1 << 6)
-#define ADC_GREEN (1 << 5)
-#define ADC_OLED (1 << 4)
+#define ADC_PORT PORTA
+#define ADC_RED_PIN_NU 7
+#define ADC_BLUE_PIN_NU 6
+#define ADC_GREEN_PIN_NU 5
+#define ADC_OLED_PIN_NU 4
 
 #define CHARGER_PORT PORTA
 #define CHARGER_PIN (1 << 2)
