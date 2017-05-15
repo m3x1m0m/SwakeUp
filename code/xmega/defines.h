@@ -11,7 +11,15 @@
 
 #include <stdint.h>
 
+
+// #define EXTERNAL_CLK
+
+#ifdef EXTERNAL_CLK
 #define F_CPU               16000000UL
+else
+#define F_CPU               32000000UL
+#endif
+
 
 #define TAB "\t\t\t\t"
 #define NL  "\r\n"
@@ -25,7 +33,7 @@
                                 TAB"===================="NL
 
 // Different levels of formatting, its formatted in order
-enum LOG_DISPLAY {
+    enum LOG_DISPLAY {
     TIME_LEVEL_NAME_FILE_LINE, LEVEL_NAME_FILE_LINE, LEVEL_NAME_FILE, LEVEL_NAME, NAME
 };
 
@@ -45,7 +53,7 @@ enum LOG_DISPLAY {
 #define SCREEN_ON               1
 
 // Draws boundary boxes around the apps
-//#define BOUNDARY_BOX
+#define BOUNDARY_BOX
 
 //Enables sleeping and more power efficiency
 #define EVENT_SUPPORTS_SLEEP
