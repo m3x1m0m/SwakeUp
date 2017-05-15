@@ -36,19 +36,25 @@ static volatile uint8_t loaded_OLED = 0;
 static uint16_t adcVals_OLED[NU_AVERAGING_VALS];
 
 /////////////////////////////////////////////////////////////////////////////////
-// Defines
+// Macro: Semaphore protected buffer loading through ADC interrupts.
 /////////////////////////////////////////////////////////////////////////////////
 #define LOAD_ADC(ADCCHANNEL, SEMAPHORE)\												
 	ADCA.CTRLA |= ADCCHANNEL;\
 	while(!SEMAPHORE)
 
+/////////////////////////////////////////////////////////////////////////////////
+// Macro: Semaphore protected buffer loading through ADC interrupts.
+/////////////////////////////////////////////////////////////////////////////////
 #define INIT_ADCA_CHANNEL(ADCCHANNEL, INTFLAG, ADCPIN)\									
 	ADCCHANNEL.CTRL |= ADC_CH_INPUTMODE_SINGLEENDED_gc;\									
 	ADCCHANNEL.MUXCTRL |= ADCPIN<<3;\
 	ADCA.INTFLAGS = INTFLAG;\
 	ADCCHANNEL.INTCTRL = ADC_CH_INTLVL1_bm | ADC_CH_INTLVL0_bm;\
 	PORTA.DIRCLR |= (1 << ADCPIN)
-	
+
+/////////////////////////////////////////////////////////////////////////////////
+// Macro: Create ISRs for the individual channels.
+/////////////////////////////////////////////////////////////////////////////////
 #define CREATE_ADCA_ISR(ADCVECTOR, VARSEMAPHORE, BUFFER, RESULTREG, STARTFLAG)\		
 	ISR(ADCVECTOR)\
 	{\
@@ -64,6 +70,20 @@ static uint16_t adcVals_OLED[NU_AVERAGING_VALS];
 				cycles = 0;\
 			}\
 		}\
+	}
+
+/////////////////////////////////////////////////////////////////////////////////
+// Macro: Create getter functions for the ADC value (averaging is included).
+/////////////////////////////////////////////////////////////////////////////////
+#define CREATE_GET_ADC_VAL(CHANNELNAME, STARTFLAG, VARSEMAPHORE, BUFFER)\
+	uint16_t getVal_ADC##CHANNELNAME(void)\
+	{\
+		uint16_t result = 0;\
+		uint16_t i = 0;\
+		LOAD_ADC(STARTFLAG, VARSEMAPHORE);\
+		while(i < NU_AVERAGING_VALS) result += BUFFER[i++];\
+		VARSEMAPHORE = 0;\
+		return ( (result / NU_AVERAGING_VALS) - offsetErr);\
 	}
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -108,77 +128,20 @@ void compensateOffset_ADCA()
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-// Get value from ADC_RED
+// ADC values getter functions
 /////////////////////////////////////////////////////////////////////////////////
-uint16_t getVal_ADCRed(void)
-{
-	// Variables
-	uint16_t result = 0;
-	uint16_t i = 0;
-	
-	// Action
-	//LOAD_ADC(ADC_CH1START_bm, loaded_BLUE);
-	while(i < NU_AVERAGING_VALS)
-	result += adcVals_BLUE[i++];									// Read out result
-	loaded_OLED = 0;												// Set semaphore back after emptying
-	return ( (result / NU_AVERAGING_VALS) - offsetErr);
-}
-
-/////////////////////////////////////////////////////////////////////////////////
-// Get value from ADC_BLUE
-/////////////////////////////////////////////////////////////////////////////////
-uint16_t getVal_ADCBlue(void)
-{
-	// Variables
-	uint16_t result = 0;
-	uint16_t i = 0;
-	
-	// Action
-	//LOAD_ADC(ADC_CH1START_bm, loaded_BLUE);
-	while(i < NU_AVERAGING_VALS)
-	result += adcVals_BLUE[i++];									// Read out result
-	loaded_OLED = 0;												// Set semaphore back after emptying
-	return ( (result / NU_AVERAGING_VALS) - offsetErr);
-}
-
-/////////////////////////////////////////////////////////////////////////////////
-// Get value from ADC_GREEN
-/////////////////////////////////////////////////////////////////////////////////
-uint16_t getVal_ADCGreen(void)
-{
-	// Variables
-	uint16_t result = 0;
-	uint16_t i = 0;
-	
-	// Action
-	//LOAD_ADC(ADC_CH2START_bm, loaded_GREEN);
-	while(i < NU_AVERAGING_VALS)
-	result += adcVals_GREEN[i++];									// Read out result
-	loaded_OLED = 0;												// Set semaphore back after emptying
-	return ( (result / NU_AVERAGING_VALS) - offsetErr);
-}
-
-/////////////////////////////////////////////////////////////////////////////////
-// Get value from ADC_OLED
-/////////////////////////////////////////////////////////////////////////////////
-uint16_t getVal_ADCOLED(void)
-{
-	// Variables
-	uint16_t result = 0;
-	uint16_t i = 0;
-	
-	// Action
-	LOAD_ADC(ADC_CH3START_bm, loaded_OLED);
-	while(i < NU_AVERAGING_VALS)
-		result += adcVals_OLED[i++];									// Read out result
-	loaded_OLED = 0;													// Set semaphore back after emptying
-	return ( (result / NU_AVERAGING_VALS) - offsetErr);					
-}
+CREATE_GET_ADC_VAL(Red, ADC_RED_STARTFLAG, loaded_RED, adcVals_RED);
+CREATE_GET_ADC_VAL(Blue, ADC_BLUE_STARTFLAG, loaded_BLUE, adcVals_BLUE);
+CREATE_GET_ADC_VAL(Green, ADC_GREEN_STARTFLAG, loaded_GREEN, adcVals_GREEN);
+CREATE_GET_ADC_VAL(OLED, ADC_OLED_STARTFLAG, loaded_OLED, adcVals_OLED);
 
 /////////////////////////////////////////////////////////////////////////////////
 // ISRs
 /////////////////////////////////////////////////////////////////////////////////
 
+CREATE_ADCA_ISR(ADC_RED_VECT, loaded_RED, adcVals_RED, ADC_RED_RESULTREG, ADC_RED_STARTFLAG);
+CREATE_ADCA_ISR(ADC_BLUE_VECT, loaded_BLUE, adcVals_BLUE, ADC_BLUE_RESULTREG, ADC_BLUE_STARTFLAG);
+CREATE_ADCA_ISR(ADC_GREEN_VECT, loaded_GREEN, adcVals_GREEN, ADC_GREEN_RESULTREG, ADC_GREEN_STARTFLAG);
 CREATE_ADCA_ISR(ADC_OLED_VECT, loaded_OLED, adcVals_OLED, ADC_OLED_RESULTREG, ADC_OLED_STARTFLAG);
 
 /////////////////////////////////////////////////////////////////////////////////
