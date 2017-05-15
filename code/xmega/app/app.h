@@ -10,6 +10,7 @@
 #define APP_H_
 
 #include <stdint.h>
+#include "../modules/log.h"
 
 #define true 1
 #define false 0
@@ -22,11 +23,11 @@ typedef struct {
     void (*move)(uint16_t, uint16_t);
 } APP;
 
-#define APP_SET_POS(x, y)               _app.x = x; _app.y = y
+#define APP_SET_POS(drawX, drawY)       _app.x = drawX; _app.y = drawY
 #define APP_POS                         _app.x, _app.y
 
-#define APP_ENABLE(enable)              _app.enabled = enable
 #define APP_ISENABLED                   _app.enabled
+#define APP_ENABLE(enable)              if(_app.enabled == enable) return; _app.enabled = enable; if(APP_ISENABLED){ LOG_SYSTEM("Initialized"); }else{  LOG_SYSTEM("Deinitialized");}
 
 #define APP_SET_BOUNDS(_width, _height)   _app.width = _width; _app.height = _height
 #define APP_SIZE                        _app.width, _app.height
@@ -36,7 +37,7 @@ typedef struct {
     static APP _app = { \
         .name = _name, \
         .move = _move\
-    }
+    }; LOG_INIT("App|"_name)
 
 #define xx _app.x
 #define yy _app.y

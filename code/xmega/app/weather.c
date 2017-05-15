@@ -8,9 +8,15 @@
 #include "core.h"
 #include "weather.h"
 #include "../sprites.h"
+#include "app.h"
 #include <avr/pgmspace.h>
 
 EVENT_REGISTER(WEATHER_CHANGE, "Change of weather");
+
+static void move(uint16_t x, uint16_t y) {
+}
+
+APP_CREATE("Weather", move);
 
 #define ICON_WIDTH          32
 #define ICON_HEIGHT         32
@@ -24,7 +30,7 @@ EVENT_REGISTER(WEATHER_CHANGE, "Change of weather");
 #define ICON_THUNDER_INDEX  5
 
 static Weather curWeather;
-uint8_t initialized = 0;
+
 static uint8_t getIndex(WeatherType type) {
     if (type == WeatherType_WEATHER_THUNDER) return ICON_THUNDER_INDEX;
     if (type == WeatherType_WEATHER_SNOW) return ICON_SNOW_INDEX;
@@ -35,7 +41,6 @@ static uint8_t getIndex(WeatherType type) {
     return 0;
 }
 
-static uint16_t x, y;
 static char text[4][4];
 
 void weather_set(Weather weather) {
@@ -57,16 +62,16 @@ Weather weather_get(void) {
 
 
 void weather_draw(void) {
-    if(!initialized) return;
-    screen_sub_image(&sprite_weather, x, y, ICON_WIDTH * getIndex(curWeather.weatherType), 0, ICON_WIDTH, ICON_HEIGHT);
-    screen_text(text[0], 4, x + 32 + 1, y + 1);
-    screen_text(text[1], 4, x + 32 + 1, y + 8 + 2 + 1);
-    screen_text(text[2], 4, x + 32 + 1, y + 8 + 8 + 4 + 1);
+    if (!APP_ISENABLED) return;
+    screen_sub_image(&sprite_weather, xx, yy, ICON_WIDTH * getIndex(curWeather.weatherType), 0, ICON_WIDTH, ICON_HEIGHT);
+    screen_text(text[0], 4, xx + 32 + 1, yy + 1);
+    screen_text(text[1], 4, xx + 32 + 1, yy + 8 + 2 + 1);
+    screen_text(text[2], 4, xx + 32 + 1, yy + 8 + 8 + 4 + 1);
 #ifdef BOUNDARY_BOX
     screen_draw_begin(LINE);
     screen_color(COLOR_TO656(30, 240, 30));
-    screen_rect(x, y, WEATHER_APP_WIDTH, WEATHER_APP_HEIGHT - 1);
-    screen_rect(x, y, WEATHER_ICON_WIDTH, WEATHER_ICON_HEIGHT - 1);
+    screen_rect(APP_BOUNDS - 1);
+    screen_rect(APP_BOUNDS - 1);
     screen_draw_end();
 #endif
 }
@@ -74,17 +79,17 @@ void weather_draw(void) {
 const char * city = "Amsterdam";
 
 void weather_init(uint16_t drawX, uint16_t drawY) {
-    initialized =1;
+    APP_SET_POS(drawX, drawY);
+    APP_SET_BOUNDS(WEATHER_APP_WIDTH, WEATHER_APP_HEIGHT);
+    APP_ENABLE(true);
     curWeather.temperature = 12;
     curWeather.city.size = 8;//sizeof(&city);
     memcpy(curWeather.city.bytes, city, 8);
     curWeather.unit[0] = 'K';
     curWeather.weatherType = WeatherType_WEATHER_SUN;
-    x = drawX;
-    y = drawY;
     weather_set(curWeather);
 }
 
 void weather_deinit(void) {
-    initialized =0;
+    APP_ENABLE(false);
 }

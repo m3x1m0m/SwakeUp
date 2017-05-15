@@ -26,7 +26,7 @@ LOG_INIT("Core");
 
 EVENT_REGISTER(TIME_SOCIAL_MEDIACHANGE, "Social Media");
 
-static uint8_t screenOn;
+static uint8_t screenOn = 0;
 
 static void ledCommand(uint8_t len __attribute__ ((unused)), char * data __attribute__ ((unused))) {
     switch (data[0]) {
@@ -137,37 +137,58 @@ static void setCommand(uint8_t len __attribute__ ((unused)), char * data __attri
     }
 }
 
+static void enableApps(void) {
+#if DRAW_CLOCK == 1
+    clock_init(APP_CLOCK_X, APP_CLOCK_Y);
+#endif
+#if DRAW_WEATHER == 1
+    weather_init(APP_WEATHER_X, APP_WEATHER_Y);
+    weather_draw();
+#endif
+#if DRAW_STATUS == 1
+    status_init(APP_STATUS_X, APP_STATUS_Y);
+#endif
+#if DRAW_MAIL == 1
+    mail_init(APP_MAIL_X, APP_MAIL_Y);
+#endif
+    console_init();
+}
+
+static void disableApps(void) {
+#if DRAW_CLOCK == 1
+    clock_deinit();
+#endif
+#if DRAW_STATUS == 1
+    status_deinit();
+#endif
+#if DRAW_MAIL == 1
+    mail_deinit();
+#endif
+#if DRAW_WEATHER
+    weather_deinit();
+#endif
+    console_deinit();
+}
+
 void core_screen(uint8_t on) {
-    screenOn = on;
     if (on) {
         if (SCREEN.cnt == 0) {
             module_init(&SCREEN);
-#if DRAW_CLOCK == 1
-            clock_init_screen(APP_CLOCK_X, APP_CLOCK_Y, 1);
-#endif
-#if DRAW_WEATHER == 1
-            weather_init(APP_WEATHER_X, APP_WEATHER_Y);
-            weather_draw();
-#endif
-#if DRAW_STATUS == 1
-            status_init(APP_STATUS_X, APP_STATUS_Y);
-#endif
-#if DRAW_MAIL == 1
-            mail_init(APP_MAIL_X, APP_MAIL_Y);
-#endif
-            console_init();
         }
+        enableApps();
     } else {
         if (SCREEN.cnt >= 1) {
             module_deinit(&SCREEN);
         }
-#if DRAW_CLOCK == 1
-        clock_init_screen(APP_CLOCK_X, APP_CLOCK_X, 0);
-#endif
+        disableApps();
     }
+    screenOn = on;
 }
 static uint8_t init(void) {
-    clock_init();
+    if(screenOn) {
+        module_init(&SCREEN);
+        enableApps();
+    }
     command_hook_description('L', &ledCommand,      "Led control L<option> options: T(Toggle) 1(on) 0(off)\0");
     command_hook_description('S', &setCommand,      "Sets an app state S<app> <options>\r\n\t"
                              "W<options> options: 1 - 6 for different weather\r\n\t"
@@ -177,11 +198,18 @@ static uint8_t init(void) {
     command_hook_description('G', &getCommand,      "Gets state of an app A<App>\r\n\t"
                              "W Get weather            no options \r\n\t"
                              "T Get time               no options \0");
+    LOG_INFO("Core initialized");
     return 1;
 }
 static uint8_t deinit(void) {
-    clock_deinit();
-    if (screenOn) module_deinit(&SCREEN);
+    if (screenOn) {
+        module_deinit(&SCREEN);
+    }
+    disableApps();
+    command_remove('L', &ledCommand);
+    command_remove('S', &setCommand);
+    command_remove('G', &getCommand);
+    LOG_INFO("Core deinitialized");
     return 1;
 }
 MODULE_DEFINE(CORE, "Central core", init, deinit, &TIME, &COMMAND, &CONTROL);

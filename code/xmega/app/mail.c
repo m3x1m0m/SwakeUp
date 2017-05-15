@@ -10,7 +10,8 @@
 * Created: 5/13/2017 4:23:01 PM
 *  Author: elmar
 */
-
+#include <string.h>
+#include <stdio.h>
 #include "mail.h"
 #include "app.h"
 #include "../defines.h"
@@ -28,6 +29,7 @@ typedef struct EmailEntry {
 EmailEntry entries[4];
 // EmailEntry * order[4]; //TODO
 uint8_t mails = 0;
+
 static void move(uint16_t x, uint16_t y) {
 }
 
@@ -54,7 +56,7 @@ static void draw(void) {
 #ifdef BOUNDARY_BOX
         screen_draw_begin(LINE);
         screen_color(COLOR_TO656(30, 240, 30));
-        screen_rect(APP_POS, ww, hh);
+        screen_rect(APP_BOUNDS);
         screen_draw_end();
 #endif
     }
@@ -68,18 +70,23 @@ static const char Subject[] = "test ";
 
 void mail_add(const char * sender, const char * subject) {
     uint8_t i;
-    for (i = mails; i > 0; i--) {
-        memcpy(&entries[i], &entries[i - 1], sizeof(EmailEntry));
-    }
-    memcpy(entries[0].name, sender, 5);
-    memcpy(entries[0].subject, subject, 5);
-    if (mails < 4)
+    if (mails < 4) {
+        memcpy(entries[mails].name, sender, 5);
+        memcpy(entries[mails].subject, subject, 5);
         mails++;
+    } else {
+        for(i = 0; i<3; i++) {
+            memcpy(&entries[i], &entries[i + 1], sizeof(EmailEntry));
+        }
+        memcpy(entries[3].name, sender, 5);
+        memcpy(entries[3].subject, subject, 5);
+    }
     draw();
 }
+
 uint8_t asd = 0;
 static void callback(Event * event, uint8_t * data) {
-    if (++waiter >= 10) {
+    if (++waiter >= 3) {
         waiter = 0;
         asd++;
         snprintf(Subject, 6, "tst%02d", asd);
@@ -100,4 +107,6 @@ void mail_init(uint16_t x, uint16_t y) {
 }
 void mail_deinit(void) {
     APP_ENABLE(false);
+    mails = 0;
+    event_removeListener(&EVENT_TIMER_1_HZ, &callback);
 }

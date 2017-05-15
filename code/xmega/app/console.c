@@ -20,7 +20,7 @@ static void logSink(uint8_t len __attribute__ ((unused)), char * data __attribut
     if (data[0] == 's' || data[0] == 'S') {
         if (SCREEN.cnt > 0) {
             log_redirectOutput(screenterminal_sink());
-            clock_init_screen(64, 0, 0);
+            clock_deinit();
             log_set_display(LEVEL_NAME);
         } else {
             LOG_WARNING("Screen is not initialized!");
@@ -31,7 +31,7 @@ static void logSink(uint8_t len __attribute__ ((unused)), char * data __attribut
             screen_draw_begin(FILLED);
             screen_rect(0, 0, 160, 128);
             screen_draw_end();
-            clock_init_screen(64, 0, 1);
+            clock_init(64, 0);
             weather_init(0, 96);
             weather_draw();
         }

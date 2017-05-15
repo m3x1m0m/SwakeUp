@@ -16,10 +16,10 @@
 /** This event will get fired when a social media change request occurs */
 EVENT_EXP(SOCIAL_MEDIA);
 
-#define DRAW_CLOCK		1
-#define DRAW_WEATHER	1
-#define DRAW_STATUS		1
-#define DRAW_MAIL		0
+#define DRAW_CLOCK		0
+#define DRAW_WEATHER	0
+#define DRAW_STATUS		0
+#define DRAW_MAIL		1
 
 #define APP_CLOCK_X     64
 #define APP_CLOCK_Y     32

@@ -128,4 +128,5 @@ void status_init(uint16_t x, uint16_t y) {
 }
 void status_deinit(void) {
     APP_ENABLE(false);
+    event_removeListener(&EVENT_TIMER_1_HZ, &callback);
 }
