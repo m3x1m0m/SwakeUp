@@ -57,12 +57,12 @@ int main(void) {
     sleep_enable();
     set_sleep_mode(SLEEP_MODE_IDLE);
 #endif
-    PMIC.CTRL |= PMIC_LOLVLEN_bm | PMIC_MEDLVLEN_bm;    //Peripheral enable - interrupt levels (ALL)
+    PMIC.CTRL |= PMIC_LOLVLEN_bm | PMIC_MEDLVLEN_bm | PMIC_HILVLEN_bm;    //Peripheral enable - interrupt levels (ALL)
     module_init(&LOGGER);                               //Initializing the logger for use
     sei();                                              //Enabling interrupts
     module_init(&CORE);
-    //module_init(&PWM);
-    //module_init(&ADC);
+    module_init(&PWM);
+    module_init(&ADC);
     event_addListener(&EVENT_TIMER_1_HZ, callback);     //TODO this can be removed
     LOG_SYSTEM("System initialized");
     LOG_SYSTEM(greeting);

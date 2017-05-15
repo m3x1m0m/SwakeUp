@@ -16,8 +16,6 @@
 #include "../drivers/uart/esp8266.h"    //BREACH OF LAYERING
 #include "../drivers/uart/terminal.h"   //BREACH OF LAYERING
 #include "../modules/control.h"
-#include "../drivers/host/pwm.h"
-#include "../drivers/host/adc.h"
 
 #include "../pin_definitions.h"
 
@@ -50,84 +48,6 @@ static void ledCommand(uint8_t len __attribute__ ((unused)), char * data __attri
     }
 }
 
-<<<<<<< HEAD
-static void pwmCommand(uint8_t len __attribute__ ((unused)), char * data __attribute__ ((unused))) {
-	uint8_t index = 1;
-	uint16_t cycle;
-	char channel = data[index]; 
-	LOG_DEBUG("Channel: %c", channel);
-	cycle = command_next_int(&index, data, len);
-	switch(channel){
-	case 'R':
-		LOG_DEBUG("Cycle: %d", cycle);
-		LOG_DEBUG("Apply new settings to PWM_RED.");
-		setDutyCycle_PWMRed(cycle);
-		break;
-	case 'B':
-		LOG_DEBUG("Cycle: %d", cycle);
-		LOG_DEBUG("Apply new settings to PWM_BLUE.");
-		setDutyCycle_PWMBlue(cycle);
-		break;
-	case 'G':
-		LOG_DEBUG("Cycle: %d", cycle);
-		LOG_DEBUG("Apply new settings to PWM_GREEN.");
-		setDutyCycle_PWMGreen(cycle);
-		break;
-	case 'O':
-		LOG_DEBUG("Cycle: %d", cycle);
-		LOG_DEBUG("Apply new settings to PWM_OLED.");
-		setDutyCycle_PWMOLED(cycle);
-		break;
-	default: 
-		LOG_DEBUG("Channel does not exist.");
-	}
-}
-
-static void adcCommand(uint8_t len __attribute__ ((unused)), char * data __attribute__ ((unused))) {
-	uint8_t index = 1;
-	uint16_t cycle;
-	char channel = data[index];
-	LOG_DEBUG("Channel: %c", channel);
-	cycle = command_next_int(&index, data, len);
-	switch(channel){
-		case 'R':
-		LOG_DEBUG("ADC_RED value is %d.", getVal_ADCRed());
-		break;
-		case 'B':
-		LOG_DEBUG("ADC_RED value is %d.", getVal_ADCBlue());
-		break;
-		case 'G':
-		LOG_DEBUG("ADC_RED value is %d.", getVal_ADCGreen());
-		break;
-		case 'O':
-		LOG_DEBUG("ADC_RED value is %d.", getVal_ADCOLED());
-		break;
-		default:
-		LOG_DEBUG("Channel does not exist.");
-	}
-}
-
-
-static void TCD0Command(uint8_t len __attribute__ ((unused)), char * data __attribute__ ((unused))) {
-	uint8_t index = 1;
-	uint16_t period;
-	char option = data[index];
-	LOG_DEBUG("Option: %c", option);
-	switch(option){
-		case 'G':
-			LOG_DEBUG("Current period is: %d", getPeriod_TCD0());
-		break;
-		case 'S':
-			period = command_next_int(&index, data, len);
-			setPeriod_TCD0(period);			
-		break;
-		default:
-		LOG_DEBUG("Not a valid option.");
-	}
-}
-
-=======
->>>>>>> 6315b81585c00765a5928aa2de08cee05f87e756
 static void atCommand(uint8_t len __attribute__ ((unused)), char * data __attribute__ ((unused))) {
     LOG_DEBUG("Sending AT(%d):", len, data);
     uint8_t i;
