@@ -38,6 +38,7 @@ static volatile divider = 0;
 // Register events
 /////////////////////////////////////////////////////////////////////////////////
 EVENT_REGISTER(EVENT_TIMER_1_HZ, "1 second pulse");
+EVENT_REGISTER(EVENT_TIMER_10_HZ, "10 millisecond pulse");
 EVENT_REGISTER(EVENT_TIMER_100_HZ, "10 millisecond pulse");
 EVENT_REGISTER(EVENT_TIMER_1000_HZ, "1 millisecond pulse");
 EVENT_REGISTER(EVENT_ALARM, "ms alarm");
@@ -138,6 +139,12 @@ ISR(TCC0_OVF_vect)
 {
 	event_fire(&EVENT_TIMER_100_HZ, 0);
 	//LED_PORT.OUTTGL = LED_PIN;
+	if(divider == 10)
+	{
+		event_fire(&EVENT_TIMER_10_HZ, 0);
+		//LED_PORT.OUTTGL = LED_PIN;
+		divider = 0;
+	}
 }
 #endif
 

@@ -24,6 +24,7 @@
 // Event export
 /////////////////////////////////////////////////////////////////////////////////
 EVENT_EXP(EVENT_TIMER_1_HZ);
+EVENT_EXP(EVENT_TIMER_10_HZ);
 EVENT_EXP(EVENT_TIMER_100_HZ);
 EVENT_EXP(EVENT_TIMER_1000_HZ);
 EVENT_EXP(EVENT_ALARM);

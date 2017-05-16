@@ -5,13 +5,81 @@
 // Last Modification:	16.05.2017
 /////////////////////////////////////////////////////////////////////////////////
 
+/////////////////////////////////////////////////////////////////////////////////
+// Includes
+/////////////////////////////////////////////////////////////////////////////////
 #include <avr/io.h>
-#include "pid.h"
+#include <stdlib.h>
 #include <stdarg.h>
+#include "pid.h"
+#include "../../modules/log.h"
+#include "adc.h"
+#include "pwm.h"
 
-void init_PID()
-{
+LOG_INIT("ADC");
+
+/////////////////////////////////////////////////////////////////////////////////
+// Global Variables
+/////////////////////////////////////////////////////////////////////////////////
+uint16_t setPoint = 0;
+
+/////////////////////////////////////////////////////////////////////////////////
+// Hook  for 100 Hz event (actual PID algorithm)
+/////////////////////////////////////////////////////////////////////////////////
+static void pid(Event * event, uint8_t * data __attribute__ ((unused))) {
+	//Variables
+	static uint16_t previousError = 0;
+	static uint16_t integral = 0;
+	uint8_t error = 0;
+	uint16_t derivative = 0;
+	uint16_t drive = 0;
+	uint16_t actualValue = getVal_ADCOLED();
 	
+	//Action
+	if (event == &EVENT_TIMER_1_HZ) {
+		LOG_DEBUG("actualValue: %d", actualValue);
+		error = setPoint - actualValue;
+		integral = integral + error*DT;
+		derivative = (error-previousError)/DT;
+		drive = KP*error + KI*integral + KD*derivative;
+		LOG_DEBUG("actualValue: %d", actualValue);
+		LOG_DEBUG("error: %d", error);
+		setDutyCycle_PWMOLED(drive);
+		previousError = error;
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+// Start PID controller
+/////////////////////////////////////////////////////////////////////////////////
+void start_PID(uint16_t isetpoint)
+{
+	LOG_DEBUG("PID started.");
+	setPoint = isetpoint;
+	event_addListener(&EVENT_TIMER_1_HZ, &pid);
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+// Stop PID controller
+/////////////////////////////////////////////////////////////////////////////////
+void stop_PID()
+{
+	LOG_DEBUG("PID stopped.");
+	event_removeListener(&EVENT_TIMER_1_HZ, &pid);
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+// Init and deinit of this module
+/////////////////////////////////////////////////////////////////////////////////
+static uint8_t init(void)
+{
+	start_PID(1000);
+	return EXIT_SUCCESS;
+}
+
+static uint8_t deinit(void)
+{
+	return EXIT_SUCCESS;
 }
 
 MODULE_DEFINE(PID, "PID Controller", init, deinit, &PWM, &ADC);
