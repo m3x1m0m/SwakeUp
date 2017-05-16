@@ -21,22 +21,26 @@ static void logSink(uint8_t len __attribute__ ((unused)), char * data __attribut
         if (SCREEN.cnt > 0) {
             log_redirectOutput(screenterminal_sink());
             clock_deinit();
+            weather_deinit();
+            status_deinit();
+            mail_deinit();
             log_set_display(LEVEL_NAME);
         } else {
             LOG_WARNING("Screen is not initialized!");
         }
     } else {
+        log_set_display(DEFAULT_LOG_FORMAT);
+        log_defaultOutput();
         if (SCREEN.cnt > 0) {
             screen_color(COLOR_TO656(0, 0, 0));
             screen_draw_begin(FILLED);
             screen_rect(0, 0, 160, 128);
             screen_draw_end();
-            clock_init(64, 0);
-            weather_init(0, 96);
-            weather_draw();
+            clock_init(APP_CLOCK_X, APP_CLOCK_Y);
+            weather_init(APP_WEATHER_X, APP_WEATHER_Y);
+            mail_init(APP_MAIL_X, APP_MAIL_Y);
+            status_init(APP_STATUS_X, APP_STATUS_Y);
         }
-        log_set_display(DEFAULT_LOG_FORMAT);
-        log_defaultOutput();
     }
 }
 
