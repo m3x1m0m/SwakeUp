@@ -63,7 +63,7 @@ int main(void) {
     module_init(&CORE);
     module_init(&PWM);
     module_init(&ADC);
-    event_addListener(&EVENT_TIMER_1_HZ, callback);     //TODO this can be removed
+    event_addListener(&EVENT_TIMER_100_HZ, callback);     //TODO this can be removed
     LOG_SYSTEM("System initialized");
     LOG_SYSTEM(greeting);
     core_screen(SCREEN_ON);
@@ -75,7 +75,7 @@ int main(void) {
 }
 
 static void callback(Event * event, uint8_t * data __attribute__ ((unused))) {
-    if (event == &EVENT_TIMER_1_HZ) {
+    if (event == &EVENT_TIMER_100_HZ) {
         LED_PORT.OUTTGL = LED_PIN;
     }
 }

@@ -1,9 +1,9 @@
-/*
- * pid.c
- *
- * Created: 2017-05-11 12:20:57
- *  Author: Maximilian Stiefel
- */ 
+/////////////////////////////////////////////////////////////////////////////////
+//
+//
+// Author:				Maximilian Stiefel
+// Last Modification:	16.05.2017
+/////////////////////////////////////////////////////////////////////////////////
 
 #include <avr/io.h>
 #include "pid.h"
@@ -11,9 +11,8 @@
 
 void init_PID()
 {
-	//module_init(&PWM);
-	//module_init(&ADC);
+	
 }
 
-MODULE_EXP(ADC);
+MODULE_DEFINE(PID, "PID Controller", init, deinit, &PWM, &ADC);
 

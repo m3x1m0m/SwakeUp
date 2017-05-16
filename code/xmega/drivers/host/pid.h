@@ -1,15 +1,16 @@
-/*
- * pid.h
- *
- * Created: 2017-05-11 12:21:11
- *  Author: Maximilian Stiefel
- */ 
+/////////////////////////////////////////////////////////////////////////////////
+// 
+//
+// Author:				Maximilian Stiefel
+// Last Modification:	16.05.2017
+/////////////////////////////////////////////////////////////////////////////////
 
-#ifndef XMEGA_MODULES_ADC_H_
-#define XMEGA_MODULES_ADC_H_
-
-
+#ifndef XMEGA_MODULES_PID_H_
+#define XMEGA_MODULES_PID_H_
 
 
 
-#endif /* XMEGA_MODULES_ADC_H_ */
+
+MODULE_EXP(PID);
+
+#endif /* XMEGA_MODULES_PID_H_ */
