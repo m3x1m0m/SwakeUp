@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////////
-//
+// PID controller to run with a certain frequency.
 //
 // Author:				Maximilian Stiefel
 // Last Modification:	16.05.2017
@@ -16,7 +16,7 @@
 #include "adc.h"
 #include "pwm.h"
 
-LOG_INIT("ADC");
+LOG_INIT("PID");
 
 /////////////////////////////////////////////////////////////////////////////////
 // Global Variables
@@ -37,13 +37,16 @@ static void pid(Event * event, uint8_t * data __attribute__ ((unused))) {
 	
 	//Action
 	if (event == &EVENT_TIMER_1_HZ) {
-		LOG_DEBUG("actualValue: %d", actualValue);
 		error = setPoint - actualValue;
 		integral = integral + error*DT;
 		derivative = (error-previousError)/DT;
 		drive = KP*error + KI*integral + KD*derivative;
 		LOG_DEBUG("actualValue: %d", actualValue);
+		LOG_DEBUG("setPoint: %d", setPoint);
 		LOG_DEBUG("error: %d", error);
+		LOG_DEBUG("integral: %d", integral);
+		LOG_DEBUG("drive: %d", drive);
+		LOG_DEBUG("-----------------------------");
 		setDutyCycle_PWMOLED(drive);
 		previousError = error;
 	}
@@ -56,7 +59,7 @@ void start_PID(uint16_t isetpoint)
 {
 	LOG_DEBUG("PID started.");
 	setPoint = isetpoint;
-	event_addListener(&EVENT_TIMER_1_HZ, &pid);
+	event_addListener(&EVENT_TIMER_1_HZ, pid);
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -65,7 +68,7 @@ void start_PID(uint16_t isetpoint)
 void stop_PID()
 {
 	LOG_DEBUG("PID stopped.");
-	event_removeListener(&EVENT_TIMER_1_HZ, &pid);
+	event_removeListener(&EVENT_TIMER_1_HZ, pid);
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -73,6 +76,7 @@ void stop_PID()
 /////////////////////////////////////////////////////////////////////////////////
 static uint8_t init(void)
 {
+	LOG_DEBUG("Hej");
 	start_PID(1000);
 	return EXIT_SUCCESS;
 }
@@ -82,5 +86,4 @@ static uint8_t deinit(void)
 	return EXIT_SUCCESS;
 }
 
-MODULE_DEFINE(PID, "PID Controller", init, deinit, &PWM, &ADC);
-
+MODULE_DEFINE(PID, "PID Controller", &init, &deinit, &ADC, &PWM);
