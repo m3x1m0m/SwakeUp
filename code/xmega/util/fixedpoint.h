@@ -17,7 +17,7 @@ typedef int64_t myfixedpoint64_t;		//signed 64 bit integer
 /////////////////////////////////////////////////////////////////////////////////
 // Defines
 /////////////////////////////////////////////////////////////////////////////////
-#define NO_OF_DECIMALS 4
+#define NO_OF_DECIMALS 6
 #define FROMFLOAT(x) (myfixedpoint32_t)(((double)x) * (1<<NO_OF_DECIMALS))
 #define FMUL1(x, y) (myfixedpoint32_t)(((myfixedpoint64_t)x * (myfixedpoint64_t)y) >> NO_OF_DECIMALS)
 
@@ -26,8 +26,8 @@ typedef int64_t myfixedpoint64_t;		//signed 64 bit integer
 /////////////////////////////////////////////////////////////////////////////////
 void fixedPt_printInt(myfixedpoint32_t input);
 void fixedPt_pritntBit(myfixedpoint32_t input);
-myfixedpoint32_t fixedPt_mul(myfixedpoint32_t x, myfixedpoint32_t y);
-myfixedpoint32_t fixedPt_div(myfixedpoint32_t x, myfixedpoint32_t y);
+static inline myfixedpoint32_t fixedPt_mul(myfixedpoint32_t x, myfixedpoint32_t y);
+static inline myfixedpoint32_t fixedPt_div(myfixedpoint32_t x, myfixedpoint32_t y);
 
 
 #endif /* XMEGA_UTIL_FIXEDPOINT_H_ */

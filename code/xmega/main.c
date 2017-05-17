@@ -80,6 +80,6 @@ int main(void) {
 static void callback(Event * event, uint8_t * data __attribute__ ((unused))) {
     if (event == &EVENT_TIMER_1_HZ) {
         LED_PORT.OUTTGL = LED_PIN;
-		myFPTF();
+
     }
 }
