@@ -10,10 +10,5 @@
 
 #include <string.h>
 
-class UserSettings {
-public:
-	String city;
-	String country;
-};
 
 #endif /* APP_USERSETTINGS_H_ */

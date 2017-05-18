@@ -20,8 +20,8 @@
 static void sendRest(MsgFrame * frame) {
 	// Seems a little redundant to do this every time
 	// TODO have a predefined location struct do this
-	strncpy(frame->location.city, userSettings.city.c_str(), sizeof(frame->location.city));
-	strncpy(frame->location.country, userSettings.country.c_str(), sizeof(frame->location.country));
+	//strncpy(frame->location.city, userSettings.city.c_str(), sizeof(frame->location.city));
+	//strncpy(frame->location.country, userSettings.country.c_str(), sizeof(frame->location.country));
 	restStream.writeMessage(frame);
 }
 
