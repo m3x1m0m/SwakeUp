@@ -29,21 +29,41 @@ uint16_t setPoint = 0;
 /////////////////////////////////////////////////////////////////////////////////
 static void pid(Event * event, uint8_t * data __attribute__ ((unused))) {
 	//Variables
-	static myfixedpoint32_t drive = 0;
+	static volatile myfixedpoint32_t drive = 0;
+	static volatile myfixedpoint32_t previousError = 0;
+	static volatile myfixedpoint32_t integral = 0;
+	
 	myfixedpoint32_t error = 0;
-	uint16_t actualValue = 0;
+	myfixedpoint32_t derivative = 0;
+	myfixedpoint32_t proportional = 0;
+	int16_t actualValue = 0;
 	
 	//Action
 	if (event == &EVENT_TIMER_1_HZ) {
 		actualValue = getVal_ADCOLED();
+		if (actualValue < 0) actualValue = 0;
 		error = FROMINT(setPoint) - FROMINT(actualValue);
-		LOG_DEBUG("setPoint: %d", setPoint);
-		LOG_DEBUG("error: %d", error);
-		drive += KP*error;
-		LOG_DEBUG("drive: %d", drive);
+		proportional = fixedPt_mul(error,KP);
+		integral = integral + fixedPt_mul(error,DT);
+		integral = fixedPt_mul(integral, KI);
+		derivative = error-previousError;
+		derivative = fixedPt_mul(derivative, KD);
+		drive = proportional + integral + derivative;
+		if(drive < 0) drive = 0;
 		setDutyCycle_PWMOLED(TOUINT16T(drive));
+		#ifdef PID_PRINT_MODE
+		LOG_DEBUG("error: %d", error);
+		LOG_DEBUG("previousError: %d", previousError);
 		LOG_DEBUG("actualValue: %d", actualValue);
-		LOG_DEBUG("-----------------------");
+		LOG_DEBUG("set Point: %d", setPoint);
+		LOG_DEBUG("proportional: %d", proportional);
+		LOG_DEBUG("integral: %d", integral);
+		LOG_DEBUG("derivative: %d", TOUINT16T(derivative));
+		LOG_DEBUG("drive: %d", TOUINT16T(drive));
+		LOG_DEBUG("------------");
+		#endif
+		previousError = error;
+
 	}
 }
 
@@ -71,8 +91,7 @@ void stop_PID()
 /////////////////////////////////////////////////////////////////////////////////
 static uint8_t init(void)
 {
-	LOG_DEBUG("Hej");
-	start_PID(1000);
+	start_PID(200);
 	return EXIT_SUCCESS;
 }
 

@@ -269,7 +269,7 @@ static void pwmCommand(uint8_t len __attribute__ ((unused)), char * data __attri
 	}
 }
 											
- static void TCD0Command(uint8_t len __attribute__ ((unused)), char * data __attribute__ ((unused))) {
+ /*static void TCD0Command(uint8_t len __attribute__ ((unused)), char * data __attribute__ ((unused))) {
 	 uint8_t index = 1;
 	 uint16_t period;
 	 char option = data[index];
@@ -280,7 +280,7 @@ static void pwmCommand(uint8_t len __attribute__ ((unused)), char * data __attri
 		break;
 		case 'S':
 		period = command_next_int(&index, data, len);
-		#ifdef REV_1
+		#ifdef REV_2
 		setPeriod_TCD0(period);
 		#else
 		setPeriod_TCD1(period);
@@ -289,7 +289,7 @@ static void pwmCommand(uint8_t len __attribute__ ((unused)), char * data __attri
 		default:
 		LOG_DEBUG("Not a valid option.");
 	 }
- }
+ }*/
   
 /////////////////////////////////////////////////////////////////////////////////
 // Init and deinit of this module
@@ -298,8 +298,8 @@ static uint8_t init()
 {
 	command_hook_description('P', &pwmCommand,	"P <channel> <intensity>\r\n\t"
 												"Set PWM channel compare value.");
-	command_hook_description('N', &TCD0Command,	"N <G(Get) / S(Set)> (<PER register>)\r\n\t"
-												"Get / Set TCD0 PER register.");
+	/*command_hook_description('N', &TCD0Command,	"N <G(Get) / S(Set)> (<PER register>)\r\n\t"
+												"Get / Set TCD0 PER register.");*/
 	init_PWMRed(PWM_FREQ_16KHZ);
 	init_PWMBlue(PWM_FREQ_16KHZ);
 	init_PWMGreen(PWM_FREQ_16KHZ);

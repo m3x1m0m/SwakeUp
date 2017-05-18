@@ -55,7 +55,7 @@ char *fixedPt_pritntBit(myfixedpoint32_t input, uint8_t print)
 /////////////////////////////////////////////////////////////////////////////////
 // Multiplication
 /////////////////////////////////////////////////////////////////////////////////
-static inline myfixedpoint32_t fixedPt_mul(myfixedpoint32_t x, myfixedpoint32_t y) 
+myfixedpoint32_t fixedPt_mul(myfixedpoint32_t x, myfixedpoint32_t y) 
 {
 	myfixedpoint32_t xr, xl, yr, yl;
 	// Split both operands in a left and right part (xl.xr and yl.yr)
@@ -71,7 +71,7 @@ static inline myfixedpoint32_t fixedPt_mul(myfixedpoint32_t x, myfixedpoint32_t 
 /////////////////////////////////////////////////////////////////////////////////
 // Division
 /////////////////////////////////////////////////////////////////////////////////
-static inline myfixedpoint32_t fixedPt_div(myfixedpoint32_t x, myfixedpoint32_t y) 
+myfixedpoint32_t fixedPt_div(myfixedpoint32_t x, myfixedpoint32_t y) 
 {
 	myfixedpoint32_t out = 0;
 	assert(x!=0);

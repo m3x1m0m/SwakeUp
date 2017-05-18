@@ -36,4 +36,6 @@
 // Switch between hardware versions
 #define REV_1
 //#define REV_2
+// Activate/Deactivate printing for PID controller
+#define PID_PRINT_MODE
 #endif /* DEFINES_H_ */

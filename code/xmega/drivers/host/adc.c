@@ -24,16 +24,16 @@ LOG_INIT("ADC");
 static uint16_t offsetErr = 0;															// Offset error from the ADC
 
 static volatile uint8_t loaded_RED = 0;													// Simple semaphore for the shared buffer
-static uint16_t adcVals_RED[NU_AVERAGING_VALS];											// Shared buffer for ADC values
+static volatile uint16_t adcVals_RED[NU_AVERAGING_VALS];								// Shared buffer for ADC values
 
 static volatile uint8_t loaded_BLUE = 0;
-static uint16_t adcVals_BLUE[NU_AVERAGING_VALS];
+static volatile uint16_t adcVals_BLUE[NU_AVERAGING_VALS];
 
 static volatile uint8_t loaded_GREEN = 0;
-static uint16_t adcVals_GREEN[NU_AVERAGING_VALS];
+static volatile uint16_t adcVals_GREEN[NU_AVERAGING_VALS];
 
 static volatile uint8_t loaded_OLED = 0;
-static uint16_t adcVals_OLED[NU_AVERAGING_VALS];
+static volatile uint16_t adcVals_OLED[NU_AVERAGING_VALS];
 
 /////////////////////////////////////////////////////////////////////////////////
 // Macro: Semaphore protected buffer loading through ADC interrupts.
@@ -58,10 +58,13 @@ static uint16_t adcVals_OLED[NU_AVERAGING_VALS];
 #define CREATE_ADCA_ISR(ADCVECTOR, VARSEMAPHORE, BUFFER, RESULTREG, STARTFLAG)\		
 	ISR(ADCVECTOR)\
 	{\
-		static cycles = 0;\
+		static volatile cycles = 0;\
 		if(!VARSEMAPHORE)\
 		{\
-			BUFFER[cycles++] = RESULTREG;\
+			if( ((int16_t) RESULTREG) < 0)\
+				BUFFER[cycles++] = 0;\
+			else\
+				BUFFER[cycles++] = RESULTREG;\
 			if(cycles < NU_AVERAGING_VALS)\												
 				ADCA.CTRLA |= STARTFLAG;\
 			else\
