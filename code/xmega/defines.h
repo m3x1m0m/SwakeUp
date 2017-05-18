@@ -34,6 +34,6 @@
 //Enables sleeping and more power efficiency
 #define EVENT_SUPPORTS_SLEEP
 // Switch between hardware versions
-//#define REV_1
-#define REV_2
+#define REV_1
+//#define REV_2
 #endif /* DEFINES_H_ */

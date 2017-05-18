@@ -75,16 +75,16 @@ static const IO_PP _led =     GPIO_PP(0, GPIO_PORTB);
 #define SEPS525F_CSB_PP()   gpio_pp(3, GPIO_PORTC)
 
 #define PWM_PORT            PORTD
-#define PWM_1               (1<<0)
-#define PWM_2               (1<<1)
-#define PWM_3               (1<<4)
-#define PWM_4               (1<<5)
+#define PWM_RED (1 << 0)
+#define PWM_BLUE (1 << 1)
+#define PWM_GREEN (1 << 4)
+#define PWM_OLED (1 << 5)
 
-#define ADC_PORT            PORTA
-#define ADC_1               (1<<4)
-#define ADC_2               (1<<5)
-#define ADC_3               (1<<6)
-#define ADC_4               (1<<7)
+#define ADC_PORT PORTA
+#define ADC_RED_PIN_NU 7
+#define ADC_BLUE_PIN_NU 6
+#define ADC_GREEN_PIN_NU 5
+#define ADC_OLED_PIN_NU 4
 
 
 

@@ -11,10 +11,11 @@
 #include <avr/io.h>
 #include <stdlib.h>
 #include <stdarg.h>
-#include "pid.h"
 #include "../../modules/log.h"
+#include "../../util/fixedpoint.h"
 #include "adc.h"
 #include "pwm.h"
+#include "pid.h"
 
 LOG_INIT("PID");
 
@@ -28,27 +29,21 @@ uint16_t setPoint = 0;
 /////////////////////////////////////////////////////////////////////////////////
 static void pid(Event * event, uint8_t * data __attribute__ ((unused))) {
 	//Variables
-	static uint16_t previousError = 0;
-	static uint16_t integral = 0;
-	uint8_t error = 0;
-	uint16_t derivative = 0;
-	uint16_t drive = 0;
-	uint16_t actualValue = getVal_ADCOLED();
+	static myfixedpoint32_t drive = 0;
+	myfixedpoint32_t error = 0;
+	uint16_t actualValue = 0;
 	
 	//Action
 	if (event == &EVENT_TIMER_1_HZ) {
-		error = setPoint - actualValue;
-		integral = integral + error*DT;
-		derivative = (error-previousError)/DT;
-		drive = KP*error + KI*integral + KD*derivative;
-		LOG_DEBUG("actualValue: %d", actualValue);
+		actualValue = getVal_ADCOLED();
+		error = FROMINT(setPoint) - FROMINT(actualValue);
 		LOG_DEBUG("setPoint: %d", setPoint);
 		LOG_DEBUG("error: %d", error);
-		LOG_DEBUG("integral: %d", integral);
+		drive += KP*error;
 		LOG_DEBUG("drive: %d", drive);
-		LOG_DEBUG("-----------------------------");
-		setDutyCycle_PWMOLED(drive);
-		previousError = error;
+		setDutyCycle_PWMOLED(TOUINT16T(drive));
+		LOG_DEBUG("actualValue: %d", actualValue);
+		LOG_DEBUG("-----------------------");
 	}
 }
 
@@ -86,4 +81,4 @@ static uint8_t deinit(void)
 	return EXIT_SUCCESS;
 }
 
-MODULE_DEFINE(PID, "PID Controller", &init, &deinit, &ADC, &PWM);
+MODULE_DEFINE(PID, "PID Controller", &init, &deinit);

@@ -106,7 +106,7 @@ void init_ADCA(void)
 	for(int i=0; i < 24; i++)															// Wait until ADC is started up (in every case less than 24 cycles)
 	{
 		asm("nop");
-		if(i == 23)
+		if(i == 99)
 		{
 			LOG_DEBUG("Waited for %d cycles for ADC to start up.", i+1);	
 		}

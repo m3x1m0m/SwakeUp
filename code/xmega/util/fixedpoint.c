@@ -27,7 +27,7 @@ void fixedPt_printInt(myfixedpoint32_t input)
 /////////////////////////////////////////////////////////////////////////////////
 // Print fixed point number in bitwise representation
 /////////////////////////////////////////////////////////////////////////////////
-void fixedPt_pritntBit(myfixedpoint32_t input) 
+char *fixedPt_pritntBit(myfixedpoint32_t input, uint8_t print) 
 {
 	char buffer[33];
 	char debugOut[33];
@@ -48,8 +48,8 @@ void fixedPt_pritntBit(myfixedpoint32_t input)
 		debugOut[j] = buffer[i];
 		j++;
 	}
-	
-	LOG_DEBUG("bitwiseRep: %s", debugOut);
+	if(print)
+		LOG_DEBUG("bitwiseRep: %s", debugOut);
 }
 
 /////////////////////////////////////////////////////////////////////////////////
