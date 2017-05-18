@@ -22,7 +22,7 @@
 
 ## COM port parameter is reqruied to flash firmware correctly.
 ## Windows: 
- COM_PORT = COM4
+# COM_PORT = COM4
 
 ## MacOS / Linux:
 # COM_PORT = /dev/tty.usbserial
