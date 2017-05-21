@@ -8,8 +8,12 @@
     <title>TyTherm configuration</title>
 
     <!-- Bootstrap core -->
+	<link href="clockpicker.css" rel="stylesheet">
+	<link href="bootstrap-clockpicker.css" rel="stylesheet">
     <link href="bootstrap.min.css" rel="stylesheet">
 	<script src="jquery-2.1.4.min.js"></script>
+	<script src="clockpicker.js"</script>
+	<script src="bootstrap-clockpicker.js</script>
 	<style>
 		.main { font-size: 63px; }
 	</style>
@@ -35,19 +39,30 @@
 			<!-- Network config -->
 			<div>
 			<div class="panel panel-default">
-						<div class="panel-heading">
-							<h3 class="panel-title">Settings</h3>
+				<div class="panel-heading">
+					<h3 class="panel-title">Settings</h3>
+				</div>
+				<div class="panel-body">
+					<form id="form_citycfg" method="POST">
+					  <div class="form-group">
+						<label for="StaCITY">City</label>
+						<input type="text" id="StaCITY" name="StaCITY" class="form-control" placeholder="Enter City" value="{StaCITY}">
+					  </div>
+					  <div class="btn-group" data-toggle="buttons">
+						  <label class="btn btn-primary active">
+							<input type="radio" name="options" id="option1" autocomplete="off" checked> Celsius
+						  </label>
+						  <label class="btn btn-primary">
+							<input type="radio" name="options" id="option2" autocomplete="off"> Fahrenheit
+						  </label>
+						  <label class="btn btn-primary">
+							<input type="radio" name="options" id="option3" autocomplete="off"> Kelvin
+						  </label>
 						</div>
-						<div class="panel-body">
-							<form id="form_citycfg" method="POST">
-							  <div class="form-group">
-								<label for="StaCITY">City</label>
-								<input type="text" id="StaCITY" name="StaCITY" class="form-control" placeholder="Enter City" value="{StaCITY}">
-							  </div>
-							  <button type="submit" class="btn btn-success">Submit</button>
-							</form>
-						</div>
-					</div>
+					  <button type="submit" class="btn pull-right btn-success">Submit</button>
+					</form>
+				</div>
+			  </div>
 			  <div class="panel panel-default">
 				<div class="panel-heading">
 				  <h3 class="panel-title">Network</h3>
@@ -61,14 +76,27 @@
 					  <div class="form-group">
 						<label for="Password">Password</label>
 						<input type="password" id="StaPassword" name="StaPassword" class="form-control" placeholder="Password">
-					  </div>
-					  <div class="form-group">
+					  </div> 
+					  <div class="form-group"> 
 						<label for="StaEnable">Enable WIFI Client</label>
-						<input type="checkbox" id="StaEnable" name="StaEnable" class="form-control">
-					  </div>
+						<input type="checkbox" id="StaEnable" name="StaEnable" class="form-horizontal pull-right"> 
+					  </div> 
 					  <button type="submit" class="btn btn-success">Save network</button>
 					  <button type="button" id="netcfg_cancel" class="btn btn-link">Cancel</button>
 					</form>
+				</div>
+			  </div>
+			</div>
+			
+			<div class="panel panel-default">
+				<div class="panel-heading">
+				  <h3 class="panel-title">Alarms</h3>
+				</div>
+				<div class="panel-body">
+					<div class="input-group clockpicker">
+						<input type="text" class="form-control" value="09:30"> 
+					</span>
+				</div>
 				</div>
 			  </div>
 			</div>
@@ -78,6 +106,8 @@
 		</div> <!-- /col -->
 	</div> <!-- /row -->
 
-	</div> <!-- /container -->
+<script type="text/javascript">
+$('.clockpicker').clockpicker();
+</script>
   </body>
 </html>

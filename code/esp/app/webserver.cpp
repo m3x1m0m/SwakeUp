@@ -97,7 +97,7 @@ void onAJAXGetState(HttpRequest &request, HttpResponse &response) {
 	json["counter"] = counter;
 	json["weather"] = "23C";
 	json["city"] = ActiveConfig.city;
-	json["time"] = "12:34:56";
+	json["date"] = ActiveConfig.date;
 
 	response.sendJsonObject(stream);
 }
@@ -114,8 +114,10 @@ void startWebServer() {
 	server.setDefaultHandler(onFile);
 	serverStarted = true;
 
-	if (WifiStation.isEnabled())
+	if (WifiStation.isEnabled()){
 		Serial.printf("STA: %s \n", WifiStation.getIP().toString().c_str());
-	if (WifiAccessPoint.isEnabled())
+	}
+	if (WifiAccessPoint.isEnabled()){
 		Serial.printf("AP: %s \n", WifiAccessPoint.getIP().toString().c_str());
+	}
 }

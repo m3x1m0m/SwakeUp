@@ -36,12 +36,10 @@ void requestTime() {
 	msgCallback(&frame, (void*) &restStream);
 }
 
-String city = "Uppsala";
-String country = "Sweden";
-
 unsigned long counter = 0;
 
 int i = 0;
+
 void requestWeather() {
 	MsgFrame frame;
 	frame.typ = MsgType_MSG_TYPE_WEATHER;
@@ -50,8 +48,8 @@ void requestWeather() {
 	frame.pl.weather.unit[0] = 'C';
 	frame.pl.weather.sunrise = 123123;
 	frame.pl.weather.sunset = 123123;
-	memcpy(&frame.pl.weather.city.bytes, city.c_str(), city.length() - 1);
-	frame.pl.weather.city.size = city.length() - 1;
+	memcpy(&frame.pl.weather.city.bytes, ActiveConfig.city.c_str(), ActiveConfig.city.length() - 1);
+	frame.pl.weather.city.size = ActiveConfig.city.length() - 1;
 	msgCallback(&frame, (void*) &restStream);
 }
 

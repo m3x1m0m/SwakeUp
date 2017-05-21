@@ -16,7 +16,8 @@ struct SwakeConfig {
 	uint8_t StaEnable;
 
 // ThermControl settings
-
+	String date;
+	String time;	//TODO
 	String city;
 	String country;
 };
