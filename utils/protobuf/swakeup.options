@@ -1,5 +1,3 @@
-# Commom limits
-
 DateAndTime.day             	int_size:IS_8
 DateAndTime.month           	int_size:IS_8
 DateAndTime.year            	int_size:IS_8
@@ -8,10 +6,23 @@ DateAndTime.hour            	int_size:IS_8
 DateAndTime.minute          	int_size:IS_8
 DateAndTime.second          	int_size:IS_8
 
-Location.country		max_size:8
-Location.city			max_size:8
+Location.country				max_size:10
+Location.city					max_size:10
+		
+Weather.unit					max_size:1
+Weather.city					max_size:10
+Weather.temperature				int_size:IS_16
+
+AlarmPut.hour            		int_size:IS_8
+AlarmPut.minute          		int_size:IS_8
+AlarmPut.second          		int_size:IS_8
+AlarmPut.days	          		int_size:IS_8
+
+AlarmGet.index	          		int_size:IS_8
+
+AlarmRemove.index          		int_size:IS_8
+
+Email.sender					max_size:5
+Email.subject					max_size:5
 
 
-Weather.unit			max_size:1
-Weather.city			max_size:8
-Weather.temperature		int_size:IS_16

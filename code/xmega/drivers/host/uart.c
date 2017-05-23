@@ -79,7 +79,7 @@ uint8_t uart_buffer_out_level(const USART_t * const port) {
 uint8_t uart_buffer_in_level(const USART_t * const port) {
     return uartStatus[getId(port)].inBuffer.size;
 }
-
+#ifdef EXTERNAL_CLK
 void uart_speed(UART_BAUDRATE baudrate, USART_t * port) {
     switch (baudrate) {
     case B2400:
@@ -102,6 +102,30 @@ void uart_speed(UART_BAUDRATE baudrate, USART_t * port) {
         break;
     }
 }
+#else
+void uart_speed(UART_BAUDRATE baudrate, USART_t * port) {
+    switch (baudrate) {
+    case B2400:
+        break;
+    case B4800:
+        port->BAUDCTRLA = 207;
+        port->BAUDCTRLB = -4;
+        break;
+    case B9600:
+        port->BAUDCTRLA = 103;
+        port->BAUDCTRLB = 0;
+        break;
+    case B38400:
+        port->BAUDCTRLA = 25;
+        port->BAUDCTRLB = 0;
+        break;
+    case B115200:
+        port->BAUDCTRLA = 131;
+        port->BAUDCTRLB = (0x0F & (uint8_t)-3) << 4;
+        break;
+    }
+}
+#endif
 
 
 uint8_t uart_job(char * data, uint8_t len, void (* callback)(struct Job *), USART_t * const port) {

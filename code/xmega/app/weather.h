@@ -10,6 +10,17 @@
 #define WEATHER_H_
 
 #include "../util/protobuf/swakeup.pb.h"
+#include "../util/event.h"
+
+#define WEATHER_ICON_WIDTH  32
+#define WEATHER_ICON_HEIGHT 32
+#define WEATHER_INFO_WIDTH  32
+#define WEATHER_INFO_HEIGHT 32
+#define WEATHER_APP_WIDTH   WEATHER_ICON_WIDTH + WEATHER_INFO_WIDTH
+#define WEATHER_APP_HEIGHT  32
+
+/** This event will get fired when a weather change request occurs */
+EVENT_EXP(WEATHER_CHANGE);
 
 void weather_set(Weather weather);
 Weather weather_get(void);

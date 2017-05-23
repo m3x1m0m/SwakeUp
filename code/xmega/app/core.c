@@ -13,22 +13,20 @@
 #include "../modules/log.h"
 #include "../modules/control.h"
 #include "../drivers/host/uart.h"    //BREACH OF LAYERING
-#include "../drivers/uart/esp8266.h"    //BREACH OF LAYERING
-#include "../drivers/uart/terminal.h"   //BREACH OF LAYERING
 #include "../modules/control.h"
-
+#include "../drivers/host/pwm.h"
+#include "../drivers/host/adc.h"
 #include "../pin_definitions.h"
-
+#include "mail.h"
+#include "console.h"
 #include "weather.h"
 #include "clock.h"
 
 LOG_INIT("Core");
 
-EVENT_REGISTER(TIME_CHANGE, "Change of net time");
-EVENT_REGISTER(WEATHER_CHANGE, "Change of weather");
 EVENT_REGISTER(TIME_SOCIAL_MEDIACHANGE, "Social Media");
 
-static uint8_t screenOn;
+static uint8_t screenOn = 0;
 
 static void ledCommand(uint8_t len __attribute__ ((unused)), char * data __attribute__ ((unused))) {
     switch (data[0]) {
@@ -48,47 +46,12 @@ static void ledCommand(uint8_t len __attribute__ ((unused)), char * data __attri
     }
 }
 
-static void atCommand(uint8_t len __attribute__ ((unused)), char * data __attribute__ ((unused))) {
-    LOG_DEBUG("Sending AT(%d):", len, data);
-    uint8_t i;
-    terminal_putc('\t');
-    for (i = 0; i < len; i++) {
-        terminal_putc(data[i]);
-    }
-    terminal_putc('\r');
-    terminal_putc('\n');
-    uart_write((char*)data, len, &ESP_UART_PORT);
-    uart_write("\r\n", 2, &ESP_UART_PORT);
-}
-
-static void terminalCommand(uint8_t len __attribute__ ((unused)), char * data __attribute__ ((unused))) {
-    if (data[0] == 's' || data[0] == 'S') {
-        if (SCREEN.cnt > 0) {
-            log_redirectOutput(screenterminal_sink());
-            clock_deinit();
-        } else
-            LOG_WARNING("Screen is not initialized");
-    } else {
-        if (SCREEN.cnt > 0) {
-            screen_color(COLOR_TO656(0, 0, 0));
-            screen_draw_begin(FILLED);
-            screen_rect(0, 0, 160, 128);
-            screen_draw_end();
-            clock_init(64, 0);
-            weather_init(0, 96);
-            weather_draw();
-        }
-        terminal_default_sink();
-    }
-}
-
 static void getCommand(uint8_t len __attribute__ ((unused)), char * data __attribute__ ((unused))) {
     if (data[0] == 'W' || data[0] == 'w') {
         LOG_SYSTEM("Weather: %d", weather_get());
     } else if (data[0] == 'T' || data[0] == 't') {
-        struct TimeKeeper time;
-        core_time_get(&time);
-        LOG_SYSTEM("Time: %d:%d:%d", time.hour, time.minute, time.second);
+        TimeKeeper timeKeeper = timekeeper_get();
+        LOG_SYSTEM("Time: %d:%d:%d", timeKeeper.time.hour, timeKeeper.time.minute, timeKeeper.time.second);
     } else if (data[0] == 'A' || data[0] == 'a') {
         if (len < 2) {
             LOG_SYSTEM("Please define an application. Implemented:\r\n \t GA[S] get stream information");
@@ -111,6 +74,9 @@ static void getCommand(uint8_t len __attribute__ ((unused)), char * data __attri
             break;
             }
         }
+    } else if (data[0] == 'L' || data[0] == 'l') {
+        LOG_SYSTEM("Current log display %d", log_display);
+        LOG_SYSTEM("Global log level %d", 0);
     }
 }
 
@@ -129,7 +95,7 @@ static void setCommand(uint8_t len __attribute__ ((unused)), char * data __attri
     case 'T':
     case 't':
         if (command_arguments(&data[index], len - 1) < 3) {
-            LOG_WARNING("Not enough arguments for setting time");
+            LOG_WARNING("Not enough arguments for setting time, ['S']['T'][h][m][s]");
         } else {
             uint32_t hour = command_next_int(&index, data, len);
             uint32_t minute = command_next_int(&index, data, len);
@@ -144,7 +110,7 @@ static void setCommand(uint8_t len __attribute__ ((unused)), char * data __attri
             frame->pl.dateAndTime.second = (second & 0xFF);
             writeMessage(stream, frame);
 #else
-            core_time_set(hour & 0xFF, minute & 0xFF, second & 0xFF);
+            timekeeper_time_set(hour & 0xFF, minute & 0xFF, second & 0xFF);
 #endif
         }
         //time
@@ -153,51 +119,97 @@ static void setCommand(uint8_t len __attribute__ ((unused)), char * data __attri
     case 's':
         //social
         break;
+    case 'L':
+    case 'l':
+        if (command_arguments(&data[index], len - 1) < 2) {
+            LOG_WARNING("Not enough arguments for setting logger, ['S']['L'][Display][Level]");
+        } else {
+            uint32_t display = command_next_int(&index, data, len);
+            uint32_t level = command_next_int(&index, data, len);
+            log_display = (enum LOG_DISPLAY) display;
+            LOG_SYSTEM("Current log display %d", log_display);
+            LOG_SYSTEM("Global log level %d", level);
+        }
+        break;
     default:
         LOG_WARNING("Unrecognized set command: % c", (char)data[index]);
         break;
     }
 }
-void core_time_set(uint8_t h, uint8_t m, uint8_t s) {
-    timekeeper_time_set(h, m, s);
-    struct TimeKeeper tim;
-    timekeeper_time_get(&tim);
-    clock_time_set(&tim);
+
+static void enableApps(void) {
+#if DRAW_CLOCK == 1
+    clock_init(APP_CLOCK_X, APP_CLOCK_Y);
+#endif
+#if DRAW_WEATHER == 1
+    weather_init(APP_WEATHER_X, APP_WEATHER_Y);
+    weather_draw();
+#endif
+#if DRAW_STATUS == 1
+    status_init(APP_STATUS_X, APP_STATUS_Y);
+#endif
+#if DRAW_MAIL == 1
+    mail_init(APP_MAIL_X, APP_MAIL_Y);
+#endif
+    console_init();
 }
-void core_time_get(struct TimeKeeper * time) {
-    timekeeper_time_get(time);
-    clock_time_set(time);
+
+static void disableApps(void) {
+#if DRAW_CLOCK == 1
+    clock_deinit();
+#endif
+#if DRAW_STATUS == 1
+    status_deinit();
+#endif
+#if DRAW_MAIL == 1
+    mail_deinit();
+#endif
+#if DRAW_WEATHER
+    weather_deinit();
+#endif
+    console_deinit();
 }
+
 void core_screen(uint8_t on) {
-    screenOn = on;
     if (on) {
         if (SCREEN.cnt == 0) {
             module_init(&SCREEN);
-            clock_init(64, 0);
-            weather_init(0, 96);
-            weather_draw();
         }
+        enableApps();
     } else {
         if (SCREEN.cnt >= 1) {
             module_deinit(&SCREEN);
         }
+        disableApps();
     }
+    screenOn = on;
 }
 static uint8_t init(void) {
-    command_hook_description('T', &terminalCommand, "Log sink    T<option> options: U(Uart) S(Screen)\0");
+    if(screenOn) {
+        module_init(&SCREEN);
+        enableApps();
+    }
     command_hook_description('L', &ledCommand,      "Led control L<option> options: T(Toggle) 1(on) 0(off)\0");
-    command_hook_description('A', &atCommand,       "Sends AT    A         no options\0");
     command_hook_description('S', &setCommand,      "Sets an app state S<app> <options>\r\n\t"
                              "W<options> options: 1 - 6 for different weather\r\n\t"
                              "S<options> options : f(Facebook) e(Mail)\r\n\t"
+                             "L<options> options : display(1-5) level(1-5)\r\n\t"
                              "T<options> options : hour minute second\0");
     command_hook_description('G', &getCommand,      "Gets state of an app A<App>\r\n\t"
                              "W Get weather            no options \r\n\t"
                              "T Get time               no options \0");
+    LOG_INFO("Core initialized");
     return 1;
 }
 static uint8_t deinit(void) {
-    if (screenOn) module_deinit(&SCREEN);
+    if (screenOn) {
+        module_deinit(&SCREEN);
+    }
+    disableApps();
+    command_remove('L', &ledCommand);
+    command_remove('S', &setCommand);
+    command_remove('G', &getCommand);
+    LOG_INFO("Core deinitialized");
     return 1;
 }
-MODULE_DEFINE(CORE, "Central core", init, deinit, &TIME, &COMMAND, &CONTROL, &ESP8266);
+MODULE_DEFINE(CORE, "Central core", init, deinit, &TIME, &COMMAND, &CONTROL);

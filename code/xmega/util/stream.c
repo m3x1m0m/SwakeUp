@@ -27,6 +27,9 @@ uint8_t stream_readCallback(pb_istream_t *stream, const pb_byte_t *buf, size_t c
 }
 
 void logErrorExpected(uint8_t exp, uint8_t got) {
+    (void)(exp);
+    (void)(got);
+    //TODO!
     //LOG_ERROR("Expected %02x but got %02x\n", exp, got); //TODO
 }
 
