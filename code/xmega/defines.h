@@ -11,15 +11,7 @@
 
 #include <stdint.h>
 
-
-// #define EXTERNAL_CLK
-
-#ifdef EXTERNAL_CLK
 #define F_CPU               16000000UL
-else
-#define F_CPU               32000000UL
-#endif
-
 
 #define TAB "\t\t\t\t"
 #define NL  "\r\n"
@@ -50,7 +42,7 @@ else
 // #define PROTO_PRINT
 
 //Change this to a 1 if you want to use the screen
-#define SCREEN_ON               1
+#define SCREEN_ON               0
 
 // Draws boundary boxes around the apps
 #define BOUNDARY_BOX
@@ -59,9 +51,21 @@ else
 #define EVENT_SUPPORTS_SLEEP
 
 // Switch between hardware versions
-//#define REV_1
-#define REV_2
+#define REV_1
+//#define REV_2
 
 // Enable watchig timeout
 // #define WATCHDOG_ENABLE
+
+// Set print levels for PID
+#define PID_PRINT_MODE_LVL4
+
+// Background: A fast system tick (event with 1 kHz produced by overflow ISR TCC0) does not work yet  with 16 MHz, processing is too slow I guess
+// TODO: Test it with 32 MHz
+//#define TIMER_EXPERIMENTAL_1MS_TICK
+
+// ADC reference
+#define VREF 2.3
+#define VPERCOUNT_GAIN10E6 561.52
+
 #endif /* DEFINES_H_ */

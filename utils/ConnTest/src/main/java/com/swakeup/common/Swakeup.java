@@ -40,9 +40,9 @@ public final class Swakeup {
      * -------------------------------------------------------------------------------
      * </pre>
      *
-     * <code>MSG_TUPE_LOCATION = 16;</code>
+     * <code>MSG_TYPE_LOCATION = 16;</code>
      */
-    MSG_TUPE_LOCATION(16),
+    MSG_TYPE_LOCATION(16),
     /**
      * <pre>
      *&#47; for the time and date
@@ -69,20 +69,24 @@ public final class Swakeup {
     MSG_TYPE_SOCIAL(19),
     /**
      * <pre>
-     *&#47; Mail
+     *&#47; E-Mail
      * </pre>
      *
-     * <code>MSG_TYPE_MAIL = 20;</code>
+     * <code>MSG_TYPE_EMAIL = 20;</code>
      */
-    MSG_TYPE_MAIL(20),
+    MSG_TYPE_EMAIL(20),
     /**
-     * <code>MSG_TYPE_ALARM_SET = 32;</code>
+     * <code>MSG_TYPE_ALARM_PUT = 32;</code>
      */
-    MSG_TYPE_ALARM_SET(32),
+    MSG_TYPE_ALARM_PUT(32),
     /**
      * <code>MSG_TYPE_ALARM_GET = 33;</code>
      */
     MSG_TYPE_ALARM_GET(33),
+    /**
+     * <code>MSG_TYPE_ALARM_REMOVE = 34;</code>
+     */
+    MSG_TYPE_ALARM_REMOVE(34),
     UNRECOGNIZED(-1),
     ;
 
@@ -107,9 +111,9 @@ public final class Swakeup {
      * -------------------------------------------------------------------------------
      * </pre>
      *
-     * <code>MSG_TUPE_LOCATION = 16;</code>
+     * <code>MSG_TYPE_LOCATION = 16;</code>
      */
-    public static final int MSG_TUPE_LOCATION_VALUE = 16;
+    public static final int MSG_TYPE_LOCATION_VALUE = 16;
     /**
      * <pre>
      *&#47; for the time and date
@@ -136,20 +140,24 @@ public final class Swakeup {
     public static final int MSG_TYPE_SOCIAL_VALUE = 19;
     /**
      * <pre>
-     *&#47; Mail
+     *&#47; E-Mail
      * </pre>
      *
-     * <code>MSG_TYPE_MAIL = 20;</code>
+     * <code>MSG_TYPE_EMAIL = 20;</code>
      */
-    public static final int MSG_TYPE_MAIL_VALUE = 20;
+    public static final int MSG_TYPE_EMAIL_VALUE = 20;
     /**
-     * <code>MSG_TYPE_ALARM_SET = 32;</code>
+     * <code>MSG_TYPE_ALARM_PUT = 32;</code>
      */
-    public static final int MSG_TYPE_ALARM_SET_VALUE = 32;
+    public static final int MSG_TYPE_ALARM_PUT_VALUE = 32;
     /**
      * <code>MSG_TYPE_ALARM_GET = 33;</code>
      */
     public static final int MSG_TYPE_ALARM_GET_VALUE = 33;
+    /**
+     * <code>MSG_TYPE_ALARM_REMOVE = 34;</code>
+     */
+    public static final int MSG_TYPE_ALARM_REMOVE_VALUE = 34;
 
 
     public final int getNumber() {
@@ -172,13 +180,14 @@ public final class Swakeup {
       switch (value) {
         case 0: return MSG_TYPE_NONE;
         case 1: return MSG_TYPE_POWER;
-        case 16: return MSG_TUPE_LOCATION;
+        case 16: return MSG_TYPE_LOCATION;
         case 17: return MSG_TYPE_DATE_TIME;
         case 18: return MSG_TYPE_WEATHER;
         case 19: return MSG_TYPE_SOCIAL;
-        case 20: return MSG_TYPE_MAIL;
-        case 32: return MSG_TYPE_ALARM_SET;
+        case 20: return MSG_TYPE_EMAIL;
+        case 32: return MSG_TYPE_ALARM_PUT;
         case 33: return MSG_TYPE_ALARM_GET;
+        case 34: return MSG_TYPE_ALARM_REMOVE;
         default: return null;
       }
     }
@@ -365,6 +374,1980 @@ public final class Swakeup {
     // @@protoc_insertion_point(enum_scope:WeatherType)
   }
 
+  public interface AlarmPutOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:AlarmPut)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>optional uint32 days = 1;</code>
+     */
+    int getDays();
+
+    /**
+     * <code>optional uint32 hour = 2;</code>
+     */
+    int getHour();
+
+    /**
+     * <code>optional uint32 minute = 3;</code>
+     */
+    int getMinute();
+
+    /**
+     * <code>optional uint32 second = 4;</code>
+     */
+    int getSecond();
+  }
+  /**
+   * Protobuf type {@code AlarmPut}
+   */
+  public  static final class AlarmPut extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:AlarmPut)
+      AlarmPutOrBuilder {
+    // Use AlarmPut.newBuilder() to construct.
+    private AlarmPut(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private AlarmPut() {
+      days_ = 0;
+      hour_ = 0;
+      minute_ = 0;
+      second_ = 0;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+    }
+    private AlarmPut(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!input.skipField(tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+
+              days_ = input.readUInt32();
+              break;
+            }
+            case 16: {
+
+              hour_ = input.readUInt32();
+              break;
+            }
+            case 24: {
+
+              minute_ = input.readUInt32();
+              break;
+            }
+            case 32: {
+
+              second_ = input.readUInt32();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.swakeup.common.Swakeup.internal_static_AlarmPut_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.swakeup.common.Swakeup.internal_static_AlarmPut_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.swakeup.common.Swakeup.AlarmPut.class, com.swakeup.common.Swakeup.AlarmPut.Builder.class);
+    }
+
+    public static final int DAYS_FIELD_NUMBER = 1;
+    private int days_;
+    /**
+     * <code>optional uint32 days = 1;</code>
+     */
+    public int getDays() {
+      return days_;
+    }
+
+    public static final int HOUR_FIELD_NUMBER = 2;
+    private int hour_;
+    /**
+     * <code>optional uint32 hour = 2;</code>
+     */
+    public int getHour() {
+      return hour_;
+    }
+
+    public static final int MINUTE_FIELD_NUMBER = 3;
+    private int minute_;
+    /**
+     * <code>optional uint32 minute = 3;</code>
+     */
+    public int getMinute() {
+      return minute_;
+    }
+
+    public static final int SECOND_FIELD_NUMBER = 4;
+    private int second_;
+    /**
+     * <code>optional uint32 second = 4;</code>
+     */
+    public int getSecond() {
+      return second_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (days_ != 0) {
+        output.writeUInt32(1, days_);
+      }
+      if (hour_ != 0) {
+        output.writeUInt32(2, hour_);
+      }
+      if (minute_ != 0) {
+        output.writeUInt32(3, minute_);
+      }
+      if (second_ != 0) {
+        output.writeUInt32(4, second_);
+      }
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (days_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(1, days_);
+      }
+      if (hour_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(2, hour_);
+      }
+      if (minute_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(3, minute_);
+      }
+      if (second_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(4, second_);
+      }
+      memoizedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.swakeup.common.Swakeup.AlarmPut)) {
+        return super.equals(obj);
+      }
+      com.swakeup.common.Swakeup.AlarmPut other = (com.swakeup.common.Swakeup.AlarmPut) obj;
+
+      boolean result = true;
+      result = result && (getDays()
+          == other.getDays());
+      result = result && (getHour()
+          == other.getHour());
+      result = result && (getMinute()
+          == other.getMinute());
+      result = result && (getSecond()
+          == other.getSecond());
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (37 * hash) + DAYS_FIELD_NUMBER;
+      hash = (53 * hash) + getDays();
+      hash = (37 * hash) + HOUR_FIELD_NUMBER;
+      hash = (53 * hash) + getHour();
+      hash = (37 * hash) + MINUTE_FIELD_NUMBER;
+      hash = (53 * hash) + getMinute();
+      hash = (37 * hash) + SECOND_FIELD_NUMBER;
+      hash = (53 * hash) + getSecond();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.swakeup.common.Swakeup.AlarmPut parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.swakeup.common.Swakeup.AlarmPut parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.swakeup.common.Swakeup.AlarmPut parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.swakeup.common.Swakeup.AlarmPut parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.swakeup.common.Swakeup.AlarmPut parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.swakeup.common.Swakeup.AlarmPut parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.swakeup.common.Swakeup.AlarmPut parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.swakeup.common.Swakeup.AlarmPut parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.swakeup.common.Swakeup.AlarmPut parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.swakeup.common.Swakeup.AlarmPut parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.swakeup.common.Swakeup.AlarmPut prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code AlarmPut}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:AlarmPut)
+        com.swakeup.common.Swakeup.AlarmPutOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.swakeup.common.Swakeup.internal_static_AlarmPut_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.swakeup.common.Swakeup.internal_static_AlarmPut_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.swakeup.common.Swakeup.AlarmPut.class, com.swakeup.common.Swakeup.AlarmPut.Builder.class);
+      }
+
+      // Construct using com.swakeup.common.Swakeup.AlarmPut.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        days_ = 0;
+
+        hour_ = 0;
+
+        minute_ = 0;
+
+        second_ = 0;
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.swakeup.common.Swakeup.internal_static_AlarmPut_descriptor;
+      }
+
+      public com.swakeup.common.Swakeup.AlarmPut getDefaultInstanceForType() {
+        return com.swakeup.common.Swakeup.AlarmPut.getDefaultInstance();
+      }
+
+      public com.swakeup.common.Swakeup.AlarmPut build() {
+        com.swakeup.common.Swakeup.AlarmPut result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public com.swakeup.common.Swakeup.AlarmPut buildPartial() {
+        com.swakeup.common.Swakeup.AlarmPut result = new com.swakeup.common.Swakeup.AlarmPut(this);
+        result.days_ = days_;
+        result.hour_ = hour_;
+        result.minute_ = minute_;
+        result.second_ = second_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.swakeup.common.Swakeup.AlarmPut) {
+          return mergeFrom((com.swakeup.common.Swakeup.AlarmPut)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.swakeup.common.Swakeup.AlarmPut other) {
+        if (other == com.swakeup.common.Swakeup.AlarmPut.getDefaultInstance()) return this;
+        if (other.getDays() != 0) {
+          setDays(other.getDays());
+        }
+        if (other.getHour() != 0) {
+          setHour(other.getHour());
+        }
+        if (other.getMinute() != 0) {
+          setMinute(other.getMinute());
+        }
+        if (other.getSecond() != 0) {
+          setSecond(other.getSecond());
+        }
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.swakeup.common.Swakeup.AlarmPut parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.swakeup.common.Swakeup.AlarmPut) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int days_ ;
+      /**
+       * <code>optional uint32 days = 1;</code>
+       */
+      public int getDays() {
+        return days_;
+      }
+      /**
+       * <code>optional uint32 days = 1;</code>
+       */
+      public Builder setDays(int value) {
+        
+        days_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional uint32 days = 1;</code>
+       */
+      public Builder clearDays() {
+        
+        days_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int hour_ ;
+      /**
+       * <code>optional uint32 hour = 2;</code>
+       */
+      public int getHour() {
+        return hour_;
+      }
+      /**
+       * <code>optional uint32 hour = 2;</code>
+       */
+      public Builder setHour(int value) {
+        
+        hour_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional uint32 hour = 2;</code>
+       */
+      public Builder clearHour() {
+        
+        hour_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int minute_ ;
+      /**
+       * <code>optional uint32 minute = 3;</code>
+       */
+      public int getMinute() {
+        return minute_;
+      }
+      /**
+       * <code>optional uint32 minute = 3;</code>
+       */
+      public Builder setMinute(int value) {
+        
+        minute_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional uint32 minute = 3;</code>
+       */
+      public Builder clearMinute() {
+        
+        minute_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int second_ ;
+      /**
+       * <code>optional uint32 second = 4;</code>
+       */
+      public int getSecond() {
+        return second_;
+      }
+      /**
+       * <code>optional uint32 second = 4;</code>
+       */
+      public Builder setSecond(int value) {
+        
+        second_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional uint32 second = 4;</code>
+       */
+      public Builder clearSecond() {
+        
+        second_ = 0;
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:AlarmPut)
+    }
+
+    // @@protoc_insertion_point(class_scope:AlarmPut)
+    private static final com.swakeup.common.Swakeup.AlarmPut DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.swakeup.common.Swakeup.AlarmPut();
+    }
+
+    public static com.swakeup.common.Swakeup.AlarmPut getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<AlarmPut>
+        PARSER = new com.google.protobuf.AbstractParser<AlarmPut>() {
+      public AlarmPut parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new AlarmPut(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<AlarmPut> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<AlarmPut> getParserForType() {
+      return PARSER;
+    }
+
+    public com.swakeup.common.Swakeup.AlarmPut getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface AlarmGetOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:AlarmGet)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>optional uint32 index = 1;</code>
+     */
+    int getIndex();
+  }
+  /**
+   * Protobuf type {@code AlarmGet}
+   */
+  public  static final class AlarmGet extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:AlarmGet)
+      AlarmGetOrBuilder {
+    // Use AlarmGet.newBuilder() to construct.
+    private AlarmGet(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private AlarmGet() {
+      index_ = 0;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+    }
+    private AlarmGet(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!input.skipField(tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+
+              index_ = input.readUInt32();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.swakeup.common.Swakeup.internal_static_AlarmGet_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.swakeup.common.Swakeup.internal_static_AlarmGet_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.swakeup.common.Swakeup.AlarmGet.class, com.swakeup.common.Swakeup.AlarmGet.Builder.class);
+    }
+
+    public static final int INDEX_FIELD_NUMBER = 1;
+    private int index_;
+    /**
+     * <code>optional uint32 index = 1;</code>
+     */
+    public int getIndex() {
+      return index_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (index_ != 0) {
+        output.writeUInt32(1, index_);
+      }
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (index_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(1, index_);
+      }
+      memoizedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.swakeup.common.Swakeup.AlarmGet)) {
+        return super.equals(obj);
+      }
+      com.swakeup.common.Swakeup.AlarmGet other = (com.swakeup.common.Swakeup.AlarmGet) obj;
+
+      boolean result = true;
+      result = result && (getIndex()
+          == other.getIndex());
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (37 * hash) + INDEX_FIELD_NUMBER;
+      hash = (53 * hash) + getIndex();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.swakeup.common.Swakeup.AlarmGet parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.swakeup.common.Swakeup.AlarmGet parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.swakeup.common.Swakeup.AlarmGet parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.swakeup.common.Swakeup.AlarmGet parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.swakeup.common.Swakeup.AlarmGet parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.swakeup.common.Swakeup.AlarmGet parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.swakeup.common.Swakeup.AlarmGet parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.swakeup.common.Swakeup.AlarmGet parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.swakeup.common.Swakeup.AlarmGet parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.swakeup.common.Swakeup.AlarmGet parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.swakeup.common.Swakeup.AlarmGet prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code AlarmGet}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:AlarmGet)
+        com.swakeup.common.Swakeup.AlarmGetOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.swakeup.common.Swakeup.internal_static_AlarmGet_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.swakeup.common.Swakeup.internal_static_AlarmGet_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.swakeup.common.Swakeup.AlarmGet.class, com.swakeup.common.Swakeup.AlarmGet.Builder.class);
+      }
+
+      // Construct using com.swakeup.common.Swakeup.AlarmGet.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        index_ = 0;
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.swakeup.common.Swakeup.internal_static_AlarmGet_descriptor;
+      }
+
+      public com.swakeup.common.Swakeup.AlarmGet getDefaultInstanceForType() {
+        return com.swakeup.common.Swakeup.AlarmGet.getDefaultInstance();
+      }
+
+      public com.swakeup.common.Swakeup.AlarmGet build() {
+        com.swakeup.common.Swakeup.AlarmGet result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public com.swakeup.common.Swakeup.AlarmGet buildPartial() {
+        com.swakeup.common.Swakeup.AlarmGet result = new com.swakeup.common.Swakeup.AlarmGet(this);
+        result.index_ = index_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.swakeup.common.Swakeup.AlarmGet) {
+          return mergeFrom((com.swakeup.common.Swakeup.AlarmGet)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.swakeup.common.Swakeup.AlarmGet other) {
+        if (other == com.swakeup.common.Swakeup.AlarmGet.getDefaultInstance()) return this;
+        if (other.getIndex() != 0) {
+          setIndex(other.getIndex());
+        }
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.swakeup.common.Swakeup.AlarmGet parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.swakeup.common.Swakeup.AlarmGet) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int index_ ;
+      /**
+       * <code>optional uint32 index = 1;</code>
+       */
+      public int getIndex() {
+        return index_;
+      }
+      /**
+       * <code>optional uint32 index = 1;</code>
+       */
+      public Builder setIndex(int value) {
+        
+        index_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional uint32 index = 1;</code>
+       */
+      public Builder clearIndex() {
+        
+        index_ = 0;
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:AlarmGet)
+    }
+
+    // @@protoc_insertion_point(class_scope:AlarmGet)
+    private static final com.swakeup.common.Swakeup.AlarmGet DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.swakeup.common.Swakeup.AlarmGet();
+    }
+
+    public static com.swakeup.common.Swakeup.AlarmGet getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<AlarmGet>
+        PARSER = new com.google.protobuf.AbstractParser<AlarmGet>() {
+      public AlarmGet parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new AlarmGet(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<AlarmGet> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<AlarmGet> getParserForType() {
+      return PARSER;
+    }
+
+    public com.swakeup.common.Swakeup.AlarmGet getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface AlarmRemoveOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:AlarmRemove)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>optional uint32 index = 1;</code>
+     */
+    int getIndex();
+  }
+  /**
+   * Protobuf type {@code AlarmRemove}
+   */
+  public  static final class AlarmRemove extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:AlarmRemove)
+      AlarmRemoveOrBuilder {
+    // Use AlarmRemove.newBuilder() to construct.
+    private AlarmRemove(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private AlarmRemove() {
+      index_ = 0;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+    }
+    private AlarmRemove(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!input.skipField(tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+
+              index_ = input.readUInt32();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.swakeup.common.Swakeup.internal_static_AlarmRemove_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.swakeup.common.Swakeup.internal_static_AlarmRemove_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.swakeup.common.Swakeup.AlarmRemove.class, com.swakeup.common.Swakeup.AlarmRemove.Builder.class);
+    }
+
+    public static final int INDEX_FIELD_NUMBER = 1;
+    private int index_;
+    /**
+     * <code>optional uint32 index = 1;</code>
+     */
+    public int getIndex() {
+      return index_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (index_ != 0) {
+        output.writeUInt32(1, index_);
+      }
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (index_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(1, index_);
+      }
+      memoizedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.swakeup.common.Swakeup.AlarmRemove)) {
+        return super.equals(obj);
+      }
+      com.swakeup.common.Swakeup.AlarmRemove other = (com.swakeup.common.Swakeup.AlarmRemove) obj;
+
+      boolean result = true;
+      result = result && (getIndex()
+          == other.getIndex());
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (37 * hash) + INDEX_FIELD_NUMBER;
+      hash = (53 * hash) + getIndex();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.swakeup.common.Swakeup.AlarmRemove parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.swakeup.common.Swakeup.AlarmRemove parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.swakeup.common.Swakeup.AlarmRemove parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.swakeup.common.Swakeup.AlarmRemove parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.swakeup.common.Swakeup.AlarmRemove parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.swakeup.common.Swakeup.AlarmRemove parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.swakeup.common.Swakeup.AlarmRemove parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.swakeup.common.Swakeup.AlarmRemove parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.swakeup.common.Swakeup.AlarmRemove parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.swakeup.common.Swakeup.AlarmRemove parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.swakeup.common.Swakeup.AlarmRemove prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code AlarmRemove}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:AlarmRemove)
+        com.swakeup.common.Swakeup.AlarmRemoveOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.swakeup.common.Swakeup.internal_static_AlarmRemove_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.swakeup.common.Swakeup.internal_static_AlarmRemove_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.swakeup.common.Swakeup.AlarmRemove.class, com.swakeup.common.Swakeup.AlarmRemove.Builder.class);
+      }
+
+      // Construct using com.swakeup.common.Swakeup.AlarmRemove.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        index_ = 0;
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.swakeup.common.Swakeup.internal_static_AlarmRemove_descriptor;
+      }
+
+      public com.swakeup.common.Swakeup.AlarmRemove getDefaultInstanceForType() {
+        return com.swakeup.common.Swakeup.AlarmRemove.getDefaultInstance();
+      }
+
+      public com.swakeup.common.Swakeup.AlarmRemove build() {
+        com.swakeup.common.Swakeup.AlarmRemove result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public com.swakeup.common.Swakeup.AlarmRemove buildPartial() {
+        com.swakeup.common.Swakeup.AlarmRemove result = new com.swakeup.common.Swakeup.AlarmRemove(this);
+        result.index_ = index_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.swakeup.common.Swakeup.AlarmRemove) {
+          return mergeFrom((com.swakeup.common.Swakeup.AlarmRemove)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.swakeup.common.Swakeup.AlarmRemove other) {
+        if (other == com.swakeup.common.Swakeup.AlarmRemove.getDefaultInstance()) return this;
+        if (other.getIndex() != 0) {
+          setIndex(other.getIndex());
+        }
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.swakeup.common.Swakeup.AlarmRemove parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.swakeup.common.Swakeup.AlarmRemove) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int index_ ;
+      /**
+       * <code>optional uint32 index = 1;</code>
+       */
+      public int getIndex() {
+        return index_;
+      }
+      /**
+       * <code>optional uint32 index = 1;</code>
+       */
+      public Builder setIndex(int value) {
+        
+        index_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional uint32 index = 1;</code>
+       */
+      public Builder clearIndex() {
+        
+        index_ = 0;
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:AlarmRemove)
+    }
+
+    // @@protoc_insertion_point(class_scope:AlarmRemove)
+    private static final com.swakeup.common.Swakeup.AlarmRemove DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.swakeup.common.Swakeup.AlarmRemove();
+    }
+
+    public static com.swakeup.common.Swakeup.AlarmRemove getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<AlarmRemove>
+        PARSER = new com.google.protobuf.AbstractParser<AlarmRemove>() {
+      public AlarmRemove parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new AlarmRemove(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<AlarmRemove> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<AlarmRemove> getParserForType() {
+      return PARSER;
+    }
+
+    public com.swakeup.common.Swakeup.AlarmRemove getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface EmailOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:Email)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>optional bytes subject = 1;</code>
+     */
+    com.google.protobuf.ByteString getSubject();
+
+    /**
+     * <code>optional bytes sender = 2;</code>
+     */
+    com.google.protobuf.ByteString getSender();
+  }
+  /**
+   * Protobuf type {@code Email}
+   */
+  public  static final class Email extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:Email)
+      EmailOrBuilder {
+    // Use Email.newBuilder() to construct.
+    private Email(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private Email() {
+      subject_ = com.google.protobuf.ByteString.EMPTY;
+      sender_ = com.google.protobuf.ByteString.EMPTY;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+    }
+    private Email(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!input.skipField(tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+
+              subject_ = input.readBytes();
+              break;
+            }
+            case 18: {
+
+              sender_ = input.readBytes();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.swakeup.common.Swakeup.internal_static_Email_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.swakeup.common.Swakeup.internal_static_Email_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.swakeup.common.Swakeup.Email.class, com.swakeup.common.Swakeup.Email.Builder.class);
+    }
+
+    public static final int SUBJECT_FIELD_NUMBER = 1;
+    private com.google.protobuf.ByteString subject_;
+    /**
+     * <code>optional bytes subject = 1;</code>
+     */
+    public com.google.protobuf.ByteString getSubject() {
+      return subject_;
+    }
+
+    public static final int SENDER_FIELD_NUMBER = 2;
+    private com.google.protobuf.ByteString sender_;
+    /**
+     * <code>optional bytes sender = 2;</code>
+     */
+    public com.google.protobuf.ByteString getSender() {
+      return sender_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!subject_.isEmpty()) {
+        output.writeBytes(1, subject_);
+      }
+      if (!sender_.isEmpty()) {
+        output.writeBytes(2, sender_);
+      }
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!subject_.isEmpty()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(1, subject_);
+      }
+      if (!sender_.isEmpty()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(2, sender_);
+      }
+      memoizedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.swakeup.common.Swakeup.Email)) {
+        return super.equals(obj);
+      }
+      com.swakeup.common.Swakeup.Email other = (com.swakeup.common.Swakeup.Email) obj;
+
+      boolean result = true;
+      result = result && getSubject()
+          .equals(other.getSubject());
+      result = result && getSender()
+          .equals(other.getSender());
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (37 * hash) + SUBJECT_FIELD_NUMBER;
+      hash = (53 * hash) + getSubject().hashCode();
+      hash = (37 * hash) + SENDER_FIELD_NUMBER;
+      hash = (53 * hash) + getSender().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.swakeup.common.Swakeup.Email parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.swakeup.common.Swakeup.Email parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.swakeup.common.Swakeup.Email parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.swakeup.common.Swakeup.Email parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.swakeup.common.Swakeup.Email parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.swakeup.common.Swakeup.Email parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.swakeup.common.Swakeup.Email parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.swakeup.common.Swakeup.Email parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.swakeup.common.Swakeup.Email parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.swakeup.common.Swakeup.Email parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.swakeup.common.Swakeup.Email prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code Email}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:Email)
+        com.swakeup.common.Swakeup.EmailOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.swakeup.common.Swakeup.internal_static_Email_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.swakeup.common.Swakeup.internal_static_Email_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.swakeup.common.Swakeup.Email.class, com.swakeup.common.Swakeup.Email.Builder.class);
+      }
+
+      // Construct using com.swakeup.common.Swakeup.Email.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        subject_ = com.google.protobuf.ByteString.EMPTY;
+
+        sender_ = com.google.protobuf.ByteString.EMPTY;
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.swakeup.common.Swakeup.internal_static_Email_descriptor;
+      }
+
+      public com.swakeup.common.Swakeup.Email getDefaultInstanceForType() {
+        return com.swakeup.common.Swakeup.Email.getDefaultInstance();
+      }
+
+      public com.swakeup.common.Swakeup.Email build() {
+        com.swakeup.common.Swakeup.Email result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public com.swakeup.common.Swakeup.Email buildPartial() {
+        com.swakeup.common.Swakeup.Email result = new com.swakeup.common.Swakeup.Email(this);
+        result.subject_ = subject_;
+        result.sender_ = sender_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.swakeup.common.Swakeup.Email) {
+          return mergeFrom((com.swakeup.common.Swakeup.Email)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.swakeup.common.Swakeup.Email other) {
+        if (other == com.swakeup.common.Swakeup.Email.getDefaultInstance()) return this;
+        if (other.getSubject() != com.google.protobuf.ByteString.EMPTY) {
+          setSubject(other.getSubject());
+        }
+        if (other.getSender() != com.google.protobuf.ByteString.EMPTY) {
+          setSender(other.getSender());
+        }
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.swakeup.common.Swakeup.Email parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.swakeup.common.Swakeup.Email) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private com.google.protobuf.ByteString subject_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <code>optional bytes subject = 1;</code>
+       */
+      public com.google.protobuf.ByteString getSubject() {
+        return subject_;
+      }
+      /**
+       * <code>optional bytes subject = 1;</code>
+       */
+      public Builder setSubject(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        subject_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional bytes subject = 1;</code>
+       */
+      public Builder clearSubject() {
+        
+        subject_ = getDefaultInstance().getSubject();
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.ByteString sender_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <code>optional bytes sender = 2;</code>
+       */
+      public com.google.protobuf.ByteString getSender() {
+        return sender_;
+      }
+      /**
+       * <code>optional bytes sender = 2;</code>
+       */
+      public Builder setSender(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        sender_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional bytes sender = 2;</code>
+       */
+      public Builder clearSender() {
+        
+        sender_ = getDefaultInstance().getSender();
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:Email)
+    }
+
+    // @@protoc_insertion_point(class_scope:Email)
+    private static final com.swakeup.common.Swakeup.Email DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.swakeup.common.Swakeup.Email();
+    }
+
+    public static com.swakeup.common.Swakeup.Email getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<Email>
+        PARSER = new com.google.protobuf.AbstractParser<Email>() {
+      public Email parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new Email(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<Email> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Email> getParserForType() {
+      return PARSER;
+    }
+
+    public com.swakeup.common.Swakeup.Email getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   public interface WeatherOrBuilder extends
       // @@protoc_insertion_point(interface_extends:Weather)
       com.google.protobuf.MessageOrBuilder {
@@ -394,14 +2377,9 @@ public final class Swakeup {
         getUnitBytes();
 
     /**
-     * <code>optional string city = 4;</code>
+     * <code>optional bytes city = 4;</code>
      */
-    java.lang.String getCity();
-    /**
-     * <code>optional string city = 4;</code>
-     */
-    com.google.protobuf.ByteString
-        getCityBytes();
+    com.google.protobuf.ByteString getCity();
 
     /**
      * <code>optional uint32 sunrise = 5;</code>
@@ -428,7 +2406,7 @@ public final class Swakeup {
       weatherType_ = 0;
       temperature_ = 0;
       unit_ = "";
-      city_ = "";
+      city_ = com.google.protobuf.ByteString.EMPTY;
       sunrise_ = 0;
       sunset_ = 0;
     }
@@ -476,9 +2454,8 @@ public final class Swakeup {
               break;
             }
             case 34: {
-              java.lang.String s = input.readStringRequireUtf8();
 
-              city_ = s;
+              city_ = input.readBytes();
               break;
             }
             case 40: {
@@ -574,37 +2551,12 @@ public final class Swakeup {
     }
 
     public static final int CITY_FIELD_NUMBER = 4;
-    private volatile java.lang.Object city_;
+    private com.google.protobuf.ByteString city_;
     /**
-     * <code>optional string city = 4;</code>
+     * <code>optional bytes city = 4;</code>
      */
-    public java.lang.String getCity() {
-      java.lang.Object ref = city_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        city_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>optional string city = 4;</code>
-     */
-    public com.google.protobuf.ByteString
-        getCityBytes() {
-      java.lang.Object ref = city_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        city_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+    public com.google.protobuf.ByteString getCity() {
+      return city_;
     }
 
     public static final int SUNRISE_FIELD_NUMBER = 5;
@@ -646,8 +2598,8 @@ public final class Swakeup {
       if (!getUnitBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 3, unit_);
       }
-      if (!getCityBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, city_);
+      if (!city_.isEmpty()) {
+        output.writeBytes(4, city_);
       }
       if (sunrise_ != 0) {
         output.writeUInt32(5, sunrise_);
@@ -673,8 +2625,9 @@ public final class Swakeup {
       if (!getUnitBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, unit_);
       }
-      if (!getCityBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, city_);
+      if (!city_.isEmpty()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(4, city_);
       }
       if (sunrise_ != 0) {
         size += com.google.protobuf.CodedOutputStream
@@ -857,7 +2810,7 @@ public final class Swakeup {
 
         unit_ = "";
 
-        city_ = "";
+        city_ = com.google.protobuf.ByteString.EMPTY;
 
         sunrise_ = 0;
 
@@ -942,9 +2895,8 @@ public final class Swakeup {
           unit_ = other.unit_;
           onChanged();
         }
-        if (!other.getCity().isEmpty()) {
-          city_ = other.city_;
-          onChanged();
+        if (other.getCity() != com.google.protobuf.ByteString.EMPTY) {
+          setCity(other.getCity());
         }
         if (other.getSunrise() != 0) {
           setSunrise(other.getSunrise());
@@ -1117,43 +3069,17 @@ public final class Swakeup {
         return this;
       }
 
-      private java.lang.Object city_ = "";
+      private com.google.protobuf.ByteString city_ = com.google.protobuf.ByteString.EMPTY;
       /**
-       * <code>optional string city = 4;</code>
+       * <code>optional bytes city = 4;</code>
        */
-      public java.lang.String getCity() {
-        java.lang.Object ref = city_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          city_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+      public com.google.protobuf.ByteString getCity() {
+        return city_;
       }
       /**
-       * <code>optional string city = 4;</code>
+       * <code>optional bytes city = 4;</code>
        */
-      public com.google.protobuf.ByteString
-          getCityBytes() {
-        java.lang.Object ref = city_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          city_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>optional string city = 4;</code>
-       */
-      public Builder setCity(
-          java.lang.String value) {
+      public Builder setCity(com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -1163,25 +3089,11 @@ public final class Swakeup {
         return this;
       }
       /**
-       * <code>optional string city = 4;</code>
+       * <code>optional bytes city = 4;</code>
        */
       public Builder clearCity() {
         
         city_ = getDefaultInstance().getCity();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional string city = 4;</code>
-       */
-      public Builder setCityBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        city_ = value;
         onChanged();
         return this;
       }
@@ -2702,22 +4614,66 @@ public final class Swakeup {
     com.swakeup.common.Swakeup.LocationOrBuilder getLocationOrBuilder();
 
     /**
-     * <code>optional .DateAndTime dateAndTime = 16;</code>
+     * <code>optional .DateAndTime dateAndTime = 17;</code>
      */
     com.swakeup.common.Swakeup.DateAndTime getDateAndTime();
     /**
-     * <code>optional .DateAndTime dateAndTime = 16;</code>
+     * <code>optional .DateAndTime dateAndTime = 17;</code>
      */
     com.swakeup.common.Swakeup.DateAndTimeOrBuilder getDateAndTimeOrBuilder();
 
     /**
-     * <code>optional .Weather weather = 17;</code>
+     * <code>optional .Weather weather = 18;</code>
      */
     com.swakeup.common.Swakeup.Weather getWeather();
     /**
-     * <code>optional .Weather weather = 17;</code>
+     * <code>optional .Weather weather = 18;</code>
      */
     com.swakeup.common.Swakeup.WeatherOrBuilder getWeatherOrBuilder();
+
+    /**
+     * <pre>
+     *Social, empty for now
+     * </pre>
+     *
+     * <code>optional .Email email = 20;</code>
+     */
+    com.swakeup.common.Swakeup.Email getEmail();
+    /**
+     * <pre>
+     *Social, empty for now
+     * </pre>
+     *
+     * <code>optional .Email email = 20;</code>
+     */
+    com.swakeup.common.Swakeup.EmailOrBuilder getEmailOrBuilder();
+
+    /**
+     * <code>optional .AlarmPut alarmPut = 32;</code>
+     */
+    com.swakeup.common.Swakeup.AlarmPut getAlarmPut();
+    /**
+     * <code>optional .AlarmPut alarmPut = 32;</code>
+     */
+    com.swakeup.common.Swakeup.AlarmPutOrBuilder getAlarmPutOrBuilder();
+
+    /**
+     * <code>optional .AlarmGet alarmGet = 33;</code>
+     */
+    com.swakeup.common.Swakeup.AlarmGet getAlarmGet();
+    /**
+     * <code>optional .AlarmGet alarmGet = 33;</code>
+     */
+    com.swakeup.common.Swakeup.AlarmGetOrBuilder getAlarmGetOrBuilder();
+
+    /**
+     * <code>optional .AlarmRemove alarmRemove = 34;</code>
+     */
+    com.swakeup.common.Swakeup.AlarmRemove getAlarmRemove();
+    /**
+     * <code>optional .AlarmRemove alarmRemove = 34;</code>
+     */
+    com.swakeup.common.Swakeup.AlarmRemoveOrBuilder getAlarmRemoveOrBuilder();
 
     public com.swakeup.common.Swakeup.MsgFrame.PlCase getPlCase();
   }
@@ -2786,9 +4742,9 @@ public final class Swakeup {
 
               break;
             }
-            case 130: {
+            case 138: {
               com.swakeup.common.Swakeup.DateAndTime.Builder subBuilder = null;
-              if (plCase_ == 16) {
+              if (plCase_ == 17) {
                 subBuilder = ((com.swakeup.common.Swakeup.DateAndTime) pl_).toBuilder();
               }
               pl_ =
@@ -2797,12 +4753,12 @@ public final class Swakeup {
                 subBuilder.mergeFrom((com.swakeup.common.Swakeup.DateAndTime) pl_);
                 pl_ = subBuilder.buildPartial();
               }
-              plCase_ = 16;
+              plCase_ = 17;
               break;
             }
-            case 138: {
+            case 146: {
               com.swakeup.common.Swakeup.Weather.Builder subBuilder = null;
-              if (plCase_ == 17) {
+              if (plCase_ == 18) {
                 subBuilder = ((com.swakeup.common.Swakeup.Weather) pl_).toBuilder();
               }
               pl_ =
@@ -2811,7 +4767,63 @@ public final class Swakeup {
                 subBuilder.mergeFrom((com.swakeup.common.Swakeup.Weather) pl_);
                 pl_ = subBuilder.buildPartial();
               }
-              plCase_ = 17;
+              plCase_ = 18;
+              break;
+            }
+            case 162: {
+              com.swakeup.common.Swakeup.Email.Builder subBuilder = null;
+              if (plCase_ == 20) {
+                subBuilder = ((com.swakeup.common.Swakeup.Email) pl_).toBuilder();
+              }
+              pl_ =
+                  input.readMessage(com.swakeup.common.Swakeup.Email.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.swakeup.common.Swakeup.Email) pl_);
+                pl_ = subBuilder.buildPartial();
+              }
+              plCase_ = 20;
+              break;
+            }
+            case 258: {
+              com.swakeup.common.Swakeup.AlarmPut.Builder subBuilder = null;
+              if (plCase_ == 32) {
+                subBuilder = ((com.swakeup.common.Swakeup.AlarmPut) pl_).toBuilder();
+              }
+              pl_ =
+                  input.readMessage(com.swakeup.common.Swakeup.AlarmPut.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.swakeup.common.Swakeup.AlarmPut) pl_);
+                pl_ = subBuilder.buildPartial();
+              }
+              plCase_ = 32;
+              break;
+            }
+            case 266: {
+              com.swakeup.common.Swakeup.AlarmGet.Builder subBuilder = null;
+              if (plCase_ == 33) {
+                subBuilder = ((com.swakeup.common.Swakeup.AlarmGet) pl_).toBuilder();
+              }
+              pl_ =
+                  input.readMessage(com.swakeup.common.Swakeup.AlarmGet.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.swakeup.common.Swakeup.AlarmGet) pl_);
+                pl_ = subBuilder.buildPartial();
+              }
+              plCase_ = 33;
+              break;
+            }
+            case 274: {
+              com.swakeup.common.Swakeup.AlarmRemove.Builder subBuilder = null;
+              if (plCase_ == 34) {
+                subBuilder = ((com.swakeup.common.Swakeup.AlarmRemove) pl_).toBuilder();
+              }
+              pl_ =
+                  input.readMessage(com.swakeup.common.Swakeup.AlarmRemove.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom((com.swakeup.common.Swakeup.AlarmRemove) pl_);
+                pl_ = subBuilder.buildPartial();
+              }
+              plCase_ = 34;
               break;
             }
           }
@@ -2841,8 +4853,12 @@ public final class Swakeup {
     private java.lang.Object pl_;
     public enum PlCase
         implements com.google.protobuf.Internal.EnumLite {
-      DATEANDTIME(16),
-      WEATHER(17),
+      DATEANDTIME(17),
+      WEATHER(18),
+      EMAIL(20),
+      ALARMPUT(32),
+      ALARMGET(33),
+      ALARMREMOVE(34),
       PL_NOT_SET(0);
       private final int value;
       private PlCase(int value) {
@@ -2858,8 +4874,12 @@ public final class Swakeup {
 
       public static PlCase forNumber(int value) {
         switch (value) {
-          case 16: return DATEANDTIME;
-          case 17: return WEATHER;
+          case 17: return DATEANDTIME;
+          case 18: return WEATHER;
+          case 20: return EMAIL;
+          case 32: return ALARMPUT;
+          case 33: return ALARMGET;
+          case 34: return ALARMREMOVE;
           case 0: return PL_NOT_SET;
           default: return null;
         }
@@ -2921,44 +4941,132 @@ public final class Swakeup {
       return getLocation();
     }
 
-    public static final int DATEANDTIME_FIELD_NUMBER = 16;
+    public static final int DATEANDTIME_FIELD_NUMBER = 17;
     /**
-     * <code>optional .DateAndTime dateAndTime = 16;</code>
+     * <code>optional .DateAndTime dateAndTime = 17;</code>
      */
     public com.swakeup.common.Swakeup.DateAndTime getDateAndTime() {
-      if (plCase_ == 16) {
+      if (plCase_ == 17) {
          return (com.swakeup.common.Swakeup.DateAndTime) pl_;
       }
       return com.swakeup.common.Swakeup.DateAndTime.getDefaultInstance();
     }
     /**
-     * <code>optional .DateAndTime dateAndTime = 16;</code>
+     * <code>optional .DateAndTime dateAndTime = 17;</code>
      */
     public com.swakeup.common.Swakeup.DateAndTimeOrBuilder getDateAndTimeOrBuilder() {
-      if (plCase_ == 16) {
+      if (plCase_ == 17) {
          return (com.swakeup.common.Swakeup.DateAndTime) pl_;
       }
       return com.swakeup.common.Swakeup.DateAndTime.getDefaultInstance();
     }
 
-    public static final int WEATHER_FIELD_NUMBER = 17;
+    public static final int WEATHER_FIELD_NUMBER = 18;
     /**
-     * <code>optional .Weather weather = 17;</code>
+     * <code>optional .Weather weather = 18;</code>
      */
     public com.swakeup.common.Swakeup.Weather getWeather() {
-      if (plCase_ == 17) {
+      if (plCase_ == 18) {
          return (com.swakeup.common.Swakeup.Weather) pl_;
       }
       return com.swakeup.common.Swakeup.Weather.getDefaultInstance();
     }
     /**
-     * <code>optional .Weather weather = 17;</code>
+     * <code>optional .Weather weather = 18;</code>
      */
     public com.swakeup.common.Swakeup.WeatherOrBuilder getWeatherOrBuilder() {
-      if (plCase_ == 17) {
+      if (plCase_ == 18) {
          return (com.swakeup.common.Swakeup.Weather) pl_;
       }
       return com.swakeup.common.Swakeup.Weather.getDefaultInstance();
+    }
+
+    public static final int EMAIL_FIELD_NUMBER = 20;
+    /**
+     * <pre>
+     *Social, empty for now
+     * </pre>
+     *
+     * <code>optional .Email email = 20;</code>
+     */
+    public com.swakeup.common.Swakeup.Email getEmail() {
+      if (plCase_ == 20) {
+         return (com.swakeup.common.Swakeup.Email) pl_;
+      }
+      return com.swakeup.common.Swakeup.Email.getDefaultInstance();
+    }
+    /**
+     * <pre>
+     *Social, empty for now
+     * </pre>
+     *
+     * <code>optional .Email email = 20;</code>
+     */
+    public com.swakeup.common.Swakeup.EmailOrBuilder getEmailOrBuilder() {
+      if (plCase_ == 20) {
+         return (com.swakeup.common.Swakeup.Email) pl_;
+      }
+      return com.swakeup.common.Swakeup.Email.getDefaultInstance();
+    }
+
+    public static final int ALARMPUT_FIELD_NUMBER = 32;
+    /**
+     * <code>optional .AlarmPut alarmPut = 32;</code>
+     */
+    public com.swakeup.common.Swakeup.AlarmPut getAlarmPut() {
+      if (plCase_ == 32) {
+         return (com.swakeup.common.Swakeup.AlarmPut) pl_;
+      }
+      return com.swakeup.common.Swakeup.AlarmPut.getDefaultInstance();
+    }
+    /**
+     * <code>optional .AlarmPut alarmPut = 32;</code>
+     */
+    public com.swakeup.common.Swakeup.AlarmPutOrBuilder getAlarmPutOrBuilder() {
+      if (plCase_ == 32) {
+         return (com.swakeup.common.Swakeup.AlarmPut) pl_;
+      }
+      return com.swakeup.common.Swakeup.AlarmPut.getDefaultInstance();
+    }
+
+    public static final int ALARMGET_FIELD_NUMBER = 33;
+    /**
+     * <code>optional .AlarmGet alarmGet = 33;</code>
+     */
+    public com.swakeup.common.Swakeup.AlarmGet getAlarmGet() {
+      if (plCase_ == 33) {
+         return (com.swakeup.common.Swakeup.AlarmGet) pl_;
+      }
+      return com.swakeup.common.Swakeup.AlarmGet.getDefaultInstance();
+    }
+    /**
+     * <code>optional .AlarmGet alarmGet = 33;</code>
+     */
+    public com.swakeup.common.Swakeup.AlarmGetOrBuilder getAlarmGetOrBuilder() {
+      if (plCase_ == 33) {
+         return (com.swakeup.common.Swakeup.AlarmGet) pl_;
+      }
+      return com.swakeup.common.Swakeup.AlarmGet.getDefaultInstance();
+    }
+
+    public static final int ALARMREMOVE_FIELD_NUMBER = 34;
+    /**
+     * <code>optional .AlarmRemove alarmRemove = 34;</code>
+     */
+    public com.swakeup.common.Swakeup.AlarmRemove getAlarmRemove() {
+      if (plCase_ == 34) {
+         return (com.swakeup.common.Swakeup.AlarmRemove) pl_;
+      }
+      return com.swakeup.common.Swakeup.AlarmRemove.getDefaultInstance();
+    }
+    /**
+     * <code>optional .AlarmRemove alarmRemove = 34;</code>
+     */
+    public com.swakeup.common.Swakeup.AlarmRemoveOrBuilder getAlarmRemoveOrBuilder() {
+      if (plCase_ == 34) {
+         return (com.swakeup.common.Swakeup.AlarmRemove) pl_;
+      }
+      return com.swakeup.common.Swakeup.AlarmRemove.getDefaultInstance();
     }
 
     private byte memoizedIsInitialized = -1;
@@ -2982,11 +5090,23 @@ public final class Swakeup {
       if (location_ != null) {
         output.writeMessage(3, getLocation());
       }
-      if (plCase_ == 16) {
-        output.writeMessage(16, (com.swakeup.common.Swakeup.DateAndTime) pl_);
-      }
       if (plCase_ == 17) {
-        output.writeMessage(17, (com.swakeup.common.Swakeup.Weather) pl_);
+        output.writeMessage(17, (com.swakeup.common.Swakeup.DateAndTime) pl_);
+      }
+      if (plCase_ == 18) {
+        output.writeMessage(18, (com.swakeup.common.Swakeup.Weather) pl_);
+      }
+      if (plCase_ == 20) {
+        output.writeMessage(20, (com.swakeup.common.Swakeup.Email) pl_);
+      }
+      if (plCase_ == 32) {
+        output.writeMessage(32, (com.swakeup.common.Swakeup.AlarmPut) pl_);
+      }
+      if (plCase_ == 33) {
+        output.writeMessage(33, (com.swakeup.common.Swakeup.AlarmGet) pl_);
+      }
+      if (plCase_ == 34) {
+        output.writeMessage(34, (com.swakeup.common.Swakeup.AlarmRemove) pl_);
       }
     }
 
@@ -3007,13 +5127,29 @@ public final class Swakeup {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(3, getLocation());
       }
-      if (plCase_ == 16) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(16, (com.swakeup.common.Swakeup.DateAndTime) pl_);
-      }
       if (plCase_ == 17) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(17, (com.swakeup.common.Swakeup.Weather) pl_);
+          .computeMessageSize(17, (com.swakeup.common.Swakeup.DateAndTime) pl_);
+      }
+      if (plCase_ == 18) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(18, (com.swakeup.common.Swakeup.Weather) pl_);
+      }
+      if (plCase_ == 20) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(20, (com.swakeup.common.Swakeup.Email) pl_);
+      }
+      if (plCase_ == 32) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(32, (com.swakeup.common.Swakeup.AlarmPut) pl_);
+      }
+      if (plCase_ == 33) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(33, (com.swakeup.common.Swakeup.AlarmGet) pl_);
+      }
+      if (plCase_ == 34) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(34, (com.swakeup.common.Swakeup.AlarmRemove) pl_);
       }
       memoizedSize = size;
       return size;
@@ -3043,13 +5179,29 @@ public final class Swakeup {
           other.getPlCase());
       if (!result) return false;
       switch (plCase_) {
-        case 16:
+        case 17:
           result = result && getDateAndTime()
               .equals(other.getDateAndTime());
           break;
-        case 17:
+        case 18:
           result = result && getWeather()
               .equals(other.getWeather());
+          break;
+        case 20:
+          result = result && getEmail()
+              .equals(other.getEmail());
+          break;
+        case 32:
+          result = result && getAlarmPut()
+              .equals(other.getAlarmPut());
+          break;
+        case 33:
+          result = result && getAlarmGet()
+              .equals(other.getAlarmGet());
+          break;
+        case 34:
+          result = result && getAlarmRemove()
+              .equals(other.getAlarmRemove());
           break;
         case 0:
         default:
@@ -3074,13 +5226,29 @@ public final class Swakeup {
         hash = (53 * hash) + getLocation().hashCode();
       }
       switch (plCase_) {
-        case 16:
+        case 17:
           hash = (37 * hash) + DATEANDTIME_FIELD_NUMBER;
           hash = (53 * hash) + getDateAndTime().hashCode();
           break;
-        case 17:
+        case 18:
           hash = (37 * hash) + WEATHER_FIELD_NUMBER;
           hash = (53 * hash) + getWeather().hashCode();
+          break;
+        case 20:
+          hash = (37 * hash) + EMAIL_FIELD_NUMBER;
+          hash = (53 * hash) + getEmail().hashCode();
+          break;
+        case 32:
+          hash = (37 * hash) + ALARMPUT_FIELD_NUMBER;
+          hash = (53 * hash) + getAlarmPut().hashCode();
+          break;
+        case 33:
+          hash = (37 * hash) + ALARMGET_FIELD_NUMBER;
+          hash = (53 * hash) + getAlarmGet().hashCode();
+          break;
+        case 34:
+          hash = (37 * hash) + ALARMREMOVE_FIELD_NUMBER;
+          hash = (53 * hash) + getAlarmRemove().hashCode();
           break;
         case 0:
         default:
@@ -3244,18 +5412,46 @@ public final class Swakeup {
         } else {
           result.location_ = locationBuilder_.build();
         }
-        if (plCase_ == 16) {
+        if (plCase_ == 17) {
           if (dateAndTimeBuilder_ == null) {
             result.pl_ = pl_;
           } else {
             result.pl_ = dateAndTimeBuilder_.build();
           }
         }
-        if (plCase_ == 17) {
+        if (plCase_ == 18) {
           if (weatherBuilder_ == null) {
             result.pl_ = pl_;
           } else {
             result.pl_ = weatherBuilder_.build();
+          }
+        }
+        if (plCase_ == 20) {
+          if (emailBuilder_ == null) {
+            result.pl_ = pl_;
+          } else {
+            result.pl_ = emailBuilder_.build();
+          }
+        }
+        if (plCase_ == 32) {
+          if (alarmPutBuilder_ == null) {
+            result.pl_ = pl_;
+          } else {
+            result.pl_ = alarmPutBuilder_.build();
+          }
+        }
+        if (plCase_ == 33) {
+          if (alarmGetBuilder_ == null) {
+            result.pl_ = pl_;
+          } else {
+            result.pl_ = alarmGetBuilder_.build();
+          }
+        }
+        if (plCase_ == 34) {
+          if (alarmRemoveBuilder_ == null) {
+            result.pl_ = pl_;
+          } else {
+            result.pl_ = alarmRemoveBuilder_.build();
           }
         }
         result.plCase_ = plCase_;
@@ -3316,6 +5512,22 @@ public final class Swakeup {
           }
           case WEATHER: {
             mergeWeather(other.getWeather());
+            break;
+          }
+          case EMAIL: {
+            mergeEmail(other.getEmail());
+            break;
+          }
+          case ALARMPUT: {
+            mergeAlarmPut(other.getAlarmPut());
+            break;
+          }
+          case ALARMGET: {
+            mergeAlarmGet(other.getAlarmGet());
+            break;
+          }
+          case ALARMREMOVE: {
+            mergeAlarmRemove(other.getAlarmRemove());
             break;
           }
           case PL_NOT_SET: {
@@ -3553,23 +5765,23 @@ public final class Swakeup {
       private com.google.protobuf.SingleFieldBuilderV3<
           com.swakeup.common.Swakeup.DateAndTime, com.swakeup.common.Swakeup.DateAndTime.Builder, com.swakeup.common.Swakeup.DateAndTimeOrBuilder> dateAndTimeBuilder_;
       /**
-       * <code>optional .DateAndTime dateAndTime = 16;</code>
+       * <code>optional .DateAndTime dateAndTime = 17;</code>
        */
       public com.swakeup.common.Swakeup.DateAndTime getDateAndTime() {
         if (dateAndTimeBuilder_ == null) {
-          if (plCase_ == 16) {
+          if (plCase_ == 17) {
             return (com.swakeup.common.Swakeup.DateAndTime) pl_;
           }
           return com.swakeup.common.Swakeup.DateAndTime.getDefaultInstance();
         } else {
-          if (plCase_ == 16) {
+          if (plCase_ == 17) {
             return dateAndTimeBuilder_.getMessage();
           }
           return com.swakeup.common.Swakeup.DateAndTime.getDefaultInstance();
         }
       }
       /**
-       * <code>optional .DateAndTime dateAndTime = 16;</code>
+       * <code>optional .DateAndTime dateAndTime = 17;</code>
        */
       public Builder setDateAndTime(com.swakeup.common.Swakeup.DateAndTime value) {
         if (dateAndTimeBuilder_ == null) {
@@ -3581,11 +5793,11 @@ public final class Swakeup {
         } else {
           dateAndTimeBuilder_.setMessage(value);
         }
-        plCase_ = 16;
+        plCase_ = 17;
         return this;
       }
       /**
-       * <code>optional .DateAndTime dateAndTime = 16;</code>
+       * <code>optional .DateAndTime dateAndTime = 17;</code>
        */
       public Builder setDateAndTime(
           com.swakeup.common.Swakeup.DateAndTime.Builder builderForValue) {
@@ -3595,15 +5807,15 @@ public final class Swakeup {
         } else {
           dateAndTimeBuilder_.setMessage(builderForValue.build());
         }
-        plCase_ = 16;
+        plCase_ = 17;
         return this;
       }
       /**
-       * <code>optional .DateAndTime dateAndTime = 16;</code>
+       * <code>optional .DateAndTime dateAndTime = 17;</code>
        */
       public Builder mergeDateAndTime(com.swakeup.common.Swakeup.DateAndTime value) {
         if (dateAndTimeBuilder_ == null) {
-          if (plCase_ == 16 &&
+          if (plCase_ == 17 &&
               pl_ != com.swakeup.common.Swakeup.DateAndTime.getDefaultInstance()) {
             pl_ = com.swakeup.common.Swakeup.DateAndTime.newBuilder((com.swakeup.common.Swakeup.DateAndTime) pl_)
                 .mergeFrom(value).buildPartial();
@@ -3612,26 +5824,26 @@ public final class Swakeup {
           }
           onChanged();
         } else {
-          if (plCase_ == 16) {
+          if (plCase_ == 17) {
             dateAndTimeBuilder_.mergeFrom(value);
           }
           dateAndTimeBuilder_.setMessage(value);
         }
-        plCase_ = 16;
+        plCase_ = 17;
         return this;
       }
       /**
-       * <code>optional .DateAndTime dateAndTime = 16;</code>
+       * <code>optional .DateAndTime dateAndTime = 17;</code>
        */
       public Builder clearDateAndTime() {
         if (dateAndTimeBuilder_ == null) {
-          if (plCase_ == 16) {
+          if (plCase_ == 17) {
             plCase_ = 0;
             pl_ = null;
             onChanged();
           }
         } else {
-          if (plCase_ == 16) {
+          if (plCase_ == 17) {
             plCase_ = 0;
             pl_ = null;
           }
@@ -3640,32 +5852,32 @@ public final class Swakeup {
         return this;
       }
       /**
-       * <code>optional .DateAndTime dateAndTime = 16;</code>
+       * <code>optional .DateAndTime dateAndTime = 17;</code>
        */
       public com.swakeup.common.Swakeup.DateAndTime.Builder getDateAndTimeBuilder() {
         return getDateAndTimeFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .DateAndTime dateAndTime = 16;</code>
+       * <code>optional .DateAndTime dateAndTime = 17;</code>
        */
       public com.swakeup.common.Swakeup.DateAndTimeOrBuilder getDateAndTimeOrBuilder() {
-        if ((plCase_ == 16) && (dateAndTimeBuilder_ != null)) {
+        if ((plCase_ == 17) && (dateAndTimeBuilder_ != null)) {
           return dateAndTimeBuilder_.getMessageOrBuilder();
         } else {
-          if (plCase_ == 16) {
+          if (plCase_ == 17) {
             return (com.swakeup.common.Swakeup.DateAndTime) pl_;
           }
           return com.swakeup.common.Swakeup.DateAndTime.getDefaultInstance();
         }
       }
       /**
-       * <code>optional .DateAndTime dateAndTime = 16;</code>
+       * <code>optional .DateAndTime dateAndTime = 17;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           com.swakeup.common.Swakeup.DateAndTime, com.swakeup.common.Swakeup.DateAndTime.Builder, com.swakeup.common.Swakeup.DateAndTimeOrBuilder> 
           getDateAndTimeFieldBuilder() {
         if (dateAndTimeBuilder_ == null) {
-          if (!(plCase_ == 16)) {
+          if (!(plCase_ == 17)) {
             pl_ = com.swakeup.common.Swakeup.DateAndTime.getDefaultInstance();
           }
           dateAndTimeBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
@@ -3675,7 +5887,7 @@ public final class Swakeup {
                   isClean());
           pl_ = null;
         }
-        plCase_ = 16;
+        plCase_ = 17;
         onChanged();;
         return dateAndTimeBuilder_;
       }
@@ -3683,23 +5895,23 @@ public final class Swakeup {
       private com.google.protobuf.SingleFieldBuilderV3<
           com.swakeup.common.Swakeup.Weather, com.swakeup.common.Swakeup.Weather.Builder, com.swakeup.common.Swakeup.WeatherOrBuilder> weatherBuilder_;
       /**
-       * <code>optional .Weather weather = 17;</code>
+       * <code>optional .Weather weather = 18;</code>
        */
       public com.swakeup.common.Swakeup.Weather getWeather() {
         if (weatherBuilder_ == null) {
-          if (plCase_ == 17) {
+          if (plCase_ == 18) {
             return (com.swakeup.common.Swakeup.Weather) pl_;
           }
           return com.swakeup.common.Swakeup.Weather.getDefaultInstance();
         } else {
-          if (plCase_ == 17) {
+          if (plCase_ == 18) {
             return weatherBuilder_.getMessage();
           }
           return com.swakeup.common.Swakeup.Weather.getDefaultInstance();
         }
       }
       /**
-       * <code>optional .Weather weather = 17;</code>
+       * <code>optional .Weather weather = 18;</code>
        */
       public Builder setWeather(com.swakeup.common.Swakeup.Weather value) {
         if (weatherBuilder_ == null) {
@@ -3711,11 +5923,11 @@ public final class Swakeup {
         } else {
           weatherBuilder_.setMessage(value);
         }
-        plCase_ = 17;
+        plCase_ = 18;
         return this;
       }
       /**
-       * <code>optional .Weather weather = 17;</code>
+       * <code>optional .Weather weather = 18;</code>
        */
       public Builder setWeather(
           com.swakeup.common.Swakeup.Weather.Builder builderForValue) {
@@ -3725,15 +5937,15 @@ public final class Swakeup {
         } else {
           weatherBuilder_.setMessage(builderForValue.build());
         }
-        plCase_ = 17;
+        plCase_ = 18;
         return this;
       }
       /**
-       * <code>optional .Weather weather = 17;</code>
+       * <code>optional .Weather weather = 18;</code>
        */
       public Builder mergeWeather(com.swakeup.common.Swakeup.Weather value) {
         if (weatherBuilder_ == null) {
-          if (plCase_ == 17 &&
+          if (plCase_ == 18 &&
               pl_ != com.swakeup.common.Swakeup.Weather.getDefaultInstance()) {
             pl_ = com.swakeup.common.Swakeup.Weather.newBuilder((com.swakeup.common.Swakeup.Weather) pl_)
                 .mergeFrom(value).buildPartial();
@@ -3742,26 +5954,26 @@ public final class Swakeup {
           }
           onChanged();
         } else {
-          if (plCase_ == 17) {
+          if (plCase_ == 18) {
             weatherBuilder_.mergeFrom(value);
           }
           weatherBuilder_.setMessage(value);
         }
-        plCase_ = 17;
+        plCase_ = 18;
         return this;
       }
       /**
-       * <code>optional .Weather weather = 17;</code>
+       * <code>optional .Weather weather = 18;</code>
        */
       public Builder clearWeather() {
         if (weatherBuilder_ == null) {
-          if (plCase_ == 17) {
+          if (plCase_ == 18) {
             plCase_ = 0;
             pl_ = null;
             onChanged();
           }
         } else {
-          if (plCase_ == 17) {
+          if (plCase_ == 18) {
             plCase_ = 0;
             pl_ = null;
           }
@@ -3770,32 +5982,32 @@ public final class Swakeup {
         return this;
       }
       /**
-       * <code>optional .Weather weather = 17;</code>
+       * <code>optional .Weather weather = 18;</code>
        */
       public com.swakeup.common.Swakeup.Weather.Builder getWeatherBuilder() {
         return getWeatherFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .Weather weather = 17;</code>
+       * <code>optional .Weather weather = 18;</code>
        */
       public com.swakeup.common.Swakeup.WeatherOrBuilder getWeatherOrBuilder() {
-        if ((plCase_ == 17) && (weatherBuilder_ != null)) {
+        if ((plCase_ == 18) && (weatherBuilder_ != null)) {
           return weatherBuilder_.getMessageOrBuilder();
         } else {
-          if (plCase_ == 17) {
+          if (plCase_ == 18) {
             return (com.swakeup.common.Swakeup.Weather) pl_;
           }
           return com.swakeup.common.Swakeup.Weather.getDefaultInstance();
         }
       }
       /**
-       * <code>optional .Weather weather = 17;</code>
+       * <code>optional .Weather weather = 18;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
           com.swakeup.common.Swakeup.Weather, com.swakeup.common.Swakeup.Weather.Builder, com.swakeup.common.Swakeup.WeatherOrBuilder> 
           getWeatherFieldBuilder() {
         if (weatherBuilder_ == null) {
-          if (!(plCase_ == 17)) {
+          if (!(plCase_ == 18)) {
             pl_ = com.swakeup.common.Swakeup.Weather.getDefaultInstance();
           }
           weatherBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
@@ -3805,9 +6017,561 @@ public final class Swakeup {
                   isClean());
           pl_ = null;
         }
-        plCase_ = 17;
+        plCase_ = 18;
         onChanged();;
         return weatherBuilder_;
+      }
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.swakeup.common.Swakeup.Email, com.swakeup.common.Swakeup.Email.Builder, com.swakeup.common.Swakeup.EmailOrBuilder> emailBuilder_;
+      /**
+       * <pre>
+       *Social, empty for now
+       * </pre>
+       *
+       * <code>optional .Email email = 20;</code>
+       */
+      public com.swakeup.common.Swakeup.Email getEmail() {
+        if (emailBuilder_ == null) {
+          if (plCase_ == 20) {
+            return (com.swakeup.common.Swakeup.Email) pl_;
+          }
+          return com.swakeup.common.Swakeup.Email.getDefaultInstance();
+        } else {
+          if (plCase_ == 20) {
+            return emailBuilder_.getMessage();
+          }
+          return com.swakeup.common.Swakeup.Email.getDefaultInstance();
+        }
+      }
+      /**
+       * <pre>
+       *Social, empty for now
+       * </pre>
+       *
+       * <code>optional .Email email = 20;</code>
+       */
+      public Builder setEmail(com.swakeup.common.Swakeup.Email value) {
+        if (emailBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          pl_ = value;
+          onChanged();
+        } else {
+          emailBuilder_.setMessage(value);
+        }
+        plCase_ = 20;
+        return this;
+      }
+      /**
+       * <pre>
+       *Social, empty for now
+       * </pre>
+       *
+       * <code>optional .Email email = 20;</code>
+       */
+      public Builder setEmail(
+          com.swakeup.common.Swakeup.Email.Builder builderForValue) {
+        if (emailBuilder_ == null) {
+          pl_ = builderForValue.build();
+          onChanged();
+        } else {
+          emailBuilder_.setMessage(builderForValue.build());
+        }
+        plCase_ = 20;
+        return this;
+      }
+      /**
+       * <pre>
+       *Social, empty for now
+       * </pre>
+       *
+       * <code>optional .Email email = 20;</code>
+       */
+      public Builder mergeEmail(com.swakeup.common.Swakeup.Email value) {
+        if (emailBuilder_ == null) {
+          if (plCase_ == 20 &&
+              pl_ != com.swakeup.common.Swakeup.Email.getDefaultInstance()) {
+            pl_ = com.swakeup.common.Swakeup.Email.newBuilder((com.swakeup.common.Swakeup.Email) pl_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            pl_ = value;
+          }
+          onChanged();
+        } else {
+          if (plCase_ == 20) {
+            emailBuilder_.mergeFrom(value);
+          }
+          emailBuilder_.setMessage(value);
+        }
+        plCase_ = 20;
+        return this;
+      }
+      /**
+       * <pre>
+       *Social, empty for now
+       * </pre>
+       *
+       * <code>optional .Email email = 20;</code>
+       */
+      public Builder clearEmail() {
+        if (emailBuilder_ == null) {
+          if (plCase_ == 20) {
+            plCase_ = 0;
+            pl_ = null;
+            onChanged();
+          }
+        } else {
+          if (plCase_ == 20) {
+            plCase_ = 0;
+            pl_ = null;
+          }
+          emailBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *Social, empty for now
+       * </pre>
+       *
+       * <code>optional .Email email = 20;</code>
+       */
+      public com.swakeup.common.Swakeup.Email.Builder getEmailBuilder() {
+        return getEmailFieldBuilder().getBuilder();
+      }
+      /**
+       * <pre>
+       *Social, empty for now
+       * </pre>
+       *
+       * <code>optional .Email email = 20;</code>
+       */
+      public com.swakeup.common.Swakeup.EmailOrBuilder getEmailOrBuilder() {
+        if ((plCase_ == 20) && (emailBuilder_ != null)) {
+          return emailBuilder_.getMessageOrBuilder();
+        } else {
+          if (plCase_ == 20) {
+            return (com.swakeup.common.Swakeup.Email) pl_;
+          }
+          return com.swakeup.common.Swakeup.Email.getDefaultInstance();
+        }
+      }
+      /**
+       * <pre>
+       *Social, empty for now
+       * </pre>
+       *
+       * <code>optional .Email email = 20;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.swakeup.common.Swakeup.Email, com.swakeup.common.Swakeup.Email.Builder, com.swakeup.common.Swakeup.EmailOrBuilder> 
+          getEmailFieldBuilder() {
+        if (emailBuilder_ == null) {
+          if (!(plCase_ == 20)) {
+            pl_ = com.swakeup.common.Swakeup.Email.getDefaultInstance();
+          }
+          emailBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.swakeup.common.Swakeup.Email, com.swakeup.common.Swakeup.Email.Builder, com.swakeup.common.Swakeup.EmailOrBuilder>(
+                  (com.swakeup.common.Swakeup.Email) pl_,
+                  getParentForChildren(),
+                  isClean());
+          pl_ = null;
+        }
+        plCase_ = 20;
+        onChanged();;
+        return emailBuilder_;
+      }
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.swakeup.common.Swakeup.AlarmPut, com.swakeup.common.Swakeup.AlarmPut.Builder, com.swakeup.common.Swakeup.AlarmPutOrBuilder> alarmPutBuilder_;
+      /**
+       * <code>optional .AlarmPut alarmPut = 32;</code>
+       */
+      public com.swakeup.common.Swakeup.AlarmPut getAlarmPut() {
+        if (alarmPutBuilder_ == null) {
+          if (plCase_ == 32) {
+            return (com.swakeup.common.Swakeup.AlarmPut) pl_;
+          }
+          return com.swakeup.common.Swakeup.AlarmPut.getDefaultInstance();
+        } else {
+          if (plCase_ == 32) {
+            return alarmPutBuilder_.getMessage();
+          }
+          return com.swakeup.common.Swakeup.AlarmPut.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>optional .AlarmPut alarmPut = 32;</code>
+       */
+      public Builder setAlarmPut(com.swakeup.common.Swakeup.AlarmPut value) {
+        if (alarmPutBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          pl_ = value;
+          onChanged();
+        } else {
+          alarmPutBuilder_.setMessage(value);
+        }
+        plCase_ = 32;
+        return this;
+      }
+      /**
+       * <code>optional .AlarmPut alarmPut = 32;</code>
+       */
+      public Builder setAlarmPut(
+          com.swakeup.common.Swakeup.AlarmPut.Builder builderForValue) {
+        if (alarmPutBuilder_ == null) {
+          pl_ = builderForValue.build();
+          onChanged();
+        } else {
+          alarmPutBuilder_.setMessage(builderForValue.build());
+        }
+        plCase_ = 32;
+        return this;
+      }
+      /**
+       * <code>optional .AlarmPut alarmPut = 32;</code>
+       */
+      public Builder mergeAlarmPut(com.swakeup.common.Swakeup.AlarmPut value) {
+        if (alarmPutBuilder_ == null) {
+          if (plCase_ == 32 &&
+              pl_ != com.swakeup.common.Swakeup.AlarmPut.getDefaultInstance()) {
+            pl_ = com.swakeup.common.Swakeup.AlarmPut.newBuilder((com.swakeup.common.Swakeup.AlarmPut) pl_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            pl_ = value;
+          }
+          onChanged();
+        } else {
+          if (plCase_ == 32) {
+            alarmPutBuilder_.mergeFrom(value);
+          }
+          alarmPutBuilder_.setMessage(value);
+        }
+        plCase_ = 32;
+        return this;
+      }
+      /**
+       * <code>optional .AlarmPut alarmPut = 32;</code>
+       */
+      public Builder clearAlarmPut() {
+        if (alarmPutBuilder_ == null) {
+          if (plCase_ == 32) {
+            plCase_ = 0;
+            pl_ = null;
+            onChanged();
+          }
+        } else {
+          if (plCase_ == 32) {
+            plCase_ = 0;
+            pl_ = null;
+          }
+          alarmPutBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>optional .AlarmPut alarmPut = 32;</code>
+       */
+      public com.swakeup.common.Swakeup.AlarmPut.Builder getAlarmPutBuilder() {
+        return getAlarmPutFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>optional .AlarmPut alarmPut = 32;</code>
+       */
+      public com.swakeup.common.Swakeup.AlarmPutOrBuilder getAlarmPutOrBuilder() {
+        if ((plCase_ == 32) && (alarmPutBuilder_ != null)) {
+          return alarmPutBuilder_.getMessageOrBuilder();
+        } else {
+          if (plCase_ == 32) {
+            return (com.swakeup.common.Swakeup.AlarmPut) pl_;
+          }
+          return com.swakeup.common.Swakeup.AlarmPut.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>optional .AlarmPut alarmPut = 32;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.swakeup.common.Swakeup.AlarmPut, com.swakeup.common.Swakeup.AlarmPut.Builder, com.swakeup.common.Swakeup.AlarmPutOrBuilder> 
+          getAlarmPutFieldBuilder() {
+        if (alarmPutBuilder_ == null) {
+          if (!(plCase_ == 32)) {
+            pl_ = com.swakeup.common.Swakeup.AlarmPut.getDefaultInstance();
+          }
+          alarmPutBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.swakeup.common.Swakeup.AlarmPut, com.swakeup.common.Swakeup.AlarmPut.Builder, com.swakeup.common.Swakeup.AlarmPutOrBuilder>(
+                  (com.swakeup.common.Swakeup.AlarmPut) pl_,
+                  getParentForChildren(),
+                  isClean());
+          pl_ = null;
+        }
+        plCase_ = 32;
+        onChanged();;
+        return alarmPutBuilder_;
+      }
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.swakeup.common.Swakeup.AlarmGet, com.swakeup.common.Swakeup.AlarmGet.Builder, com.swakeup.common.Swakeup.AlarmGetOrBuilder> alarmGetBuilder_;
+      /**
+       * <code>optional .AlarmGet alarmGet = 33;</code>
+       */
+      public com.swakeup.common.Swakeup.AlarmGet getAlarmGet() {
+        if (alarmGetBuilder_ == null) {
+          if (plCase_ == 33) {
+            return (com.swakeup.common.Swakeup.AlarmGet) pl_;
+          }
+          return com.swakeup.common.Swakeup.AlarmGet.getDefaultInstance();
+        } else {
+          if (plCase_ == 33) {
+            return alarmGetBuilder_.getMessage();
+          }
+          return com.swakeup.common.Swakeup.AlarmGet.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>optional .AlarmGet alarmGet = 33;</code>
+       */
+      public Builder setAlarmGet(com.swakeup.common.Swakeup.AlarmGet value) {
+        if (alarmGetBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          pl_ = value;
+          onChanged();
+        } else {
+          alarmGetBuilder_.setMessage(value);
+        }
+        plCase_ = 33;
+        return this;
+      }
+      /**
+       * <code>optional .AlarmGet alarmGet = 33;</code>
+       */
+      public Builder setAlarmGet(
+          com.swakeup.common.Swakeup.AlarmGet.Builder builderForValue) {
+        if (alarmGetBuilder_ == null) {
+          pl_ = builderForValue.build();
+          onChanged();
+        } else {
+          alarmGetBuilder_.setMessage(builderForValue.build());
+        }
+        plCase_ = 33;
+        return this;
+      }
+      /**
+       * <code>optional .AlarmGet alarmGet = 33;</code>
+       */
+      public Builder mergeAlarmGet(com.swakeup.common.Swakeup.AlarmGet value) {
+        if (alarmGetBuilder_ == null) {
+          if (plCase_ == 33 &&
+              pl_ != com.swakeup.common.Swakeup.AlarmGet.getDefaultInstance()) {
+            pl_ = com.swakeup.common.Swakeup.AlarmGet.newBuilder((com.swakeup.common.Swakeup.AlarmGet) pl_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            pl_ = value;
+          }
+          onChanged();
+        } else {
+          if (plCase_ == 33) {
+            alarmGetBuilder_.mergeFrom(value);
+          }
+          alarmGetBuilder_.setMessage(value);
+        }
+        plCase_ = 33;
+        return this;
+      }
+      /**
+       * <code>optional .AlarmGet alarmGet = 33;</code>
+       */
+      public Builder clearAlarmGet() {
+        if (alarmGetBuilder_ == null) {
+          if (plCase_ == 33) {
+            plCase_ = 0;
+            pl_ = null;
+            onChanged();
+          }
+        } else {
+          if (plCase_ == 33) {
+            plCase_ = 0;
+            pl_ = null;
+          }
+          alarmGetBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>optional .AlarmGet alarmGet = 33;</code>
+       */
+      public com.swakeup.common.Swakeup.AlarmGet.Builder getAlarmGetBuilder() {
+        return getAlarmGetFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>optional .AlarmGet alarmGet = 33;</code>
+       */
+      public com.swakeup.common.Swakeup.AlarmGetOrBuilder getAlarmGetOrBuilder() {
+        if ((plCase_ == 33) && (alarmGetBuilder_ != null)) {
+          return alarmGetBuilder_.getMessageOrBuilder();
+        } else {
+          if (plCase_ == 33) {
+            return (com.swakeup.common.Swakeup.AlarmGet) pl_;
+          }
+          return com.swakeup.common.Swakeup.AlarmGet.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>optional .AlarmGet alarmGet = 33;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.swakeup.common.Swakeup.AlarmGet, com.swakeup.common.Swakeup.AlarmGet.Builder, com.swakeup.common.Swakeup.AlarmGetOrBuilder> 
+          getAlarmGetFieldBuilder() {
+        if (alarmGetBuilder_ == null) {
+          if (!(plCase_ == 33)) {
+            pl_ = com.swakeup.common.Swakeup.AlarmGet.getDefaultInstance();
+          }
+          alarmGetBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.swakeup.common.Swakeup.AlarmGet, com.swakeup.common.Swakeup.AlarmGet.Builder, com.swakeup.common.Swakeup.AlarmGetOrBuilder>(
+                  (com.swakeup.common.Swakeup.AlarmGet) pl_,
+                  getParentForChildren(),
+                  isClean());
+          pl_ = null;
+        }
+        plCase_ = 33;
+        onChanged();;
+        return alarmGetBuilder_;
+      }
+
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.swakeup.common.Swakeup.AlarmRemove, com.swakeup.common.Swakeup.AlarmRemove.Builder, com.swakeup.common.Swakeup.AlarmRemoveOrBuilder> alarmRemoveBuilder_;
+      /**
+       * <code>optional .AlarmRemove alarmRemove = 34;</code>
+       */
+      public com.swakeup.common.Swakeup.AlarmRemove getAlarmRemove() {
+        if (alarmRemoveBuilder_ == null) {
+          if (plCase_ == 34) {
+            return (com.swakeup.common.Swakeup.AlarmRemove) pl_;
+          }
+          return com.swakeup.common.Swakeup.AlarmRemove.getDefaultInstance();
+        } else {
+          if (plCase_ == 34) {
+            return alarmRemoveBuilder_.getMessage();
+          }
+          return com.swakeup.common.Swakeup.AlarmRemove.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>optional .AlarmRemove alarmRemove = 34;</code>
+       */
+      public Builder setAlarmRemove(com.swakeup.common.Swakeup.AlarmRemove value) {
+        if (alarmRemoveBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          pl_ = value;
+          onChanged();
+        } else {
+          alarmRemoveBuilder_.setMessage(value);
+        }
+        plCase_ = 34;
+        return this;
+      }
+      /**
+       * <code>optional .AlarmRemove alarmRemove = 34;</code>
+       */
+      public Builder setAlarmRemove(
+          com.swakeup.common.Swakeup.AlarmRemove.Builder builderForValue) {
+        if (alarmRemoveBuilder_ == null) {
+          pl_ = builderForValue.build();
+          onChanged();
+        } else {
+          alarmRemoveBuilder_.setMessage(builderForValue.build());
+        }
+        plCase_ = 34;
+        return this;
+      }
+      /**
+       * <code>optional .AlarmRemove alarmRemove = 34;</code>
+       */
+      public Builder mergeAlarmRemove(com.swakeup.common.Swakeup.AlarmRemove value) {
+        if (alarmRemoveBuilder_ == null) {
+          if (plCase_ == 34 &&
+              pl_ != com.swakeup.common.Swakeup.AlarmRemove.getDefaultInstance()) {
+            pl_ = com.swakeup.common.Swakeup.AlarmRemove.newBuilder((com.swakeup.common.Swakeup.AlarmRemove) pl_)
+                .mergeFrom(value).buildPartial();
+          } else {
+            pl_ = value;
+          }
+          onChanged();
+        } else {
+          if (plCase_ == 34) {
+            alarmRemoveBuilder_.mergeFrom(value);
+          }
+          alarmRemoveBuilder_.setMessage(value);
+        }
+        plCase_ = 34;
+        return this;
+      }
+      /**
+       * <code>optional .AlarmRemove alarmRemove = 34;</code>
+       */
+      public Builder clearAlarmRemove() {
+        if (alarmRemoveBuilder_ == null) {
+          if (plCase_ == 34) {
+            plCase_ = 0;
+            pl_ = null;
+            onChanged();
+          }
+        } else {
+          if (plCase_ == 34) {
+            plCase_ = 0;
+            pl_ = null;
+          }
+          alarmRemoveBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>optional .AlarmRemove alarmRemove = 34;</code>
+       */
+      public com.swakeup.common.Swakeup.AlarmRemove.Builder getAlarmRemoveBuilder() {
+        return getAlarmRemoveFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>optional .AlarmRemove alarmRemove = 34;</code>
+       */
+      public com.swakeup.common.Swakeup.AlarmRemoveOrBuilder getAlarmRemoveOrBuilder() {
+        if ((plCase_ == 34) && (alarmRemoveBuilder_ != null)) {
+          return alarmRemoveBuilder_.getMessageOrBuilder();
+        } else {
+          if (plCase_ == 34) {
+            return (com.swakeup.common.Swakeup.AlarmRemove) pl_;
+          }
+          return com.swakeup.common.Swakeup.AlarmRemove.getDefaultInstance();
+        }
+      }
+      /**
+       * <code>optional .AlarmRemove alarmRemove = 34;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.swakeup.common.Swakeup.AlarmRemove, com.swakeup.common.Swakeup.AlarmRemove.Builder, com.swakeup.common.Swakeup.AlarmRemoveOrBuilder> 
+          getAlarmRemoveFieldBuilder() {
+        if (alarmRemoveBuilder_ == null) {
+          if (!(plCase_ == 34)) {
+            pl_ = com.swakeup.common.Swakeup.AlarmRemove.getDefaultInstance();
+          }
+          alarmRemoveBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.swakeup.common.Swakeup.AlarmRemove, com.swakeup.common.Swakeup.AlarmRemove.Builder, com.swakeup.common.Swakeup.AlarmRemoveOrBuilder>(
+                  (com.swakeup.common.Swakeup.AlarmRemove) pl_,
+                  getParentForChildren(),
+                  isClean());
+          pl_ = null;
+        }
+        plCase_ = 34;
+        onChanged();;
+        return alarmRemoveBuilder_;
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -3859,6 +6623,26 @@ public final class Swakeup {
   }
 
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_AlarmPut_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_AlarmPut_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_AlarmGet_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_AlarmGet_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_AlarmRemove_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_AlarmRemove_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_Email_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_Email_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_Weather_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -3887,27 +6671,35 @@ public final class Swakeup {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\rswakeup.proto\"~\n\007Weather\022!\n\013weatherTyp" +
-      "e\030\001 \001(\0162\014.WeatherType\022\023\n\013temperature\030\002 \001" +
-      "(\r\022\014\n\004unit\030\003 \001(\t\022\014\n\004city\030\004 \001(\t\022\017\n\007sunris" +
-      "e\030\005 \001(\r\022\016\n\006sunset\030\006 \001(\r\")\n\010Location\022\017\n\007c" +
-      "ountry\030\001 \001(\t\022\014\n\004city\030\002 \001(\t\"e\n\013DateAndTim" +
-      "e\022\014\n\004year\030\001 \001(\r\022\r\n\005month\030\002 \001(\r\022\013\n\003day\030\003 " +
-      "\001(\r\022\014\n\004hour\030\004 \001(\r\022\016\n\006minute\030\005 \001(\r\022\016\n\006sec" +
-      "ond\030\006 \001(\r\"\227\001\n\010MsgFrame\022\025\n\003typ\030\001 \001(\0162\010.Ms" +
-      "gType\022\017\n\007request\030\002 \001(\010\022\033\n\010location\030\003 \001(\013" +
-      "2\t.Location\022#\n\013dateAndTime\030\020 \001(\0132\014.DateA",
-      "ndTimeH\000\022\033\n\007weather\030\021 \001(\0132\010.WeatherH\000B\004\n" +
-      "\002pl*\315\001\n\007MsgType\022\021\n\rMSG_TYPE_NONE\020\000\022\022\n\016MS" +
-      "G_TYPE_POWER\020\001\022\025\n\021MSG_TUPE_LOCATION\020\020\022\026\n" +
-      "\022MSG_TYPE_DATE_TIME\020\021\022\024\n\020MSG_TYPE_WEATHE" +
-      "R\020\022\022\023\n\017MSG_TYPE_SOCIAL\020\023\022\021\n\rMSG_TYPE_MAI" +
-      "L\020\024\022\026\n\022MSG_TYPE_ALARM_SET\020 \022\026\n\022MSG_TYPE_" +
-      "ALARM_GET\020!*\201\001\n\013WeatherType\022\023\n\017WEATHER_T" +
-      "HUNDER\020\000\022\020\n\014WEATHER_SNOW\020\001\022\020\n\014WEATHER_RA" +
-      "IN\020\002\022\022\n\016WEATHER_CLOUDY\020\003\022\024\n\020WEATHER_OVER" +
-      "CAST\020\004\022\017\n\013WEATHER_SUN\020\005B\024\n\022com.swakeup.c",
-      "ommonb\006proto3"
+      "\n\rswakeup.proto\"F\n\010AlarmPut\022\014\n\004days\030\001 \001(" +
+      "\r\022\014\n\004hour\030\002 \001(\r\022\016\n\006minute\030\003 \001(\r\022\016\n\006secon" +
+      "d\030\004 \001(\r\"\031\n\010AlarmGet\022\r\n\005index\030\001 \001(\r\"\034\n\013Al" +
+      "armRemove\022\r\n\005index\030\001 \001(\r\"(\n\005Email\022\017\n\007sub" +
+      "ject\030\001 \001(\014\022\016\n\006sender\030\002 \001(\014\"~\n\007Weather\022!\n" +
+      "\013weatherType\030\001 \001(\0162\014.WeatherType\022\023\n\013temp" +
+      "erature\030\002 \001(\r\022\014\n\004unit\030\003 \001(\t\022\014\n\004city\030\004 \001(" +
+      "\014\022\017\n\007sunrise\030\005 \001(\r\022\016\n\006sunset\030\006 \001(\r\")\n\010Lo" +
+      "cation\022\017\n\007country\030\001 \001(\t\022\014\n\004city\030\002 \001(\t\"e\n" +
+      "\013DateAndTime\022\014\n\004year\030\001 \001(\r\022\r\n\005month\030\002 \001(",
+      "\r\022\013\n\003day\030\003 \001(\r\022\014\n\004hour\030\004 \001(\r\022\016\n\006minute\030\005" +
+      " \001(\r\022\016\n\006second\030\006 \001(\r\"\223\002\n\010MsgFrame\022\025\n\003typ" +
+      "\030\001 \001(\0162\010.MsgType\022\017\n\007request\030\002 \001(\010\022\033\n\010loc" +
+      "ation\030\003 \001(\0132\t.Location\022#\n\013dateAndTime\030\021 " +
+      "\001(\0132\014.DateAndTimeH\000\022\033\n\007weather\030\022 \001(\0132\010.W" +
+      "eatherH\000\022\027\n\005email\030\024 \001(\0132\006.EmailH\000\022\035\n\010ala" +
+      "rmPut\030  \001(\0132\t.AlarmPutH\000\022\035\n\010alarmGet\030! \001" +
+      "(\0132\t.AlarmGetH\000\022#\n\013alarmRemove\030\" \001(\0132\014.A" +
+      "larmRemoveH\000B\004\n\002pl*\351\001\n\007MsgType\022\021\n\rMSG_TY" +
+      "PE_NONE\020\000\022\022\n\016MSG_TYPE_POWER\020\001\022\025\n\021MSG_TYP",
+      "E_LOCATION\020\020\022\026\n\022MSG_TYPE_DATE_TIME\020\021\022\024\n\020" +
+      "MSG_TYPE_WEATHER\020\022\022\023\n\017MSG_TYPE_SOCIAL\020\023\022" +
+      "\022\n\016MSG_TYPE_EMAIL\020\024\022\026\n\022MSG_TYPE_ALARM_PU" +
+      "T\020 \022\026\n\022MSG_TYPE_ALARM_GET\020!\022\031\n\025MSG_TYPE_" +
+      "ALARM_REMOVE\020\"*\201\001\n\013WeatherType\022\023\n\017WEATHE" +
+      "R_THUNDER\020\000\022\020\n\014WEATHER_SNOW\020\001\022\020\n\014WEATHER" +
+      "_RAIN\020\002\022\022\n\016WEATHER_CLOUDY\020\003\022\024\n\020WEATHER_O" +
+      "VERCAST\020\004\022\017\n\013WEATHER_SUN\020\005B\024\n\022com.swakeu" +
+      "p.commonb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -3921,30 +6713,54 @@ public final class Swakeup {
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
-    internal_static_Weather_descriptor =
+    internal_static_AlarmPut_descriptor =
       getDescriptor().getMessageTypes().get(0);
+    internal_static_AlarmPut_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_AlarmPut_descriptor,
+        new java.lang.String[] { "Days", "Hour", "Minute", "Second", });
+    internal_static_AlarmGet_descriptor =
+      getDescriptor().getMessageTypes().get(1);
+    internal_static_AlarmGet_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_AlarmGet_descriptor,
+        new java.lang.String[] { "Index", });
+    internal_static_AlarmRemove_descriptor =
+      getDescriptor().getMessageTypes().get(2);
+    internal_static_AlarmRemove_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_AlarmRemove_descriptor,
+        new java.lang.String[] { "Index", });
+    internal_static_Email_descriptor =
+      getDescriptor().getMessageTypes().get(3);
+    internal_static_Email_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_Email_descriptor,
+        new java.lang.String[] { "Subject", "Sender", });
+    internal_static_Weather_descriptor =
+      getDescriptor().getMessageTypes().get(4);
     internal_static_Weather_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Weather_descriptor,
         new java.lang.String[] { "WeatherType", "Temperature", "Unit", "City", "Sunrise", "Sunset", });
     internal_static_Location_descriptor =
-      getDescriptor().getMessageTypes().get(1);
+      getDescriptor().getMessageTypes().get(5);
     internal_static_Location_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Location_descriptor,
         new java.lang.String[] { "Country", "City", });
     internal_static_DateAndTime_descriptor =
-      getDescriptor().getMessageTypes().get(2);
+      getDescriptor().getMessageTypes().get(6);
     internal_static_DateAndTime_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_DateAndTime_descriptor,
         new java.lang.String[] { "Year", "Month", "Day", "Hour", "Minute", "Second", });
     internal_static_MsgFrame_descriptor =
-      getDescriptor().getMessageTypes().get(3);
+      getDescriptor().getMessageTypes().get(7);
     internal_static_MsgFrame_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_MsgFrame_descriptor,
-        new java.lang.String[] { "Typ", "Request", "Location", "DateAndTime", "Weather", "Pl", });
+        new java.lang.String[] { "Typ", "Request", "Location", "DateAndTime", "Weather", "Email", "AlarmPut", "AlarmGet", "AlarmRemove", "Pl", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

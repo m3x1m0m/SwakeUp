@@ -20,6 +20,8 @@
 #include "drivers/host/timer.h"
 #include "drivers/host/pwm.h"
 #include "drivers/host/adc.h"
+#include "drivers/host/pid.h"
+#include "modules/voltagecntr.h"
 
 LOG_INIT("Main");
 
@@ -84,10 +86,11 @@ int main(void) {
     sleep_enable();
     set_sleep_mode(SLEEP_MODE_IDLE);
 #endif
-    PMIC.CTRL |= PMIC_LOLVLEN_bm | PMIC_MEDLVLEN_bm;    //Peripheral enable - interrupt levels (ALL)
+    PMIC.CTRL |= PMIC_LOLVLEN_bm | PMIC_MEDLVLEN_bm | PMIC_HILVLEN_bm;    //Peripheral enable - interrupt levels (ALL)
     module_init(&LOGGER);                               //Initializing the logger for use
     sei();                                              //Enabling interrupts
     module_init(&CORE);
+	module_init(&PID);
     core_screen(SCREEN_ON);
     event_addListener(&EVENT_TIMER_1_HZ, callback);     //TODO this can be removed when watchdog control is better
 #ifdef WATCHDOG_ENABLE
@@ -95,6 +98,9 @@ int main(void) {
 #endif
     LOG_SYSTEM("System initialized");
     LOG_SYSTEM(greeting);
+	initController();
+	setVoltage(15);
+	enableController();
     while (1) {
         //This is all that should happen in the main loop
         //The system will go to sleep if no more events are to be processed
