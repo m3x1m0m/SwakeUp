@@ -1,8 +1,9 @@
 /////////////////////////////////////////////////////////////////////////////////
-// 
+// PID controller module with slots for different controllers. The whole module
+// i.e. every controller is executed in a certain interval.
 //
 // Author:				Maximilian Stiefel
-// Last Modification:	16.05.2017
+// Last Modification:	19.05.2017
 /////////////////////////////////////////////////////////////////////////////////
 
 #ifndef XMEGA_MODULES_PID_H_
@@ -11,25 +12,44 @@
 /////////////////////////////////////////////////////////////////////////////////
 // Includes
 /////////////////////////////////////////////////////////////////////////////////
+#include <avr/io.h>
 #include "../../util/fixedpoint.h"
+
+/////////////////////////////////////////////////////////////////////////////////
+// Typedefs
+/////////////////////////////////////////////////////////////////////////////////
+typedef uint16_t (*mysensorfunc_t)(void);
+typedef void (*myactuatorfunc_t)(uint16_t);
+
+typedef struct mycontroller_t 
+{
+	uint8_t enabled;						// Is this PID controller enabled?
+	
+	myfixedpoint32_t kp;					// PID features
+	myfixedpoint32_t ki;
+	myfixedpoint32_t kd;
+	
+	uint16_t setPoint;						// PID values
+	myfixedpoint32_t previousError;
+	myfixedpoint32_t integral;
+	
+    mysensorfunc_t getSensorVal;			// Function pointer to ADC value function
+	myactuatorfunc_t setActuatorVal;		// Function pointer to actuator e.g. PWM
+} mycontroller_t;
 
 /////////////////////////////////////////////////////////////////////////////////
 // Defines
 /////////////////////////////////////////////////////////////////////////////////
+#define NU_OF_CONTROLLER_SLOTS 4
 #define DT FROMFLOAT(1.0)
-#define KP FROMFLOAT(1.5)
-#define KI FROMFLOAT(1.0)
-#define KD FROMFLOAT(0.25)
+#define DEBUG_MEM_SIZE 128
 
 /////////////////////////////////////////////////////////////////////////////////
 // Prototypes
 /////////////////////////////////////////////////////////////////////////////////
-void start_PID(uint16_t isetpoint);
-void stop_PID();
-
-static uint8_t init(void);
-static uint8_t deinit(void);
-void start_PID(uint16_t isetpoint);
+void start_PID(void);
+void stop_PID(void);
+void add_Controller(mycontroller_t *newController);
 
 MODULE_EXP(PID);
 

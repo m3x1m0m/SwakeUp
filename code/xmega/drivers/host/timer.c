@@ -38,7 +38,7 @@ static volatile divider = 0;
 // Register events
 /////////////////////////////////////////////////////////////////////////////////
 EVENT_REGISTER(EVENT_TIMER_1_HZ, "1 second pulse");
-EVENT_REGISTER(EVENT_TIMER_10_HZ, "10 millisecond pulse");
+EVENT_REGISTER(EVENT_TIMER_10_HZ, "100 millisecond pulse");
 EVENT_REGISTER(EVENT_TIMER_100_HZ, "10 millisecond pulse");
 EVENT_REGISTER(EVENT_TIMER_1000_HZ, "1 millisecond pulse");
 EVENT_REGISTER(EVENT_ALARM, "ms alarm");
@@ -73,11 +73,11 @@ int8_t   timer_timeOutEvent(uint16_t duration) {
 // }
 
 /////////////////////////////////////////////////////////////////////////////////
-// Init TCC0 for 1 kHz tick
+// Init TCC0 for 1 kHz / 100Hz tick
 /////////////////////////////////////////////////////////////////////////////////
 void init_TCC0(void)
 {
-	#ifdef EXPERIMENTAL
+	#ifdef TIMER_EXPERIMENTAL_1MS_TICK
 	TCC0.PER = TICK_1KHZ;										
 	#else
 	TCC0.PER = TICK_100HZ;
@@ -122,7 +122,7 @@ static uint8_t deinit(void) {
 /////////////////////////////////////////////////////////////////////////////////
 // Interrupt service routines
 /////////////////////////////////////////////////////////////////////////////////
-#ifdef EXPERIMENTAL
+#ifdef TIMER_EXPERIMENTAL_1MS_TICK
 ISR(TCC0_OVF_vect)
 {
 	event_fire(&EVENT_TIMER_1000_HZ, 0);
@@ -138,6 +138,7 @@ ISR(TCC0_OVF_vect)
 ISR(TCC0_OVF_vect)
 {
 	event_fire(&EVENT_TIMER_100_HZ, 0);
+	divider++;
 	//LED_PORT.OUTTGL = LED_PIN;
 	if(divider == 10)
 	{

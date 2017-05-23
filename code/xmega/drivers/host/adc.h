@@ -17,8 +17,6 @@
 // Defines
 /////////////////////////////////////////////////////////////////////////////////
 #define NU_AVERAGING_VALS 8
-#define VREF 2.275
-#define ADC_RESOLUTION 12
 
 #define ADC_RED_CHANNEL		ADCA.CH0
 #define ADC_RED_INTFLAG		ADC_CH0IF_bm
@@ -55,9 +53,6 @@ uint16_t getVal_ADCBlue(void);
 uint16_t getVal_ADCGreen(void);
 uint16_t getVal_ADCOLED(void);
 
-static uint8_t init(void);
-static uint8_t deinit(void);
-
-MODULE_EXP(ADC)
+MODULE_EXP(ADC);
 
 #endif /* XMEGA_DRIVERS_HOST_ADC_H_ */

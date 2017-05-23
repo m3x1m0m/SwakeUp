@@ -58,8 +58,8 @@ uint16_t getDutyCycle_PWMOLED(void);
 
 // TCD0
 void setPeriod_TCD0(uint16_t period);
-uint16_t getPeriod_TCD0();
+uint16_t getPeriod_TCD0(void);
 
-MODULE_EXP(PWM)
+MODULE_EXP(PWM);
 
 #endif /* XMEGA_DRIVERS_HOST_PWM_H_ */

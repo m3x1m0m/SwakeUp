@@ -304,6 +304,7 @@ static uint8_t init()
 	init_PWMBlue(PWM_FREQ_16KHZ);
 	init_PWMGreen(PWM_FREQ_16KHZ);
 	init_PWMOLED(PWM_FREQ_16KHZ);
+	LOG_DEBUG("PWM initialized.");
 	return 1;
 }
 

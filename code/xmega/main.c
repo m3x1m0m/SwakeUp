@@ -22,6 +22,7 @@
 #include "drivers/host/adc.h"
 #include "drivers/host/pid.h"
 #include "util/fixedpoint.h"
+#include "modules/voltagecntr.h"
 
 LOG_INIT("Main");
 
@@ -63,14 +64,15 @@ int main(void) {
     module_init(&LOGGER);                               //Initializing the logger for use
     sei();                                              //Enabling interrupts
     module_init(&CORE);
-	module_init(&PWM);
-	module_init(&ADC);
+	//module_init(&PWM);
+	//module_init(&ADC);
 	module_init(&PID);
     event_addListener(&EVENT_TIMER_1_HZ, callback);     //TODO this can be removed
     LOG_SYSTEM("System initialized");
     LOG_SYSTEM(greeting);
     core_screen(SCREEN_ON);
-    while (1) {
+
+while (1) {
         //This is all that should happen in the main loop
         //The system will go to sleep if no more events are to be processed
         event_process();

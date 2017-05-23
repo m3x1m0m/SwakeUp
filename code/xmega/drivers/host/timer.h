@@ -17,8 +17,6 @@
 /////////////////////////////////////////////////////////////////////////////////
 #define TICK_1KHZ 250-1;
 #define TICK_100HZ 2500-1;
-//#define EXPERIMENTAL				// Background: A fast system tick (event with 1 kHz produced by overflow ISR TCC0) does not work yet  with 16 MHz, processing is too slow I guess
-									// TODO: Test it with 32 MHz
 
 /////////////////////////////////////////////////////////////////////////////////
 // Event export

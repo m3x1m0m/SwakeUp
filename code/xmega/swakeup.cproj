@@ -240,6 +240,12 @@
     <Compile Include="modules\log.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="modules\voltagecntr.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="modules\voltagecntr.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="modules\screen.c">
       <SubType>compile</SubType>
     </Compile>
