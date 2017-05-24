@@ -1,42 +1,44 @@
 /////////////////////////////////////////////////////////////////////////////////
-// Light controller, which simple allows to post colors with a duration to a
-// queue and takes care of execution.
+//
 //
 // Author:				Maximilian Stiefel
 // Last Modification:	24.05.2017
 /////////////////////////////////////////////////////////////////////////////////
 
-#ifndef XMEGA_MODULES_LIGTHCNTRL_H_
-#define XMEGA_MODULES_LIGTHCNTRL_H_
-
 /////////////////////////////////////////////////////////////////////////////////
 // Includes
 /////////////////////////////////////////////////////////////////////////////////
-#include <avr/io.h>
-#include "../util/fixedpoint.h"
+#include "simplealarm.h"
 
 /////////////////////////////////////////////////////////////////////////////////
-// Defines
+// Colors
 /////////////////////////////////////////////////////////////////////////////////
-#define QUEUE_LENGTH 128
+myrgbcolor_t red = {5, 255, 0, 0, 0};
+myrgbcolor_t blue = {5, 0, 255, 0, 0};
+myrgbcolor_t green = {5, 0, 0, 255, 0};
+myrgbcolor_t white = {10, 255, 255, 255, 0};
+myrgbcolor_t dark = {5, 0, 0, 0};
 
 /////////////////////////////////////////////////////////////////////////////////
-// Typedefs
+// Enable Simple Alarm
 /////////////////////////////////////////////////////////////////////////////////
-typedef struct myrgbcolor_t
+void enableSimpAlarm(void)
 {
-	uint16_t duration;					// Duration as tics, right now 100 ms = 1 tick
-	uint16_t red;
-	uint16_t blue;
-	uint16_t green;	
-	myfixedpoint32_t gain;				
-} myrgbcolor_t;
+	addToLigthPattern(&red);
+	addToLigthPattern(&dark);
+	addToLigthPattern(&blue);
+	addToLigthPattern(&dark);
+	addToLigthPattern(&green);
+	addToLigthPattern(&dark);
+	addToLigthPattern(&white);
+	addToLigthPattern(&dark);
+	enableLightCnt(1);								// Enable light controller in repeat mode
+}
 
 /////////////////////////////////////////////////////////////////////////////////
-// Prototypes
+// Disable Simple Alarm
 /////////////////////////////////////////////////////////////////////////////////
-uint8_t addToLigthPattern(myrgbcolor_t *color);
-void enableLightCnt(uint8_t repeat);
-void disableLightCnt();
-
-#endif /* XMEGA_MODULES_LIGTHCNTRL_H_ */
+void disableSimpAlarm(void)
+{
+	disableLightCnt();
+}

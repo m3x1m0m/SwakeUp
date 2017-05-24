@@ -267,6 +267,12 @@
     <Compile Include="modules\pid.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="modules\simplealarm.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="modules\simplealarm.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="modules\voltagecntr.c">
       <SubType>compile</SubType>
     </Compile>

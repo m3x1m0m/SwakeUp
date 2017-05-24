@@ -1,5 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////////
-//
+// Light controller, which simple allows to post colors with a duration to a 
+// queue and takes care of execution.
 //
 // Author:				Maximilian Stiefel
 // Last Modification:	24.05.2017
@@ -28,14 +29,26 @@ typedef enum mycolorstate_t {IDLE, PLAY_COLOR} mycolorstate_t;
 /////////////////////////////////////////////////////////////////////////////////
 // Globale Vars
 /////////////////////////////////////////////////////////////////////////////////
-static volatile myrgbcolor_t *patternQue[QUEUE_LENGTH] = {NULL};
+static volatile myrgbcolor_t *patternQueue[QUEUE_LENGTH] = {NULL};
 static volatile uint16_t readInd;
 static volatile uint16_t writeInd;
+uint8_t repeatMode = 0;
 
 /////////////////////////////////////////////////////////////////////////////////
-// Increase Ring Buffer Style
+// Increase indRead Ring Buffer Style
 /////////////////////////////////////////////////////////////////////////////////
-static inline incRingBuffer(uint16_t *i)
+static inline incReadInd(uint16_t *i)
+{
+	if( (*i) < (writeInd-1) )
+		(*i)++;
+	else
+		(*i) = 0;
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+// Increase indRead Ring Buffer Style
+/////////////////////////////////////////////////////////////////////////////////
+static inline incWriteInd(uint16_t *i)
 {
 	if( (*i) < QUEUE_LENGTH)
 		(*i)++;
@@ -68,10 +81,10 @@ static inline setRGB(myrgbcolor_t *color)
 /////////////////////////////////////////////////////////////////////////////////
 uint8_t addToLigthPattern(myrgbcolor_t *color)
 {
-	if( patternQue[writeInd] == NULL)				// Check if queue is already full
+	if( patternQueue[writeInd] == NULL)				// Check if queue is already full
 	{
-		patternQue[writeInd] = color;
-		incRingBuffer(&writeInd);
+		patternQueue[writeInd] = color;
+		incWriteInd(&writeInd);
 		return 1;									// Successfully added element 
 	}
 	else
@@ -84,31 +97,35 @@ uint8_t addToLigthPattern(myrgbcolor_t *color)
 static void light(Event * event, uint8_t * data __attribute__ ((unused))) 
 {
 	static volatile mycolorstate_t currentState = IDLE;
+	static volatile myrgbcolor_t currentColor;
+	
 	if (event == &EVENT_TIMER_10_HZ) 
 	{
 		switch (currentState)
 		{
 		case IDLE:
-			if(patternQue[readInd] != NULL)
+			if(patternQueue[readInd] != NULL)
 			{
-				setRGB(patternQue[readInd]);
-				(patternQue[readInd]->duration)--;
+				currentColor = *(patternQueue[readInd]);						// Copy color out of queue
+				setRGB(&currentColor);											// Set light to color
+				currentColor.duration--;
 				currentState = PLAY_COLOR;
 			}
 			else
 			{
-				setRGB(NULL);
+				setRGB(NULL);													// Dark
 			}
 			break;
 		case PLAY_COLOR:
-				if( (patternQue[readInd]->duration) > 0)
+				if( currentColor.duration > 0)
 				{
-					LOG_DEBUG("Hejsan, %d", patternQue[readInd]->duration);
-					(patternQue[readInd]->duration)--;
+					currentColor.duration--;
 				}
 				else
 				{
-					incRingBuffer(&readInd);
+					if(!repeatMode)						
+						patternQueue[readInd] = NULL;							// Remove element
+					incReadInd(&readInd);
 					currentState = IDLE;
 				}
 			break;
@@ -118,8 +135,9 @@ static void light(Event * event, uint8_t * data __attribute__ ((unused)))
 /////////////////////////////////////////////////////////////////////////////////
 // Enable Light Controller
 /////////////////////////////////////////////////////////////////////////////////
-void enableLightCnt(void)
+void enableLightCnt(uint8_t repeat)
 {
+	repeatMode = repeat;
 	LOG_DEBUG("Ligth controller enabled.");
 	event_addListener(&EVENT_TIMER_10_HZ, light);
 }
