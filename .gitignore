@@ -48,6 +48,9 @@ Thumbs.db
 
 # C #
 ######################
+# main.c
+main.c
+
 # Prerequisites
 *.d
 
