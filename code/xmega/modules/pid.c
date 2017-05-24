@@ -12,13 +12,13 @@
 #include <avr/io.h>
 #include <stdlib.h>
 #include <stdarg.h>
-#include "../../modules/log.h"
-#include "../../util/fixedpoint.h"
-#include "../../defines.h"
+#include "../modules/log.h"
+#include "../util/fixedpoint.h"
+#include "../defines.h"
 #include "pid.h"
-#include "adc.h"
-#include "pwm.h"
-#include "../uart/terminal.h"
+#include "../drivers/host/adc.h"
+#include "../drivers/host/pwm.h"
+#include "../drivers/uart/terminal.h"
 #include <avr/pgmspace.h>
 
 LOG_INIT("PID");
@@ -37,7 +37,8 @@ static uint8_t debugMemInd = 0;
 /////////////////////////////////////////////////////////////////////////////////
 // Hook  for event which runs all PID controllers
 /////////////////////////////////////////////////////////////////////////////////
-static void pid(Event * event, uint8_t * data __attribute__ ((unused))) {
+static void pid(Event * event, uint8_t * data __attribute__ ((unused))) 
+{
 	// Variables
 	int32_t actualValue = 0;
 	uint16_t setPoint = 0;
@@ -53,7 +54,8 @@ static void pid(Event * event, uint8_t * data __attribute__ ((unused))) {
 	myfixedpoint32_t kd = 0;
 	
 	//Action
-	if (event == &EVENT_TIMER_100_HZ) {
+	if (event == &EVENT_TIMER_100_HZ) 
+	{
 		for(int i=0; i < nuOfControllers; i++)
 		{
 			if( !(controllers[i]->enabled) ) continue;									// PID is not enabled

@@ -1,8 +1,8 @@
 /////////////////////////////////////////////////////////////////////////////////
-//
+// Voltage controller based on a low-pass filter, PWM and an non-inv. opamp.
 //
 // Author:				Maximilian Stiefel
-// Last Modification:	19.05.2017
+// Last Modification:	24.05.2017
 /////////////////////////////////////////////////////////////////////////////////
 
 #ifndef XMEGA_MODULES_VOLTAGECNTR_H_
@@ -21,9 +21,9 @@
 /////////////////////////////////////////////////////////////////////////////////
 // Prototypes
 /////////////////////////////////////////////////////////////////////////////////
-void initController(void);
-void disableController(void);
-void enableController(void);
-void setVoltage(uint16_t voltage);
+void initVolCnt(void);
+void disableVolCnt(void);
+void enableVolCnt(void);
+void setVolCnt(uint16_t voltage);
 
 #endif /*XMEGA_MODULES_VOLTAGECNTR_H_ */
