@@ -10,7 +10,6 @@
 #define SPI_H_
 
 #include "../../util/module.h"
-#include "../../util/event.h"
 
 uint8_t spi_write_blocked(uint8_t byte);
 uint8_t spi_writes_blocked(uint8_t * bytes, uint8_t len);
