@@ -7,6 +7,7 @@
 
 #include "../modules/timekeeper.h"
 #include "../modules/screen.h"
+#include "../modules/simplealarm.h"
 #include "../sprites.h"
 #include "clock.h"
 #include "app.h"
@@ -100,12 +101,19 @@ static void callback(Event * event, uint8_t * data) {
     }
 }
 
+static void alarm(Event * event, uint8_t * data) {
+	if (event == &ALARM && APP_ISENABLED) {
+		enableSimpAlarm();
+	}
+}
+
 void clock_init(uint16_t drawX, uint16_t drawY) {
     APP_SET_POS(drawX, drawY);
     APP_SET_BOUNDS(CLOCK_DIGITAL_WIDTH, CLOCK_DIGITAL_HEIGHT + CLOCK_SMALL_HEIGHT);
     APP_ENABLE(true);
     displayWhat = CLOCK_DISPLAY_ALL;
     event_addListener(&TIME_CHANGE, callback);
+	event_addListener(&ALARM, alarm);
     clock_draw(TIMEKEEPER_UPDATE_TIME, displayWhat);
 }
 void clock_deinit(void) {

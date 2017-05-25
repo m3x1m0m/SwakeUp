@@ -19,19 +19,77 @@
 LOG_INIT("PWM");
 
 /////////////////////////////////////////////////////////////////////////////////
-// Defines
+// Macros
 /////////////////////////////////////////////////////////////////////////////////
+
+#define INIT_PWM_CHANNEL(PWM_PIN, SET_DUTY_CYCLE)\
+	PORTD.DIRSET |= PWM_PIN;\											// Set the port PWM_RED as output
+	SET_DUTY_CYCLE(PWM_INIT_CYCLE);\
+
+
+#define CREATE_SET_DUTY_CYCLE(CHANNEL_NAME, TIMER_NAME, CHANNEL_ID)\
+void setDutyCycle_PWM##CHANNEL_NAME(uint16_t cycle)\
+{\
+	uint16_t period = 0;\
+	period = GET_PERIOD();\
+	if (cycle < period){\
+		##TIMER_NAME.CC##CHANNEL_IDBUF = cycle;\
+		while( !(TCD0.INTFLAGS & TC0_OVFIF_bm) );\
+		TCD0.INTFLAGS &= ~TC1_OVFIF_bm;
+	}
+}
+
+uint16_t getDutyCycle_PWMRed(void)
+{
+	return TCD0.CCA;
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+// Functions for PWM_RED, TCD0A
+/////////////////////////////////////////////////////////////////////////////////
+void init_PWMRed(uint16_t period)
+{
+	// Configuring timer TCD0 and compare channel A
+	PORTD.DIRSET |= PWM_RED;											// Set the port PWM_RED as output
+	setPeriod_TCD0(period);												// Set period
+	TCD0.CTRLB |= TC_WGMODE_SINGLESLOPE_gc | TC0_CCAEN_bm;				// Single slope PWM and TCD0 enable
+	TCD0.CTRLA |= TC_CLKSEL_DIV1_gc;
+	setDutyCycle_PWMRed(PWM_INIT_CYCLE);
+}
+
+void setDutyCycle_PWMRed(uint16_t cycle)
+{
+	uint16_t period = 0;
+	period = getPeriod_TCD0();
+	if (cycle < period){
+		TCD0.CCABUF = cycle;
+		while( !(TCD0.INTFLAGS & TC0_OVFIF_bm) );
+		TCD0.INTFLAGS &= ~TC1_OVFIF_bm;
+	}
+}
+
+uint16_t getDutyCycle_PWMRed(void)
+{
+	return TCD0.CCA;
+}
 
 /////////////////////////////////////////////////////////////////////////////////
 // Timer TCD0 functions
 /////////////////////////////////////////////////////////////////////////////////
-void setPeriod_TCD0(uint16_t period)
+void init_TCD0(uint16_t period)
 {
 	if(period < PWM_MIN_PERIOD)
 		period = PWM_MIN_PERIOD;
 	HIRESD.CTRLA |= HIRES_HREN0_bm | HIRES_HRPLUS_bm ;					// Activate high resolution plus mode 
 	TCD0.PER = period-(period%8);										// Avoid that the last two bits are set
 																		// Acc. to the datasheet this is necessary for proper operation
+	TCD0.CTRLB |= TC_WGMODE_SINGLESLOPE_gc | TC0_CCAEN_bm;				// Single slope PWM and TCD0 enable
+	TCD0.CTRLA |= TC_CLKSEL_DIV1_gc;									// Activate timer
+}
+
+void deinit_TCD0(uint16_t period)
+{
+	TCD0.CTRLA &= ~TC_CLKSEL_DIV1_gc;									// Deactivate timer
 }
 
 uint16_t getPeriod_TCD0()

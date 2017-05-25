@@ -82,7 +82,7 @@ void init_TCC0(void)
 	#else
 	TCC0.PER = TICK_100HZ;
 	#endif
-	TCC0.CTRLA = TC_CLKSEL_DIV64_gc;							// 16 MHz / 64 = 250 kHz
+	TCC0.CTRLA = TC_CLKSEL_DIV64_gc;							// 16 MHz / 64 = 250 kHz or 32 MHz / 64 = 500kHz
 	TCC0.INTCTRLA |= TC_OVFINTLVL_HI_gc;						// Activate interrupt
 }
 
@@ -126,6 +126,7 @@ static uint8_t deinit(void) {
 ISR(TCC0_OVF_vect)
 {
 	event_fire(&EVENT_TIMER_1000_HZ, 0);
+	LED_PORT.OUTTGL = LED_PIN;
 	divider++;
 	if(divider == 10)
 	{

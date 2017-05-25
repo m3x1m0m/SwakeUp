@@ -3,7 +3,7 @@
 // queue and takes care of execution.
 //
 // Author:				Maximilian Stiefel
-// Last Modification:	24.05.2017
+// Last Modification:	25.05.2017
 /////////////////////////////////////////////////////////////////////////////////
 
 #ifndef XMEGA_MODULES_LIGTHCNTRL_H_
@@ -29,8 +29,19 @@ typedef struct myrgbcolor_t
 	uint16_t red;
 	uint16_t blue;
 	uint16_t green;	
-	myfixedpoint32_t gain;				
+	uint8_t gain;						// Gain on every color
+	uint8_t smoothing;					// Smoothing between this color and the next color
+	char name[32];						// Name of the color  
 } myrgbcolor_t;
+
+/////////////////////////////////////////////////////////////////////////////////
+// Macros
+/////////////////////////////////////////////////////////////////////////////////
+#define STRINGIFY(x) #x
+#define TOSTRING(x) STRINGIFY(x)
+
+#define CREATE_NEW_COLOR(DURATION, RED, BLUE, GREEN, GAIN, SMOOTH, COL_NAME)\
+	myrgbcolor_t COL_NAME = {DURATION*10, RED, BLUE, GREEN, GAIN, SMOOTH, TOSTRING(COL_NAME)}
 
 /////////////////////////////////////////////////////////////////////////////////
 // Prototypes

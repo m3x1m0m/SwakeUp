@@ -21,6 +21,7 @@ typedef int32_t myfixedpoint32_t;		//signed 32 bit integer
 #define FROMFLOAT(x) (myfixedpoint32_t)( ((double)x) * (1<<NO_OF_DECIMALS) )
 #define FROMINT(x) ( ( (myfixedpoint32_t) x) * (1<<NO_OF_DECIMALS) )
 #define TOUINT16T(x) ( (uint16_t) ( (x)>>NO_OF_DECIMALS ) )
+#define TOUINT8T(x) ( (uint8_t) ( (x)>>NO_OF_DECIMALS ) )
 #define FMUL1(x, y) (myfixedpoint32_t)(((myfixedpoint64_t)x * (myfixedpoint64_t)y) >> NO_OF_DECIMALS)
 
 /////////////////////////////////////////////////////////////////////////////////

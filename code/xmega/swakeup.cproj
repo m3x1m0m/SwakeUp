@@ -273,6 +273,12 @@
     <Compile Include="modules\simplealarm.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="modules\sunnyalarm.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="modules\sunnyalarm.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="modules\voltagecntr.c">
       <SubType>compile</SubType>
     </Compile>

@@ -30,7 +30,7 @@
 };
 
 // Prints out all the event that are being fired
-// #define EVENT_PRINT
+//#define EVENT_PRINT
 
 // This is the default log formatting
 #define DEFAULT_LOG_FORMAT TIME_LEVEL_NAME_FILE_LINE
@@ -67,5 +67,11 @@
 // ADC reference
 #define VREF 2.3
 #define VPERCOUNT_GAIN10E6 561.52
+
+// Use external clock
+#define EXTERNAL_CLK
+
+// Show interpolated colors from the light control
+#define SHOW_INTERPOLATED_COLORS
 
 #endif /* DEFINES_H_ */

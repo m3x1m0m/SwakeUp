@@ -86,6 +86,7 @@ struct timekeeperalarm_s timekeeper_alarm_get(void);
 TimeKeeper timekeeper_get(void);
 /** This event will get fired when a time change request occurs */
 EVENT_EXP(TIME_CHANGE);
+EVENT_EXP(ALARM);
 
 MODULE_EXP(TIME);
 

@@ -12,6 +12,7 @@
 LOG_INIT("Timekeeper");
 
 EVENT_REGISTER(TIME_CHANGE, "Time and Date change");
+EVENT_REGISTER(ALARM, "Wakeup Alarm");
 
 static TimeKeeper timeKeeper;
 
@@ -59,6 +60,16 @@ static void updateDayDate(void) {
     }
 }
 
+void checkAlarm(void)
+{
+	if ( (timeKeeper.date.day & timeKeeper.alarm.days) &&\
+	(timeKeeper.time.hour & timeKeeper.alarm.time.hour) &&\
+	(timeKeeper.time.minute & timeKeeper.alarm.time.minute) )
+	{
+		//event_fire(&ALARM, 0);
+	}
+}
+
 static void callback(Event * event, uint8_t * data __attribute__ ((unused))) {
     if (event == &EVENT_TIMER_1_HZ) {
         timeKeeper.time.second++;
@@ -66,6 +77,7 @@ static void callback(Event * event, uint8_t * data __attribute__ ((unused))) {
         if (timeKeeper.time.second >= 60) {
             timeKeeper.time.second = 0;
             timeKeeper.time.minute++;
+			checkAlarm();
             updated |= TIMEKEEPER_UPDATE_MIN_BP;
             if (timeKeeper.time.minute >= 60) {
                 timeKeeper.time.minute = 0;

@@ -1,14 +1,14 @@
 /////////////////////////////////////////////////////////////////////////////////
-// Simple blinking alarm module for a rough waking up.
+// 
 //
 // Author:				Maximilian Stiefel
 // Last Modification:	25.05.2017
 /////////////////////////////////////////////////////////////////////////////////
 
 
+#ifndef XMEGA_MODULES_SUNNYALARM_H_
+#define XMEGA_MODULES_SUNNYALARM_H_
 
-#ifndef  XMEGA_MODULES_SIMPLEALARM_H_
-#define  XMEGA_MODULES_SIMPLEALARM_H_
 
 /////////////////////////////////////////////////////////////////////////////////
 // Includes
@@ -18,7 +18,9 @@
 /////////////////////////////////////////////////////////////////////////////////
 // Prototypes
 /////////////////////////////////////////////////////////////////////////////////
-void enableSimpAlarm(void);				// Enable when it is the time for it
-void disableSimpAlarm(void);						// Disable when user pressed button
+void enableSunnyAlarm(void);						// Enable when it is the time for it
+void disableSunnyAlarm(void);						// Disable when user pressed button
 
-#endif /*  XMEGA_MODULES_SIMPLEALARM_H_ */
+
+
+#endif /* XMEGA_MODULES_SUNNYALARM_H_ */

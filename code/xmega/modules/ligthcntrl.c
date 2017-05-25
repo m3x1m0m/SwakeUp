@@ -3,7 +3,7 @@
 // queue and takes care of execution.
 //
 // Author:				Maximilian Stiefel
-// Last Modification:	24.05.2017
+// Last Modification:	25.05.2017
 /////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -24,7 +24,7 @@ LOG_INIT("LIGHT");
 /////////////////////////////////////////////////////////////////////////////////
 // Typedefs
 /////////////////////////////////////////////////////////////////////////////////
-typedef enum mycolorstate_t {IDLE, PLAY_COLOR} mycolorstate_t;
+typedef enum mycolorstate_t {IDLE, PLAY_COLOR, PLAY_COLOR_SMOOTH} mycolorstate_t;
 
 /////////////////////////////////////////////////////////////////////////////////
 // Globale Vars
@@ -92,12 +92,51 @@ uint8_t addToLigthPattern(myrgbcolor_t *color)
 }
 
 /////////////////////////////////////////////////////////////////////////////////
+// Get Gradient between two Vals
+/////////////////////////////////////////////////////////////////////////////////
+static inline myfixedpoint32_t getGradient(uint8_t ia, uint8_t ib, uint16_t idx)
+{
+	// Variables
+	myfixedpoint32_t a = FROMINT(ia);
+	myfixedpoint32_t b = FROMINT(ib);
+	myfixedpoint32_t dx = FROMINT(idx);
+	
+	// Action
+	return fixedPt_div( (b-a), dx );  
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+// Next Smooth Value
+/////////////////////////////////////////////////////////////////////////////////
+static inline myrgbcolor_t nextSmoothVal(myrgbcolor_t colora, myrgbcolor_t colorb)
+{
+	// Variables
+	myrgbcolor_t newVal = colora;
+	
+	// Action
+	
+	newVal.red = colora.red + TOUINT8T(getGradient(colora.red, colorb.red, colora.duration));
+	newVal.blue = colora.blue + TOUINT8T(getGradient(colora.blue, colorb.blue, colora.duration));
+	newVal.green = colora.green + TOUINT8T(getGradient(colora.green, colorb.green, colora.duration));
+	
+	
+	#ifdef SHOW_INTERPOLATED_COLORS
+		LOG_DEBUG("RBG: %d, %d, %d", newVal.red, newVal.blue, newVal.green); 
+		LOG_DEBUG("Gradients RBG: %d, %d, %d", TOUINT8T(getGradient(colora.red, colorb.red, colora.duration)),\
+		TOUINT8T(getGradient(colora.blue, colorb.blue, colora.duration)),\
+		TOUINT8T(getGradient(colora.green, colorb.green, colora.duration))); 
+	#endif	
+	return newVal;				
+}
+
+/////////////////////////////////////////////////////////////////////////////////
 // Executet every 100 ms
 /////////////////////////////////////////////////////////////////////////////////
 static void light(Event * event, uint8_t * data __attribute__ ((unused))) 
 {
 	static volatile mycolorstate_t currentState = IDLE;
 	static volatile myrgbcolor_t currentColor;
+	static volatile myrgbcolor_t nextColor;
 	
 	if (event == &EVENT_TIMER_10_HZ) 
 	{
@@ -109,7 +148,15 @@ static void light(Event * event, uint8_t * data __attribute__ ((unused)))
 				currentColor = *(patternQueue[readInd]);						// Copy color out of queue
 				setRGB(&currentColor);											// Set light to color
 				currentColor.duration--;
-				currentState = PLAY_COLOR;
+				if(currentColor.smoothing)
+				{
+					currentState = PLAY_COLOR_SMOOTH;
+					nextColor = *(patternQueue[readInd + 1]);
+				}
+				else
+				{
+					currentState = PLAY_COLOR;
+				}
 			}
 			else
 			{
@@ -129,7 +176,28 @@ static void light(Event * event, uint8_t * data __attribute__ ((unused)))
 					currentState = IDLE;
 				}
 			break;
+		case PLAY_COLOR_SMOOTH:
+				if( currentColor.duration > 0)
+				{
+					currentColor = nextSmoothVal(currentColor, nextColor);
+					setRGB(&currentColor);
+					currentColor.duration--;
+				}
+				else
+				{
+					if(!repeatMode)
+						patternQueue[readInd] = NULL;							// Remove element
+					incReadInd(&readInd);
+					currentState = IDLE;
+				}		
+				break;
 		}
+		#ifdef SHOW_INTERPOLATED_COLORS
+			LOG_DEBUG("State: %d", currentState);
+			LOG_DEBUG("Duration: %d", currentColor.duration);
+			LOG_DEBUG("Current Color: %s", currentColor.name);
+			LOG_DEBUG("----------------------");
+		#endif
 	}
 }
 /////////////////////////////////////////////////////////////////////////////////
