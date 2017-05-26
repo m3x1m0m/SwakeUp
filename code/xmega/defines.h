@@ -11,8 +11,6 @@
 
 #include <stdint.h>
 
-#define F_CPU               16000000UL
-
 #define TAB "\t\t\t\t"
 #define NL  "\r\n"
 
@@ -69,7 +67,14 @@
 #define VPERCOUNT_GAIN10E6 561.52
 
 // Use external clock
-#define EXTERNAL_CLK
+//#define EXTERNAL_CLK
+
+#ifdef EXTERNAL_CLK
+#define F_CPU               16000000UL
+#else
+#define F_CPU               32000000UL
+#endif
+
 
 // Show interpolated colors from the light control
 #define SHOW_INTERPOLATED_COLORS

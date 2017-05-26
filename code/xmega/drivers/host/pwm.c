@@ -3,7 +3,7 @@
 // (x8 the input freq. of the system clock).
 // 
 // Author:				Maximilian Stiefel
-// Last Modification:	10.05.2017
+// Last Modification:	26.05.2017
 /////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -19,75 +19,19 @@
 LOG_INIT("PWM");
 
 /////////////////////////////////////////////////////////////////////////////////
-// Macros
-/////////////////////////////////////////////////////////////////////////////////
-
-#define INIT_PWM_CHANNEL(PWM_PIN, SET_DUTY_CYCLE)\
-	PORTD.DIRSET |= PWM_PIN;\											// Set the port PWM_RED as output
-	SET_DUTY_CYCLE(PWM_INIT_CYCLE);\
-
-
-#define CREATE_SET_DUTY_CYCLE(CHANNEL_NAME, TIMER_NAME, CHANNEL_ID)\
-void setDutyCycle_PWM##CHANNEL_NAME(uint16_t cycle)\
-{\
-	uint16_t period = 0;\
-	period = GET_PERIOD();\
-	if (cycle < period){\
-		##TIMER_NAME.CC##CHANNEL_IDBUF = cycle;\
-		while( !(TCD0.INTFLAGS & TC0_OVFIF_bm) );\
-		TCD0.INTFLAGS &= ~TC1_OVFIF_bm;
-	}
-}
-
-uint16_t getDutyCycle_PWMRed(void)
-{
-	return TCD0.CCA;
-}
-
-/////////////////////////////////////////////////////////////////////////////////
-// Functions for PWM_RED, TCD0A
-/////////////////////////////////////////////////////////////////////////////////
-void init_PWMRed(uint16_t period)
-{
-	// Configuring timer TCD0 and compare channel A
-	PORTD.DIRSET |= PWM_RED;											// Set the port PWM_RED as output
-	setPeriod_TCD0(period);												// Set period
-	TCD0.CTRLB |= TC_WGMODE_SINGLESLOPE_gc | TC0_CCAEN_bm;				// Single slope PWM and TCD0 enable
-	TCD0.CTRLA |= TC_CLKSEL_DIV1_gc;
-	setDutyCycle_PWMRed(PWM_INIT_CYCLE);
-}
-
-void setDutyCycle_PWMRed(uint16_t cycle)
-{
-	uint16_t period = 0;
-	period = getPeriod_TCD0();
-	if (cycle < period){
-		TCD0.CCABUF = cycle;
-		while( !(TCD0.INTFLAGS & TC0_OVFIF_bm) );
-		TCD0.INTFLAGS &= ~TC1_OVFIF_bm;
-	}
-}
-
-uint16_t getDutyCycle_PWMRed(void)
-{
-	return TCD0.CCA;
-}
-
-/////////////////////////////////////////////////////////////////////////////////
 // Timer TCD0 functions
 /////////////////////////////////////////////////////////////////////////////////
 void init_TCD0(uint16_t period)
 {
-	if(period < PWM_MIN_PERIOD)
-		period = PWM_MIN_PERIOD;
-	HIRESD.CTRLA |= HIRES_HREN0_bm | HIRES_HRPLUS_bm ;					// Activate high resolution plus mode 
+	if(period < PWM_MIN_PERIOD) period = PWM_MIN_PERIOD;
+	HIRESD.CTRLA |= HIRES_HREN0_bm | HIRES_HRPLUS_bm ;					// Activate high resolution plus mode
 	TCD0.PER = period-(period%8);										// Avoid that the last two bits are set
 																		// Acc. to the datasheet this is necessary for proper operation
-	TCD0.CTRLB |= TC_WGMODE_SINGLESLOPE_gc | TC0_CCAEN_bm;				// Single slope PWM and TCD0 enable
+	TCD0.CTRLB |= TC_WGMODE_SINGLESLOPE_gc;								// Single slope PWM and TCD0 enable
 	TCD0.CTRLA |= TC_CLKSEL_DIV1_gc;									// Activate timer
 }
 
-void deinit_TCD0(uint16_t period)
+void deinit_TCD0()
 {
 	TCD0.CTRLA &= ~TC_CLKSEL_DIV1_gc;									// Deactivate timer
 }
@@ -97,17 +41,19 @@ uint16_t getPeriod_TCD0()
 	return TCD0.PER;
 }
 
+/////////////////////////////////////////////////////////////////////////////////
+// Timer TCD1 functions. Only relevant if revision 1 is used.
+/////////////////////////////////////////////////////////////////////////////////
 #ifdef REV_1
-/////////////////////////////////////////////////////////////////////////////////
-// Timer TCD1 functions
-/////////////////////////////////////////////////////////////////////////////////
-void setPeriod_TCD1(uint16_t period)
+void init_TCD1(uint16_t period)
 {
 	if(period < PWM_MIN_PERIOD)
 	period = PWM_MIN_PERIOD;
 	HIRESD.CTRLA |= HIRES_HREN1_bm | HIRES_HRPLUS_bm ;					// Activate high resolution plus mode
 	TCD1.PER = period-(period%8);										// Avoid that the last two bits are set
-	// Acc. to the datasheet this is necessary for proper operation
+																		// Acc. to the datasheet this is necessary for proper operation
+	TCD1.CTRLB |= TC_WGMODE_SINGLESLOPE_gc;								// Single slope PWM and TCD0 enable
+	TCD1.CTRLA |= TC_CLKSEL_DIV1_gc;									// Activate timer
 }
 
 uint16_t getPeriod_TCD1()
@@ -118,180 +64,46 @@ uint16_t getPeriod_TCD1()
 
 
 /////////////////////////////////////////////////////////////////////////////////
-// Functions for PWM_RED, TCD0A
+// Macros for Compare Channel Setup
 /////////////////////////////////////////////////////////////////////////////////
-void init_PWMRed(uint16_t period)
-{
-	// Configuring timer TCD0 and compare channel A
-	PORTD.DIRSET |= PWM_RED;											// Set the port PWM_RED as output
-	setPeriod_TCD0(period);												// Set period 
-	TCD0.CTRLB |= TC_WGMODE_SINGLESLOPE_gc | TC0_CCAEN_bm;				// Single slope PWM and TCD0 enable
-	TCD0.CTRLA |= TC_CLKSEL_DIV1_gc;				
-	setDutyCycle_PWMRed(PWM_INIT_CYCLE);								             
+#define CREATE_SET_DUTY_CYCLE(CHANNEL_NAME, TIMER_NAME, CHANNEL_ID, GET_PER)\
+void setDutyCycle_PWM ##CHANNEL_NAME(uint16_t cycle)\
+{\
+	uint16_t period = 0;\
+	period = GET_PER();\
+	if (cycle < period){\
+		TIMER_NAME.CHANNEL_ID = cycle;\
+		while( !(TIMER_NAME.INTFLAGS & TC0_OVFIF_bm) );\
+		TIMER_NAME.INTFLAGS &= ~TC1_OVFIF_bm;\
+	}\
 }
 
-void setDutyCycle_PWMRed(uint16_t cycle)
-{
-	uint16_t period = 0;
-	period = getPeriod_TCD0();
-	if (cycle < period){
-		TCD0.CCABUF = cycle;
-		while( !(TCD0.INTFLAGS & TC0_OVFIF_bm) );
-		TCD0.INTFLAGS &= ~TC1_OVFIF_bm;
-	}
-}
+#define INIT_PWM_CHANNEL(CHANNEL_NAME, PIN_NU, TIMER_NAME, COMPARE_ENABLE)\
+PWM_PORT.DIRSET |= (1 << PIN_NU);\
+TIMER_NAME.CTRLB |= TC_WGMODE_SINGLESLOPE_gc | COMPARE_ENABLE;\
+setDutyCycle_PWM ##CHANNEL_NAME(PWM_INIT_CYCLE);
 
-uint16_t getDutyCycle_PWMRed(void)
-{
-	return TCD0.CCA;
+#define  CREATE_GET_DUTY_CYCLE(CHANNEL_NAME, TIMER_NAME, CHANNEL_ID)\
+uint16_t getDutyCycle_PWM ##CHANNEL_NAME(void)\
+{\
+	return TIMER_NAME.CHANNEL_ID;\
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-// Functions for PWM_BLUE, TC0B
+// PWM Channel Functions
 /////////////////////////////////////////////////////////////////////////////////
-void init_PWMBlue(uint16_t period)
-{
-	// Configuring timer TCD0 and compare channel B
-	PWM_PORT.DIRSET |= PWM_BLUE;											// Set the port PWM_RED as output
-	setPeriod_TCD0(period);												// Set period
-	TCD0.CTRLB |= TC_WGMODE_SINGLESLOPE_gc | TC0_CCBEN_bm;				// Single slope PWM and TCD0 enable
-	TCD0.CTRLA |= TC_CLKSEL_DIV1_gc;
-	setDutyCycle_PWMBlue(PWM_INIT_CYCLE);								
-}
+CREATE_SET_DUTY_CYCLE(RED, PWM_RED_TIMER, PWM_RED_CHANNEL, PWM_RED_GET_PERIOD);							// Channel name, timer name, channel on HW (A, B, C or D)
+CREATE_GET_DUTY_CYCLE(RED, PWM_RED_TIMER, PWM_RED_CHANNEL);
 
-void setDutyCycle_PWMBlue(uint16_t cycle)
-{
-	uint16_t period = 0;
-	period = getPeriod_TCD0();
-	if (cycle < period){
-		TCD0.CCBBUF = cycle;
-		while( !(TCD0.INTFLAGS & TC0_OVFIF_bm) );
-		TCD0.INTFLAGS &= ~TC0_OVFIF_bm;
-	}
-}
+CREATE_SET_DUTY_CYCLE(GREEN, PWM_GREEN_TIMER, PWM_GREEN_CHANNEL, PWM_GREEN_GET_PERIOD);							
+CREATE_GET_DUTY_CYCLE(GREEN, PWM_GREEN_TIMER, PWM_GREEN_CHANNEL);
 
-uint16_t getDutyCycle_PWMBlue(void)
-{
-	return TCD0.CCB;
-}
+CREATE_SET_DUTY_CYCLE(BLUE, PWM_BLUE_TIMER, PWM_BLUE_CHANNEL, PWM_BLUE_GET_PERIOD);
+CREATE_GET_DUTY_CYCLE(BLUE, PWM_BLUE_TIMER, PWM_BLUE_CHANNEL);
 
-/////////////////////////////////////////////////////////////////////////////////
-// Functions for PWM_GREEN, TCD0C/TCD1A
-/////////////////////////////////////////////////////////////////////////////////
-#ifdef REV_1
-void init_PWMGreen(uint16_t period)
-{
-	// Configuring timer TCD0 and compare channel B
-	PWM_PORT.DIRSET |= PWM_GREEN;										// Set the port PWM_RED as output
-	setPeriod_TCD1(period);												// Set period
-	TCD1.CTRLB |= TC_WGMODE_SINGLESLOPE_gc | TC1_CCAEN_bm;				// Single slope PWM and TCD1 enable
-	TCD1.CTRLA |= TC_CLKSEL_DIV1_gc;
-	setDutyCycle_PWMGreen(PWM_INIT_CYCLE);
-}
+CREATE_SET_DUTY_CYCLE(OLED, PWM_OLED_TIMER, PWM_OLED_CHANNEL, PWM_OLED_GET_PERIOD);
+CREATE_GET_DUTY_CYCLE(OLED, PWM_OLED_TIMER, PWM_OLED_CHANNEL);
 
-void setDutyCycle_PWMGreen(uint16_t cycle)
-{
-	uint16_t period = 0;
-	period = getPeriod_TCD0();
-	if (cycle < period){
-		TCD1.CCABUF = cycle;
-		while( !(TCD1.INTFLAGS & TC1_OVFIF_bm) );
-		TCD1.INTFLAGS &= ~TC1_OVFIF_bm;
-	}
-}
-
-uint16_t getDutyCycle_PWMGreen(void)
-{
-	return TCD1.CCA;
-}
-#endif 
-
-#ifdef REV_2
-void init_PWMGreen(uint16_t period)
-{
-	// Configuring timer TCD0 and compare channel B
-	PWM_PORT.DIRSET |= PWM_GREEN;											// Set the port PWM_RED as output
-	setPeriod_TCD0(period);												// Set period
-	TCD0.CTRLB |= TC_WGMODE_SINGLESLOPE_gc | TC0_CCCEN_bm;				// Single slope PWM and TCD0 enable
-	TCD0.CTRLA |= TC_CLKSEL_DIV1_gc;
-	setDutyCycle_PWMGreen(PWM_INIT_CYCLE);
-}
-
-void setDutyCycle_PWMGreen(uint16_t cycle)
-{
-	uint16_t period = 0;
-	period = getPeriod_TCD0();
-	if (cycle < period){
-		TCD0.CCCBUF = cycle;
-		while( !(TCD0.INTFLAGS & TC0_OVFIF_bm) );
-		TCD0.INTFLAGS &= ~TC0_OVFIF_bm;
-	}
-}
-
-uint16_t getDutyCycle_PWMGreen(void)
-{
-	return TCD0.CCC;
-}
-#endif
-
-/////////////////////////////////////////////////////////////////////////////////
-// Functions for PWM_OLED, TCD0D/TCD1B
-/////////////////////////////////////////////////////////////////////////////////
-#ifdef REV_1
-void init_PWMOLED(uint16_t period)
-{
-	// Configuring timer TCD0 and compare channel B
-	PWM_PORT.DIRSET |= PWM_OLED;										// Set the port PWM_RED as output
-	setPeriod_TCD1(period);												// Set period
-	TCD1.CTRLB |= TC_WGMODE_SINGLESLOPE_gc | TC1_CCBEN_bm;				// Single slope PWM and TCD0 enable
-	TCD1.CTRLA |= TC_CLKSEL_DIV1_gc;
-	setDutyCycle_PWMOLED(PWM_INIT_CYCLE);
-}
-
-void setDutyCycle_PWMOLED(uint16_t cycle)
-{
-	uint16_t period = 0;
-	period = getPeriod_TCD1();
-	if (cycle < period){
-		TCD1.CCBBUF = cycle;
-		while( !(TCD1.INTFLAGS & TC1_OVFIF_bm) );
-		TCD1.INTFLAGS &= ~TC1_OVFIF_bm;
-	}
-}
-
-uint16_t getDutyCycle_PWMOLED(void)
-{
-	return TCD1.CCB;
-}
-#endif
-
-#ifdef REV_2
-void init_PWMOLED(uint16_t period)
-{
-	// Configuring timer TCD0 and compare channel B
-	PWM_PORT.DIRSET |= PWM_OLED;											// Set the port PWM_RED as output
-	setPeriod_TCD0(period);												// Set period
-	TCD0.CTRLB |= TC_WGMODE_SINGLESLOPE_gc | TC0_CCDEN_bm;				// Single slope PWM and TCD0 enable
-	TCD0.CTRLA |= TC_CLKSEL_DIV1_gc;
-	setDutyCycle_PWMOLED(PWM_INIT_CYCLE);
-}
-
-void setDutyCycle_PWMOLED(uint16_t cycle)
-{
-	uint16_t period = 0;
-	period = getPeriod_TCD0();
-	if (cycle < period){
-		TCD0.CCDBUF = cycle;
-		while( !(TCD0.INTFLAGS & TC0_OVFIF_bm) );
-		TCD0.INTFLAGS &= ~TC0_OVFIF_bm;
-	}
-}
-
-uint16_t getDutyCycle_PWMOLED(void)
-{
-	return TCD0.CCD;
-}
-#endif
 /////////////////////////////////////////////////////////////////////////////////
 // Terminal commands for debugging
 /////////////////////////////////////////////////////////////////////////////////
@@ -305,17 +117,17 @@ static void pwmCommand(uint8_t len __attribute__ ((unused)), char * data __attri
 		case 'R':
 		LOG_DEBUG("Cycle: %d", cycle);
 		LOG_DEBUG("Apply new settings to PWM_RED.");
-		setDutyCycle_PWMRed(cycle);
+		setDutyCycle_PWMRED(cycle);
 		break;
 		case 'B':
 		LOG_DEBUG("Cycle: %d", cycle);
 		LOG_DEBUG("Apply new settings to PWM_BLUE.");
-		setDutyCycle_PWMBlue(cycle);
+		setDutyCycle_PWMBLUE(cycle);
 		break;
 		case 'G':
 		LOG_DEBUG("Cycle: %d", cycle);
 		LOG_DEBUG("Apply new settings to PWM_GREEN.");
-		setDutyCycle_PWMGreen(cycle);
+		setDutyCycle_PWMGREEN(cycle);
 		break;
 		case 'O':
 		LOG_DEBUG("Cycle: %d", cycle);
@@ -358,16 +170,22 @@ static uint8_t init()
 												"Set PWM channel compare value.");
 	/*command_hook_description('N', &TCD0Command,	"N <G(Get) / S(Set)> (<PER register>)\r\n\t"
 												"Get / Set TCD0 PER register.");*/
-	init_PWMRed(PWM_FREQ_16KHZ);
-	init_PWMBlue(PWM_FREQ_16KHZ);
-	init_PWMGreen(PWM_FREQ_16KHZ);
-	init_PWMOLED(PWM_FREQ_16KHZ);
+	
+	init_TCD0(PWM_FREQ_16KHZ);
+	#ifdef REV_1																					// Revision 1 works with two timers
+	init_TCD1(PWM_FREQ_16KHZ);
+	#endif
+	INIT_PWM_CHANNEL(RED, PWM_RED_PIN_NU, PWM_RED_TIMER, PWM_RED_ENABLE_FLAG);
+	INIT_PWM_CHANNEL(GREEN, PWM_GREEN_PIN_NU, PWM_GREEN_TIMER, PWM_GREEN_ENABLE_FLAG);
+	INIT_PWM_CHANNEL(BLUE, PWM_BLUE_PIN_NU, PWM_BLUE_TIMER, PWM_BLUE_ENABLE_FLAG);
+	INIT_PWM_CHANNEL(OLED, PWM_OLED_PIN_NU, PWM_OLED_TIMER, PWM_OLED_ENABLE_FLAG);
 	LOG_DEBUG("PWM initialized.");
 	return 1;
 }
 
 static uint8_t deinit(void) 
 {
+	deinit_TCD0();
 	return 1;
 }
 

@@ -64,15 +64,15 @@ static inline setRGB(myrgbcolor_t *color)
 	// TODO: In a later HW revision the PID controller has to be included here.
 	if(color == NULL)
 	{
-		setDutyCycle_PWMRed(0);
-		setDutyCycle_PWMBlue(0);
-		setDutyCycle_PWMGreen(0);
+		setDutyCycle_PWMRED(0);
+		setDutyCycle_PWMBLUE(0);
+		setDutyCycle_PWMGREEN(0);
 	}
 	else
 	{
-		setDutyCycle_PWMRed(color->red);
-		setDutyCycle_PWMBlue(color->blue);
-		setDutyCycle_PWMGreen(color->green);	
+		setDutyCycle_PWMRED(color->red);
+		setDutyCycle_PWMBLUE(color->blue);
+		setDutyCycle_PWMGREEN(color->green);	
 	}
 }
 

@@ -74,18 +74,37 @@ static const IO_PP _led =     GPIO_PP(0, GPIO_PORTB);
 #define SEPS525F_CSB        (1<<2)
 #define SEPS525F_CSB_PP()   gpio_pp(3, GPIO_PORTC)
 
+
 #define PWM_PORT            PORTD
-#define PWM_RED (1 << 0)
-#define PWM_BLUE (1 << 1)
-#define PWM_GREEN (1 << 4)
-#define PWM_OLED (1 << 5)
+
+#define PWM_RED_PIN_NU 0
+#define PWM_RED_TIMER TCD0
+#define PWM_RED_CHANNEL CCABUF
+#define PWM_RED_GET_PERIOD getPeriod_TCD0
+#define PWM_RED_ENABLE_FLAG TC0_CCAEN_bm
+
+#define PWM_GREEN_PIN_NU 1
+#define PWM_GREEN_TIMER TCD0
+#define PWM_GREEN_CHANNEL CCBBUF
+#define PWM_GREEN_GET_PERIOD getPeriod_TCD0
+#define PWM_GREEN_ENABLE_FLAG TC0_CCBEN_bm
+
+#define PWM_BLUE_PIN_NU 4
+#define PWM_BLUE_TIMER TCD1
+#define PWM_BLUE_CHANNEL CCABUF
+#define PWM_BLUE_GET_PERIOD getPeriod_TCD1
+#define PWM_BLUE_ENABLE_FLAG TC0_CCAEN_bm
+
+#define PWM_OLED_PIN_NU 5
+#define PWM_OLED_TIMER TCD1
+#define PWM_OLED_CHANNEL CCBBUF
+#define PWM_OLED_GET_PERIOD getPeriod_TCD1
+#define PWM_OLED_ENABLE_FLAG TC0_CCBEN_bm
 
 #define ADC_PORT PORTA
 #define ADC_RED_PIN_NU 7
 #define ADC_BLUE_PIN_NU 6
 #define ADC_GREEN_PIN_NU 5
 #define ADC_OLED_PIN_NU 4
-
-
 
 #endif /* PIN_REV_1_H_ */
