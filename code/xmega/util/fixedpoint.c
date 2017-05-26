@@ -10,7 +10,6 @@
 /////////////////////////////////////////////////////////////////////////////////
 #include <stdio.h>
 #include <stdint.h>
-#include <assert.h>
 #include "../modules/log.h"
 #include "fixedpoint.h"
 
@@ -74,8 +73,12 @@ myfixedpoint32_t fixedPt_mul(myfixedpoint32_t x, myfixedpoint32_t y)
 myfixedpoint32_t fixedPt_div(myfixedpoint32_t x, myfixedpoint32_t y) 
 {
 	myfixedpoint32_t out = 0;
-	assert(x!=0);
-	assert(y!=0);
+	
+	if(y == 0)
+	{
+		LOG_DEBUG("Sb. tried a division by 0.");
+		return 0;
+	}
 	out = (x<<NO_OF_DECIMALS)/y;
 	if((x<0) != (y<0)) {
 		out -= (y-1)/y;

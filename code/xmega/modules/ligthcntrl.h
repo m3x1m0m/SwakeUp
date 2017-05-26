@@ -3,7 +3,7 @@
 // queue and takes care of execution.
 //
 // Author:				Maximilian Stiefel
-// Last Modification:	25.05.2017
+// Last Modification:	26.05.2017
 /////////////////////////////////////////////////////////////////////////////////
 
 #ifndef XMEGA_MODULES_LIGTHCNTRL_H_
@@ -14,11 +14,13 @@
 /////////////////////////////////////////////////////////////////////////////////
 #include <avr/io.h>
 #include "../util/fixedpoint.h"
+#include "../util/module.h"
 
 /////////////////////////////////////////////////////////////////////////////////
 // Defines
 /////////////////////////////////////////////////////////////////////////////////
 #define QUEUE_LENGTH 128
+#define SECURITY_THRESHOLD 600
 
 /////////////////////////////////////////////////////////////////////////////////
 // Typedefs
@@ -26,10 +28,10 @@
 typedef struct myrgbcolor_t
 {
 	uint16_t duration;					// Duration as tics, right now 100 ms = 1 tick
-	uint16_t red;
-	uint16_t blue;
-	uint16_t green;	
-	uint8_t gain;						// Gain on every color
+	myfixedpoint32_t red;
+	myfixedpoint32_t green;	
+	myfixedpoint32_t blue;
+	myfixedpoint32_t gain;				// Gain on every color
 	uint8_t smoothing;					// Smoothing between this color and the next color
 	char name[32];						// Name of the color  
 } myrgbcolor_t;
@@ -40,8 +42,8 @@ typedef struct myrgbcolor_t
 #define STRINGIFY(x) #x
 #define TOSTRING(x) STRINGIFY(x)
 
-#define CREATE_NEW_COLOR(DURATION, RED, BLUE, GREEN, GAIN, SMOOTH, COL_NAME)\
-	myrgbcolor_t COL_NAME = {DURATION*10, RED, BLUE, GREEN, GAIN, SMOOTH, TOSTRING(COL_NAME)}
+#define CREATE_NEW_COLOR(DURATION, RED, GREEN, BLUE, GAIN, SMOOTH, COL_NAME)\
+	myrgbcolor_t COL_NAME = {DURATION*10, FROMINT(RED), FROMINT(GREEN), FROMINT(BLUE), FROMFLOAT(GAIN), SMOOTH, TOSTRING(COL_NAME)}
 
 /////////////////////////////////////////////////////////////////////////////////
 // Prototypes
@@ -49,5 +51,7 @@ typedef struct myrgbcolor_t
 uint8_t addToLigthPattern(myrgbcolor_t *color);
 void enableLightCnt(uint8_t repeat);
 void disableLightCnt();
+
+MODULE_EXP(LIGHTCNTRL);
 
 #endif /* XMEGA_MODULES_LIGTHCNTRL_H_ */

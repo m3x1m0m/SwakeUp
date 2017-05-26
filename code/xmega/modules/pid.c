@@ -20,6 +20,7 @@
 #include "../drivers/host/pwm.h"
 #include "../drivers/uart/terminal.h"
 #include <avr/pgmspace.h>
+#include "../../util/module.h"
 
 LOG_INIT("PID");
 

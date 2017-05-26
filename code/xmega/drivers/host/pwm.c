@@ -24,8 +24,8 @@ LOG_INIT("PWM");
 void init_TCD0(uint16_t period)
 {
 	if(period < PWM_MIN_PERIOD) period = PWM_MIN_PERIOD;
-	HIRESD.CTRLA |= HIRES_HREN0_bm | HIRES_HRPLUS_bm ;					// Activate high resolution plus mode
-	TCD0.PER = period-(period%8);										// Avoid that the last two bits are set
+	HIRESD.CTRLA |= HIRES_HREN0_bm;										// Activate high resolution plus mode
+	TCD0.PER = period-(period%4);										// Avoid that the last two bits are set
 																		// Acc. to the datasheet this is necessary for proper operation
 	TCD0.CTRLB |= TC_WGMODE_SINGLESLOPE_gc;								// Single slope PWM and TCD0 enable
 	TCD0.CTRLA |= TC_CLKSEL_DIV1_gc;									// Activate timer

@@ -15,24 +15,24 @@
 /////////////////////////////////////////////////////////////////////////////////
 // Colors were taken from http://www.colourlovers.com/group/Sunset_Sunrise/colors
 // Evry color is 60 s, smoothing is activated
-CREATE_NEW_COLOR(5.0, 147, 140, 166, 0, 1, TWILIGHT_COL);
-CREATE_NEW_COLOR(5.0, 153, 152, 239, 0, 1, LOVELY_COL);
-CREATE_NEW_COLOR(5.0, 246, 180, 23, 0, 1, RISINGSUN_COL);
-CREATE_NEW_COLOR(5.0, 249, 217, 45, 0, 1, SUMMER70_COL);
-/*myrgbcolor_t twilight = {600, 147, 140, 166, 0, 1};									
-myrgbcolor_t lovely = {600, 153, 152, 239, 0, 1};
-myrgbcolor_t rising_sun = {600, 246, 180, 23, 0, 1};
-myrgbcolor_t summer_70 = {600, 249, 217, 45, 0, 1};*/
+CREATE_NEW_COLOR(30.0, 147, 140, 166, 0, 1, TWILIGHT_COL);
+CREATE_NEW_COLOR(30.0, 153, 152, 239, 0, 1, LOVELY_COL);
+CREATE_NEW_COLOR(30.0, 246, 180, 23, 0, 1, RISINGSUN_COL);
+CREATE_NEW_COLOR(30.0, 249, 217, 45, 0, 1, SUMMER70_COL);
+
+CREATE_NEW_COLOR(60.0, 255, 0, 0, 0.0, 1, RED_COL);
+CREATE_NEW_COLOR(60.0, 0, 255, 0, 0.5, 1, GREEN_COL);
+CREATE_NEW_COLOR(60.0, 0, 0, 255, 1.4, 1, BLUE_COL);
 	
 /////////////////////////////////////////////////////////////////////////////////
 // Enable Sunny Alarm
 /////////////////////////////////////////////////////////////////////////////////
 void enableSunnyAlarm(void)
 {
-	addToLigthPattern(&TWILIGHT_COL);
-	addToLigthPattern(&LOVELY_COL);
-	addToLigthPattern(&RISINGSUN_COL);
-	addToLigthPattern(&SUMMER70_COL);
+	addToLigthPattern(&RED_COL);
+	addToLigthPattern(&GREEN_COL);
+	addToLigthPattern(&BLUE_COL);
+	addToLigthPattern(&GREEN_COL);
 	enableLightCnt(1);								// Enable light controller in repeat mode
 }
 
