@@ -10,11 +10,11 @@
 \end{figure}
 In fig. \ref{fig:block_simp} a simplified system architecture from an abstract
 (e.g. customer) point of view is displayed. The heart of the system is a
-microcontrolller. This microcontroller has to procide the necessary peripherals
+microcontrolller. This microcontroller has to provide the necessary peripherals
 and enough RAM and flash for the necessary funtionality, which has to be
 implemented in software.  \newpar A terminal connection is crucial to transport
 data to a computer. One needs this to do debugging and development. The idea is,
-that a USB cbale can simply be plugged in and then the developer can start
+that a USB cable can simply be plugged in and then the developer can start
 working without additional complications.  \newpar A button is not only usefull
 for the programmer to interact with the code to set the system to a certain
 state, but it is also absolutely needed for deployment of the systems in the
@@ -22,30 +22,29 @@ real world.  Obviously, it should be extra convenient and simple for a sleepy
 user to snooze (e.g. short button pressing) or to turn off the alarm (e.g. long
 button pressing).  \newpar The idea of a IoT device is of course, that it is
 connected to the internet, that is why a component has to be included into the
-design to, which enables the system to receive a IP address. As the final
+design, too, which enables the system to receive a IP address. As the final
 product will be standing most likely on a bedside table of the customer a wired
 internet connection (e.g. Ethernet) does not make any sense. Instead a wireless
 connection is more convenient (e.g. IEEE 802.11).  \newpar USB charging
 circuitry i.e. a USB dedicated charging port has to be implemented to charge
-phones with a current of at leas \SI{1.5}{A}.  \newpar As screen provides
+phones with a current of at least \SI{1.5}{A}.  \newpar As screen provides
 information to the user, which goes beyond the current date and time (e.g.
 weather, social media and email). It is reasonable, that this screen needs to be
 powered somehow. Also the software developer or the user should have controll
 over the screen brightness.  This means, that some time has to be invested in
-the contruction of a powerful software-steerable screen driver.  \newpar To
-light up a multi-color LED with a sufficient brightness to emulate a sunrise
+the construction of a powerful software-steerable screen driver.  \newpar To
+light up a multi-color LED with a sufficient brightness to emulate a sunrise,
 circuitry has to be implemented to drive a high current. This current has to be
 steerable in magnitude by the microcontroller to mix colors together according
 to the RGB color model. 
 
 \section{Design Choices}
 
+The following table explains why different components have been chosen to enable thr required functionality.
+
 % Please add the following required packages to your document preamble:
 % \usepackage[normalem]{ulem}
 % \useunder{\uline}{\ul}{}
-\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \begin{table}[H]
 	\centering 
 	\begin{tabular}{p{0.2\textwidth} p{0.2\textwidth} p{0.1\textwidth} 
@@ -80,9 +79,9 @@ to the RGB color model.
 		\\
 		Screen and Driver        & SEPS525F and Custom Opamp Amplifier &
 		150 SEK and 30 SEK & The OLED displays 18-bit colors with a
-		resolution of 160x128 pixels. Moreover the pciture is clearly
+		resolution of 160x128 pixels. Moreover the picture is clearly
 		visible from almost every angle. One channel of the LM324 (four
-		channel operational amplifier) was unused a simple circuit made
+		channel operational amplifier) was unused. A simple circuit made
 		it a cheap and easy-to-use DAC screen driver.    \\ 
 		Microcontroller & ATxmega128A4U & 60 SEK & High-end 8-bit
 		microcontroller with a lot of usefull perpherie such as a

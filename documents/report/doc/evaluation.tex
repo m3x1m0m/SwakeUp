@@ -2,9 +2,9 @@
 \label{chap:evaluation}
 \section{Hardware}
 \label{sec:evaluation_hw}
-The hardware right now is in revision 2.0. Revision 3.0 is currently under
-developemnet. Revision 3.0 will be the third recision. The current revision
-,where all the software is running on is revision 2.0. It has been fabricated in
+The hardware right now has the revision 2.0. Revision 3.0 is currently under
+development. Revision 3.0 will be the third revision. The current revision
+, where all the software is running on is revision 2.0. It has been fabricated in
 January 2017 and the design process (including revision 1.0) began in november
 2016. There were severe mistakes on the first hardware revision, which were not
 fixable so easily, especially because of the fact, that everything is quite
@@ -47,22 +47,18 @@ application. The system crashes, when the supply voltage is below approximately
 \SI{3.3}{V}. Further investigations have to be made here. 
 \newpar
 The used coils have to be checked once more if the current rating fits. The coil
-used for the USB charger is definitely not suitable. It catches flames, when a current above \SI{600}{\milli\ampere} is drawn from the charging prot. 
+used for the USB charger is definitely not suitable. It catches flames, when a current above \SI{600}{\milli\ampere} is drawn from the charging port. 
 
 \subsection{Upgrades}
 \label{subsec:upgrades_hw}
 A few low-pass filters shall be moved from the power board to the logic board
 (saves space). 
 \newpar
-A ADC converter channel has to be tied to GND for calibration,
-which can be traced back to some special properties of the 12 bit ADC of the
-Xmega. 
-\newpar
 Also a buzzer shall be part of the next revision to ensure, that the user
 wakes up.
 \newpar
 Since the RGB LEDs are quite cheap and the driver circuitry turned
-out to be pretty powerfull, more LEDs (2-4 in total) shall be added to the system. 
+out to be pretty powerful, more LEDs (2-4 in total) shall be added to the system. 
 \newpar
 A housing is an essential part of such a product. That is why a small box will
 be constructed, which fits both boards, a couple of LEDs and the screen. 
@@ -142,9 +138,9 @@ The code size needs to be optimized. More than 80 \% of the flash of the Xmega
 is currently used. There is not too much space anymore for upgrades. 
 \newpar
 In the end four PID controllers shall run parallely on the platform. The
-facilities for debugging and tuning a PID controller are give, but the fine
+facilities for debugging and tuning a PID controller are given, but the fine
 tuning of \ensuremath{K_P}, \ensuremath{K_I} and
-\ensuremath{K_D} still has to be done for the four different controllers. 
+\ensuremath{K_D} still have to be done for the four different controllers. 
 \subsection{Upgrades}
 The software upgrades mainly orientate on the hardware upgrades, which will be
 made with hardware revision 3 (cf. \ref{subsec:upgrades_hw}).
