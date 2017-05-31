@@ -103,6 +103,9 @@ driver.
 	\label{fig:led}
 \end{figure} 
 
+\subsection{Logic Board}
+ELMAR
+
 \section{Software Interfaces}
 As can be seen from the hardware, there are two systems that have to communicate with each other. Not only that, but its also needed to talk with a server back-end. The choice has been made to use Protobuf in order to save time. Protobuf, short for Protocol buffers, are a language-neutral, platform-neutral extensible mechanism for serializing structured data developed and maintained by google https://developers.google.com/protocol-buffers/. This translates message structures in language dependent types. In C the messages are translated into structs, where the messages are translated into Objects in Java.
 \section{Software Microcontroller}
@@ -262,13 +265,57 @@ uint32_t second = command_next_int(&index, data, len);
 }
 \end{minted}
 \subsubsection{Control}
-The name for this module might be confusing, but it controls all the inter system communications. The Control module defines streams and has the capability to encode and decode Protocol buffers messages. At the moment of writing only one stream is implemented, which is the ESP8266 stream. This is used to talk with the ESP. Eventually all the communication to the PC should also happen via a stream. There is a small protocol beneath the protocol buffers. Protocol buffers itself does not offer a possibility to send and receive multiple messages, so a length of the outgoing data has to be sent first. Other than the length of the messages, the protocol also contains a prefix of 4 bytes, so that the stream can get up to date again if there is some sort of data loss. Google does not use a protocol buffers implementation for C, this is why NanoPB https://github.com/nanopb/nanopb has been used as an external library. NanoPB has a smaller code footprint, and has options to handle and print out error messages.
-\subsubsection{Light}
-\textbf{MAX}
-\subsubsection{PID}
-\textbf{MAX}
-\subsubsection{Voltage}
-\textbf{MAX}
+The name for this module might be confusing, but it controls all the inter
+system communications. The Control module defines streams and has the capability
+to encode and decode Protocol buffers messages. At the moment of writing only
+one stream is implemented, which is the ESP8266 stream. This is used to talk
+with the ESP. Eventually all the communication to the PC should also happen via
+a stream. There is a small protocol beneath the protocol buffers. Protocol
+buffers itself does not offer a possibility to send and receive multiple
+messages, so a length of the outgoing data has to be sent first. Other than the
+length of the messages, the protocol also contains a prefix of 4 bytes, so that
+the stream can get up to date again if there is some sort of data loss. Google
+does not use a protocol buffers implementation for C, this is why NanoPB
+https://github.com/nanopb/nanopb has been used as an external library. NanoPB
+has a smaller code footprint, and has options to handle and print out error
+messages.
+
+\subsubsection{Light Controller}
+The light controller is mainly a big state machine which accesses a queue. By
+using the light controller module other code can post colors to the queue. It
+can be specified which color the LED shall have for how long. There are two
+different modes: The first mode is just playing the color ones and removes it.
+The second mode repeats all colors in the given order once they are in the
+queue. A special feature of the light controller is a interpolation algorithm to
+allow three-dimensional fading between different colors within a given period.
+Furthermore the relative brightness of a color can be regulated. The light
+controller module makes use of the PID controller, to steer the lights. A
+selfmade fixed point library is used for calculations.
+
+\subsubsection{PID Infrastructure}
+The PID module is one of the most basic modules. It is written in a handy way.
+The module provides algorithms to realize PID controllers. Code, which utilizes
+this modules, simply spawns a controller by using the
+\myemph{add\_Controller(mycontroller\_t *newController)} function. That way a
+controller e.g. simulated and developed with Matlab can easily be added to the
+system. The e.g. setpoint can easily be manipulated by the owner of the
+controller (i.e. some higher layer user). Via macros the debugging output can be
+adjusted (save code size) and necessary output for PID controller tuning can be
+optained. The PID arithmetics are executed with the help of the fixed point
+library.
+\begin{figure}[H]
+	\centering
+	\label{fig:pid}
+	\includegraphics[width=1\textwidth]{./fig/pid_12v_100Hz.png}
+	\caption{Step-response of a PID controller for the screen voltage
+	control with 100 Hz periodicity}.
+\end{figure}
+
+\subsubsection{Voltage Controller}
+The voltage controller module makes use of the PID controller module by defining
+a PID controller to controll the scrren voltage to a given setpoint. This setpoint is calculated using the self-made fixed point library, taking the voltage divider
+and the reference voltage of the ADC into account.
+
 \subsubsection{LOG}
 Almost every driver or module has a dependency on the LOG driver. In order to use the logging functionality, a file first has to initialize the logger. this is done by calling:
 \begin{minted}[baselinestretch=1, fontsize=\small, linenos,frame=single,framesep=5pt]{C}
