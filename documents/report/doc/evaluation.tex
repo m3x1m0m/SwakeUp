@@ -1,6 +1,7 @@
 \chapter{Evaluation}
 \label{chap:evaluation}
 \section{Hardware}
+\label{sec:evaluation_hw}
 The hardware right now is in revision 2.0. Revision 3.0 is currently under
 developemnet. Revision 3.0 will be the third recision. The current revision
 ,where all the software is running on is revision 2.0. It has been fabricated in
@@ -11,7 +12,7 @@ small. In the second hardware revision there are still smaller mistakes.
 Moreover upgrades shall be taken into account for the revision 3.0. 
 
 \subsection{Issues}
-\label{subsec:issues}
+\label{subsec:issues_hw}
 The feedback mechanism, which is crucial of course for any kind of controll loop
 does not work in the case of the RGB channels. This is because the LM324
 quadruple operational amplifier is connected to a single power supply. In this
@@ -28,7 +29,7 @@ The used coils have to be checked once more if the current rating fits. The coil
 used for the USB charger is definitely not suitable. It catches flames, when the a current above \SI{600}{\milli\ampere} is drawn from the charging prot. 
 
 \subsection{Upgrades}
-\label{subsec:upgrades}
+\label{subsec:upgrades_hw}
 A few low-pass filters shall be moved from the power board to the logic board
 (saves space). 
 \newpar
@@ -46,4 +47,31 @@ A housing is an essential part of such a product. That is why a small box will
 be constructed, which fits both boards, a couple of LEDs and the screen. 
 
 \section{Software}
+\label
+The software is working and almost finished on all different levels. One could
+discuss about the basic principles of the operating system implemented. For
+instance if a timer triggers an event every \SI{10}{\milli\second} the listeners
+i.e. the tasks, which are supposed to be executed with this period will
+experience a heavy jitter. This jitter is dependent on how many listeners this
+event currently has and how many other events have to be handeled by the kernel at the same time. If a task implemented takes too much time to execute or executes to
+frequently, the system crashes. One has to be carefull with e.g. PID controllers
+as those can generate heavy workload, which can not be handeled anymore by the
+ressources the Xmega provides. The operating system does in that sense not
+provide real-time functionality.
 
+\subsection{Issues}
+It is crucial to make the system safer. Through a software malfunction it is
+quite easy to burn LEDs or the screen. This needs to be avoided. Time needs to
+be invested into the developement of safety mechanisms to avoid the destruction
+of the hardware.
+\newpar
+The code size needs to be optimized. More than 80 \% of the flash of the Xmega
+is currently used. There is not too much space anymore for upgrades. 
+\newpar
+In the end four PID controllers shall run parallely on the platform. The
+facilities for debugging and tuning a PID controller are give, but the fine
+tuning of \ensuremath{K_P}, \ensuremath{K_I} and
+\ensuremath{K_D} still has to be done for the four different controllers. 
+\subsection{Upgrades}
+The software upgrades mainly orientate on the hardware upgrades, which will be
+made with hardware revision 3 (cf. \ref{subsec:upgrades_hw}).
