@@ -104,7 +104,9 @@ driver.
 \end{figure} 
 
 \subsection{Logic Board}
-ELMAR
+The XMega will be programmed trough a PDI port. Furthermore four ADC and PWM pins are exposed for use with the power board. The screen is connected via a flat flex connector, rather than soldered directly on the board. This allows for reuse of the screen on further revisions without having to purchase new screens.\newpar
+An external crystal is used for the real time clock. This gives the possibility to use the 32 bit real time counter on the XMega which is more precise than using a build in oscillator. Two low side n-channel MOSFETS are connected for reverse voltage protection. An external crystal for the system clock is also used, as the internal oscillator is not as precise, which increases serial communication errors.\newpar
+The full schematics can be found in Appendix \ref{append:logic}.
 
 \section{Software Interfaces}
 As can be seen from the hardware, there are two systems that have to communicate with each other. Not only that, but its also needed to talk with a server back-end. The choice has been made to use Protobuf in order to save time. Protobuf, short for Protocol buffers, are a language-neutral, platform-neutral extensible mechanism for serializing structured data developed and maintained by google https://developers.google.com/protocol-buffers/. This translates message structures in language dependent types. In C the messages are translated into structs, where the messages are translated into Objects in Java.
@@ -164,10 +166,10 @@ In fig.\ref{fig:block} the functions of the system can be observed, these functi
 \begin{figure}[H]
 	\centering
 	\label{fig:block_code}
-	%\includegraphics[width=0.9\textwidth]{fig/block_code.png}
+	\includegraphics[width=0.9\textwidth]{fig/block_code.png}
 	\caption{The system structure and hierarchy}
 \end{figure}
-above in fig. \ref{fig:block_code} this translation from system design to a more refined code structure is shown. A brief description of the required functionality for every block follows. 
+Above in fig. \ref{fig:block_code} this translation from system design to a more refined code structure is shown. A brief description of the required functionality for every block follows. 
 
 \subsection{Platform layer}
 
@@ -423,13 +425,20 @@ The status application draws the status bar. This reflects whether the alarm is 
 \subsubsection{Console}
 The console application controls the screen terminal, in the future it will also be capable of receiving commands over WI-FI, however that functionality is not in yet due to time constraints.
 \subsubsection{Core}
-The Core translates all the commands given to actions. The debug LED can be toggled, AT commands can be sent, the sink for the terminal can be changed, time and weather can be set. The core also decides where to draw what application. Currently this results in fig. \ref{fig:clock_weather} below.
+The Core translates all the commands given to actions, places gui elements on the screen, and has the possibility to enable and disable applications. Currently this results in fig. \ref{fig:clock_weather} below. All the applications have their own green bounding box space
 \begin{figure}[H]
 	\centering
 	\label{fig:clock_weather}
 	\includegraphics[width=0.4\textwidth]{./fig/clock_weather.png}
-	\caption{Displaying the clock and the weather}
+	\caption{Displaying basic functionality}
 \end{figure}
 \section{Software Server}
-To obtain the most recent time, weather and email, a server backend has been made. This server backend is accessible trough a RESTful interface. An application can fire post requests with protobuf messages in the body. This will be decoded on the server and the right response will be given. The server backend is written in Java, and hosted on Heroku https://www.heroku.com/ . To accelerate RESTful java interface development, the spark framework has been chosen to develop with http://sparkjava.com/ .
+To obtain the most recent time, weather and email, a server backend has been made. This server backend is accessible trough a RESTful interface. An application can fire post requests with protobuf messages in the body. This will be decoded on the server and the right response will be given. The server backend is written in Java, and hosted on a Platform as a Service (Heroku https://www.heroku.com/ ) . To accelerate RESTful java interface development, the spark framework has been chosen to develop with http://sparkjava.com/ . Right now the server takes care of time and timezones, weather and email. The time is obtained based on location. The user will provide a city where the weather and time should be based on. This will be translated in a latitude and longitude trough google api's. Google also provides a possibility to return a timezone based on latitude and longitude. The current time is requested from the server and translated with the timezone. Next is the weather, which is requested trough openweathermap https://openweathermap.org/ . This is done once every 30 minutes, whereas the time is updated once every hour. The email functionality is provided trough javax mail http://www.oracle.com/technetwork/java/javamail/index.html . A pitfall here is the use of security, that is something which has to be looked into in a future edition.
+\begin{figure}[H]
+	\centering
+	\label{fig:block_server}
+	\includegraphics[width=0.4\textwidth]{fig/block_server.png}
+	\caption{The system structure and hierarchy}
+\end{figure}
+Above in fig. \ref{fig:block_server} a rough sketch of the dataflow is shown
 \section{Software ESP}
