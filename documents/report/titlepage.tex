@@ -1,0 +1,61 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Author:      Maximilian Stiefel
+%% Date:        06.03.2017
+%% University:  Uppsala Universitet
+%% Department:  Institutionen för informationsteknologi 
+%% Course:      Microcontroller Programming
+%% Project:     Swakeup
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{titlepage}
+% temporary margins only for titlepage
+\newgeometry{lmargin={2cm},rmargin={2cm},tmargin={1cm},bmargin={2cm}}
+
+%---------------------- Figures --------------------------------------------------
+
+\begin{figure}
+	\raggedright
+	%\raggedleft
+	\includegraphics[width=0.2\textwidth]{./fig/uppsla_university.png}
+\end{figure}
+
+%---------------------- Text -----------------------------------------------------
+
+\begin{center}
+	\vspace*{0pt}
+	\begin{Huge}
+		\textbf{\mytitle}\\
+	\end{Huge}
+	\vspace*{4em}
+	\begin{LARGE}
+		\textbf{\MakeUppercase{\mytypeofwork}}\\
+	\end{LARGE}	
+	\vspace*{2em}
+	within the lecture of\\
+	\mycourse\\
+	\vspace*{2em}
+	at \myuniversity\\
+	in the Departement of \mydepartement\\
+	\vspace*{2em}
+	\myauthora{} and \myauthorb{}
+	\vspace*{2em}
+	Deadline: \myduedate\\
+	\vspace*{3em}
+	\vfill
+%---------------------- Table ----------------------------------------------------
+	
+	\setlength{\tabcolsep}{24pt}	% change space between rows
+	\begin{tabular}{ll}
+		Processing Period:&  \myperiod\\
+		%&April - Juni 2016\\
+		%Matrikelnummern:&4167768\\
+		%&1231235\\
+		%&4564567\\
+		Supervisor:&\mytutor\\
+	\end{tabular}
+	\setlength{\tabcolsep}{6pt}		% back to default
+	\restoregeometry
+\end{center}
+\end{titlepage}
+\clearpage
+
