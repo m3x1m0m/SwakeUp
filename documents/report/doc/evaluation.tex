@@ -1,0 +1,49 @@
+\chapter{Evaluation}
+\label{chap:evaluation}
+\section{Hardware}
+The hardware right now is in revision 2.0. Revision 3.0 is currently under
+developemnet. Revision 3.0 will be the third recision. The current revision
+,where all the software is running on is revision 2.0. It has been fabricated in
+January 2017 and the design process (including revision 1.0) began in november
+2016. There were severe mistakes on the first hardware revision, which were not
+fixable so easily, especially because of the fact, that everything is quite
+small. In the second hardware revision there are still smaller mistakes.
+Moreover upgrades shall be taken into account for the revision 3.0. 
+
+\subsection{Issues}
+\label{subsec:issues}
+The feedback mechanism, which is crucial of course for any kind of controll loop
+does not work in the case of the RGB channels. This is because the LM324
+quadruple operational amplifier is connected to a single power supply. In this
+case it is necessary to connect the shunt resistors according to the current
+flow direction to the differential amplifier. This has been confused and needs
+to be fixed. 
+\newpar
+The supply voltage of \SI{2.8}{\volt} does not seem to be longer suitable for the
+application. The system crashes, when the supply voltage is below approximately
+\SI{3.1}{\volt}. The easy fix for the next revision is a supply voltage of
+\SI{3.3}{V}. Further investigations have to be made here. 
+\newpar
+The used coils have to be checked once more if the current rating fits. The coil
+used for the USB charger is definitely not suitable. It catches flames, when the a current above \SI{600}{\milli\ampere} is drawn from the charging prot. 
+
+\subsection{Upgrades}
+\label{subsec:upgrades}
+A few low-pass filters shall be moved from the power board to the logic board
+(saves space). 
+\newpar
+A ADC converter channel has to be tied to GND for calibration,
+which can be traced back to some special properties of the 12 bit ADC of the
+Xmega. 
+\newpar
+Also a buzzer shall be part of the next revision to ensure, that the user
+wakes up.
+\newpar
+Since the RGB LEDs are quite cheap and the driver circuitry turned
+out to be pretty powerfull, more LEDs (2-4 in total) shall be added to the system. 
+\newpar
+A housing is an essential part of such a product. That is why a small box will
+be constructed, which fits both boards, a couple of LEDs and the screen. 
+
+\section{Software}
+
