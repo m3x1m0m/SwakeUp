@@ -10,6 +10,27 @@ January 2017 and the design process (including revision 1.0) began in november
 fixable so easily, especially because of the fact, that everything is quite
 small. In the second hardware revision there are still smaller mistakes.
 Moreover upgrades shall be taken into account for the revision 3.0. 
+\newpar
+Table \ref{tab:hw_status_quo} gives an overview about the status quo of the hardware.
+\begin{table}[H]
+	\centering
+	\begin{tabularx}{\textwidth}{llX}
+		\textbf{HW Block}  	& \textbf{Working}& \textbf{Problem}  	\\\hline
+		USB Charging 	& \checkmark	& 				\\
+		Screen Driver  	& \checkmark    & 				\\
+		Screen Driver Feedback& \checkmark    & 				\\
+		Vcc for µC   	& \checkmark    & 				\\
+		ESP   		& \checkmark    &                             	\\
+		Terminal 	& \checkmark	&				\\
+		LED Driver	& \checkmark	& 				\\
+		LED Driver Feedback & & Reversed inputs of the differential ampifier \\
+		USB DCP		& \checkmark	& 				\\
+		Reverse Polarity Protection & \checkmark & \\
+		\hline
+	\end{tabularx}
+	\caption{Status Quo Hardware}
+	\label{tab:hw_status_quo}
+\end{table}
 
 \subsection{Issues}
 \label{subsec:issues_hw}
@@ -26,7 +47,7 @@ application. The system crashes, when the supply voltage is below approximately
 \SI{3.3}{V}. Further investigations have to be made here. 
 \newpar
 The used coils have to be checked once more if the current rating fits. The coil
-used for the USB charger is definitely not suitable. It catches flames, when the a current above \SI{600}{\milli\ampere} is drawn from the charging prot. 
+used for the USB charger is definitely not suitable. It catches flames, when a current above \SI{600}{\milli\ampere} is drawn from the charging prot. 
 
 \subsection{Upgrades}
 \label{subsec:upgrades_hw}
@@ -47,7 +68,7 @@ A housing is an essential part of such a product. That is why a small box will
 be constructed, which fits both boards, a couple of LEDs and the screen. 
 
 \section{Software}
-\label
+\label{sec:evaluation_sw}
 The software is working and almost finished on all different levels. One could
 discuss about the basic principles of the operating system implemented. For
 instance if a timer triggers an event every \SI{10}{\milli\second} the listeners
@@ -58,6 +79,58 @@ frequently, the system crashes. One has to be carefull with e.g. PID controllers
 as those can generate heavy workload, which can not be handeled anymore by the
 ressources the Xmega provides. The operating system does in that sense not
 provide real-time functionality.
+\newpar
+Table \ref{tab:sw_status_quo} deals with an overview of the software status quo.
+\begin{table}[H]
+	\centering
+	\begin{tabularx}{\textwidth}{llX}
+		\textbf{SW Block}  	& \textbf{Working}& \textbf{Problem}
+		\\\hline
+		UART 		& \checkmark	&
+		\\
+		SPI	  	& \checkmark    &
+		\\
+		EPROM   	& \checkmark    &
+		\\
+		Timer   	& \checkmark    &
+		\\	
+		ESP8266		& \checkmark	&
+		\\
+		Terminal	& \checkmark	&
+		\\
+		SEP525F		& \checkmark	&
+		\\
+		Wifi		& \checkmark 	&
+		\\
+		Command		& \checkmark	&
+		\\
+		Log		& \checkmark	&
+		\\
+		Screen		& \checkmark	&
+		\\
+		Timekeeper	& \checkmark	&
+		\\
+		Controller	&		&
+		\\
+		Core		& \checkmark	&
+		\\
+		Weather		& \checkmark	&
+		\\
+		Clock		& \checkmark	&
+		\\
+		Social		& 		& Not implemented yet
+		\\
+		PWM & \checkmark & \\
+		ADC & \checkmark & \\
+		Lightcontroller & \checkmark & \\
+		PID & \checkmark & \\
+		Advanced Light Patterns &  & Debugging still ongoing\\
+		Play 8 bit sounds & & Not implemented, HW missing\\
+		\hline
+	\end{tabularx}
+	\caption{Status Quo Software}
+	\label{tab:sw_status_quo}
+\end{table}
 
 \subsection{Issues}
 It is crucial to make the system safer. Through a software malfunction it is
