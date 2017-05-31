@@ -178,3 +178,4 @@ MyStuff/*
 *.run.xml
 *.synctex.gz
 documents/report/_minted-report/
+!documents/report/Makefile
