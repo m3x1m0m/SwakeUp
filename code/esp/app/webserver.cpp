@@ -3,6 +3,14 @@
 bool serverStarted = false;
 HttpServer server;
 
+void onConsole(HttpRequest &request, HttpResponse &response) {
+	if (request.getRequestMethod() == RequestMethod::POST) {
+		StaticJsonBuffer<ConfigJsonBufferSize> jsonBuffer;
+		JsonObject& root = jsonBuffer.parseObject(request.getBody());
+		root.prettyPrintTo(Serial); //Uncomment it for debuging
+	}
+}
+
 void onIndex(HttpRequest &request, HttpResponse &response) {
 	if (request.getRequestMethod() == RequestMethod::POST) {
 		Serial.printf("Update index: %s \n", request.getBody());
@@ -26,7 +34,6 @@ void onIndex(HttpRequest &request, HttpResponse &response) {
 }
 
 void onConfiguration(HttpRequest &request, HttpResponse &response) {
-
 	if (request.getRequestMethod() == RequestMethod::POST) {
 		Serial.printf("Update config\n");
 		// Update config
@@ -43,21 +50,25 @@ void onConfiguration(HttpRequest &request, HttpResponse &response) {
 				uint8_t PrevStaEnable = ActiveConfig.StaEnable;
 
 				ActiveConfig.StaSSID = String((const char *) root["StaSSID"]);
-				ActiveConfig.StaPassword = String((const char *) root["StaPassword"]);
+				ActiveConfig.StaPassword = String(
+						(const char *) root["StaPassword"]);
 				ActiveConfig.StaEnable = root["StaEnable"];
 
 				if (PrevStaEnable && ActiveConfig.StaEnable) {
 					WifiStation.enable(true);
 					WifiAccessPoint.enable(false);
-					WifiStation.config(ActiveConfig.StaSSID, ActiveConfig.StaPassword);
+					WifiStation.config(ActiveConfig.StaSSID,
+							ActiveConfig.StaPassword);
 				} else if (ActiveConfig.StaEnable) {
 					WifiStation.enable(true, true);
 					WifiAccessPoint.enable(false, true);
-					WifiStation.config(ActiveConfig.StaSSID, ActiveConfig.StaPassword);
+					WifiStation.config(ActiveConfig.StaSSID,
+							ActiveConfig.StaPassword);
 				} else {
 					WifiStation.enable(false, true);
 					WifiAccessPoint.enable(true, true);
-					WifiAccessPoint.config("TyTherm", "ENTERYOURPASSWD", AUTH_WPA2_PSK);
+					WifiAccessPoint.config("TyTherm", "ENTERYOURPASSWD",
+							AUTH_WPA2_PSK);
 				}
 			}
 		}
@@ -111,13 +122,14 @@ void startWebServer() {
 	server.addPath("/config", onConfiguration);
 	server.addPath("/config.json", onConfiguration_json);
 	server.addPath("/state", onAJAXGetState);
+	server.addPath("/console",onConsole);
 	server.setDefaultHandler(onFile);
 	serverStarted = true;
 
-	if (WifiStation.isEnabled()){
+	if (WifiStation.isEnabled()) {
 		Serial.printf("STA: %s \n", WifiStation.getIP().toString().c_str());
 	}
-	if (WifiAccessPoint.isEnabled()){
+	if (WifiAccessPoint.isEnabled()) {
 		Serial.printf("AP: %s \n", WifiAccessPoint.getIP().toString().c_str());
 	}
 }
