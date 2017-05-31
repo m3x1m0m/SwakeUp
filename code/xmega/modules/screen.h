@@ -11,6 +11,7 @@
 
 #include "../util/module.h"
 #include "../util/image.h"
+#include "../defines.h"
 
 #define COLOR_TO656(r,g,b) (((r>>3)<<11)|((g>>2)<<5)|(b>>3))
 #define COLOR_TO888(r,g,b) (((r)<<16)|((g)<<8)|(b))

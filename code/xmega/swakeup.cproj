@@ -43,7 +43,7 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ToolchainSettings>
       <AvrGcc>
-        <avrgcc.common.Device>-mmcu=atxmega128a4u -B "%24(PackRepoDir)\atmel\XMEGAA_DFP\1.1.63\gcc\dev\atxmega128a4u"</avrgcc.common.Device>
+        <avrgcc.common.Device>-mmcu=atxmega128a4u -B "%24(PackRepoDir)\atmel\XMEGAA_DFP\1.1.68\gcc\dev\atxmega128a4u"</avrgcc.common.Device>
         <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
         <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
         <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
@@ -58,7 +58,7 @@
         </avrgcc.compiler.symbols.DefSymbols>
         <avrgcc.compiler.directories.IncludePaths>
           <ListValues>
-            <Value>%24(PackRepoDir)\atmel\XMEGAA_DFP\1.1.63\include</Value>
+            <Value>%24(PackRepoDir)\atmel\XMEGAA_DFP\1.1.68\include</Value>
           </ListValues>
         </avrgcc.compiler.directories.IncludePaths>
         <avrgcc.compiler.optimization.level>Optimize for size (-Os)</avrgcc.compiler.optimization.level>
@@ -72,7 +72,7 @@
         </avrgcc.linker.libraries.Libraries>
         <avrgcc.assembler.general.IncludePaths>
           <ListValues>
-            <Value>%24(PackRepoDir)\atmel\XMEGAA_DFP\1.1.63\include</Value>
+            <Value>%24(PackRepoDir)\atmel\XMEGAA_DFP\1.1.68\include</Value>
           </ListValues>
         </avrgcc.assembler.general.IncludePaths>
       </AvrGcc>
@@ -81,7 +81,7 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <ToolchainSettings>
       <AvrGcc>
-        <avrgcc.common.Device>-mmcu=atxmega128a4u -B "%24(PackRepoDir)\atmel\XMEGAA_DFP\1.1.63\gcc\dev\atxmega128a4u"</avrgcc.common.Device>
+        <avrgcc.common.Device>-mmcu=atxmega128a4u -B "%24(PackRepoDir)\atmel\XMEGAA_DFP\1.1.68\gcc\dev\atxmega128a4u"</avrgcc.common.Device>
         <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
         <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
         <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
@@ -96,11 +96,11 @@
         </avrgcc.compiler.symbols.DefSymbols>
         <avrgcc.compiler.directories.IncludePaths>
           <ListValues>
-            <Value>%24(PackRepoDir)\atmel\XMEGAA_DFP\1.1.63\include</Value>
             <Value>../util/protobuf</Value>
+            <Value>%24(PackRepoDir)\atmel\XMEGAA_DFP\1.1.68\include</Value>
           </ListValues>
         </avrgcc.compiler.directories.IncludePaths>
-        <avrgcc.compiler.optimization.level>Optimize most (-O3)</avrgcc.compiler.optimization.level>
+        <avrgcc.compiler.optimization.level>Optimize debugging experience (-Og)</avrgcc.compiler.optimization.level>
         <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
         <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
         <avrgcc.compiler.optimization.DebugLevel>Default (-g2)</avrgcc.compiler.optimization.DebugLevel>
@@ -113,7 +113,7 @@
         </avrgcc.linker.libraries.Libraries>
         <avrgcc.assembler.general.IncludePaths>
           <ListValues>
-            <Value>%24(PackRepoDir)\atmel\XMEGAA_DFP\1.1.63\include</Value>
+            <Value>%24(PackRepoDir)\atmel\XMEGAA_DFP\1.1.68\include</Value>
           </ListValues>
         </avrgcc.assembler.general.IncludePaths>
         <avrgcc.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcc.assembler.debugging.DebugLevel>
@@ -121,22 +121,43 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="app\clock.c">
+    <Compile Include="app\app.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="app\clock.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="app\core.c">
+    <Compile Include="app\clock.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="app\console.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="app\console.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="app\core.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="app\core.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="app\mail.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="app\mail.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="app\msgproc.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="app\msgproc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="app\status.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="app\status.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="app\weather.c">
@@ -161,12 +182,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="drivers\host\gpio.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="drivers\host\pid.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="drivers\host\pid.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="drivers\host\pwm.c">
@@ -234,10 +249,28 @@
     <Compile Include="modules\image.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="modules\ligthcntrl.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="modules\ligthcntrl.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="modules\log.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="modules\log.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="modules\pid.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="modules\pid.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="modules\voltagecntr.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="modules\voltagecntr.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="modules\screen.c">
@@ -267,6 +300,12 @@
     <Compile Include="pin_rev_2.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="sprites.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="sprites.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="tinyprint\printf.c">
       <SubType>compile</SubType>
     </Compile>
@@ -283,6 +322,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="util\event.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="util\fixedpoint.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="util\fixedpoint.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="util\font.c">
@@ -304,12 +349,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="util\module.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="util\number.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="util\number.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="util\protobuf\pb.h">

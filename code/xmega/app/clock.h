@@ -9,24 +9,21 @@
 #ifndef CLOCK_H_
 #define CLOCK_H_
 
-#define CLOCK_WIDTH         96
-#define CLOCK_HEIGHT        96
-#define CLOCK_CENTER        48
+#define CLOCK_DIGITAL_WIDTH         96
+#define CLOCK_DIGITAL_HEIGHT        64
+#define CLOCK_SMALL_WIDTH           96
+#define CLOCK_SMALL_HEIGHT          32
+#define CLOCK_SMALL_LINE_SPACING    3
+#define CLOCK_SMALL_FONT_SIZE       8
+#define CLOCK_APP_HEIGHT            CLOCK_SMALL_HEIGHT + CLOCK_DIGITAL_HEIGHT
+#define CLOCK_APP_WIDTH             CLOCK_DIGITAL_WIDTH
 
-#define CLOCK_SECOND_LEN    48
-#define CLOCK_MINUTE_LEN    40
-#define CLOCK_HOUR_LEN      32
-
-#define CLOCK_ANALOGUE      0
 
 #include <stdint.h>
 #include "core.h"
 
-void clock_time_set(struct TimeKeeper * time);
-struct TimeKeeper * clock_time_get(void);
-void clock_alarm_set(struct TimeKeeper * time);
-struct TimeKeeper * clock_alarm_get(void);
-void clock_draw();
+void clock_draw(uint8_t update, uint8_t display);
 void clock_init(uint16_t drawX, uint16_t drawY);
 void clock_deinit(void);
+
 #endif /* CLOCK_H_ */

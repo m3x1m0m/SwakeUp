@@ -7,12 +7,13 @@ gnore all
 # Unignore all dirs
 !*/
 
+*.stackdump
+!*.html
+
 # Compiled source #
 ###################
 *.com
 *.class
-*.dll
-*.exe
 *.o
 *.so
 
@@ -26,7 +27,6 @@ gnore all
 *.iso
 *.jar
 *.rar
-*.tar
 *.zip
 
 # Logs and databases #
@@ -48,6 +48,9 @@ Thumbs.db
 
 # C #
 ######################
+# main.c
+main.c
+
 # Prerequisites
 *.d
 
@@ -104,7 +107,6 @@ dkms.conf
 *.raw
 *.fft
 *.plt
-*.txt
 *.net
 
 # LibreOffice #

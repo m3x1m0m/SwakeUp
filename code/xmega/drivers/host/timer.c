@@ -28,7 +28,19 @@
  */
 #define RTC (*(RTC32_t2 *)0x0420)
 #endif
+
+/////////////////////////////////////////////////////////////////////////////////
+// Global variables
+/////////////////////////////////////////////////////////////////////////////////
+static volatile divider = 0;
+
+/////////////////////////////////////////////////////////////////////////////////
+// Register events
+/////////////////////////////////////////////////////////////////////////////////
 EVENT_REGISTER(EVENT_TIMER_1_HZ, "1 second pulse");
+EVENT_REGISTER(EVENT_TIMER_10_HZ, "100 millisecond pulse");
+EVENT_REGISTER(EVENT_TIMER_100_HZ, "10 millisecond pulse");
+EVENT_REGISTER(EVENT_TIMER_1000_HZ, "1 millisecond pulse");
 EVENT_REGISTER(EVENT_ALARM, "ms alarm");
 
 LOG_INIT("Timer");
@@ -60,6 +72,26 @@ int8_t   timer_timeOutEvent(uint16_t duration) {
 //     //LED_PORT.OUTTGL = LED_PIN;
 // }
 
+/////////////////////////////////////////////////////////////////////////////////
+// Init TCC0 for 1 kHz / 100Hz tick
+/////////////////////////////////////////////////////////////////////////////////
+void init_TCC0(void)
+{
+	#ifdef TIMER_EXPERIMENTAL_1MS_TICK
+	TCC0.PER = TICK_1KHZ;										
+	#else
+	TCC0.PER = TICK_100HZ;
+	#endif
+	TCC0.CTRLA = TC_CLKSEL_DIV64_gc;							// 16 MHz / 64 = 250 kHz
+	TCC0.INTCTRLA |= TC_OVFINTLVL_HI_gc;						// Activate interrupt
+}
+
+void deinit_TCC0(void)
+{
+	TCC0.CTRLA = TC_CLKSEL_OFF_gc;
+}
+
+
 static uint8_t init(void) {
 #ifdef REV_1
     OSC.CTRL |= OSC_RC32KEN_bm;
@@ -77,13 +109,45 @@ static uint8_t init(void) {
     RTC.COMP = 0;
     RTC.CTRL = ( RTC.CTRL & ~RTC_PRESCALER_gm ) | RTC_PRESCALER_DIV1_gc;
     RTC.INTCTRL = ( RTC.INTCTRL & ~( RTC_COMPINTLVL_gm | RTC_OVFINTLVL_gm ) ) | RTC_OVFINTLVL_LO_gc | RTC_COMPINTLVL_OFF_gc;
-    LOG_SYSTEM("Timer set up");
+    init_TCC0();
+	LOG_SYSTEM("Timers set up");
     return 1;
 }
 
 static uint8_t deinit(void) {
+	deinit_TCC0();
     return 1;
 }
+
+/////////////////////////////////////////////////////////////////////////////////
+// Interrupt service routines
+/////////////////////////////////////////////////////////////////////////////////
+#ifdef TIMER_EXPERIMENTAL_1MS_TICK
+ISR(TCC0_OVF_vect)
+{
+	event_fire(&EVENT_TIMER_1000_HZ, 0);
+	divider++;
+	if(divider == 10)
+	{
+		event_fire(&EVENT_TIMER_100_HZ, 0);
+		//LED_PORT.OUTTGL = LED_PIN;
+		divider = 0; 
+	}
+}
+#else
+ISR(TCC0_OVF_vect)
+{
+	event_fire(&EVENT_TIMER_100_HZ, 0);
+	divider++;
+	//LED_PORT.OUTTGL = LED_PIN;
+	if(divider == 10)
+	{
+		event_fire(&EVENT_TIMER_10_HZ, 0);
+		//LED_PORT.OUTTGL = LED_PIN;
+		divider = 0;
+	}
+}
+#endif
 
 ISR(RTC_OVF_vect) {
     event_fire(&EVENT_TIMER_1_HZ, 0);

@@ -72,8 +72,14 @@ void StreamRest::processed(HttpClient& client, bool successful) {
 
 	istream = pb_istream_from_buffer(bytes, args);
 	MsgFrame message;
-	uint8_t status = pb_decode(&istream, MsgFrame_fields, &message);
-	this->receiveCallback(&message, this);
+	if (pb_decode(&istream, MsgFrame_fields, &message)) {
+		istream.errmsg = 0;
+		this->receiveCallback(&message, this);
+	} else {
+		//Serial.printf("err: %s \r\n", istream.errmsg);
+		//TODO retry
+	}
+
 	delete bytes;
 }
 

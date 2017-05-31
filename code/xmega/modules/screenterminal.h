@@ -9,6 +9,8 @@
 #ifndef SCREENTERMINAL_H_
 #define SCREENTERMINAL_H_
 
+#include <stdint.h>
+
 void screenterminal_writes(char text);
 void screenterminal_write(char * text, uint8_t len);
 void (*screenterminal_sink(void))(void *, char );

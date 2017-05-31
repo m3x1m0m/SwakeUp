@@ -10,72 +10,181 @@
 /////////////////////////////////////////////////////////////////////////////////
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include <stdlib.h>
 #include "../../pin_definitions.h"
 #include "../../modules/log.h"
+#include "../../modules/command.h"
 #include "adc.h"
 
+LOG_INIT("ADC");
+
+/////////////////////////////////////////////////////////////////////////////////
+// Global vars
+/////////////////////////////////////////////////////////////////////////////////
+static uint16_t offsetErr = 0;															// Offset error from the ADC
+
+static volatile uint8_t loaded_RED = 0;													// Simple semaphore for the shared buffer
+static volatile uint16_t adcVals_RED[NU_AVERAGING_VALS];								// Shared buffer for ADC values
+
+static volatile uint8_t loaded_BLUE = 0;
+static volatile uint16_t adcVals_BLUE[NU_AVERAGING_VALS];
+
+static volatile uint8_t loaded_GREEN = 0;
+static volatile uint16_t adcVals_GREEN[NU_AVERAGING_VALS];
+
+static volatile uint8_t loaded_OLED = 0;
+static volatile uint16_t adcVals_OLED[NU_AVERAGING_VALS];
+
+/////////////////////////////////////////////////////////////////////////////////
+// Prototypes
+/////////////////////////////////////////////////////////////////////////////////
+void compensateOffset_ADCA();
+
+/////////////////////////////////////////////////////////////////////////////////
+// Macro: Semaphore protected buffer loading through ADC interrupts.
+/////////////////////////////////////////////////////////////////////////////////
+#define LOAD_ADC(ADCCHANNEL, SEMAPHORE) \
+	ADCA.CTRLA |= ADCCHANNEL; \
+	while(!SEMAPHORE)
+
+/////////////////////////////////////////////////////////////////////////////////
+// Macro: Semaphore protected buffer loading through ADC interrupts.
+/////////////////////////////////////////////////////////////////////////////////
+#define INIT_ADCA_CHANNEL(ADCCHANNEL, INTFLAG, ADCPIN) \
+	ADCCHANNEL.CTRL |= ADC_CH_INPUTMODE_SINGLEENDED_gc; \
+	ADCCHANNEL.MUXCTRL |= ADCPIN<<3; \
+	ADCA.INTFLAGS = INTFLAG; \
+	ADCCHANNEL.INTCTRL = ADC_CH_INTLVL1_bm | ADC_CH_INTLVL0_bm; \
+	PORTA.DIRCLR |= (1 << ADCPIN)
+
+/////////////////////////////////////////////////////////////////////////////////
+// Macro: Create ISRs for the individual channels.
+/////////////////////////////////////////////////////////////////////////////////
+#define CREATE_ADCA_ISR(ADCVECTOR, VARSEMAPHORE, BUFFER, RESULTREG, STARTFLAG) \
+	ISR(ADCVECTOR) \
+	{ \
+		static volatile uint8_t cycles = 0; \
+		if(!VARSEMAPHORE) \
+		{ \
+			if( ((int16_t) RESULTREG) < 0) \
+				BUFFER[cycles++] = 0; \
+			else \
+				BUFFER[cycles++] = RESULTREG; \
+			if(cycles < NU_AVERAGING_VALS) \
+				ADCA.CTRLA |= STARTFLAG; \
+			else\
+			{\
+				VARSEMAPHORE = 1;\
+				cycles = 0;\
+			}\
+		}\
+	}
+
+/////////////////////////////////////////////////////////////////////////////////
+// Macro: Create getter functions for the ADC value (averaging is included).
+/////////////////////////////////////////////////////////////////////////////////
+#define CREATE_GET_ADC_VAL(CHANNELNAME, STARTFLAG, VARSEMAPHORE, BUFFER)\
+	uint16_t getVal_ADC##CHANNELNAME(void)\
+	{\
+		uint16_t result = 0;\
+		uint16_t i = 0;\
+		LOAD_ADC(STARTFLAG, VARSEMAPHORE);\
+		while(i < NU_AVERAGING_VALS)\
+		{\
+			if(BUFFER[i++] > offsetErr)\
+				result += BUFFER[i-1] - offsetErr;\
+			else\
+				result += 0;\
+		}\
+		VARSEMAPHORE = 0;\
+		return (result / NU_AVERAGING_VALS);\
+	}
 
 /////////////////////////////////////////////////////////////////////////////////
 // Init ADCA
 /////////////////////////////////////////////////////////////////////////////////
 void init_ADCA(void)
 {
-	PORTA.DIRCLR |= ADC_RED | ADC_BLUE | ADC_GREEN | ADC_OLED;
-	ADCA.CH0.CTRL |= ADC_CH_INPUTMODE_SINGLEENDED_gc;				// Set up all channels
-	ADCA.CH0.MUXCTRL |= ADC_CH_MUXPOS_PIN7_gc;									
-	ADCA.CH0.CTRL |= ADC_CH_INPUTMODE_SINGLEENDED_gc;				
-	ADCA.CH0.MUXCTRL |= ADC_CH_MUXPOS_PIN6_gc;	
-	ADCA.CH0.CTRL |= ADC_CH_INPUTMODE_SINGLEENDED_gc;
-	ADCA.CH0.MUXCTRL |=ADC_CH_MUXPOS_PIN5_gc;								
-	ADCA.CH3.CTRL |= ADC_CH_INPUTMODE_SINGLEENDED_gc;				
-	ADCA.CH3.MUXCTRL |= ADC_CH_MUXPOS_PIN4_gc;		
-	ADCA.REFCTRL |= ADC_REFSEL_INT1V_gc;							// Select bandgap device for reference 1.0 V 							
-	ADCA.CTRLA |= ADC_ENABLE_bm;									// Enable ADCA
-	for(int i=0; i < 24; i++);										// Wait until ADC is started up
+	ADCA.REFCTRL = ADC_REFSEL_INTVCC_gc;												// Select Vcc/1.6 for reference
+	ADCA.PRESCALER = ADC_PRESCALER_DIV16_gc;											// ADC clock is Clk/16 -> 16 MHz / 16 = 1 MHz
+	ADCA.CTRLB = ADC_CURRLIMIT_MED_gc | ADC_RESOLUTION_12BIT_gc;						// Current limit to max 1MSPS, 12 bit resolution right, unsigned mode
+	ADCA.CAL = (0x0FFF & ((PRODSIGNATURES_ADCACAL1 << 8) | PRODSIGNATURES_ADCACAL0));	// Load calibration value
+	ADCA.EVCTRL = 0x00;
+	
+	INIT_ADCA_CHANNEL(ADC_RED_CHANNEL, ADC_RED_INTFLAG, ADC_RED_PIN_NU);				// Initialize the channels single-ended and enable interrupts
+	INIT_ADCA_CHANNEL(ADC_BLUE_CHANNEL, ADC_BLUE_INTFLAG, ADC_BLUE_PIN_NU);										
+	INIT_ADCA_CHANNEL(ADC_GREEN_CHANNEL, ADC_GREEN_INTFLAG, ADC_GREEN_PIN_NU);		
+	INIT_ADCA_CHANNEL(ADC_OLED_CHANNEL, ADC_OLED_INTFLAG, ADC_OLED_PIN_NU);					
+	
+	ADCA.CTRLA |= ADC_ENABLE_bm;														// Enable ADCA
+	for(int i=0; i < 1000; i++)															// Wait until ADC is started up (in every case less than 24 cycles)
+	{																					// Experience has shown, that the compensation value is bullshit when not waiting long enough here.
+		asm("nop");
+		if(i == 999)
+		{
+			LOG_DEBUG("Waited for %d cycles for ADC to start up.", i+1);	
+		}
+	}
+	
+	compensateOffset_ADCA();
+	
+	LOG_DEBUG("ADC initialized.");
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-// Get value from ADC_RED
+// Offset compensation
 /////////////////////////////////////////////////////////////////////////////////
-uint16_t getVal_ADCRed(void)
+void compensateOffset_ADCA()
 {
-	uint16_t myADCVal = 0;
-	ADCA.CTRLA |= ADC_CH0START_bm;									// Start a conversion from ADCA channel 0
-	while( !(ADCA.INTFLAGS & ADC_CH0IF_bm) );						// Wait until conversion is finished
-	return ADCA.CH0.RES;											// Read out result
+	// TODO: Write a calibration algorithm here, which checks the result at a 
+	// pin which is connected to GND. 
+	// This is just a workaround. I want a dedicated pin for that :)
+	//PWM_PORT.DIRSET = (1 << PWM_OLED);										// Put OLED PWM pin as output
+	//PWM_PORT.OUTCLR = (1 <<PWM_OLED);											// GND it
+	offsetErr = getVal_ADCOLED();												// Check offset
+	LOG_DEBUG("Offset error of %d will be substracted.", offsetErr);
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-// Get value from ADC_BLUE
+// ADC values getter functions
 /////////////////////////////////////////////////////////////////////////////////
-uint16_t getVal_ADCBlue(void)
-{
-	uint16_t myADCVal = 0;
-	ADCA.CTRLA |= ADC_CH1START_bm;									// Start a conversion from ADCA channel 1
-	while( !(ADCA.INTFLAGS & ADC_CH1IF_bm) );						// Wait until conversion is finished
-	return ADCA.CH1.RES;											// Read out result
-}
+CREATE_GET_ADC_VAL(Red, ADC_RED_STARTFLAG, loaded_RED, adcVals_RED);
+CREATE_GET_ADC_VAL(Blue, ADC_BLUE_STARTFLAG, loaded_BLUE, adcVals_BLUE);
+CREATE_GET_ADC_VAL(Green, ADC_GREEN_STARTFLAG, loaded_GREEN, adcVals_GREEN);
+CREATE_GET_ADC_VAL(OLED, ADC_OLED_STARTFLAG, loaded_OLED, adcVals_OLED);
 
 /////////////////////////////////////////////////////////////////////////////////
-// Get value from ADC_BLUE
+// ISRs
 /////////////////////////////////////////////////////////////////////////////////
-uint16_t getVal_ADCGreen(void)
-{
-	uint16_t myADCVal = 0;
-	ADCA.CTRLA |= ADC_CH2START_bm;									// Start a conversion from ADCA channel 2
-	while( !(ADCA.INTFLAGS & ADC_CH2IF_bm) );						// Wait until conversion is finished
-	return ADCA.CH2.RES;											// Read out result
-}
+
+CREATE_ADCA_ISR(ADC_RED_VECT, loaded_RED, adcVals_RED, ADC_RED_RESULTREG, ADC_RED_STARTFLAG);
+CREATE_ADCA_ISR(ADC_BLUE_VECT, loaded_BLUE, adcVals_BLUE, ADC_BLUE_RESULTREG, ADC_BLUE_STARTFLAG);
+CREATE_ADCA_ISR(ADC_GREEN_VECT, loaded_GREEN, adcVals_GREEN, ADC_GREEN_RESULTREG, ADC_GREEN_STARTFLAG);
+CREATE_ADCA_ISR(ADC_OLED_VECT, loaded_OLED, adcVals_OLED, ADC_OLED_RESULTREG, ADC_OLED_STARTFLAG);
 
 /////////////////////////////////////////////////////////////////////////////////
-// Get value from ADC_OLED
+// Terminal commands for debugging
 /////////////////////////////////////////////////////////////////////////////////
-uint16_t getVal_ADCOLED(void)
-{
-	uint16_t myADCVal = 0;
-	ADCA.CTRLA |= ADC_CH3START_bm;									// Start a conversion from ADCA channel 3
-	while( !(ADCA.INTFLAGS & ADC_CH3IF_bm) );						// Wait until conversion is finished
-	return ADCA.CH3.RES;											// Read out result
+static void adcCommand(uint8_t len __attribute__ ((unused)), char * data __attribute__ ((unused))) {
+	uint8_t index = 1;
+	char channel = data[index];
+	LOG_DEBUG("Channel: %c", channel);
+	switch(channel){
+		case 'R':
+		LOG_DEBUG("ADC_RED value is %d.", getVal_ADCRed());
+		break;
+		case 'B':
+		LOG_DEBUG("ADC_BLUE value is %d.", getVal_ADCBlue());
+		break;
+		case 'G':
+		LOG_DEBUG("ADC_GREEN value is %d.", getVal_ADCGreen());
+		break;
+		case 'O':
+		LOG_DEBUG("ADC_OLED value is %d.", getVal_ADCOLED() );
+		break;
+		default:
+		LOG_DEBUG("Channel does not exist.");
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -83,6 +192,8 @@ uint16_t getVal_ADCOLED(void)
 /////////////////////////////////////////////////////////////////////////////////
 static uint8_t init(void)
 {
+	command_hook_description('M', &adcCommand,	"M <channel>\r\n\t"
+												"ADC readout for one channel.");
 	init_ADCA();
 	return 1;
 }
