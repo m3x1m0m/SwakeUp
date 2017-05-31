@@ -249,7 +249,7 @@ This can be seen in the code above. The driver gives the possibility to draw a s
 \subsubsection{Terminal}
 The Terminal driver gives the possibility to format strings, and outputs the formatted strings to a sink. The default sink writes to the USB-Serial IC via the UART driver. Formatting is done via the tinyprintf library\cite{sparetimelabs:tinyprintf} and implements the 'd' 'u' 'c' 's' 'x' 'X' formats.
 \subsubsection{ESP8266}
-The ESP8266 is a low cost Wi-Fi module which can be flashed with own firmware. This firmware is written using Sming in C++, more on this in chapter \textbf{CHAPTER}. In order to establish communication, protocol buffers are used. The ESP8266 driver implements a stream that is used by the Control Module which will be explained in the next section. The XMega will also serve as a bridge to flash the firmware on the ESP8266, as the module has to be detached from the board to program it right now. 
+The ESP8266 is a low cost Wi-Fi module which can be flashed with own firmware. This firmware is written using Sming in C++, more on this in chapter \ref{sec:esp}. In order to establish communication, protocol buffers are used. The ESP8266 driver implements a stream that is used by the Control Module which will be explained in the next section. The XMega will also serve as a bridge to flash the firmware on the ESP8266, as the module has to be detached from the board to program it right now. 
 
 \subsubsection{ADC}
 The Xmega subsumes a quite powerful ADC. This ADC can be used with four
@@ -442,4 +442,5 @@ To obtain the most recent time, weather and email, a server back-end has been ma
 \end{figure}
 Above in fig. \ref{fig:block_server} a rough sketch of the dataflow is shown
 \section{Software ESP}
+\label{sec:esp}
 The ESP also had to be programmed, this is done in C++ as that is the most efficient and most supported framework available right now. The ESP relays all the protobuf messages from the xmega to the server backend. Right now this is done via http post requests. This can be optimized by the usage of websockets. However these were not functional yet during the time of development. This could enable ssl encryption to make it safer for sending sensitive data, and a more real time stream could be set up. Although the ESP is programmed in C++, a C version of protobuf has been used. This way it was possible to reuse the code already written for the xmega. A website also has been developed. This way the user can connect to the access point and set up the alarm, city, wifi connection and information shown. The website was created using html, css, javascript, bootstrap and jquerry. All made responsive for both phone and computer accessibility.
