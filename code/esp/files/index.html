@@ -5,11 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>TyTherm Status</title>
+    <title>SwakeUpp Status</title>
 
     <!-- Bootstrap core -->
     <link href="bootstrap.min.css" rel="stylesheet">
+	<link href="jquery.minicolors.css" rel="stylesheet">
 	<script src="jquery-2.1.4.min.js"></script>
+	<script src="jquery.minicolors.min.js" rel="stylesheet"></script>
+	
 	<style>
 		.main { font-size: 63px; }
 	</style>
@@ -26,30 +29,126 @@
             <li role="presentation"><a href="/config">Configuration</a></li>
           </ul>
         </nav>
-        <h3 class="text-muted">TyTherm
-		<div id="time">{time}</div>
-		<div id="weather">{weather}</div>
-		<div id="city">{city}</div>
-		</h3>
+		<h3 class="text-muted">SwakeUpp</h3>
       </div>
 
-		<div class="row">
-			<h2>&nbsp;</h2>
-			<div class="col-xs-offset-2">
-				<div class="col-xs-10 col-md-5">
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h3 class="panel-title">Alarms</h3>
-						</div>
-						<div class="panel-body">
-							<h1 id="counter" class="text-center main">{counter}</h1>
-						</div>
-					</div>
-				</div>
-				
-			</div> <!-- /col -->
-		</div> <!-- /row -->
+	  <div class="row">
+	  	<h2>&nbsp;</h2> 
+		
+	  	<div class="panel panel-default">
+	  	  <div class="panel-heading">
+	  	  	<h3 class="panel-title">Overview</h3>
+	  	  </div>
+	  	  <div class="panel-body"> 
+		  
+			<div class="col-md-4">
+			  <div class="panel panel-default">
+			    <div class="panel-heading">
+			  	<h3 class="panel-title">City</h3>
+			    </div>
+			    <div class="panel-body">
+			  	<div id="city">{city}</div>	
+			    </div>
+			  </div>
+			</div>
+			
+			<div class="col-md-4">
+			  <div class="panel panel-default">
+			    <div class="panel-heading">
+			  	<h3 class="panel-title">Weather</h3>
+			    </div>
+			    <div class="panel-body">
+			  	<div id="weather">{weather}</div>
+			    </div>
+			  </div>
+			</div>
+			
+			<div class="col-md-4">
+			  <div class="panel panel-default">
+			    <div class="panel-heading">
+			  	<h3 class="panel-title">Time</h3>
+			    </div>
+			    <div class="panel-body">
+			  	<div id="time">{time}</div>
+			    </div>
+			  </div>
+			</div>
+			
+	  	  </div>
+	  	</div> <!-- /col -->
+	  
+	  <div class="panel panel-default">
+	  	  <div class="panel-heading">
+	  	  	<h3 class="panel-title">Color</h3>
+	  	  </div>
+	  	  <div class="panel-body">
+		  <input type="text" id="rgb" class="form-control demo" data-format="rgb" value="rgb(33, 147, 58)">
+	  	  </div>
+	  	</div> <!-- /col -->
+	  
+	  	<div class="panel panel-default">
+	  	  <div class="panel-heading">
+	  	  	<h3 class="panel-title">Console</h3>
+	  	  </div>
+		  <form id="form_console" method="POST">
+			  <div class="panel-body">
+				 <div class="form-group">
+				  <label for="console_out">Output</label>
+				  <textarea class="form-control " rows="5" id="console_out" readonly></textarea>
+				  <label for="console_in">Input</label>
+				  <div class="input-group">
+					 <input type="text" class="form-control" id="console_in">
+					 <span class="input-group-btn">
+						<button type="submit" class="btn btn-success">Send</button> 
+					 </span>
+				  </div> 
+				</div> 
+			  </div>
+		  </form>
+	  	</div> <!-- /col -->
+		
+
+		
+	  </div> <!-- /row -->
+
 
 	</div> <!-- /container -->
+	<script type="text/javascript">
+$(document).ready( function() {
+
+      $('.demo').each( function() {
+        //
+        // Dear reader, it's actually very easy to initialize MiniColors. For example:
+        //
+        //  $(selector).minicolors();
+        //
+        // The way I've done it below is just for the demo, so don't get confused
+        // by it. Also, data- attributes aren't supported at this time...they're
+        // only used for this demo.
+        //
+        $(this).minicolors({
+          control: $(this).attr('data-control') || 'hue',
+          defaultValue: $(this).attr('data-defaultValue') || '',
+          format: $(this).attr('data-format') || 'rgb',
+          keywords: $(this).attr('data-keywords') || '',
+          inline: $(this).attr('data-inline') === 'true',
+          letterCase: $(this).attr('data-letterCase') || 'lowercase',
+          opacity: $(this).attr('data-opacity'),
+          position: $(this).attr('data-position') || 'bottom left',
+          swatches: $(this).attr('data-swatches') ? $(this).attr('data-swatches').split('|') : [],
+          change: function(value, opacity) {
+            if( !value ) return;
+            if( opacity ) value += ', ' + opacity;
+            if( typeof console === 'object' ) {
+              console.log("value: " + value);
+            }
+          },
+          theme: 'bootstrap'
+        });
+
+      });
+
+    });
+</script>
   </body>
 </html>

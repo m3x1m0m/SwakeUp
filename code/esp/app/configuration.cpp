@@ -23,6 +23,7 @@ SwakeConfig loadConfig() {
 		cfg.StaEnable = network["StaEnable"];
 		cfg.city = String((const char*) network["city"]);
 		cfg.date = String((const char*)network["date"]);
+		cfg.time = String((const char*)network["time"]);
 		delete[] jsonString;
 	} else {
 		//Factory defaults if no config file present
@@ -30,6 +31,7 @@ SwakeConfig loadConfig() {
 		cfg.StaPassword = WIFI_PWD;
 		cfg.city = "Amsterdam";
 		cfg.date = "2017/05/19";
+		cfg.time = "00:00";
 	}
 	return cfg;
 }
@@ -45,6 +47,7 @@ void saveConfig(SwakeConfig& cfg) {
 	network["StaEnable"] = cfg.StaEnable;
 	network["city"] = cfg.city;
 	network["date"] = cfg.date;
+	network["time"] = cfg.time;
 	char buf[ConfigFileBufferSize];
 	root.prettyPrintTo(buf, sizeof(buf));
 	fileSetContent(THERM_CONFIG_FILE, buf);

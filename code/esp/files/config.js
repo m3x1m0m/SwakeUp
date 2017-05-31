@@ -1,14 +1,15 @@
 function get_config() {
 	$.getJSON('/config.json',
 			function(data) {
+				console.log(data);
 				$.each(data, function(key, value){
-            		document.getElementById(key).value = value;
-            	if (data.StaEnable == 1) {
-            		document.getElementById('StaEnable').checked = true;
-            	}
-            	else
-            		document.getElementById('StaEnable').checked = false;
-        		});
+					console.log("Key: " + key + " Value: " + value);
+					document.getElementById(key).value = value;
+					if (data.StaEnable == 1) {
+						document.getElementById('StaEnable').checked = true;
+					} else
+						document.getElementById('StaEnable').checked = false;
+					});
             });
 }
 function post_citycfg(event) {
@@ -47,5 +48,5 @@ $( document ).ready(function() {
 	get_config();
 	document.getElementById('form_citycfg').addEventListener('submit', post_citycfg);
 	document.getElementById('form_netcfg').addEventListener('submit', post_netcfg);
-	document.getElementById('netcfg_cancel').addEventListener('click', get_config);
+	// document.getElementById('netcfg_cancel').addEventListener('click', get_config);
 });
