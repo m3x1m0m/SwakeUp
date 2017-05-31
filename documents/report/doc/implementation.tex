@@ -226,5 +226,5 @@ The Core translates all the commands given to actions. The debug LED can be togg
 	\caption{Displaying the clock and the weather}
 \end{figure}
 \section{Software Server}
-Although slightly out of the scope for 
+To obtain the most recent time, weather and email, a server backend has been made. This server backend is accessible trough a RESTful interface. An application can fire post requests with protobuf messages in the body. This will be decoded on the server and the right response will be given. The server backend is written in Java, and hosted on Heroku https://www.heroku.com/ . To accelerate RESTful java interface development, the spark framework has been chosen to develop with http://sparkjava.com/ .
 \section{Software ESP}
