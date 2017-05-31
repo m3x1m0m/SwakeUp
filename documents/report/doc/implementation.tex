@@ -221,10 +221,19 @@ The Timer design is incomplete, and only houses a RTC. Due to a hardware failure
 As mentioned before, the screen uses a SEPS525F IC. This driver drives allows for driving screens with a resolution of up to 160x128 pixels with 18 bit combined color. This means that there are 6 bits for blue, 6 bits for green and 6 bits for red. However this would require to send 3 bytes for 2 bits of color precision. There is also a 16 bits combined color option available, which has been used in this driver. 5 bits for blue, 6 bits for green and 5 bits for red. A 24 bit color (8 bits per color, 0-255) can be converted with the following define:
 \begin{minted}[baselinestretch=1, fontsize=\small, linenos,frame=single,framesep=5pt]{C}
 #define SEPS525F_TO656(r,g,b)((r>>3)<<11)|((g>>2)<<5)|(b>>3)
-\end{minted}
-The SEPS525F has three data interfaces that could be used: SPI, RGB, Parallel. In retrospect a parallel interface would have given major performance advantages. However due to time constraints a SPI interface has been chosen. The clock frequency of the SPI is set at the CPU speed divided by two. Which is a clock of 8 MHz when not in any power saving mode.\newpar
-The SEPS525F has two modes, a data mode and a command mode. With the command mode a register can be set. In order to achieve this the register will be written first, while clearing the RS and the CS pin. Once the register is written, the RS pin will be set while keeping the CS pin low. After the data is written the CS pin will be set.
-\begin{minted}[baselinestretch=1, fontsize=\small, linenos,frame=single,framesep=5pt]{C}
+\end{minted} 
+The SEPS525F has three data interfaces that could be used: SPI,
+RGB, Parallel. In retrospect a parallel interface would have given major
+performance advantages. However due to time constraints a SPI interface has been
+chosen. The clock frequency of the SPI is set at the CPU speed divided by two.
+Which is a clock of 8 MHz when not in any power saving mode.\newpar The SEPS525F
+has two modes, a data mode and a command mode. With the command mode a register
+can be set. In order to achieve this the register will be written first, while
+clearing the RS and the CS pin. Once the register is written, the RS pin will be
+set while keeping the CS pin low. After the data is written the CS pin will be
+set.  
+\begin{minted}[baselinestretch=1, fontsize=\small,
+	linenos,frame=single,framesep=5pt]{C}
 static void SEPS525F_reg(int idx, int value) {
 SEPS525F_PORT.OUTCLR = SEPS525F_CSB | SEPS525F_RS;
 spi_write_blocked(idx);
@@ -239,6 +248,52 @@ This can be seen in the code above. The driver gives the possibility to draw a s
 The Terminal driver gives the possibility to format strings, and outputs the formatted strings to a sink. The default sink writes to the USB-Serial IC via the UART driver. Formatting is done via the tinyprintf library\cite{sparetimelabs:tinyprintf} and implements the 'd' 'u' 'c' 's' 'x' 'X' formats.
 \subsubsection{ESP8266}
 The ESP8266 is a low cost Wi-Fi module which can be flashed with own firmware. This firmware is written using Sming in C++, more on this in chapter \textbf{CHAPTER}. In order to establish communication, protocol buffers are used. The ESP8266 driver implements a stream that is used by the Control Module which will be explained in the next section. The XMega will also serve as a bridge to flash the firmware on the ESP8266, as the module has to be detached from the board to program it right now. 
+
+\subsubsection{ADC}
+The Xmega subsumes a quite powerful ADC. This ADC can be used with four
+different channels. The SAR ADC almost feels like being four ADCs as one
+conversion does not have to be completed befor anotherone starts. The single
+bits are independent of each other (pipelining). The ADC driver is designed for
+four different channels (red, green, blue, oled). It runs in single conversion
+mode and a couple of conversions is triggered to fill a buffer to enable
+averaging, which is recommended for such an application. The drivers is written
+quite generic to not have to write the same code for each channel with other
+register names. This can be seen e.g. in the following code example. 
+
+\begin{minted}[baselinestretch=1, fontsize=\small,
+	linenos,frame=single,framesep=5pt]{C}
+/////////////////////////////////////////////////////////////////////////////////
+// Macro: Create ISRs for the individual channels.
+/////////////////////////////////////////////////////////////////////////////////
+#define CREATE_ADCA_ISR(ADCVECTOR, VARSEMAPHORE, BUFFER, RESULTREG,STARTFLAG) \ 
+ISR(ADCVECTOR) \ 
+{ \ 
+	static volatile uint8_t cycles = 0; \
+	if(!VARSEMAPHORE) \ 
+	{ \ 
+		if( ((int16_t) RESULTREG) < 0) \
+			BUFFER[cycles++] = 0; \ 
+		else \ 
+			BUFFER[cycles++] = RESULTREG; \ 
+		if(cycles < NU_AVERAGING_VALS) \ 
+		ADCA.CTRLA |= STARTFLAG; \ 
+		else\ 
+		{\ 
+			VARSEMAPHORE= 1;\ 
+			cycles = 0;\ 
+		}\ 
+	}\
+}
+\end{minted}
+
+\subsection{PWM}
+A special thing about the PWM hardware in the Xmega is, that two high-resolution
+modes are available. This enables the possibility to make the PWM periphery
+input frequency up to 8 times higher as the system clock. This nice feature
+enables high PWM frequency, with still a quite accurate resolution of the duty
+cycle. The PWM driver also is written generically for four different channels
+(red, green, blue, oled).
+
 \subsection{Module Layer}
 Although all the drivers talked about before make use of the Module system, they are not located on the Module layer. This is a naming convention mistake.
 \subsubsection{Command}
@@ -308,7 +363,7 @@ library.
 	\label{fig:pid}
 	\includegraphics[width=1\textwidth]{./fig/pid_12v_100Hz.png}
 	\caption{Step-response of a PID controller for the screen voltage
-	control with 100 Hz periodicity}.
+	control with 100 Hz periodicity.}.
 \end{figure}
 
 \subsubsection{Voltage Controller}
@@ -317,7 +372,7 @@ a PID controller to controll the scrren voltage to a given setpoint. This setpoi
 and the reference voltage of the ADC into account.
 
 \subsubsection{LOG}
-Almost every driver or module has a dependency on the LOG driver. In order to use the logging functionality, a file first has to initialize the logger. this is done by calling:
+Almost every  or module has a dependency on the LOG driver. In order to use the logging functionality, a file first has to initialize the logger. this is done by calling:
 \begin{minted}[baselinestretch=1, fontsize=\small, linenos,frame=single,framesep=5pt]{C}
 LOG_INIT("Core");
 \end{minted}
@@ -354,7 +409,11 @@ The Time keeps track of time offline. It does so by keeping track of hours minut
 \subsection{App layer}
 This layer is the least elaborated, as it has the last priority since it would not work without the layers before it regardless.
 \subsubsection{Clock}
-The clock application draws a digital clock, alarm and date. It listens to time updates, and updates the time unit that has been updated, whether that is second minute hour or a combination of them. \textbf{MAX HERE}
+The clock application draws a digital clock, alarm and date. It listens to time
+updates, and updates the time unit that has been updated, whether that is second
+minute hour or a combination of them. Moreover the clock app includes the alarm
+functionality, which makes it possible to set an alarm and to react on it (play
+a certain light pattern via the light controller). 
 \subsubsection{Weather}
 The weather application draws a temperature, unit and an icon based on the weather situation (rain, snow, sun, overcast) which are being drawn via screen routines. 
 \subsubsection{Mail}
