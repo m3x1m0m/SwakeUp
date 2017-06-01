@@ -45,6 +45,18 @@
 #define TIMEKEEPER_MONTHS_NOVEMBER      11
 #define TIMEKEEPER_MONTHS_DECEMBER      12
 
+#define TIMEKEEPER_HASH_JANUARY       25
+#define TIMEKEEPER_HASH_FEBRUARY      13
+#define TIMEKEEPER_HASH_MARCH         32
+#define TIMEKEEPER_HASH_APRIL         35
+#define TIMEKEEPER_HASH_MAY           39
+#define TIMEKEEPER_HASH_JUNE          45
+#define TIMEKEEPER_HASH_JULY          43
+#define TIMEKEEPER_HASH_AUGUST        29
+#define TIMEKEEPER_HASH_SEPTEMBER     40
+#define TIMEKEEPER_HASH_OCTOBER       38
+#define TIMEKEEPER_HASH_NOVEMBER      51
+#define TIMEKEEPER_HASH_DECEMBER      12
 
 struct timekeepertime_s {
     uint8_t hour;

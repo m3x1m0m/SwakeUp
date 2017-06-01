@@ -62,22 +62,25 @@ static void updateDayDate(void) {
 
 void checkAlarm(void)
 {
+	LOG_DEBUG("Day: %d, %d", timeKeeper.date.day, timeKeeper.alarm.days);
+	LOG_DEBUG("Hour: %d, %d", timeKeeper.time.hour, timeKeeper.alarm.time.hour);
+	LOG_DEBUG("Minute: %d, %d", timeKeeper.time.minute, timeKeeper.alarm.time.minute);
 	if ( (timeKeeper.date.day & timeKeeper.alarm.days) &&\
-	(timeKeeper.time.hour & timeKeeper.alarm.time.hour) &&\
-	(timeKeeper.time.minute & timeKeeper.alarm.time.minute) )
+	(timeKeeper.time.hour == timeKeeper.alarm.time.hour) &&\
+	(timeKeeper.time.minute == timeKeeper.alarm.time.minute) )
 	{
-		//event_fire(&ALARM, 0);
+		event_fire(&ALARM, 0);
 	}
 }
 
 static void callback(Event * event, uint8_t * data __attribute__ ((unused))) {
     if (event == &EVENT_TIMER_1_HZ) {
+		checkAlarm();
         timeKeeper.time.second++;
         updated |= TIMEKEEPER_UPDATE_SEC_BP;
         if (timeKeeper.time.second >= 60) {
             timeKeeper.time.second = 0;
             timeKeeper.time.minute++;
-			checkAlarm();
             updated |= TIMEKEEPER_UPDATE_MIN_BP;
             if (timeKeeper.time.minute >= 60) {
                 timeKeeper.time.minute = 0;
@@ -137,6 +140,81 @@ void timekeeper_alarm_set(uint8_t days, struct timekeepertime_s time) {
     timeKeeper.alarm.days = days;
     timeKeeper.alarm.time = time;
 }
+
+uint8_t monthHash(char *month)
+{
+	uint8_t result = 0;
+	for(int i=0; i < 3; i++)
+	{
+		result+=month[i];
+	}
+	return result;
+}
+
+uint8_t getPrepSeconds(char *time){
+	return ( (time[6]-48)*10 + (time[7]-48) );
+}
+
+uint8_t getPrepMinutes(char *time){
+	return ( (time[3]-48)*10 + (time[4]-48) );
+}
+
+uint8_t getPrepHours(char *time){
+	return ( (time[0]-48)*10 + (time[1]-48) );
+}
+
+uint8_t getPrepDay(char *date){
+	return (  ( (date[4] == ' ')? 0 : date[4]-48 ) * 10 + (date[5]-48) );
+}
+
+uint8_t getPrepMonth(char *date){
+	uint8_t dateHash = monthHash(date);
+	switch(dateHash)
+	{
+		case TIMEKEEPER_HASH_JANUARY:
+		return 1;
+		break;
+		case TIMEKEEPER_HASH_FEBRUARY:
+		return 2;
+		break;
+		case TIMEKEEPER_HASH_MARCH:
+		return 3;
+		break;
+		case TIMEKEEPER_HASH_APRIL:
+		return 4;
+		break;
+		case TIMEKEEPER_HASH_MAY:
+		return 5;
+		break;
+		case TIMEKEEPER_HASH_JUNE:
+		return 6;
+		break;
+		case TIMEKEEPER_HASH_JULY:
+		return 7;
+		break;
+		case TIMEKEEPER_HASH_AUGUST:
+		return 8;
+		break;
+		case TIMEKEEPER_HASH_SEPTEMBER:
+		return 9;
+		break;
+		case TIMEKEEPER_HASH_OCTOBER:
+		return 10;
+		break;
+		case TIMEKEEPER_HASH_NOVEMBER:
+		return 11;
+		break;
+		case TIMEKEEPER_HASH_DECEMBER:
+		return 12;
+		break;
+	}
+}
+
+uint8_t getPrepYear(char *date)
+{
+	return ( (date[9]-48)*10 + (date[10]-48) );
+}
+
 void timekeeper_set(uint8_t y, uint8_t mo, uint8_t d, uint8_t h, uint8_t mi, uint8_t s) {
     timekeeper_time_set(h, mi, s);
     timekeeper_date_set(y, mo, d);
@@ -160,7 +238,9 @@ TimeKeeper timekeeper_get (void) {
 
 static uint8_t init(void) {
     event_addListener(&EVENT_TIMER_1_HZ, callback);     //TODO this can be removed
-    timekeeper_set(0, 1, 1, 0, 0, 0);                   // THE YEAR IS 2000/1/1
+    timekeeper_set(getPrepYear(__DATE__), getPrepMonth(__DATE__), \
+	getPrepDay(__DATE__), getPrepHours(__TIME__), \
+	getPrepMinutes(__TIME__), getPrepSeconds(__TIME__));                   // THE YEAR IS 2000/1/1
     timeKeeper.time.amPm = 3;
     return 1;
 }
