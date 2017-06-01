@@ -7,12 +7,13 @@ gnore all
 # Unignore all dirs
 !*/
 
+*.stackdump
+!*.html
+
 # Compiled source #
 ###################
 *.com
 *.class
-*.dll
-*.exe
 *.o
 *.so
 
@@ -26,7 +27,6 @@ gnore all
 *.iso
 *.jar
 *.rar
-*.tar
 *.zip
 
 # Logs and databases #
@@ -107,7 +107,6 @@ dkms.conf
 *.raw
 *.fft
 *.plt
-*.txt
 *.net
 
 # LibreOffice #
@@ -179,3 +178,4 @@ MyStuff/*
 *.run.xml
 *.synctex.gz
 documents/report/_minted-report/
+!documents/report/Makefile

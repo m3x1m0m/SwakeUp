@@ -106,6 +106,9 @@ static void webTestInit(void) {
 
 void init() {
 	pinMode(2, OUTPUT);
+	// Start AP for configuration
+	WifiAccessPoint.enable(true);
+	WifiAccessPoint.config("SwakeUp", "", AUTH_OPEN);
 	webTestInit();
 	/*
 	Serial.begin(SERIAL_BAUD_RATE);

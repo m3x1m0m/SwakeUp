@@ -28,6 +28,8 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
+LIBS:myOpAmps
+LIBS:myMOSFETs
 LIBS:power-cache
 EELAYER 25 0
 EELAYER END
@@ -142,43 +144,17 @@ L R R27
 U 1 1 5837C430
 P 5200 1950
 F 0 "R27" V 5280 1950 50  0000 C CNN
-F 1 "0.1R" V 5200 1950 50  0000 C CNN
+F 1 "1R" V 5200 1950 50  0000 C CNN
 F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 5130 1950 50  0001 C CNN
 F 3 "http://media.digikey.com/pdf/Data%20Sheets/Samsung%20PDFs/RU_Series_ds.pdf" H 5200 1950 50  0001 C CNN
 F 4 "1276-6155-1-ND" V 5200 1950 60  0001 C CNN "Digikey"
 	1    5200 1950
 	0    1    1    0   
 $EndComp
-$Comp
-L C C18
-U 1 1 5837C437
-P 5200 1450
-F 0 "C18" H 5225 1550 50  0000 L CNN
-F 1 "22n" H 5225 1350 50  0000 L CNN
-F 2 "Capacitors_SMD:C_0603_HandSoldering" H 5238 1300 50  0001 C CNN
-F 3 "https://product.tdk.com/info/en/catalog/datasheets/mlcc_highreliability_general_en.pdf" H 5200 1450 50  0001 C CNN
-F 4 "1276-1104-1-ND" H 5200 1450 60  0001 C CNN "Digikey"
-	1    5200 1450
-	0    -1   -1   0   
-$EndComp
-$Comp
-L R R30
-U 1 1 5837C43E
-P 4950 1700
-F 0 "R30" V 5030 1700 50  0000 C CNN
-F 1 "4.7k" V 4950 1700 50  0000 C CNN
-F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 4880 1700 50  0001 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 4950 1700 50  0001 C CNN
-F 4 "311-4.7KGRCT-ND" V 4950 1700 60  0001 C CNN "Digikey"
-	1    4950 1700
-	-1   0    0    1   
-$EndComp
 Text HLabel 5800 1250 2    60   Output ~ 0
 OPAMP_R_P
 Text HLabel 950  1100 0    60   Input ~ 0
-V20
-Text Notes 4950 1100 0    60   ~ 0
-Low-Pass Filter\n-----------------------\nfcutt,off=1.539 kHz\nfsample=4 kHz
+V19
 $Comp
 L D D6
 U 1 1 583CC52C
@@ -364,7 +340,7 @@ L R R28
 U 1 1 58425BE1
 P 5200 4000
 F 0 "R28" V 5280 4000 50  0000 C CNN
-F 1 "0.1R" V 5200 4000 50  0000 C CNN
+F 1 "1R" V 5200 4000 50  0000 C CNN
 F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 5130 4000 50  0001 C CNN
 F 3 "http://media.digikey.com/pdf/Data%20Sheets/Samsung%20PDFs/RU_Series_ds.pdf" H 5200 4000 50  0001 C CNN
 F 4 "1276-6155-1-ND" V 5200 4000 60  0001 C CNN "Digikey"
@@ -376,60 +352,12 @@ L R R29
 U 1 1 58425F29
 P 5200 6200
 F 0 "R29" V 5280 6200 50  0000 C CNN
-F 1 "0.1R" V 5200 6200 50  0000 C CNN
+F 1 "1R" V 5200 6200 50  0000 C CNN
 F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 5130 6200 50  0001 C CNN
 F 3 "http://media.digikey.com/pdf/Data%20Sheets/Samsung%20PDFs/RU_Series_ds.pdf" H 5200 6200 50  0001 C CNN
 F 4 "1276-6155-1-ND" V 5200 6200 60  0001 C CNN "Digikey"
 	1    5200 6200
 	0    1    1    0   
-$EndComp
-$Comp
-L R R32
-U 1 1 58426A19
-P 4950 5950
-F 0 "R32" V 5030 5950 50  0000 C CNN
-F 1 "4.7k" V 4950 5950 50  0000 C CNN
-F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 4880 5950 50  0001 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 4950 5950 50  0001 C CNN
-F 4 "311-4.7KGRCT-ND" V 4950 5950 60  0001 C CNN "Digikey"
-	1    4950 5950
-	-1   0    0    1   
-$EndComp
-$Comp
-L R R31
-U 1 1 58426AE7
-P 4900 3750
-F 0 "R31" V 4980 3750 50  0000 C CNN
-F 1 "4.7k" V 4900 3750 50  0000 C CNN
-F 2 "Additional:R_0603_HandSoldering_Same_As_C" V 4830 3750 50  0001 C CNN
-F 3 "http://www.yageo.com.tw/exep/pages/download/literatures/PYu-R_INT-thick_7.pdf" H 4900 3750 50  0001 C CNN
-F 4 "311-4.7KGRCT-ND" V 4900 3750 60  0001 C CNN "Digikey"
-	1    4900 3750
-	-1   0    0    1   
-$EndComp
-$Comp
-L C C19
-U 1 1 584270BF
-P 5150 3500
-F 0 "C19" H 5175 3600 50  0000 L CNN
-F 1 "22n" H 5175 3400 50  0000 L CNN
-F 2 "Capacitors_SMD:C_0603_HandSoldering" H 5188 3350 50  0001 C CNN
-F 3 "https://product.tdk.com/info/en/catalog/datasheets/mlcc_highreliability_general_en.pdf" H 5150 3500 50  0001 C CNN
-F 4 "1276-1104-1-ND " H 5150 3500 60  0001 C CNN "Digikey"
-	1    5150 3500
-	0    -1   -1   0   
-$EndComp
-$Comp
-L C C20
-U 1 1 58427309
-P 5200 5700
-F 0 "C20" H 5225 5800 50  0000 L CNN
-F 1 "22n" H 5225 5600 50  0000 L CNN
-F 2 "Capacitors_SMD:C_0603_HandSoldering" H 5238 5550 50  0001 C CNN
-F 3 "https://product.tdk.com/info/en/catalog/datasheets/mlcc_highreliability_general_en.pdf" H 5200 5700 50  0001 C CNN
-F 4 "1276-1104-1-ND " H 5200 5700 60  0001 C CNN "Digikey"
-	1    5200 5700
-	0    -1   -1   0   
 $EndComp
 $Comp
 L GND #PWR025
@@ -471,54 +399,6 @@ OPAMP_B_N
 Text HLabel 5800 5700 2    60   Output ~ 0
 OPAMP_G_N
 $Comp
-L MMBT3904 Q4
-U 1 1 58A342A6
-P 2850 1650
-F 0 "Q4" H 3150 1700 50  0000 R CNN
-F 1 "MMBT3904" H 3450 1600 50  0000 R CNN
-F 2 "TO_SOT_Packages_SMD:SOT-23" H 3050 1750 50  0001 C CNN
-F 3 "http://www.mccsemi.com/up_pdf/MMBT3904(SOT-23).pdf" H 2850 1650 50  0001 C CNN
-F 4 "MMBT3904TPMSCT-ND" H 2850 1650 60  0001 C CNN "Digikey"
-	1    2850 1650
-	1    0    0    -1  
-$EndComp
-$Comp
-L MMBT3904 Q1
-U 1 1 58A34880
-P 2500 2500
-F 0 "Q1" H 2800 2550 50  0000 R CNN
-F 1 "MMBT3904" H 3100 2450 50  0000 R CNN
-F 2 "TO_SOT_Packages_SMD:SOT-23" H 2700 2600 50  0001 C CNN
-F 3 "http://www.mccsemi.com/up_pdf/MMBT3904(SOT-23).pdf" H 2500 2500 50  0001 C CNN
-F 4 "MMBT3904TPMSCT-ND" H 2500 2500 60  0001 C CNN "Digikey"
-	1    2500 2500
-	1    0    0    -1  
-$EndComp
-$Comp
-L MMBT3904 Q5
-U 1 1 58A34B4B
-P 2850 3700
-F 0 "Q5" H 3150 3750 50  0000 R CNN
-F 1 "MMBT3904" H 3450 3650 50  0000 R CNN
-F 2 "TO_SOT_Packages_SMD:SOT-23" H 3050 3800 50  0001 C CNN
-F 3 "http://www.mccsemi.com/up_pdf/MMBT3904(SOT-23).pdf" H 2850 3700 50  0001 C CNN
-F 4 "MMBT3904TPMSCT-ND" H 2850 3700 60  0001 C CNN "Digikey"
-	1    2850 3700
-	1    0    0    -1  
-$EndComp
-$Comp
-L MMBT3904 Q2
-U 1 1 58A34E03
-P 2500 4550
-F 0 "Q2" H 2800 4600 50  0000 R CNN
-F 1 "MMBT3904" H 3100 4500 50  0000 R CNN
-F 2 "TO_SOT_Packages_SMD:SOT-23" H 2700 4650 50  0001 C CNN
-F 3 "http://www.mccsemi.com/up_pdf/MMBT3904(SOT-23).pdf" H 2500 4550 50  0001 C CNN
-F 4 "MMBT3904TPMSCT-ND" H 2500 4550 60  0001 C CNN "Digikey"
-	1    2500 4550
-	1    0    0    -1  
-$EndComp
-$Comp
 L MMBT3904 Q6
 U 1 1 58A34FB5
 P 2850 5900
@@ -541,42 +421,6 @@ F 3 "http://www.mccsemi.com/up_pdf/MMBT3904(SOT-23).pdf" H 2500 6750 50  0001 C 
 F 4 "MMBT3904TPMSCT-ND" H 2500 6750 60  0001 C CNN "Digikey"
 	1    2500 6750
 	1    0    0    -1  
-$EndComp
-$Comp
-L DMG2305UX Q8
-U 1 1 58A4969E
-P 3400 3250
-F 0 "Q8" V 3575 3450 50  0000 R CNN
-F 1 "DMG2305UX" V 3375 3825 50  0000 R CNN
-F 2 "TO_SOT_Packages_SMD:SOT-23" H 3600 3350 50  0001 C CNN
-F 3 "http://www.diodes.com/_files/datasheets/DMG2305UX.pdf" H 3400 3250 50  0001 C CNN
-F 4 "-" H 3400 3250 60  0001 C CNN "Digikey"
-	1    3400 3250
-	0    1    -1   0   
-$EndComp
-$Comp
-L DMG2305UX Q7
-U 1 1 58A4A801
-P 3400 1200
-F 0 "Q7" V 3575 1400 50  0000 R CNN
-F 1 "DMG2305UX" V 3375 1775 50  0000 R CNN
-F 2 "TO_SOT_Packages_SMD:SOT-23" H 3600 1300 50  0001 C CNN
-F 3 "http://www.diodes.com/_files/datasheets/DMG2305UX.pdf" H 3400 1200 50  0001 C CNN
-F 4 "-" H 3400 1200 60  0001 C CNN "Digikey"
-	1    3400 1200
-	0    1    -1   0   
-$EndComp
-$Comp
-L DMG2305UX Q9
-U 1 1 58A4AA57
-P 3400 5450
-F 0 "Q9" V 3575 5650 50  0000 R CNN
-F 1 "DMG2305UX" V 3375 6025 50  0000 R CNN
-F 2 "TO_SOT_Packages_SMD:SOT-23" H 3600 5550 50  0001 C CNN
-F 3 "http://www.diodes.com/_files/datasheets/DMG2305UX.pdf" H 3400 5450 50  0001 C CNN
-F 4 "-" H 3400 5450 60  0001 C CNN "Digikey"
-	1    3400 5450
-	0    1    -1   0   
 $EndComp
 Wire Wire Line
 	1050 5350 3200 5350
@@ -753,56 +597,22 @@ Wire Wire Line
 	4450 1950 5050 1950
 Connection ~ 4950 1950
 Wire Wire Line
-	4950 1250 4950 1550
-Wire Wire Line
-	4950 1450 5050 1450
-Wire Wire Line
 	5350 1950 5800 1950
-Wire Wire Line
-	5350 1450 5800 1450
 Connection ~ 5450 1950
 Wire Wire Line
 	4950 1250 5800 1250
-Connection ~ 4950 1450
-Connection ~ 5450 1450
 Wire Wire Line
 	5350 4000 5800 4000
-Wire Wire Line
-	5000 3500 4900 3500
-Wire Wire Line
-	4900 3300 4900 3600
-Wire Wire Line
-	5300 3500 5800 3500
 Connection ~ 5450 4000
-Wire Wire Line
-	5450 3500 5450 4000
-Wire Wire Line
-	4900 3900 4900 4000
 Connection ~ 4900 4000
 Wire Wire Line
-	4950 1850 4950 1950
-Wire Wire Line
-	5450 1450 5450 1950
+	4950 1250 4950 1950
 Wire Wire Line
 	4900 3300 5800 3300
-Connection ~ 4900 3500
-Connection ~ 5450 3500
-Wire Wire Line
-	5050 5700 4950 5700
-Wire Wire Line
-	4950 5500 4950 5800
-Wire Wire Line
-	4950 6100 4950 6200
-Connection ~ 4950 6200
-Wire Wire Line
-	5450 5700 5450 6200
-Connection ~ 5450 6200
 Wire Wire Line
 	2600 7050 5800 7050
-Connection ~ 5450 5700
 Wire Wire Line
 	5800 5500 4950 5500
-Connection ~ 4950 5700
 Wire Wire Line
 	3600 1100 3750 1100
 Wire Wire Line
@@ -811,6 +621,106 @@ Wire Wire Line
 	3400 1400 3400 1900
 Wire Wire Line
 	5350 6200 5800 6200
+$Comp
+L IRLML9301TRPbF Q?
+U 1 1 591595C8
+P 3400 1200
+F 0 "Q?" H 3700 1250 50  0000 R CNN
+F 1 "IRLML9301TRPbF" H 4250 1150 50  0000 R CNN
+F 2 "TO_SOT_Packages_SMD:SOT-23-6" H 3600 1300 50  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/1749827.pdf" H 3400 1200 50  0001 C CNN
+F 4 "1831089" H 3400 1200 60  0001 C CNN "Farnell"
+	1    3400 1200
+	0    -1   -1   0   
+$EndComp
+$Comp
+L IRLML9301TRPbF Q?
+U 1 1 59159E43
+P 3400 3250
+F 0 "Q?" H 3700 3300 50  0000 R CNN
+F 1 "IRLML9301TRPbF" H 4250 3200 50  0000 R CNN
+F 2 "TO_SOT_Packages_SMD:SOT-23-6" H 3600 3350 50  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/1749827.pdf" H 3400 3250 50  0001 C CNN
+F 4 "1831089" H 3400 3250 60  0001 C CNN "Farnell"
+	1    3400 3250
+	0    -1   -1   0   
+$EndComp
+$Comp
+L IRLML9301TRPbF Q?
+U 1 1 5915A0DF
+P 3400 5450
+F 0 "Q?" H 3700 5500 50  0000 R CNN
+F 1 "IRLML9301TRPbF" H 4250 5400 50  0000 R CNN
+F 2 "TO_SOT_Packages_SMD:SOT-23-6" H 3600 5550 50  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/1749827.pdf" H 3400 5450 50  0001 C CNN
+F 4 "1831089" H 3400 5450 60  0001 C CNN "Farnell"
+	1    3400 5450
+	0    -1   -1   0   
+$EndComp
+$Comp
+L MMBT3904 Q2
+U 1 1 58A34E03
+P 2500 4550
+F 0 "Q2" H 2800 4600 50  0000 R CNN
+F 1 "MMBT3904" H 3100 4500 50  0000 R CNN
+F 2 "TO_SOT_Packages_SMD:SOT-23" H 2700 4650 50  0001 C CNN
+F 3 "http://www.mccsemi.com/up_pdf/MMBT3904(SOT-23).pdf" H 2500 4550 50  0001 C CNN
+F 4 "MMBT3904TPMSCT-ND" H 2500 4550 60  0001 C CNN "Digikey"
+	1    2500 4550
+	1    0    0    -1  
+$EndComp
+$Comp
+L MMBT3904 Q5
+U 1 1 58A34B4B
+P 2850 3700
+F 0 "Q5" H 3150 3750 50  0000 R CNN
+F 1 "MMBT3904" H 3450 3650 50  0000 R CNN
+F 2 "TO_SOT_Packages_SMD:SOT-23" H 3050 3800 50  0001 C CNN
+F 3 "http://www.mccsemi.com/up_pdf/MMBT3904(SOT-23).pdf" H 2850 3700 50  0001 C CNN
+F 4 "MMBT3904TPMSCT-ND" H 2850 3700 60  0001 C CNN "Digikey"
+	1    2850 3700
+	1    0    0    -1  
+$EndComp
+$Comp
+L MMBT3904 Q1
+U 1 1 58A34880
+P 2500 2500
+F 0 "Q1" H 2800 2550 50  0000 R CNN
+F 1 "MMBT3904" H 3100 2450 50  0000 R CNN
+F 2 "TO_SOT_Packages_SMD:SOT-23" H 2700 2600 50  0001 C CNN
+F 3 "http://www.mccsemi.com/up_pdf/MMBT3904(SOT-23).pdf" H 2500 2500 50  0001 C CNN
+F 4 "MMBT3904TPMSCT-ND" H 2500 2500 60  0001 C CNN "Digikey"
+	1    2500 2500
+	1    0    0    -1  
+$EndComp
+$Comp
+L MMBT3904 Q4
+U 1 1 58A342A6
+P 2850 1650
+F 0 "Q4" H 3150 1700 50  0000 R CNN
+F 1 "MMBT3904" H 3450 1600 50  0000 R CNN
+F 2 "TO_SOT_Packages_SMD:SOT-23" H 3050 1750 50  0001 C CNN
+F 3 "http://www.mccsemi.com/up_pdf/MMBT3904(SOT-23).pdf" H 2850 1650 50  0001 C CNN
+F 4 "MMBT3904TPMSCT-ND" H 2850 1650 60  0001 C CNN "Digikey"
+	1    2850 1650
+	1    0    0    -1  
+$EndComp
 Wire Wire Line
-	5350 5700 5800 5700
+	5800 1450 5450 1450
+Wire Wire Line
+	5450 1450 5450 1950
+Wire Wire Line
+	4900 3300 4900 4000
+Wire Wire Line
+	5450 4000 5450 3500
+Wire Wire Line
+	5450 3500 5800 3500
+Connection ~ 4950 6200
+Wire Wire Line
+	4950 5500 4950 6200
+Connection ~ 5450 6200
+Wire Wire Line
+	5450 5700 5450 6200
+Wire Wire Line
+	5800 5700 5450 5700
 $EndSCHEMATC

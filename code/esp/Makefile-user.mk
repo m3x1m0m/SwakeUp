@@ -34,6 +34,6 @@ COM_SPEED	= 460800
 # SPI_MODE = dio
 
 ## SPIFFS options
-SPIFF_SIZE     = 196608
+SPIFF_SIZE     = 250000
 # SPIFF_FILES = files
 
