@@ -103,7 +103,7 @@ static void callback(Event * event, uint8_t * data) {
 
 static void alarm(Event * event, uint8_t * data) {
 	if (event == &ALARM && APP_ISENABLED) {
-		enableSimpAlarm();
+		LOG_DEBUG("ALARM!");
 	}
 }
 

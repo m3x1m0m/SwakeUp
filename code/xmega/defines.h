@@ -40,7 +40,7 @@
 // #define PROTO_PRINT
 
 //Change this to a 1 if you want to use the screen
-#define SCREEN_ON               0
+#define SCREEN_ON               1
 
 // Draws boundary boxes around the apps
 #define BOUNDARY_BOX
