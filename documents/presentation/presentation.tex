@@ -3,6 +3,7 @@
 % For PDFs
 \usepackage{pdfpages}
 \usepackage{minted}
+\usepackage{tabularx}
 \title{Swakeup}
 \subtitle{More Than A Simple Wakeup Light}
 \date{\today}
@@ -17,18 +18,40 @@
 \end{frame}
 
   \section{Introduction}
-  	\begin{frame}{The Idea}
+  	\begin{frame}{Poka-yoke}
+		\only<1>{\Large Who knows what Poka-yoke is?}
+		\only<2>{
+		\metroset{block=fill}
+		\begin{block}{Poka-yoke (Wikipedia)}
+		Poka-yoke [poka joke] is a Japanese term that means
+		"mistake-proofing" or “inadvertent error prevention”.
+		\end{block}
+		}
+	\end{frame}
+	\begin{frame}{Background}
+		\begin{figure}
+        		\centering
+                	\includegraphics[width=1\textwidth]{./fig/darkness}
+			\caption{According to Sveriges Radio ”many Swedes suffer
+		from the winter blues or seasonal affective disorder”.
+		Image Source: Visitsweden}
+		\end{figure}
+	\end{frame}
+
+  	\begin{frame}{System Requirements}
 		\begin{itemize}
 			\item<1-> Wakeup light which is a part of the \textit{IoT}
 			\item<2-> Swakeup \ensuremath{\rightarrow} engl. "Swedish Wakeup Light"
 			\item<3-> Wakes up, displays time, weather, mails, facebook
 			\item<4-> Smart, small, USB charger included
+			\item<5-> Spends happiness
 		\end{itemize}
   	\end{frame}
   	\begin{frame}{System Overview}	
 		\begin{figure}
 			\centering
-			\includegraphics[height=0.8\textheight]{../../block/block.png}
+			\only<2>{\includegraphics[height=0.8\textheight]{../block/block.png}}
+			\only<1>{\includegraphics[height=0.6\textheight]{../block/block_simplified.png}}
 			\caption{System Overview}
 		\end{figure}
 	\end{frame}
@@ -37,8 +60,13 @@
   	\begin{frame}{Power Board}
 		\begin{figure}
 			\centering
-			\includegraphics[width=0.95\textwidth]{./fig/power}
-			\caption{Top View Of The Power Board Schematics}
+			\only<1>{\includegraphics[width=0.95\textwidth]{./fig/power1}}
+			\only<2>{\includegraphics[width=0.95\textwidth]{./fig/power2}}
+			\only<3>{\includegraphics[width=0.95\textwidth]{./fig/power3}}
+
+
+
+			\caption{Power Board Schematics}
 		\end{figure}	
   	\end{frame}
   	\begin{frame}{Logic Board}	
@@ -60,7 +88,7 @@
 	\begin{frame}{Code Organisation}
 		 \begin{figure}
                         \centering
-                        \includegraphics[width=0.7\textwidth]{./fig/block_code}
+                        \includegraphics[width=0.5\textwidth]{./fig/block_code}
                         \caption{Block Diagram Of The Code Organisation}
                 \end{figure}
   	\end{frame}
@@ -118,72 +146,73 @@ event_fire(&EVENT_UART_DELIMITER, SYSTEM_ADDRESS_CAST (&delimiters[USART_ID][i])
                 \includegraphics[width=0.6\textwidth]{./fig/command_usage}
                 \caption{USART Command Interpreter}
         \end{figure}
+	\end{frame}
 
-
+\begin{frame}{Realization (4)}
+	\begin{figure}
+        	\centering
+		\only<1>{\includegraphics[height=0.8\textheight]{./fig/website1}}
+                \only<2>{\includegraphics[height=0.8\textheight]{./fig/website2}}
+		\only<3>{\includegraphics[height=0.8\textheight]{./fig/website3}}
+		\caption{Website: Main User Interface}
+        \end{figure}
 	\end{frame}
  
+
   \section{Status Quo and Outlook}
-  	\begin{frame}{What works? What does not? (1)}
-	\footnotesize
-	\begin{table}[H]
-	\centering
-	\begin{tabular}{lll}
-	\textbf{HW Block}       & \textbf{Working}& \textbf{Problem}    \\\hline
-	USB Charging    & \checkmark    &                               \\
-	OLED Driver     & \checkmark    &                               \\
-	Vcc for µC      & \checkmark    &                               \\
-	IEEE 802.11     & \checkmark    &                               \\
-	USB2UART        & \checkmark    &                               \\
-	LED Driver      &               & Wrong footprint assignment    \\
-	Crystal         &               & Wrong pin assignment          \\
-	USB DCP         &               & Further tests necessary       \\
-	\end{tabular}
-	\caption{Hardware Overview: What works? What does not?}
-	\label{tab:hw}
-	\end{table}
-  	\end{frame}
+	\begin{frame}{Basic System Functionality is Given}
+	\begin{figure}
+        	\centering
+                \includegraphics[width=0.8\textwidth]{./fig/demo}
+                \caption{Picture of Nake HW}
+        \end{figure}
+	\end{frame}
 
-	\begin{frame}{What works? What does not? (2)}
+
+	\begin{frame}{Hardware} \footnotesize \begin{table}[H] \centering
+		\begin{tabularx}{\textwidth}{llX} \textbf{HW Block} &
+			\textbf{Working}& \textbf{Problem} \\\hline USB Charging
+			& \checkmark & \\ Screen Driver & \checkmark & \\ Screen
+			Driver Feedback& \checkmark & \\ Vcc for µC & \checkmark
+			& \\ ESP & \checkmark & \\ Terminal & \checkmark & \\
+			LED Driver & \checkmark & \\ LED Driver Feedback & &
+			Reversed inputs of the differential ampifier \\ USB DCP
+			& \checkmark & \\ Reverse Polarity Protection &
+		\checkmark & \\ \hline \end{tabularx} \caption{Status Quo
+	Hardware} \label{tab:hw_status_quo} \end{table} \end{frame}
+
+	\begin{frame}{Software}
 	\tiny
-	\begin{table}[H]
-	\centering
-	\begin{tabular}{lll}
-	\textbf{SW Block}       & \textbf{Working}& \textbf{Problem}    \\\hline
-	UART            & \checkmark    &                               \\
-	SPI             & \checkmark    &                               \\
-	EPROM           & \checkmark    &                               \\
-	Timer           & \checkmark    &                               \\
-	ADC             &               &                               \\
-	PWM             &               &                               \\
-	ESP8266         & \checkmark    &                               \\
-	Terminal        & \checkmark    &                               \\
-	SEP525F         & \checkmark    &                               \\
-	Wifi            &               &                               \\
-	Command         & \checkmark    &                               \\
-	Log             & \checkmark    &                               \\
-	Screen          & \checkmark    &                               \\
-	Timekeeper      & \checkmark    &                               \\
-	Controller      &               &                               \\
-	Core            & \checkmark    &                               \\
-	Weather         & \checkmark    &                               \\
-	Clock           & \checkmark    &                               \\
-	Social          &               &                               \\
-	\end{tabular}
-	\caption{Software Overview: What works? What does not?}
-	\label{tab:sw}
-	\end{table}
-
+		\begin{table}[H] \centering \begin{tabularx}{\textwidth}{llX}
+			\textbf{SW Block} & \textbf{Working}& \textbf{Problem}
+			\\\hline UART & \checkmark & \\ SPI & \checkmark & \\
+			EPROM & \checkmark & \\ Timer & \checkmark & \\	ESP8266
+			& \checkmark & \\ Terminal & \checkmark & \\ SEP525F &
+			\checkmark & \\ Wifi & \checkmark & \\ Command &
+			\checkmark & \\ Log & \checkmark & \\ Screen &
+			\checkmark & \\ Timekeeper & \checkmark & \\ Controller
+			& & \\ Core & \checkmark & \\ Weather & \checkmark & \\
+			Clock & \checkmark & \\ Social & & Not implemented yet
+			\\ PWM & \checkmark & \\ ADC & \checkmark & \\
+			Lightcontroller & \checkmark & \\ PID & \checkmark & \\
+			Advanced Light Patterns & & Debugging still ongoing\\
+		Play 8 bit sounds & & Not implemented, HW missing\\ \hline
+		\end{tabularx} \caption{Status Quo Software}
+	\label{tab:sw_status_quo} \end{table}
 	\end{frame}
 	
   	\begin{frame}{Outlook}	
 		\begin{itemize}
-			\item<1-> HW Rev2 has arrived
-			\item<2-> LED driver will work hopefully
-			\item<3-> Social connectivity and calendar functions will be implemented
+			\item<1-> HW revision 3 is under construction
+			\item<2-> Different functionality shall be added
+			\item<3-> Housing will be constructed
+			\item<4-> Social connectivity and calendar functions will be implemented
+			\item<5-> Take part in Swedish Embedded Award (Embedded
+				Priset)
 		\end{itemize}
 	\end{frame}
 
-  	\begin{frame}{Contact Information}
+  	\begin{frame}{Open Source}
         	\begin{center}
                 \begin{table}[]
                         \begin{tabular}{ll}
@@ -191,7 +220,7 @@ event_fire(&EVENT_UART_DELIMITER, SYSTEM_ADDRESS_CAST (&delimiters[USART_ID][i])
                                 E: & Maximilian.Stiefel.8233@student.uu.se\\
                         \end{tabular}
                 \end{table}
-                \includegraphics[width=0.05\textwidth]{./fig/github} \hspace{0.1cm} \url{https://github.com/s3xm3x/SwakeUp}\\
+                \includegraphics[width=0.05\textwidth]{./fig/github} \hspace{0.1cm} \url{github.com/s3xm3x/SwakeUp}\\
         	\end{center}
         	\begin{figure}
                 	\includegraphics[width=0.3\textwidth]{./fig/logo}
