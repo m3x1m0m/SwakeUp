@@ -27,7 +27,8 @@ struct SwakeConfig {
 
 	// Alarm config
 	uint8_t alarmDays = 0;
-	char alarmTime[5];
+	String alarmTime;
+	String unit;
 
 	// Current state
 	String date;

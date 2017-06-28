@@ -11,9 +11,25 @@ void onConsole(HttpRequest &request, HttpResponse &response) {
 	}
 }
 
+void onAlarm(HttpRequest &request, HttpResponse &response) {
+	if (request.getRequestMethod() == RequestMethod::POST) {
+		StaticJsonBuffer<ConfigJsonBufferSize> jsonBuffer;
+		JsonObject& root = jsonBuffer.parseObject(request.getBody());
+		Serial.print("Received on alarm!");
+		root.prettyPrintTo(Serial); //Uncomment it for debuging
+
+		if (root["StaAlarmTime"].success()) {
+			ActiveConfig.alarmDays = ((uint8_t)root["StaAlarmMon"] << 1)
+					| ((uint8_t)root["StaAlarmTue"] << 2) | ((uint8_t)root["StaAlarmWed"] << 3)
+					| ((uint8_t)root["StaAlarmThu"] << 4) | ((uint8_t)root["StaAlarmFri"] << 5)
+					| ((uint8_t)root["StaAlarmSat"] << 6) | ((uint8_t)root["StaAlarmSun"] << 7);
+			ActiveConfig.alarmTime = String((const char *) root["StaAlarmTime"]);
+		}
+	}
+}
+
 void onIndex(HttpRequest &request, HttpResponse &response) {
 	if (request.getRequestMethod() == RequestMethod::POST) {
-		Serial.printf("Update index: %s \n", request.getBody());
 		if (request.getBody() == NULL) {
 			response.setCache(86400, true); // It's important to use cache for better performance.
 			response.sendFile("index.html");
@@ -26,6 +42,7 @@ void onIndex(HttpRequest &request, HttpResponse &response) {
 		if (root["StaCITY"].success()) {
 			Serial.printf("Success\r\n");
 			ActiveConfig.city = String((const char *) root["StaCITY"]);
+			ActiveConfig.unit = String((const char *) root["StaUNIT"]);
 		}
 	} else {
 		response.setCache(86400, true); // It's important to use cache for better performance.
@@ -122,7 +139,8 @@ void startWebServer() {
 	server.addPath("/config", onConfiguration);
 	server.addPath("/config.json", onConfiguration_json);
 	server.addPath("/state", onAJAXGetState);
-	server.addPath("/console",onConsole);
+	server.addPath("/console", onConsole);
+	server.addPath("/alarm", onAlarm);
 	server.setDefaultHandler(onFile);
 	serverStarted = true;
 
