@@ -20,6 +20,7 @@ $( document ).ready(function() {
 			document.getElementById('weather').textContent = data.weather;
 			document.getElementById('city').textContent = data.city;
 			document.getElementById('time').textContent = data.time;
+			document.getElementById('date').textContent = data.date;
 			console.log(data);
 			setTimeout(worker, 5000);
 		});

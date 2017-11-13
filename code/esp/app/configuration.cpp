@@ -24,14 +24,18 @@ SwakeConfig loadConfig() {
 		cfg.city = String((const char*) network["city"]);
 		cfg.date = String((const char*)network["date"]);
 		cfg.time = String((const char*)network["time"]);
+		cfg.alarmTime = String((const char*)network["alarmtime"]);
+		cfg.alarmDays = network["alarmdays"];
 		delete[] jsonString;
 	} else {
 		//Factory defaults if no config file present
 		cfg.StaSSID = WIFI_SSID;
 		cfg.StaPassword = WIFI_PWD;
 		cfg.city = "Amsterdam";
-		cfg.date = "2017/05/19";
-		cfg.time = "00:00";
+		cfg.date = "2017/06/01";
+		cfg.time = "01:30";
+		cfg.alarmTime = "00:00";
+		cfg.alarmDays = 0;
 	}
 	return cfg;
 }
@@ -48,6 +52,8 @@ void saveConfig(SwakeConfig& cfg) {
 	network["city"] = cfg.city;
 	network["date"] = cfg.date;
 	network["time"] = cfg.time;
+	network["alarmtime"] = cfg.alarmTime;
+	network["alarmdays"] = cfg.alarmDays;
 	char buf[ConfigFileBufferSize];
 	root.prettyPrintTo(buf, sizeof(buf));
 	fileSetContent(THERM_CONFIG_FILE, buf);

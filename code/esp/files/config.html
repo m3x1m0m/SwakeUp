@@ -11,14 +11,17 @@
     <link href="clockpicker.css" rel="stylesheet">
     <link href="bootstrap-clockpicker.css" rel="stylesheet">
     <link href="bootstrap.min.css" rel="stylesheet">
+	
     <script src="jquery-2.1.4.min.js"></script>
-    <script src="clockpicker.js"</script>
-    <script src="bootstrap-clockpicker.js</script>
+	<script src="bootstrap.min.js"></script>
+    <script src="clockpicker.js"></script>
+	
+    <script src="bootstrap-clockpicker.js"></script>
+	<script src="config.js"></script>
       <style>
       .main { font-size: 63px; }
       </style>
   </head>
-  <script src="config.js"></script>
   <body>
     <div class="container">
       <div class="header">
@@ -37,7 +40,7 @@
               <h3 class="panel-title">Alarms</h3>
             </div>
             <div class="panel-body">
-              <form class="form" id="form_addalarm" method="POST"> 
+              <form class="form" id="form_addalarm" method="POST" action="#"> 
                 <div class="input-group clockpicker" data-align="top" data-autoclose="true">
 					<input type="text" id="alarm_time" name="alarm_time" class="form-control" placeholder="00:00" value="00:00">
 					<span class="input-group-addon">
@@ -47,25 +50,25 @@
 				<div>&nbsp;</div>
                 <div class="btn-group btn-group-justified" data-toggle="buttons">
                   <label class="btn btn-primary btn-sm">
-                  <input type="checkbox" name="options" id="option1" autocomplete="off"> Mon
+                  <input type="checkbox" name="checkAlarmDays" id="checkMon" autocomplete="off"> Mon
                   </label>
                   <label class="btn btn-primary btn-sm">
-                  <input type="checkbox" name="options" id="option2" autocomplete="off"> Tue
+                  <input type="checkbox" name="checkAlarmDays" id="checkTue" autocomplete="off"> Tue
                   </label>
                   <label class="btn btn-primary btn-sm">
-                  <input type="checkbox" name="options" id="option3" autocomplete="off"> Wed
+                  <input type="checkbox" name="checkAlarmDays" id="checkWed" autocomplete="off"> Wed
                   </label>
 				  <label class="btn btn-primary btn-sm">
-                  <input type="checkbox" name="options" id="option3" autocomplete="off"> Thu
+                  <input type="checkbox" name="checkAlarmDays" id="checkThu" autocomplete="off"> Thu
                   </label>
 				  <label class="btn btn-primary btn-sm">
-                  <input type="checkbox" name="options" id="option3" autocomplete="off"> Fri
+                  <input type="checkbox" name="checkAlarmDays" id="checkFri" autocomplete="off"> Fri
                   </label>
 				  <label class="btn btn-primary btn-sm">
-                  <input type="checkbox" name="options" id="option3" autocomplete="off"> Sat
+                  <input type="checkbox" name="checkAlarmDays" id="checkSat" autocomplete="off"> Sat
                   </label>
 				  <label class="btn btn-primary btn-sm">
-                  <input type="checkbox" name="options" id="option3" autocomplete="off"> Sun
+                  <input type="checkbox" name="checkAlarmDays" id="checkSun" autocomplete="off"> Sun
                   </label>
                 </div> 
 				<div>&nbsp;</div>
@@ -81,24 +84,24 @@
                 <h3 class="panel-title">Settings</h3>
               </div>
               <div class="panel-body">
-                <form id="form_citycfg" method="POST">
+                <form id="form_citycfg" method="POST" action="#">
                   <div class="form-group">
                     <label for="StaCITY">City</label>
                     <input type="text" id="StaCITY" name="StaCITY" class="form-control" placeholder="Enter City" value="{StaCITY}">
                   </div>
                   <div class="btn-group btn-group-justified" data-toggle="buttons">
                     <label class="btn btn-primary">
-                    <input type="radio" name="options" id="option1" autocomplete="off"> Celsius
+						<input type="radio" name="radioUnit" id="radioCelsius" autocomplete="off" > Celsius
                     </label>
                     <label class="btn btn-primary">
-                    <input type="radio" name="options" id="option2" autocomplete="off"> Fahrenheit
+						<input type="radio" name="radioUnit" id="radioFahrenheit" autocomplete="off"> Fahrenheit
                     </label>
                     <label class="btn btn-primary">
-                    <input type="radio" name="options" id="option3" autocomplete="off"> Kelvin
+						<input type="radio" name="radioUnit" id="radioKelvin" autocomplete="off"> Kelvin
                     </label>
                   </div>
 				  <div>&nbsp;</div>
-                  <button type="submit" class="btn btn-success  btn-block">Submit</button>
+                  <button class="btn btn-success btn-block">Submit</button>
                 </form>
               </div>
             </div>
@@ -108,7 +111,7 @@
                 <h3 class="panel-title">Network</h3>
               </div>
               <div class="panel-body">
-                <form id="form_netcfg" method="POST">
+                <form id="form_netcfg" method="POST" action="#">
                   <div class="form-group">
                     <label for="StaSSID">Name</label>
                     <input type="text" id="StaSSID" name="StaSSID" class="form-control" placeholder="Enter SSID" value="{StaSSID}">
@@ -129,7 +132,6 @@
 		  
         </div>
       <!-- TyTherm adjustment config -->
-      </div>
     <!-- /col -->
     </div> <!-- /row -->
     <script type="text/javascript">
