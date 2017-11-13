@@ -24,7 +24,7 @@
 		\metroset{block=fill}
 		\begin{block}{Poka-yoke (Wikipedia)}
 		Poka-yoke [poka joke] is a Japanese term that means
-		"mistake-proofing" or “inadvertent error prevention”.
+		"mistake-proofing" or "inadvertent error prevention".
 		\end{block}
 		}
 	\end{frame}
@@ -44,7 +44,7 @@
 			\item<2-> Swakeup \ensuremath{\rightarrow} engl. "Swedish Wakeup Light"
 			\item<3-> Wakes up, displays time, weather, mails, facebook
 			\item<4-> Smart, small, USB charger included
-			\item<5-> Spends happiness
+			\item<5-> \alert<5->{Spends happiness}
 		\end{itemize}
   	\end{frame}
   	\begin{frame}{System Overview}	
@@ -123,7 +123,34 @@ event_fire(&EVENT_UART_DELIMITER, SYSTEM_ADDRESS_CAST (&delimiters[USART_ID][i])
 
 
 \end{frame}	
-  
+
+\begin{frame}[fragile]{Drivers- ADC}
+\begin{minted}[baselinestretch=1, fontsize=\tiny, linenos,frame=single,framesep=5pt]{C}
+/////////////////////////////////////////////////////////////////////////////////
+// Macro: Create ISRs for the individual channels.
+/////////////////////////////////////////////////////////////////////////////////
+#define CREATE_ADCA_ISR(ADCVECTOR, VARSEMAPHORE, BUFFER, RESULTREG,STARTFLAG) \
+ISR(ADCVECTOR) \
+{ \
+        static volatile uint8_t cycles = 0; \
+        if(!VARSEMAPHORE) \
+        { \
+                if( ((int16_t) RESULTREG) < 0) \
+                        BUFFER[cycles++] = 0; \
+                else \
+                        BUFFER[cycles++] = RESULTREG; \
+                if(cycles < NU_AVERAGING_VALS) \
+                ADCA.CTRLA |= STARTFLAG; \
+                else\
+                {\
+                        VARSEMAPHORE= 1;\
+                        cycles = 0;\
+                }\
+        }\
+}
+
+\end{minted}
+\end{frame}
 	\begin{frame}{Realization (1)}
 	\begin{figure}
         	\centering
@@ -152,8 +179,8 @@ event_fire(&EVENT_UART_DELIMITER, SYSTEM_ADDRESS_CAST (&delimiters[USART_ID][i])
 	\begin{figure}
         	\centering
 		\only<1>{\includegraphics[height=0.8\textheight]{./fig/website1}}
-                \only<2>{\includegraphics[height=0.8\textheight]{./fig/website2}}
-		\only<3>{\includegraphics[height=0.8\textheight]{./fig/website3}}
+                \only<3>{\includegraphics[height=0.8\textheight]{./fig/website2}}
+		\only<2>{\includegraphics[height=0.8\textheight]{./fig/website3}}
 		\caption{Website: Main User Interface}
         \end{figure}
 	\end{frame}
@@ -220,7 +247,7 @@ event_fire(&EVENT_UART_DELIMITER, SYSTEM_ADDRESS_CAST (&delimiters[USART_ID][i])
                                 E: & Maximilian.Stiefel.8233@student.uu.se\\
                         \end{tabular}
                 \end{table}
-                \includegraphics[width=0.05\textwidth]{./fig/github} \hspace{0.1cm} \url{github.com/s3xm3x/SwakeUp}\\
+                \includegraphics[width=0.05\textwidth]{./fig/github} \hspace{0.1cm} \url{github.com/m3x1m0m/SwakeUp}\\
         	\end{center}
         	\begin{figure}
                 	\includegraphics[width=0.3\textwidth]{./fig/logo}

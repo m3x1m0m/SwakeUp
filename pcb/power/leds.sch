@@ -506,9 +506,7 @@ F 4 "2073421" V 8875 3050 60  0001 C CNN "Farnell"
 	0    -1   -1   0   
 $EndComp
 Wire Wire Line
-	8350 2300 8400 2300
-Wire Wire Line
-	8400 2300 8450 2300
+	8350 2300 8450 2300
 Wire Wire Line
 	8400 2850 8400 2700
 Wire Wire Line
@@ -533,11 +531,7 @@ Wire Wire Line
 Wire Wire Line
 	2850 5650 3800 5650
 Wire Wire Line
-	3800 4950 3800 5650
-Wire Wire Line
-	3800 5650 3800 6100
-Wire Wire Line
-	3800 6100 3800 6550
+	3800 4950 3800 6550
 Wire Wire Line
 	2850 6000 3600 6000
 Wire Wire Line
@@ -563,14 +557,10 @@ Wire Wire Line
 Wire Wire Line
 	8750 2300 9200 2300
 Wire Wire Line
-	4425 2350 4625 2350
-Wire Wire Line
-	4625 2350 4825 2350
+	4425 2350 4825 2350
 Connection ~ 4625 2350
 Wire Wire Line
-	4425 2850 4625 2850
-Wire Wire Line
-	4625 2850 4825 2850
+	4425 2850 4825 2850
 Wire Wire Line
 	4000 2350 4125 2350
 Wire Wire Line
@@ -578,9 +568,7 @@ Wire Wire Line
 Wire Wire Line
 	1500 1400 1500 1300
 Wire Wire Line
-	1150 1300 1500 1300
-Wire Wire Line
-	1500 1300 1650 1300
+	1150 1300 1650 1300
 Wire Wire Line
 	1500 1700 1500 1775
 Connection ~ 1500 1300
@@ -589,9 +577,7 @@ Wire Wire Line
 Wire Wire Line
 	1525 2325 1525 2225
 Wire Wire Line
-	1175 2225 1525 2225
-Wire Wire Line
-	1525 2225 1675 2225
+	1175 2225 1675 2225
 Wire Wire Line
 	1525 2625 1525 2700
 Connection ~ 1525 2225
@@ -600,9 +586,7 @@ Wire Wire Line
 Wire Wire Line
 	1525 3275 1525 3175
 Wire Wire Line
-	1175 3175 1525 3175
-Wire Wire Line
-	1525 3175 1675 3175
+	1175 3175 1675 3175
 Wire Wire Line
 	1525 3575 1525 3650
 Connection ~ 1525 3175
@@ -618,23 +602,17 @@ Wire Wire Line
 Wire Wire Line
 	4625 2350 4625 2550
 Wire Wire Line
-	5125 2350 5650 2350
-Wire Wire Line
-	5650 2350 5875 2350
+	5125 2350 5875 2350
 Wire Wire Line
 	5525 2150 5650 2150
 Wire Wire Line
 	5650 2150 5650 2350
 Connection ~ 5650 2350
 Wire Wire Line
-	4425 3550 4625 3550
-Wire Wire Line
-	4625 3550 4825 3550
+	4425 3550 4825 3550
 Connection ~ 4625 3550
 Wire Wire Line
-	4425 3050 4625 3050
-Wire Wire Line
-	4625 3050 4825 3050
+	4425 3050 4825 3050
 Wire Wire Line
 	4000 3550 4125 3550
 Wire Wire Line
@@ -649,18 +627,14 @@ Wire Wire Line
 Wire Wire Line
 	4625 3550 4625 3350
 Wire Wire Line
-	5125 3550 5650 3550
-Wire Wire Line
-	5650 3550 5875 3550
+	5125 3550 5875 3550
 Wire Wire Line
 	5525 3750 5650 3750
 Wire Wire Line
 	5650 3750 5650 3550
 Connection ~ 5650 3550
 Wire Wire Line
-	5125 2850 5200 2850
-Wire Wire Line
-	5200 2850 5350 2850
+	5125 2850 5350 2850
 Wire Wire Line
 	5350 2850 5350 2925
 Wire Wire Line
@@ -669,14 +643,10 @@ Wire Wire Line
 	5200 3050 5200 2850
 Connection ~ 5200 2850
 Wire Wire Line
-	8325 3550 8525 3550
-Wire Wire Line
-	8525 3550 8725 3550
+	8325 3550 8725 3550
 Connection ~ 8525 3550
 Wire Wire Line
-	8325 3050 8525 3050
-Wire Wire Line
-	8525 3050 8725 3050
+	8325 3050 8725 3050
 Wire Wire Line
 	9150 3550 9025 3550
 Wire Wire Line
@@ -691,9 +661,7 @@ Wire Wire Line
 Wire Wire Line
 	8525 3550 8525 3350
 Wire Wire Line
-	7275 3550 7500 3550
-Wire Wire Line
-	7500 3550 8025 3550
+	7275 3550 8025 3550
 Wire Wire Line
 	7625 3750 7500 3750
 Wire Wire Line
@@ -708,9 +676,7 @@ Wire Wire Line
 Wire Wire Line
 	7750 2750 7750 2300
 Wire Wire Line
-	7750 2300 7950 2300
-Wire Wire Line
-	7950 2300 8050 2300
+	7750 2300 8050 2300
 Wire Wire Line
 	7950 2400 7950 2300
 Connection ~ 7950 2300
@@ -740,9 +706,7 @@ F 4 "1759011" H 7950 2550 60  0001 C CNN "Farnell"
 $EndComp
 Connection ~ 7950 2850
 Wire Wire Line
-	7950 2700 7950 2850
-Wire Wire Line
-	7950 2850 7950 3050
+	7950 2700 7950 3050
 $Comp
 L R R?
 U 1 1 5917A30B
@@ -781,9 +745,7 @@ $EndComp
 Wire Wire Line
 	7375 1950 7775 1950
 Wire Wire Line
-	8075 1950 8225 1950
-Wire Wire Line
-	8225 1950 8450 1950
+	8075 1950 8450 1950
 Wire Wire Line
 	8750 1950 9000 1950
 Wire Wire Line
@@ -802,9 +764,7 @@ Wire Wire Line
 Wire Wire Line
 	7375 2350 7375 1950
 Wire Wire Line
-	7800 2850 7950 2850
-Wire Wire Line
-	7950 2850 8400 2850
+	7800 2850 8400 2850
 Text GLabel 7275 2950 2    60   UnSpc ~ 0
 V-
 Text GLabel 5875 2950 0    60   UnSpc ~ 0
